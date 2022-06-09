@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
 function download_button_clicked(evt) {
   evt.preventDefault();
   var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  var table = document.getElementById('target'); //get "id = target"
+  var table = document.getElementById('table1'); //get "id = table1"
   var data_tsv = "";                             // data_tsv is data holder
 
   for(var i = 0;  i < table.rows.length; i++) {

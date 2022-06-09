@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+
+    <link rel="stylesheet" 
+      href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
+      integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h"
+      crossorigin="anonymous">
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous">
+
+    <script src="add.js"></script>
+    <script src="donwload.js"></script>
+
+    <style>
+      .hide {display: none;}
+    </style>
+
+</head>
+
+<body>
+
+<p><button id="download">Download Text</button></p>
+
+<table class="table table-striped" id="target">
+    <thead>
+    <tr>
+        <th scope="row">key</th>
+        <th>Layer</th>
+        <th>Species</th>
+        <th>Cover</th>
+        <th>Identified</th>
+        <th>Sampled</th>
+        <th>delete</th>
+    </tr>
+    </thead>
+
+    <tbody id="params">
+
+    <tr>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
+    </tr>
+
+    <tr class="add_row"
+      onclick="
+        let node = this.nextElementSibling.cloneNode(true);
+        node.removeAttribute('id');
+        node.classList.remove('hide');
+        this.parentNode.insertBefore(node,this);">
+      <td colspan="7" style="text-align: left"><i class="fas fa-plus"></i></td>
+    </tr>
+
+    <!--template-->
+    <tr class="hide">
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td><span contenteditable="true"></span></td>
+        <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>
