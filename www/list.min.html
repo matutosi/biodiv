@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="" />
+
+  <script src="list.min.js"></script>
+
+<!--  https://listjs.com/   -->
+
+
+  <title>mebeeサンプル</title>
+</head>
+<style>
+  #wrap {
+    width: 250px;
+    margin-top: 250px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .sort.desc:after {
+    content: "▼";
+  }
+
+  .sort.asc:after {
+    content: "▲";
+  }
+</style>
+
+<body id="wrap">
+  <div id="users" class="bg-gray-100 flex-1 p-6 md:mt-16">
+    <input class="search p-3 flex-1" placeholder="Search" />
+    <table class="table-auto w-full text-left">
+      <thead>
+        <tr>
+          <th class="sort px-4 py-2 border-r" data-sort="layer">  layer</th>
+          <th class="sort px-4 py-2 border-r" data-sort="species">species</th>
+          <th class="sort px-4 py-2 border-r" data-sort="cover">  cover</th>
+        </tr>
+      </thead>
+      <tbody class="list text-gray-600">
+        <tr>
+          <td class="layer   border border-l-0 px-4 py-2">B1</td>
+          <td class="species border border-l-0 px-4 py-2">コナラ</td>
+          <td class="cover   border border-l-0 px-4 py-2">50</td>
+        </tr>
+        <tr>
+          <td class="layer   border border-l-0 px-4 py-2">B1</td>
+          <td class="species border border-l-0 px-4 py-2">アベマキ</td>
+          <td class="cover   border border-l-0 px-4 py-2">30</td>
+        </tr>
+        <tr>
+          <td class="layer   border border-l-0 px-4 py-2">K</td>
+          <td class="species border border-l-0 px-4 py-2">ネザサ</td>
+          <td class="cover   border border-l-0 px-4 py-2">80</td>
+        </tr>
+        <tr>
+          <td class="layer   border border-l-0 px-4 py-2">K</td>
+          <td class="species border border-l-0 px-4 py-2">シシガシラ</td>
+          <td class="cover   border border-l-0 px-4 py-2">10</td>
+        </tr>
+        <tr>
+          <td class="layer   border border-l-0 px-4 py-2">K</td>
+          <td class="species border border-l-0 px-4 py-2">コナラ</td>
+          <td class="cover   border border-l-0 px-4 py-2">10</td>
+        </tr>
+        <tr>
+          <td class="layer   border border-l-0 px-4 py-2">K</td>
+          <td class="species border border-l-0 px-4 py-2">アベマキ</td>
+          <td class="cover   border border-l-0 px-4 py-2">20</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+
+<script>
+  var options = {
+    valueNames: ['layer', 'species', 'cover']
+  };
+
+  var userList = new List('users', options);
+  userList.sort('id', { order: 'asc' });
+
+</script>

@@ -1,0 +1,50 @@
+.editable-table,.editable-table th,td{
+	border: 1px solid darkgray;
+	border-collapse: collapse;
+}
+.editable-table th { background-color: paleturquoise; }
+.editable-table td.selected { border: 2px solid black;}
+textarea.cell-edit {
+	display: block;
+	padding: 6px 24px;
+	height: 100%; width: 100%;
+  -webkit-box-sizing: border-box;
+   -khtml-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+  box-sizing: border-box;}
+span.tooltip {
+  position:absolute;
+  z-index:9999;
+  display:block;
+  color:#0000ff;
+  font-size:14px;
+  line-height:1.2;
+}
+span.tooltip__body {
+  position:relative;
+  top:-15px;
+  padding:10px;
+  background:#f0e68c;
+  -webkit-border-radius:3px;
+     -moz-border-radius:3px;
+      -ms-border-radius:3px;
+          border-radius:3px;
+  -webkit-box-shadow:0 2px 4px rgba(0, 0, 0, .4);
+     -moz-box-shadow:0 2px 4px rgba(0, 0, 0, .4);
+      -ms-box-shadow:0 2px 4px rgba(0, 0, 0, .4);
+          box-shadow:0 2px 4px rgba(0, 0, 0, .4);
+}
+span.tooltip__body:after {
+  content:"";
+  position:absolute;
+  bottom:-5px;
+  left:50%;
+  display:block;
+  width:0;
+  height:0;
+  margin-left:-5px;
+  border-width:5px 5px 0 5px;
+  border-style:solid;
+  border-color:#f0e68c transparent transparent transparent;
+}

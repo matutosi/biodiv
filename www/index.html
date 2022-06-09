@@ -12,6 +12,24 @@
     
 </head>
 <body>
+
+<!-- ------------------                         ------------------ -->
+    <div data-role="page" id="welcome">
+        <div data-role="header" data-position="fixed" data-theme="c">
+            <h1>BISA (Biodiversity Investigation System App.)</h1>
+        </div>
+
+
+        <div data-role="content">
+            <input type="button" value="Settings"         onclick="location.href='#settings'">  <br>
+            <input type="button" value="Input location"   onclick="location.href='#location'">  <br>
+            <input type="button" value="Input occurrence" onclick="location.href='#occurrence'"><br>
+            <input type="button" value="Send data"        onclick="location.href='#send-data'"> <br>
+            <input type="button" value="Links"            onclick="location.href='#links'">     <br>
+        </div>
+    </div>
+
+<!-- ------------------                         ------------------ -->
     <div data-role="page" id="list-page">
         <div data-role="header" data-position="fixed" data-theme="c">
             <h1>TODO App</h1>
@@ -22,14 +40,13 @@
         </div>
     </div>
 
+<!-- ------------------                         ------------------ -->
     <div data-role="page" id="add-page">
         <div data-role="header" data-position="fixed" data-theme="c">
             <h1>Add TODO</h1>
             <a href="#list-page" data-icon="back" class="ui-btn-left">back</a>
         </div>
         <div data-role="content">
-            <input id="add-button" type="button" value="Save" onclick="addTodo()">
-            <input id="add-button" type="button" value="Picture And Save" onclick="addTodoPicture()"  data-theme="b">
 
             <table>
                 <thead>
@@ -55,8 +72,13 @@
                 </tbody>
             </table>
 
+            <input id="add-button" type="button" value="Save" onclick="addTodo()">
+            <input id="add-button" type="button" value="Picture And Save" onclick="addTodoPicture()"  data-theme="b">
+
         </div>
     </div>
+
+<!-- ------------------                         ------------------ -->
 
 </body>
 </html>
