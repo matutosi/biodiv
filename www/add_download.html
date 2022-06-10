@@ -14,11 +14,20 @@
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous">
 
+    <!--  add row  -->
     <script src="add.js"></script>
-    <script src="donwload.js"></script>
-
     <style>
       .hide {display: none;}
+    </style>
+
+    <!--  download data  -->
+    <script src="donwload.js"></script>
+
+    <!--  sort table  -->
+    <script src="list.min.js"></script>
+    <style>
+      .sort.desc:after { content: "▼"; }
+      .sort.asc:after  { content: "▲"; }
     </style>
 
 </head>
@@ -27,52 +36,97 @@
 
 <p><button id="download">Download Text</button></p>
 
-<table class="table table-striped" id="target">
-    <thead>
-    <tr>
-        <th scope="row">key</th>
-        <th>Layer</th>
-        <th>Species</th>
-        <th>Cover</th>
-        <th>Identified</th>
-        <th>Sampled</th>
+<div id="users" class="bg-gray-100 flex-1 p-6 md:mt-16">
+  <table class="table table-striped" id="target">
+      <thead>
+      <tr>
+        <th scope="row">key       </th>
+        <th            >Layer     </th>
+        <th            >Species   </th>
+        <th            >Cover     </th>
+        <th            >Identified</th>
+        <th            >Sampled   </th>
         <th>delete</th>
-    </tr>
-    </thead>
+      </tr>
+      </thead>
 
-    <tbody id="params">
+      <tbody id="params" class="list">
+      <tr>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
+      </tr>
 
-    <tr>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
-    </tr>
+      <tr class="add_row"
+        onclick="
+          let node = this.nextElementSibling.cloneNode(true);
+          node.removeAttribute('id');
+          node.classList.remove('hide');
+          this.parentNode.insertBefore(node, this);">
+        <td colspan="7" style="text-align: left"><i class="fas fa-plus"></i></td>
+      </tr>
 
-    <tr class="add_row"
-      onclick="
-        let node = this.nextElementSibling.cloneNode(true);
-        node.removeAttribute('id');
-        node.classList.remove('hide');
-        this.parentNode.insertBefore(node,this);">
-      <td colspan="7" style="text-align: left"><i class="fas fa-plus"></i></td>
-    </tr>
+      <!--template-->
+      <tr class="hide">
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td><span contenteditable="true"></span></td>
+          <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
+      </tr>
 
-    <!--template-->
-    <tr class="hide">
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td><span contenteditable="true"></span></td>
-        <td onclick="this.parentNode.outerHTML = ''"><i class="fas fa-ban"></i></td>
-    </tr>
+      </tbody>
+  </table>
+</div>
 
-    </tbody>
-</table>
+<hr>
+
+
+<div id="users" class="bg-gray-100 flex-1 p-6 md:mt-16">
+<input class="search p-3 flex-1" placeholder="Search" />
+  <table class="table table-striped" id="target">
+      <thead>
+      <tr>
+        <th class="sort" data-sort="ley" scope="row">key       </th>
+        <th class="sort" data-sort="lyr"            >Layer     </th>
+        <th class="sort" data-sort="spc"            >Species   </th>
+        <th class="sort" data-sort="cvr"            >Cover     </th>
+        <th class="sort" data-sort="idn"            >Identified</th>
+        <th class="sort" data-sort="smp"            >Sampled   </th>
+      </tr>
+      </thead>
+
+      <tbody id="params" class="list">
+      <tr>
+          <td class="key"><span contenteditable="true"></span></td>
+          <td class="lyr"><span contenteditable="true"></span></td>
+          <td class="spc"><span contenteditable="true"></span></td>
+          <td class="cvr"><span contenteditable="true"></span></td>
+          <td class="idn"><span contenteditable="true"></span></td>
+          <td class="smp"><span contenteditable="true"></span></td>
+      </tr>
+
+      </tbody>
+  </table>
+</div>
+
+
+
 </body>
 </html>
+
+<!--  sort table  -->
+<!--  set these code at the END of html  -->
+<script>
+  var options = {
+    valueNames: ['lyr', 'spc', 'cvr']
+  };
+  var userList = new List('users', options);
+  userList.sort('id', { order: 'asc' });      // init sort id
+</script>

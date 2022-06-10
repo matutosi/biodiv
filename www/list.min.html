@@ -6,11 +6,17 @@
   <meta name="description" content="" />
 
   <script src="list.min.js"></script>
+  <script>
+    var options = {
+      valueNames: ['layer', 'species', 'cover']
+    };
+    var userList = new List('users', options);
+    userList.sort('id', { order: 'asc' });
+  </script>
 
 <!--  https://listjs.com/   -->
 
 
-  <title>mebeeサンプル</title>
 </head>
 <style>
   #wrap {
@@ -35,55 +41,44 @@
     <table class="table-auto w-full text-left">
       <thead>
         <tr>
-          <th class="sort px-4 py-2 border-r" data-sort="layer">  layer</th>
-          <th class="sort px-4 py-2 border-r" data-sort="species">species</th>
-          <th class="sort px-4 py-2 border-r" data-sort="cover">  cover</th>
+          <th class="sort" data-sort="layer">  layer</th>
+          <th class="sort" data-sort="species">species</th>
+          <th class="sort" data-sort="cover">  cover</th>
         </tr>
       </thead>
-      <tbody class="list text-gray-600">
+      <tbody class="list">
         <tr>
-          <td class="layer   border border-l-0 px-4 py-2">B1</td>
-          <td class="species border border-l-0 px-4 py-2">コナラ</td>
-          <td class="cover   border border-l-0 px-4 py-2">50</td>
+          <td class="layer">B1</td>
+          <td class="species">コナラ</td>
+          <td class="cover">50</td>
         </tr>
         <tr>
-          <td class="layer   border border-l-0 px-4 py-2">B1</td>
-          <td class="species border border-l-0 px-4 py-2">アベマキ</td>
-          <td class="cover   border border-l-0 px-4 py-2">30</td>
+          <td class="layer">B1</td>
+          <td class="species">アベマキ</td>
+          <td class="cover">30</td>
         </tr>
         <tr>
-          <td class="layer   border border-l-0 px-4 py-2">K</td>
-          <td class="species border border-l-0 px-4 py-2">ネザサ</td>
-          <td class="cover   border border-l-0 px-4 py-2">80</td>
+          <td class="layer">K</td>
+          <td class="species">ネザサ</td>
+          <td class="cover">80</td>
         </tr>
         <tr>
-          <td class="layer   border border-l-0 px-4 py-2">K</td>
-          <td class="species border border-l-0 px-4 py-2">シシガシラ</td>
-          <td class="cover   border border-l-0 px-4 py-2">10</td>
+          <td class="layer">K</td>
+          <td class="species">シシガシラ</td>
+          <td class="cover">40</td>
         </tr>
         <tr>
-          <td class="layer   border border-l-0 px-4 py-2">K</td>
-          <td class="species border border-l-0 px-4 py-2">コナラ</td>
-          <td class="cover   border border-l-0 px-4 py-2">10</td>
+          <td class="layer">K</td>
+          <td class="species">コナラ</td>
+          <td class="cover">10</td>
         </tr>
         <tr>
-          <td class="layer   border border-l-0 px-4 py-2">K</td>
-          <td class="species border border-l-0 px-4 py-2">アベマキ</td>
-          <td class="cover   border border-l-0 px-4 py-2">20</td>
+          <td class="layer">K</td>
+          <td class="species">アベマキ</td>
+          <td class="cover">20</td>
         </tr>
       </tbody>
     </table>
   </div>
 
 </body>
-
-
-<script>
-  var options = {
-    valueNames: ['layer', 'species', 'cover']
-  };
-
-  var userList = new List('users', options);
-  userList.sort('id', { order: 'asc' });
-
-</script>

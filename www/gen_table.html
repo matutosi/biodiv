@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TEST</title>
+  <script src="gen_table.js"></script>
+
+</head>
+<body>
+
+
+<table id="table_a">
+  <thead>
+    <tr>
+      <th>col_1</th>
+      <th>col_2</th>
+      <th>col_3</th>
+      <th>col_4</th>
+    </tr>
+  </thead>
+
+   <tbody>
+    <tr>
+       <td><span contenteditable="true">aaaa</span></td>
+       <td><span contenteditable="true">bbbb</span></td>
+       <td><span contenteditable="true">c</span></td>
+       <td><span contenteditable="true">d</span></td>
+    </tr>
+    <tr>
+       <td><span contenteditable="true">e</span></td>
+       <td><span contenteditable="true">f</span></td>
+       <td><span contenteditable="true">g</span></td>
+       <td><span contenteditable="true">h</span></td>
+    </tr>
+   </tbody>
+</table>
+
+
+<p><button id='refresh'>refresh</button></p>
+
+
+
+<hr>
+
+<table id='table_out'>
+  <tr><th>a</th><th>b</th><th>c</th><th>d</th></tr>
+</table>
+
+<script>
+  get_table('table_a')
+</script>
+
+
+<hr>
+
+<table id='data-table'>
+  <tr><th>a</th><th>b</th><th>c</th><th>d</th></tr>
+</table>
+
+
+<!--    -->
+<script>
+  gen_table()
+</script>
+
+</body>
+</html>
