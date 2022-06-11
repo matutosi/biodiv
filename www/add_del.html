@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="add_del.js"></script>
+
+</head>
+<body>
+
+<input type="button" value="行追加" onclick="insertRow('sample1_table')" />
+<input type="button" value="列追加" onclick="insertColumn('sample1_table')" />
+<input type="button" value="列削除" onclick="deleteColumn('sample1_table')" />
+<table id="sample1_table">
+    <tr>
+        <td nowrap><input type="button" value="行削除"
+            onclick="deleteRow(this)" /></td>
+        <td nowrap>1-1</td>
+        <td nowrap>1-2</td>
+    </tr>
+    <tr>
+        <td nowrap><input type="button" value="行削除"
+            onclick="deleteRow(this)" /></td>
+        <td nowrap>2-1</td>
+        <td nowrap>2-2</td>
+    </tr>
+    <tr>
+        <td nowrap><input type="button" value="行削除"
+            onclick="deleteRow(this)" /></td>
+        <td nowrap>3-1</td>
+        <td nowrap>3-2</td>
+    </tr>
+</table>
+
+</body>
+</html>
