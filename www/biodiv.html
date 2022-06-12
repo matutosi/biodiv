@@ -7,69 +7,88 @@
 </head>
 
 <body>
+
+
+
+
+
+
+
 <!--
-https://allabout.co.jp/gm/gc/23969/
+  https://allabout.co.jp/gm/gc/23969/
+-->
+<!--
+<input type="text" size="20" list="mylist1" />
+  <datalist id="mylist1">
+    <option>りんご</option>
+    <option>バナナ</option>
+    <option>ぶどう</option>
+  </datalist>
 -->
 
-<!--  <input type="button" value="add row" onclick="insertRow('sort_table')" />  -->
+<p>
+  <form>
+    <label>Item (separete by ","): 
+      <input id="col_item" type="text" size="50" value="Stand,Layer,Species,Cover" inputmode="text">
+    </label>
+    <input type="button" value="create table"  onclick="createTable('occurrence', 'col_item')" />
+  </form>
+
+  <table id="occurrence">
+  </table>
+
+<input id="test" type="number" min="0" max="100" inputmode="numeric">
+
+</p>
+<hr>
+
 <table id="sort_table">
-<col span="4">                              <!-- except date col -->
-<col span="1">                              <!-- date col -->
 <!--
 <col span="1" style="visibility: collapse">
 -->
+<col span="1">                              <!-- date col -->
+<col span="1">                              <!-- delelte col -->
+<col span="6">                              <!-- normal cols -->
 
   <tr>
+    <th>date</th>
+    <th>del</th>
+    <th>Identified</th>
+    <th>Sampled</th>
     <th>Layer</th>
     <th>Species</th>
     <th>cover</th>
-    <th>del</th>
-    <th>date</th>
   </tr>
 
   <tr>
+    <td><script>document.write(getNow())</script></td>
+    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
     <td><span contenteditable="true">B</span></td>
     <td><span contenteditable="true">aaa</span></td>
     <td><span contenteditable="true">20</span></td>
-    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
-    <td><script>document.write(getNow())</script></td>
   </tr>
 
   <tr>
-    <td><span contenteditable="true">S</span></td>
-    <td><span contenteditable="true">bbb</span></td>
-    <td><span contenteditable="true">10</span></td>
-    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
     <td><script>document.write(getNow())</script></td>
+    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
+    <td><span contenteditable="true"><input type="checkbox"></span></td>
+    <td><span contenteditable="true"><input type="checkbox"></span></td>
+    <td><input type="text"size="10" /></td>
+    <td><input type="text"size="10" /></td>
+    <td><input type="text"size="10" /></td>
   </tr>
 
   <tr>
-    <td><span contenteditable="true">K</span></td>
-    <td><span contenteditable="true">ccc</span></td>
-    <td><span contenteditable="true">50</span></td>
-    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
     <td><script>document.write(getNow())</script></td>
+    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
+    <td><span contenteditable="true"><input type="checkbox"></span></td>
+    <td><span contenteditable="true"><input type="checkbox"></span></td>
+    <td><input type="text"size="10" /></td>
+    <td><input type="text"size="10" /></td>
+    <td><input type="text"size="10" /></td>
   </tr>
-
-<!--
-  <tr>
-    <td><span contenteditable="true"></span></td>
-    <td><span contenteditable="true"></span></td>
-    <td><span contenteditable="true"></span></td>
-    <td><span contenteditable="true"></span></td>
-  </tr>
-  <tr><td>2</td><td>さしすせそ</td><td>10</td><td>10,000</td></tr>
-  <tr><td>3</td><td>あいうえお</td><td>100</td><td>2,000</td></tr>
-  <tr><td>4</td><td>カキクケコ</td><td>2001</td><td>3,000</td></tr>
-  <tr><td>5</td><td>アイウエオ</td><td>2002</td><td>20,000</td></tr>
-  <tr><td>6</td><td>サシスセソ</td><td>2003</td><td>11,000</td></tr>
-  <tr><td>7</td><td>一丁目</td><td>1.234</td><td>12,000</td></tr>
-  <tr><td>8</td><td>二丁目</td><td>12.34</td><td>30,000</td></tr>
-  <tr><td>9</td><td>三丁目</td><td>123.4</td><td>31,000</td></tr>
-  <tr><td>10</td><td>１丁目</td><td>0.001</td><td>32,000</td></tr>
-  <tr><td>11</td><td>２丁目</td><td>0.002</td><td>400,000</td></tr>
-  <tr><td>12</td><td>３丁目</td><td>0.003</td><td>50</td></tr>
--->
 </table>
 
 <p>
@@ -80,17 +99,31 @@ https://allabout.co.jp/gm/gc/23969/
   <input type="button" value="Download data" onclick="download('sort_table')" />
 </p>
 
+<p>
+  <form>
+    <label>col name: <input type="text" id="add_col_name" size="10" /></label>
+    <input type="button" value="add col"  onclick="addCol('sort_table', 'add_col_name')" />
+  </form>
+</p>
+
 
 <style>
-#sort_table {
+table{
   border-collapse:collapse;
 }
-#sort_table td {
-  border:1px solid lightgray;
+table td{
+  border-width: 1.5px 0px; /* 上下だけ引く */
+  border-color: #00552e;   /* 線色：緑 */
+  border-style: solid;   /* 線種：実線 */
+  padding: 0.3em 1em;        /* セル内側の余白 */
 }
-#sort_table th {
+table th{
   cursor:pointer;
-  background-color:lightgray;
+  background-color:#00552e;
+  color:white;
+  border-color: white;
+  border-style: solid;
+  padding: 0.3em 1em;
 }
 </style>
 
