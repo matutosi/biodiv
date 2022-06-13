@@ -12,19 +12,18 @@
 
 <table id="table_setting">
 </table>
-<input type="button" value="table setting"  onclick="createTable('table_setting')" />
+<input type="button" value="table setting"  onclick="createSettingTable('table_setting')" />
 
 <script>
-  id_table = "table_setting";
+id_table = "table_setting";
 
-  id          = "col_01,col_02,col_03,col_04,col_05,col_06,col_07,col_08,col_09,col_10,col_11".split(',');
+function createSettingTable(id_table){
+  id          = "01,02,03,04,05,06,07,08,09,10,11".split(',');
   value       = "date,del_button,Identified,Sampled,Stand,Layer,Species,Cover,,,".split(',');
   placeholder = ",,,,,,,,optional,optional,optional".split(',');
-  data_type   = "auto,button,checkbox,checkbox,fixed,text,text,number,list,,,,".split(',');
-  data_list = "auto,button,checkbox,fixed,text,number,list".split(',');
+  data_type   = "auto,button,checkbox,checkbox,fixed,list,text,number,,,,,".split(',');
+  data_list = "auto,button,checkbox,fixed,list,text,number".split(',');
 
-
-function createTable(id_table){
   var table = document.getElementById(id_table);
   // table head
   head = "col_name,input_typpe,option".split(',');
@@ -34,30 +33,36 @@ function createTable(id_table){
       th.innerHTML = item;
       tr.appendChild(th);
   }
-  table.appendChild(tr)
+  table.appendChild(tr);
 
   // table body
-  n = id.length
+  n = id.length;
   for(i = 0; i < n; i++){
     tr = document.createElement('tr');
     // col_name
     var td = document.createElement('td');
-    td.innerHTML = '<input id="' + id[i] + ' " type="text" value="' + value[i] + '" placeholder="' + placeholder[i] + '">';
+    td.innerHTML = '<input class="table_settings" id="ts_1_' + id[i] + ' " type="text" value="' + value[i] + '" placeholder="' + placeholder[i] + '">';
     tr.appendChild(td);
-
+    // input_typpe
     var td = document.createElement('td');
-    td.appendChild(createSelectOpt(data_type[i], data_list));
+    td.appendChild(createSelectOpt(data_type[i], data_list, 'ts_2_'+id[i]));
     tr.appendChild(td);
-
+    // option
+    var td = document.createElement('td');
+    td.innerHTML = '<input class="table_settings" id=ts_3_"' + id[i] + ' " type="text" placeholder="fixed: text, list: text,text">';
+    tr.appendChild(td);
+    // append
     table.appendChild(tr);
   }
 }
 
-function createSelectOpt(first, list){
+function createSelectOpt(first, list, id){
   list = Array(first).concat(list);
-  n = list.length;
+  n_list = list.length;
   var select = document.createElement('select');
-  for(j = 0; j < n; j++){
+  select.setAttribute("id", id);
+  select.setAttribute("class", "table_settings");
+  for(j = 0; j < n_list; j++){
     var option = document.createElement('option');
     option.innerHTML = list[j];
     select.appendChild(option);
@@ -173,10 +178,11 @@ table{
   border-collapse:collapse;
 }
 table td{
-  border-width: 1.5px 0px; /* 上下だけ引く */
-  border-color: #00552e;   /* 線色：緑 */
-  border-style: solid;   /* 線種：実線 */
-  padding: 0.3em 1em;        /* セル内側の余白 */
+  font-size   : 12pt; /*  */
+  border-width: 1.5px 0px; /* line width: horizontal, vertical */
+  border-color: #00552e;   /* line color    */
+  border-style: solid;     /* line type     */
+  padding     : 0.3em 1em; /* innder margin */
 }
 table th{
   cursor:pointer;
