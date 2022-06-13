@@ -7,6 +7,68 @@
 </head>
 
 <body>
+<!--  タブ切り替え https://allabout.co.jp/gm/gc/23969/  -->
+
+
+<table id="table_setting">
+</table>
+<input type="button" value="table setting"  onclick="createTable('table_setting')" />
+
+<script>
+  id_table = "table_setting";
+
+  id          = "col_01,col_02,col_03,col_04,col_05,col_06,col_07,col_08,col_09,col_10,col_11".split(',');
+  value       = "date,del_button,Identified,Sampled,Stand,Layer,Species,Cover,,,".split(',');
+  placeholder = ",,,,,,,,optional,optional,optional".split(',');
+  data_type   = "auto,button,checkbox,checkbox,fixed,text,text,number,list,,,,".split(',');
+  data_list = "auto,button,checkbox,fixed,text,number,list".split(',');
+
+
+function createTable(id_table){
+  var table = document.getElementById(id_table);
+  // table head
+  head = "col_name,input_typpe,option".split(',');
+  tr = document.createElement('tr');
+  for(item of head){
+      var th = document.createElement('th');
+      th.innerHTML = item;
+      tr.appendChild(th);
+  }
+  table.appendChild(tr)
+
+  // table body
+  n = id.length
+  for(i = 0; i < n; i++){
+    tr = document.createElement('tr');
+    // col_name
+    var td = document.createElement('td');
+    td.innerHTML = '<input id="' + id[i] + ' " type="text" value="' + value[i] + '" placeholder="' + placeholder[i] + '">';
+    tr.appendChild(td);
+
+    var td = document.createElement('td');
+    td.appendChild(createSelectOpt(data_type[i], data_list));
+    tr.appendChild(td);
+
+    table.appendChild(tr);
+  }
+}
+
+function createSelectOpt(first, list){
+  list = Array(first).concat(list);
+  n = list.length;
+  var select = document.createElement('select');
+  for(j = 0; j < n; j++){
+    var option = document.createElement('option');
+    option.innerHTML = list[j];
+    select.appendChild(option);
+  }
+  return select;
+}
+
+
+</script>
+
+<hr>
 
 
 
@@ -14,22 +76,16 @@
 
 
 
-<!--
-  https://allabout.co.jp/gm/gc/23969/
--->
-<!--
-<input type="text" size="20" list="mylist1" />
-  <datalist id="mylist1">
-    <option>りんご</option>
-    <option>バナナ</option>
-    <option>ぶどう</option>
-  </datalist>
--->
+
+
+<input type="button" value="create table"  onclick="copyRowUpward('sort_table')" />
+
+
 
 <p>
   <form>
     <label>Item (separete by ","): 
-      <input id="col_item" type="text" size="50" value="Stand,Layer,Species,Cover" inputmode="text">
+      <input id="col_item" type="text" size="50" value="Identified,Sampled,Stand,Layer,Species,Cover" inputmode="text">
     </label>
     <input type="button" value="create table"  onclick="createTable('occurrence', 'col_item')" />
   </form>
@@ -37,9 +93,14 @@
   <table id="occurrence">
   </table>
 
-<input id="test" type="number" min="0" max="100" inputmode="numeric">
+  <input type="button" value="add first row"  onclick="addFirstRow('occurrence')" />
+
 
 </p>
+<hr>
+
+<input id="test" type="number" min="0" max="100" inputmode="numeric">
+
 <hr>
 
 <table id="sort_table">

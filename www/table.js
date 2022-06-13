@@ -11,7 +11,7 @@ function createTable(id_table, id_col_item){
     alert("Can not create table, \n table already exists")
     return;
   }
-  const col_name = document.getElementById(id_col_item).value.split(",");
+  const col_name = ('date,del,' + document.getElementById(id_col_item).value).split(",");
   const n_col = col_name.length;
   var tr = document.createElement('tr');
   for(var Ni = 0; Ni < n_col; Ni++){
@@ -59,35 +59,104 @@ function fillCol(table, value){
     }
 }
 
-// Wrapper function to add col: Checkbox
-function addColInputCheckbox(id_table, id_col_name){
-  const value = '<input type="checkbox">';
-  addColVal(id_table, id_col_name, value);
-}
-
-// Wrapper function to add col: InputText
+// Wrapper to add col: InputText
 function addColInputText(id_table, id_col_name, size="10"){
   const value = '<input type="text" size=' + '"size"' + ' />';
   addColVal(id_table, id_col_name, value);
 }
 
-// Wrapper function to add col: contenteditable
+// Wrapper to add col: Checkbox
+function addColInputCheckbox(id_table, id_col_name){
+  const value = '<input type="checkbox">';
+  addColVal(id_table, id_col_name, value);
+}
+
+// Wrapper to add col: InputText
+function addColInputText(id_table, id_col_name, size="10"){
+  const value = '<input type="text" size=' + '"size"' + ' />';
+  addColVal(id_table, id_col_name, value);
+}
+
+// Wrapper to add col: contenteditable
 function addColEditable(id_table, id_col_name){
   const value = '<span contenteditable="true"><pre> </pre></span>';  // enable to input easily
   addColVal(id_table, id_col_name, value);
 }
 
-// Wrapper function to add col: delete_button
+// Wrapper to add col: delete_button
 function addColDelete(id_table, id_col_name){
   const value = '<input type="button" value="DELETE" onclick="deleteRow(this)">';
   addColVal(id_table, id_col_name, value);
 }
 
-// Wrapper function to add col: date + i (serial number)
+// Wrapper to add col: date + i (serial number)
 function addColDate(id_table, id_col_name, i = 0){
   const value = getNow() + i;
   addColVal(id_table, id_col_name, value);
 }
+
+
+  // 
+function addDate(tr, n=1){
+  var td = document.createElement('td');
+  td.innerHTML = getNow() + '_' + String(n).padStart(2, `0`);
+  tr.appendChild(td);
+}
+
+  // 
+function addDelButton(tr){
+  var td = document.createElement('td');
+  td.innerHTML =  '<input type="button" value="DELETE" onclick="deleteRow(this)">';
+  tr.appendChild(td);
+}
+
+  // 
+function addCheckbox(tr, row = 1, col = 1){
+  var td = document.createElement('td');
+  td.innerHTML =  '<input type="checkbox" class="data" id=' + row + '_' + col + '>';
+  tr.appendChild(td);
+}
+
+  // Add input tag with 'class="data"' and 'id="1_1"'
+function addInputDataId(tr, row = 1, col = 1){
+  var td = document.createElement('td');
+  td.innerHTML = '<input type="text" class="data" id=' + row + '_' + col + '>';
+  tr.appendChild(td);
+}
+
+  // editing now
+function addFirstRow(id_table){
+  var table = document.getElementById(id_table);
+  const n_col = table.rows[0].cells.length;
+  var tr = document.createElement('tr');
+  addDate(tr);
+  addDelButton(tr);
+  addCheckbox(tr, 1, 1)
+  addCheckbox(tr, 1, 2)
+  for(var Ni = 4; Ni < n_col; Ni++){
+    addInputDataId(tr, 1, Ni)
+  }
+  table.appendChild(tr)
+}
+
+
+
+function copyRowUpward(id_table){
+  var table = document.getElementById(id_table);
+  const n_rows = table.rows.length;
+  const last_row = table.rows[n_rows - 1].cloneNode(true);
+  table.appendChild(last_row);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
