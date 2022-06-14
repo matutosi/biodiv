@@ -4,18 +4,16 @@
 //   createTable() add header to the table.
 //   When table with header are given, return nothing and alert.
 //   
-function createTable(id_table, id_col_item){
-  var table = document.getElementById(id_table);
+function createTable(table, col_names){
   const n_row = table.rows.length;
   if(n_row != 0){
     alert("Can not create table, \n table already exists")
     return;
   }
-  const col_name = ('date,del,' + document.getElementById(id_col_item).value).split(",");
-  const n_col = col_name.length;
+  const n_col = col_names.length;
   var tr = document.createElement('tr');
-  for(var Ni = 0; Ni < n_col; Ni++){
-    addTh(tr, col_name[Ni])  // returned by side effect
+  for(let Ni = 0; Ni < n_col; Ni++){
+    addTh(tr, col_names[Ni])
   }
   table.appendChild(tr)
 }
@@ -51,7 +49,7 @@ function addColVal(id_table, id_col_name, value){
 //   Fill all "td" except "th" in a table with value
 function fillCol(table, value){
     const n_row = table.rows.length;   // number of rows
-    for(var Ri = 1; Ri < n_row; Ri++){ // except th (Ri = 0)
+    for(let Ri = 1; Ri < n_row; Ri++){ // except th (Ri = 0)
         var tr = table.rows[Ri]
         var td = document.createElement('td');
         td.innerHTML = value;
@@ -133,7 +131,7 @@ function addFirstRow(id_table){
   addDelButton(tr);
   addCheckbox(tr, 1, 1)
   addCheckbox(tr, 1, 2)
-  for(var Ni = 4; Ni < n_col; Ni++){
+  for(let Ni = 4; Ni < n_col; Ni++){
     addInputDataId(tr, 1, Ni)
   }
   table.appendChild(tr)
@@ -171,7 +169,7 @@ function addRow(id, n = 5){
     var editable_cell = '<span contenteditable="true"><pre> </pre></span>';  // enable to input easily
   //     var editable_cell = '<span contenteditable="true"><pre> </pre></span>';  // enable to input easily
     var delete_button = '<input type="button" value="DELETE" onclick="deleteRow(this)">';
-    for(var Nj = 0; Nj < n; Nj++){
+    for(let Nj = 0; Nj < n; Nj++){
         var tr = document.createElement('tr');
         // date
         var td = document.createElement('td');
@@ -190,7 +188,7 @@ function addRow(id, n = 5){
         td.innerHTML = ckeckbox_cell;
         tr.appendChild(td);
         // 4: delete_button, date, identified, and sampled, 
-        for(var Cj = 4; Cj < n_col; Cj++){
+        for(let Cj = 4; Cj < n_col; Cj++){
             var td = document.createElement('td');
             td.innerHTML = editable_cell;
             tr.appendChild(td);
@@ -258,7 +256,7 @@ function addCol_2(id){      var table = document.getElementById(id);  // get tab
     tr.appendChild(th);
     // td
     const editable_cell = '<span contenteditable="true"><pre> </pre></span>';  // enable to input easily
-    for(var Ri = 1; Ri < n_row; Ri++){
+    for(let Ri = 1; Ri < n_row; Ri++){
       var tr = table.rows[Ri]
       var td = document.createElement('td');
       td.innerHTML = editable_cell;
@@ -276,8 +274,30 @@ function addCol_1(id){
     var cell = table.rows[0].insertCell(position);
     cell.innerHTML = '<th>' + col_name.value + '</th>';
     const editable_cell = '<span contenteditable="true"><pre> </pre></span>';  // enable to input easily
-    for(var Ri = 1; Ri < n_row; Ri++){        // add cell
+    for(let Ri = 1; Ri < n_row; Ri++){        // add cell
         var cell = table.rows[Ri].insertCell(position);
         cell.innerHTML = editable_cell;
     }
+}
+
+// Create (new) table (1st version)
+//   Create (new) table, but exactly not new. 
+//   When id of exsiting table with no data and col item are given, 
+//   createTable() add header to the table.
+//   When table with header are given, return nothing and alert.
+//   
+function createTable_1(id_table, id_col_item){
+  var table = document.getElementById(id_table);
+  const n_row = table.rows.length;
+  if(n_row != 0){
+    alert("Can not create table, \n table already exists")
+    return;
+  }
+  const col_name = ('date,del,' + document.getElementById(id_col_item).value).split(",");
+  const n_col = col_name.length;
+  var tr = document.createElement('tr');
+  for(let Ni = 0; Ni < n_col; Ni++){
+    addTh(tr, col_name[Ni])  // returned by side effect
+  }
+  table.appendChild(tr)
 }

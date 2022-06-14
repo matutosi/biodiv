@@ -1,120 +1,145 @@
 <html>
 <head>
+<!--  <script src="js/prototype.js"></script>    -->
+<!--  <script src="js/fabtabulous.js"></script>  -->
+<!--  <script src="js/tablekit.js"></script>     -->
+
 <script src="table.js"></script>
-<script src="sort.js"   ></script>
+<script src="sort.js"></script>
 <script src="date.js"></script>
-<script src="download.js"   ></script>
+<script src="download.js"></script>
+
+<script src="table_setting.js"></script>
+
+<style>
+  table{
+    border-collapse:collapse;
+  }
+  table td{
+    font-size   : 12pt;
+    border-width: 1.5px 0px; /* line width: horizontal, vertical */
+    border-color: #00552e;   /* line color    */
+    border-style: solid;     /* line type     */
+    padding     : 0.3em 1em; /* innder margin */
+  }
+  table th{
+    cursor:pointer;
+    background-color:#00552e;
+    color:white;
+    border-color: white;
+    border-style: solid;
+    padding: 0.3em 1em;
+  }
+</style>
 </head>
 
 <body>
 <!--  タブ切り替え https://allabout.co.jp/gm/gc/23969/  -->
 
-
-<table id="table_setting">
-</table>
-<input type="button" value="table setting"  onclick="createSettingTable('table_setting')" />
-
-<script>
-id_table = "table_setting";
-
-function createSettingTable(id_table){
-  id          = "01,02,03,04,05,06,07,08,09,10,11".split(',');
-  value       = "date,del_button,Identified,Sampled,Stand,Layer,Species,Cover,,,".split(',');
-  placeholder = ",,,,,,,,optional,optional,optional".split(',');
-  data_type   = "auto,button,checkbox,checkbox,fixed,list,text,number,,,,,".split(',');
-  data_list = "auto,button,checkbox,fixed,list,text,number".split(',');
-
-  var table = document.getElementById(id_table);
-  // table head
-  head = "col_name,input_typpe,option".split(',');
-  tr = document.createElement('tr');
-  for(item of head){
-      var th = document.createElement('th');
-      th.innerHTML = item;
-      tr.appendChild(th);
-  }
-  table.appendChild(tr);
-
-  // table body
-  n = id.length;
-  for(i = 0; i < n; i++){
-    tr = document.createElement('tr');
-    // col_name
-    var td = document.createElement('td');
-    td.innerHTML = '<input class="table_settings" id="ts_1_' + id[i] + ' " type="text" value="' + value[i] + '" placeholder="' + placeholder[i] + '">';
-    tr.appendChild(td);
-    // input_typpe
-    var td = document.createElement('td');
-    td.appendChild(createSelectOpt(data_type[i], data_list, 'ts_2_'+id[i]));
-    tr.appendChild(td);
-    // option
-    var td = document.createElement('td');
-    td.innerHTML = '<input class="table_settings" id=ts_3_"' + id[i] + ' " type="text" placeholder="fixed: text, list: text,text">';
-    tr.appendChild(td);
-    // append
-    table.appendChild(tr);
-  }
-}
-
-function createSelectOpt(first, list, id){
-  list = Array(first).concat(list);
-  n_list = list.length;
-  var select = document.createElement('select');
-  select.setAttribute("id", id);
-  select.setAttribute("class", "table_settings");
-  for(j = 0; j < n_list; j++){
-    var option = document.createElement('option');
-    option.innerHTML = list[j];
-    select.appendChild(option);
-  }
-  return select;
-}
-
-
-</script>
+<p>
+  <table id="table_setting" class="sortable resizable">
+  </table>
+  <input type="button" value="table setting"  onclick="createSettingTable('table_setting')" />
+</p>
 
 <hr>
 
+<table id="occurrence">
+</table>
+
+<input type="button" value="create occurrence table"  onclick="createOccurrenceTable()" />
+
+<script>
+
+// Helper to get values from input objects
+//    @params objs   list objects by document.getElementsByClassName()
+//    @return        A vector.
+function getValues(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
+  return res
+}
+
+
+function createOccurrenceTable(){
+  var table = document.getElementById("occurrence");
+  const col_names = document.getElementsByClassName("table_setting_1");
+  const dat_types = document.getElementsByClassName("table_setting_2");
+  const optionals = document.getElementsByClassName("table_setting_3");
+  const n = col_names.length;
+  createTable(table, getValues(col_names));
+
+  var cl = "occurrence_data";
+  var id = "";
+
+  var tr = document.createElement('tr');
+  for(let i=0; i<n; i++){
+    var td = document.createElement('td');
+    switch(dat_types[i].value){
+        case "auto":
+          td.innerHTML = getNow();
+          break;
+        case "button":
+  //      createInput(cl, id, ty, va, pl, on, im);
+          td.appendChild(createInput(cl, id, "button", "DELETE", "", "deleteRow(this)", ""));
+          break;
+        case "checkbox":
+          td.appendChild(createInput(cl, id, "checkbox", "true", "", "", ""));
+          break;
+        case "fixed":
+          td.innerHTML = optionals[i].value;
+          break;
+        case "list":
+          td.appendChild(createSelectOpt("", optionals[i].value.split(','), "", id));
+          break;
+        case "text":
+          td.appendChild(createInput(cl, id, "text", "", "", "", ""));
+          break;
+        case "number":
+          td.appendChild(createInput(cl, id, "number", "", "", "", "numeric"));
+          break;
+      }
+      tr.appendChild(td);
+  }
+  table.appendChild(tr);
+}
+</script>
 
 
 
-
-
-
-
-
+<!--
 <input type="button" value="create table"  onclick="copyRowUpward('sort_table')" />
-
-
 
 <p>
   <form>
     <label>Item (separete by ","): 
       <input id="col_item" type="text" size="50" value="Identified,Sampled,Stand,Layer,Species,Cover" inputmode="text">
     </label>
-    <input type="button" value="create table"  onclick="createTable('occurrence', 'col_item')" />
+    <input type="button" value="create table"  onclick="createTable_1('occurrence', 'col_item')" />
   </form>
-
   <table id="occurrence">
   </table>
-
   <input type="button" value="add first row"  onclick="addFirstRow('occurrence')" />
-
-
 </p>
 <hr>
 
 <input id="test" type="number" min="0" max="100" inputmode="numeric">
 
-<hr>
+-->
 
+<!--
+<hr>
 <table id="sort_table">
+-->
+
 <!--
 <col span="1" style="visibility: collapse">
 -->
-<col span="1">                              <!-- date col -->
-<col span="1">                              <!-- delelte col -->
-<col span="6">                              <!-- normal cols -->
+
+<!--
+<col span="1">
+<col span="1">
+<col span="6">
 
   <tr>
     <th>date</th>
@@ -171,28 +196,7 @@ function createSelectOpt(first, list, id){
     <input type="button" value="add col"  onclick="addCol('sort_table', 'add_col_name')" />
   </form>
 </p>
-
-
-<style>
-table{
-  border-collapse:collapse;
-}
-table td{
-  font-size   : 12pt; /*  */
-  border-width: 1.5px 0px; /* line width: horizontal, vertical */
-  border-color: #00552e;   /* line color    */
-  border-style: solid;     /* line type     */
-  padding     : 0.3em 1em; /* innder margin */
-}
-table th{
-  cursor:pointer;
-  background-color:#00552e;
-  color:white;
-  border-color: white;
-  border-style: solid;
-  padding: 0.3em 1em;
-}
-</style>
+-->
 
 </body>
 </html>
