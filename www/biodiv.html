@@ -39,8 +39,14 @@
 <p>
   <table id="table_setting" class="sortable resizable">
   </table>
+  <script>
+  createSettingTable('table_setting')
+  </script>
+<!--  
   <input type="button" value="table setting"  onclick="createSettingTable('table_setting')" />
+-->
 </p>
+
 
 <hr>
 
@@ -48,19 +54,15 @@
 </table>
 
 <input type="button" value="create occurrence table"  onclick="createOccurrenceTable()" />
+<input type="button" value="copy row upward"  onclick="copyRowUpward('occurrence')" />
 
 <script>
 
-// Helper to get values from input objects
-//    @params objs   list objects by document.getElementsByClassName()
-//    @return        A vector.
-function getValues(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
-  return res
-}
 
-
+// Create occurrence table accoding to table settings
+//    
+//    
+//    
 function createOccurrenceTable(){
   var table = document.getElementById("occurrence");
   const col_names = document.getElementsByClassName("table_setting_1");
@@ -103,6 +105,24 @@ function createOccurrenceTable(){
   }
   table.appendChild(tr);
 }
+
+// Helper to get values from input objects
+//    @params objs   list objects by document.getElementsByClassName()
+//    @return        A vector.
+function getValues(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
+  return res
+}
+
+
+function copyRowUpward(id_table){
+  var table = document.getElementById(id_table);
+  const n_rows = table.rows.length;
+  const last_row = table.rows[n_rows - 1].cloneNode(true);
+  table.appendChild(last_row);
+}
+
 </script>
 
 
