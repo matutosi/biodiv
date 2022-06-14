@@ -30,25 +30,29 @@ function createSettingTable(id_table){
     tr = document.createElement('tr');
     // col_name
     var td = document.createElement('td');
-    td.appendChild(createInput(clss+'_1', 'ts_1_'+id[i], type, value[i], placeholder[i]));
+    td.appendChild(createInput(type, value[i], placeholder[i]));
+    td.setAttribute("class", clss+'_1');
+    td.setAttribute("id"   , 'ts_1_'+id[i]);
     tr.appendChild(td);
     // input_typpe
     var td = document.createElement('td');
-    td.appendChild(createSelectOpt(data_type[i], data_list, clss+'_2', 'ts_2_'+id[i]));
+    td.appendChild(createSelectOpt(data_type[i], data_list));
+    td.setAttribute("class", clss+'_2');
+    td.setAttribute("id"   , 'ts_2_'+id[i]);
     tr.appendChild(td);
     // option
     var td = document.createElement('td');
-    td.appendChild(createInput(clss+'_3', 'ts_3_'+id[i], type, opt_val[i], ""));
+    td.appendChild(createInput(type, opt_val[i], ""));
+    td.setAttribute("class", clss+'_3');
+    td.setAttribute("id"   , 'ts_3_'+id[i]);
     tr.appendChild(td);
     // append
     table.appendChild(tr);
   }
 }
 // Helper to create input tag with class, id, type, value, and placeholder
-function createInput(cl, id, ty, va, pl, on, im){
+function createInput(ty, va, pl, on, im){
   var input = document.createElement('input');
-  input.setAttribute("class"      , cl);
-  input.setAttribute("id"         , id);
   input.setAttribute("type"       , ty);
   input.setAttribute("value"      , va);
   input.setAttribute("placeholder", pl);

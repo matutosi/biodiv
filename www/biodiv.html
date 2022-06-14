@@ -65,9 +65,9 @@
 //    
 function createOccurrenceTable(){
   var table = document.getElementById("occurrence");
-  const col_names = document.getElementsByClassName("table_setting_1");
-  const dat_types = document.getElementsByClassName("table_setting_2");
-  const optionals = document.getElementsByClassName("table_setting_3");
+  const col_names = getFistChild(document.getElementsByClassName("table_setting_1"));
+  const dat_types = getFistChild(document.getElementsByClassName("table_setting_2"));
+  const optionals = getFistChild(document.getElementsByClassName("table_setting_3"));
   const n_col = col_names.length;
   const n_row = table.rows.length;  // n_row means next column number because starting with 0
   createTable(table, getValues(col_names));
@@ -76,44 +76,51 @@ function createOccurrenceTable(){
   for(let i=0; i<n_col; i++){
     var td = document.createElement('td');
     // IF "occurrence_data" is NOT used anywhere DELETE it!
-    var cl = "occurrence_data occ_" + col_names[i].value;
-    var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
     switch(dat_types[i].value){
         case "auto":
           td.innerHTML = getNow();
-          td.setAttribute("class", cl);
-          td.setAttribute("id"   , id);
           break;
         case "button":
-  //      createInput(cl, id, ty, va, pl, on, im);
-          td.appendChild(createInput(cl, id, "button", "DELETE", "", "deleteRow(this)", ""));
+  //      createInput(ty, va, pl, on, im);
+          td.appendChild(createInput("button", "DELETE", "", "deleteRow(this)", ""));
           break;
         case "checkbox":
-          td.appendChild(createInput(cl, id, "checkbox", "true", "", "", ""));
+          td.appendChild(createInput("checkbox", "true", "", "", ""));
           break;
         case "fixed":
           td.innerHTML = optionals[i].value;
-          td.setAttribute("class", cl);
-          td.setAttribute("id"   , id);
           break;
         case "list":
-          td.appendChild(createSelectOpt("", optionals[i].value.split(','), cl, id));
+          td.appendChild(createSelectOpt("", optionals[i].value.split(',')));
           break;
         case "text":
-          td.appendChild(createInput(cl, id, "text", "", "", "", ""));
+          td.appendChild(createInput("text", "", "", "", ""));
           break;
         case "number":
-          td.appendChild(createInput(cl, id, "number", "", "", "", "numeric"));
+          td.appendChild(createInput("number", "", "", "", "numeric"));
           break;
       }
-      tr.appendChild(td);
+    var cl = "occurrence_data occ_" + col_names[i].value;
+    var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
+    td.setAttribute("class", cl);
+    td.setAttribute("id"   , id);
+    tr.appendChild(td);
   }
   table.appendChild(tr);
 }
 
+// Helper to get first child from html elements
+//    @params elements   html elements by document.getElementsByClassName()
+//    @return        An array.
+function getFistChild(elements){
+  var res = [];
+  for(let i = 0; i < elements.length; i++){ res[i] = elements[i].firstChild; }
+  return res
+}
+
 // Helper to get values from input objects
 //    @params objs   list objects by document.getElementsByClassName()
-//    @return        A vector.
+//    @return        An array.
 function getValues(objs){
   var res = [];
   for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
@@ -129,9 +136,14 @@ function getValues(objs){
 function copyRowUpward(id_table){
 var id_table = "occurrence"
   var table = document.getElementById(id_table);
-  const n_rows = table.rows.length;
+  const n_row = table.rows.length;
   const next_row = table.rows[n_rows - 1].cloneNode(true);
-  
+  const n_col = next_row.cells.length;
+  for(let Ni = 0; Ni < n_col; Ni++){
+    next_row.cells[Ni].getAttribute("class")
+    next_row.cells[1].firstChild.getAttribute("class")
+
+  }
 // editing now
 
 //  next_row に以下を適用
