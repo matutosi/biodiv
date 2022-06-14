@@ -68,18 +68,21 @@ function createOccurrenceTable(){
   const col_names = document.getElementsByClassName("table_setting_1");
   const dat_types = document.getElementsByClassName("table_setting_2");
   const optionals = document.getElementsByClassName("table_setting_3");
-  const n = col_names.length;
+  const n_col = col_names.length;
+  const n_row = table.rows.length;  // n_row means next column number because starting with 0
   createTable(table, getValues(col_names));
 
-  var cl = "occurrence_data";
-  var id = "";
-
   var tr = document.createElement('tr');
-  for(let i=0; i<n; i++){
+  for(let i=0; i<n_col; i++){
     var td = document.createElement('td');
+    // IF "occurrence_data" is NOT used anywhere DELETE it!
+    var cl = "occurrence_data occ_" + col_names[i].value;
+    var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
     switch(dat_types[i].value){
         case "auto":
           td.innerHTML = getNow();
+          td.setAttribute("class", cl);
+          td.setAttribute("id"   , id);
           break;
         case "button":
   //      createInput(cl, id, ty, va, pl, on, im);
@@ -90,9 +93,11 @@ function createOccurrenceTable(){
           break;
         case "fixed":
           td.innerHTML = optionals[i].value;
+          td.setAttribute("class", cl);
+          td.setAttribute("id"   , id);
           break;
         case "list":
-          td.appendChild(createSelectOpt("", optionals[i].value.split(','), "", id));
+          td.appendChild(createSelectOpt("", optionals[i].value.split(','), cl, id));
           break;
         case "text":
           td.appendChild(createInput(cl, id, "text", "", "", "", ""));
@@ -115,12 +120,41 @@ function getValues(objs){
   return res
 }
 
-
+// Copy bottom row and paste it as new rows
+//    id of each cell will be updated: "occ_date_001" -> "occ_date_002"
+//    Column date  getNow() will be applied.
+//    Column fixed and <select> <option> will be used the same selection.
+//    Column "checkbox" and "text" will be made in unchecked and blank.
+//    
 function copyRowUpward(id_table){
   var table = document.getElementById(id_table);
   const n_rows = table.rows.length;
   const last_row = table.rows[n_rows - 1].cloneNode(true);
   table.appendChild(last_row);
+}
+
+function updateId(id){
+var  id = "occ_date_002";
+  var id_items = id.split("_").slice(0,-1).join("_");
+  id_items
+
+
+
+
+}
+
+// Get next id form id_items
+//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
+//    return "occ_date_005"
+//    
+function getNextId(id_items){
+  var ids = [];
+  const items = document.getElementsByClassName(id_items);
+  for(it of items){
+    ids.push(Number(id.split("_").slice(-1)));
+  }
+  const max = Math.max.apply(Math, ids);
+  return id_items + "_" + String(max + 1).padStart(3, `0`);
 }
 
 </script>

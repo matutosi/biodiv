@@ -139,12 +139,6 @@ function addFirstRow(id_table){
 
 
 
-function copyRowUpward(id_table){
-  var table = document.getElementById(id_table);
-  const n_rows = table.rows.length;
-  const last_row = table.rows[n_rows - 1].cloneNode(true);
-  table.appendChild(last_row);
-}
 
 
 
@@ -300,4 +294,12 @@ function createTable_1(id_table, id_col_item){
     addTh(tr, col_name[Ni])  // returned by side effect
   }
   table.appendChild(tr)
+}
+
+// new function is now in biodiv.html
+function copyRowUpward_1(id_table){
+  var table = document.getElementById(id_table);
+  const n_rows = table.rows.length;
+  const last_row = table.rows[n_rows - 1].cloneNode(true);
+  table.appendChild(last_row);
 }
