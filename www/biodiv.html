@@ -127,23 +127,31 @@ function getValues(objs){
 //    Column "checkbox" and "text" will be made in unchecked and blank.
 //    
 function copyRowUpward(id_table){
+var id_table = "occurrence"
   var table = document.getElementById(id_table);
   const n_rows = table.rows.length;
-  const last_row = table.rows[n_rows - 1].cloneNode(true);
-  table.appendChild(last_row);
+  const next_row = table.rows[n_rows - 1].cloneNode(true);
+  
+// editing now
+
+//  next_row に以下を適用
+//    dateは新しいものを入れる
+//    optionのselectionは上と同じものを入れる
+//    updateId(id); 各要素に適用して，idを更新
+
+  table.appendChild(next_row);
 }
 
+// Helper to updateId: Get next id from id_items
+//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
+//    return "occ_date_005"
+//    
 function updateId(id){
-var  id = "occ_date_002";
   var id_items = id.split("_").slice(0,-1).join("_");
-  id_items
-
-
-
-
+  return getNextId(id_items);
 }
 
-// Get next id form id_items
+// Helper to updateId: Get next id from id_items
 //    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
 //    return "occ_date_005"
 //    
