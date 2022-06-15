@@ -13,7 +13,7 @@ function createTable(table, col_names){
   const n_col = col_names.length;
   var tr = document.createElement('tr');
   for(let Ni = 0; Ni < n_col; Ni++){
-    addTh(tr, col_names[Ni])
+    if(col_names[Ni] !== "") addTh(tr, col_names[Ni]);
   }
   table.appendChild(tr)
 }
@@ -194,7 +194,7 @@ function addRow(id, n = 5){
 
 // delete a row
 function deleteRow(obj){
-    tr = obj.parentNode.parentNode;              // clicked row
+    var tr = obj.parentNode.parentNode;              // clicked row
     tr.parentNode.deleteRow(tr.sectionRowIndex); // delete clicked row
 }
 

@@ -56,7 +56,21 @@
 <input type="button" value="create occurrence table"  onclick="createOccurrenceTable()" />
 <input type="button" value="copy row upward"  onclick="copyRowUpward('occurrence')" />
 
+
 <script>
+
+// // // // // // // // // // // // // // // // // // // 
+// 
+//                 download用の値の取り出し
+// 
+// // // // // // // // // // // // // // // // // // // 
+// 
+//    if(row.children[i].firstChild.value === void 0){  // void 0 means undifined
+//      row.children[i].innerHTML
+//    } else {
+//      row.children[i].firstChild.value
+//    }
+
 
 
 // Create occurrence table accoding to table settings
@@ -65,27 +79,30 @@
 //    
 function createOccurrenceTable(){
   var table = document.getElementById("occurrence");
-  const col_names = getFistChild(document.getElementsByClassName("table_setting_1"));
-  const dat_types = getFistChild(document.getElementsByClassName("table_setting_2"));
-  const optionals = getFistChild(document.getElementsByClassName("table_setting_3"));
+  const col_names = getFirstChild(document.getElementsByClassName("table_setting_1"));
+  const dat_types = getFirstChild(document.getElementsByClassName("table_setting_2"));
+  const optionals = getFirstChild(document.getElementsByClassName("table_setting_3"));
   const n_col = col_names.length;
   const n_row = table.rows.length;  // n_row means next column number because starting with 0
+  if(n_row != 0){
+    alert("Can not create table, \n table already exists")
+    return;
+  }
   createTable(table, getValues(col_names));
-
   var tr = document.createElement('tr');
   for(let i=0; i<n_col; i++){
     var td = document.createElement('td');
-    // IF "occurrence_data" is NOT used anywhere DELETE it!
     switch(dat_types[i].value){
         case "auto":
-          td.innerHTML = getNow();
+          if(col_names[i].value==="date") td.innerHTML = getNow();
+          if(col_names[i].value==="no")   td.innerHTML = 1;
           break;
         case "button":
   //      createInput(ty, va, pl, on, im);
           td.appendChild(createInput("button", "DELETE", "", "deleteRow(this)", ""));
           break;
         case "checkbox":
-          td.appendChild(createInput("checkbox", "true", "", "", ""));
+          td.appendChild(createInput("checkbox", "", "", "", ""));
           break;
         case "fixed":
           td.innerHTML = optionals[i].value;
@@ -100,11 +117,14 @@ function createOccurrenceTable(){
           td.appendChild(createInput("number", "", "", "", "numeric"));
           break;
       }
-    var cl = "occurrence_data occ_" + col_names[i].value;
-    var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
-    td.setAttribute("class", cl);
-    td.setAttribute("id"   , id);
-    tr.appendChild(td);
+    if(col_names[i].value !== ""){ 
+    // IF "occurrence_data" is NOT used anywhere DELETE it!
+      var cl = "occurrence_data occ_" + col_names[i].value;
+      var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
+      td.setAttribute("class", cl);
+      td.setAttribute("id"   , id);
+      tr.appendChild(td);
+    }
   }
   table.appendChild(tr);
 }
@@ -112,7 +132,7 @@ function createOccurrenceTable(){
 // Helper to get first child from html elements
 //    @params elements   html elements by document.getElementsByClassName()
 //    @return        An array.
-function getFistChild(elements){
+function getFirstChild(elements){
   var res = [];
   for(let i = 0; i < elements.length; i++){ res[i] = elements[i].firstChild; }
   return res
@@ -127,6 +147,16 @@ function getValues(objs){
   return res
 }
 
+function getColNames(table){
+  const row_0 = table.rows[0];
+  const col_names = [];
+  for(let Ri=0; Ri<row_0.cells.length; Ri++){
+    col_names[Ri] = row_0.cells[Ri].innerHTML;
+  }
+  return col_names
+}
+
+
 // Copy bottom row and paste it as new rows
 //    id of each cell will be updated: "occ_date_001" -> "occ_date_002"
 //    Column date  getNow() will be applied.
@@ -136,21 +166,44 @@ function getValues(objs){
 function copyRowUpward(id_table){
 var id_table = "occurrence"
   var table = document.getElementById(id_table);
+  const col_names = getColNames(table);
+  const n_col = col_names.length;
   const n_row = table.rows.length;
-  const next_row = table.rows[n_rows - 1].cloneNode(true);
-  const n_col = next_row.cells.length;
-  for(let Ni = 0; Ni < n_col; Ni++){
-    next_row.cells[Ni].getAttribute("class")
-    next_row.cells[1].firstChild.getAttribute("class")
-
+  var last_row = table.rows[n_row - 1];  // to get selectedIndex
+  var next_row = table.rows[n_row - 1].cloneNode(true);
+  for(let Ci = 0; Ci < n_col; Ci++){
+    var next_id = updateId(next_row.children[Ci].getAttribute("id"));
+    next_row.children[Ci].setAttribute("id", next_id);
+    switch(col_names[Ci]){
+      case "date":  // update "date"
+        next_row.children[Ci].innerHTML = getNow();
+        break;
+      case "delButton": // do nothing
+        break;
+      case "no":   // no++
+        next_row.children[Ci].innerHTML = Number(next_row.children[Ci].innerHTML) + 1;
+        break;
+      default:
+        if(next_row.children[Ci].firstChild.value === void 0){  // void 0 means undifined
+          // fixed :do nothing
+        } else {
+          switch(next_row.children[Ci].firstChild.getAttribute("type")){
+            case "checkbox": // clear checkbox
+              next_row.children[Ci].firstChild.checked = false;
+              break;
+            case "text":    // clear input text
+            case "number":  // clear input text
+              next_row.children[Ci].firstChild.value = "";
+              break;
+            case null: // select from list
+              selected_opt = last_row.children[Ci].firstChild.selectedIndex;
+              next_row.children[Ci].firstChild.selectedIndex = selected_opt;
+              break;
+          }
+        }
+        break;
+    }
   }
-// editing now
-
-//  next_row に以下を適用
-//    dateは新しいものを入れる
-//    optionのselectionは上と同じものを入れる
-//    updateId(id); 各要素に適用して，idを更新
-
   table.appendChild(next_row);
 }
 
@@ -158,6 +211,9 @@ var id_table = "occurrence"
 //    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
 //    return "occ_date_005"
 //    
+// updateId('occ_date_001')
+// 'occ_date_001'.split("_").slice(0,-1).join("_");
+// getNextId('occ_date')
 function updateId(id){
   var id_items = id.split("_").slice(0,-1).join("_");
   return getNextId(id_items);
@@ -171,7 +227,7 @@ function getNextId(id_items){
   var ids = [];
   const items = document.getElementsByClassName(id_items);
   for(it of items){
-    ids.push(Number(id.split("_").slice(-1)));
+    ids.push(Number(it.getAttribute("id").split("_").slice(-1)));
   }
   const max = Math.max.apply(Math, ids);
   return id_items + "_" + String(max + 1).padStart(3, `0`);
@@ -179,98 +235,6 @@ function getNextId(id_items){
 
 </script>
 
-
-
-<!--
-<input type="button" value="create table"  onclick="copyRowUpward('sort_table')" />
-
-<p>
-  <form>
-    <label>Item (separete by ","): 
-      <input id="col_item" type="text" size="50" value="Identified,Sampled,Stand,Layer,Species,Cover" inputmode="text">
-    </label>
-    <input type="button" value="create table"  onclick="createTable_1('occurrence', 'col_item')" />
-  </form>
-  <table id="occurrence">
-  </table>
-  <input type="button" value="add first row"  onclick="addFirstRow('occurrence')" />
-</p>
-<hr>
-
-<input id="test" type="number" min="0" max="100" inputmode="numeric">
-
--->
-
-<!--
-<hr>
-<table id="sort_table">
--->
-
-<!--
-<col span="1" style="visibility: collapse">
--->
-
-<!--
-<col span="1">
-<col span="1">
-<col span="6">
-
-  <tr>
-    <th>date</th>
-    <th>del</th>
-    <th>Identified</th>
-    <th>Sampled</th>
-    <th>Layer</th>
-    <th>Species</th>
-    <th>cover</th>
-  </tr>
-
-  <tr>
-    <td><script>document.write(getNow())</script></td>
-    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
-    <td><input type="checkbox"></td>
-    <td><input type="checkbox"></td>
-    <td><span contenteditable="true">B</span></td>
-    <td><span contenteditable="true">aaa</span></td>
-    <td><span contenteditable="true">20</span></td>
-  </tr>
-
-  <tr>
-    <td><script>document.write(getNow())</script></td>
-    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
-    <td><span contenteditable="true"><input type="checkbox"></span></td>
-    <td><span contenteditable="true"><input type="checkbox"></span></td>
-    <td><input type="text"size="10" /></td>
-    <td><input type="text"size="10" /></td>
-    <td><input type="text"size="10" /></td>
-  </tr>
-
-  <tr>
-    <td><script>document.write(getNow())</script></td>
-    <td><input type="button" value="DELETE" onclick="deleteRow(this)"></td>
-    <td><span contenteditable="true"><input type="checkbox"></span></td>
-    <td><span contenteditable="true"><input type="checkbox"></span></td>
-    <td><input type="text"size="10" /></td>
-    <td><input type="text"size="10" /></td>
-    <td><input type="text"size="10" /></td>
-  </tr>
-</table>
-
-<p>
-  <input type="button" value="Add rows" onclick="addRow('sort_table'), 5" />
-</p>
-
-<p>
-  <input type="button" value="Download data" onclick="download('sort_table')" />
-</p>
-
-<p>
-  <form>
-    <label>col name: <input type="text" id="add_col_name" size="10" /></label>
-    <input type="button" value="add col"  onclick="addCol('sort_table', 'add_col_name')" />
-  </form>
-</p>
--->
 
 </body>
 </html>
