@@ -10,6 +10,8 @@
 <script src="download.js"></script>
 
 <script src="table_setting.js"></script>
+<script src="createOccurrenceTable.js"></script>
+<script src="ranksort.js"></script>
 
 <style>
   table{
@@ -47,17 +49,33 @@
 -->
 </p>
 
-
 <hr>
 
 <table id="occurrence">
 </table>
 
 <input type="button" value="create occurrence table"  onclick="createOccurrenceTable()" />
-<input type="button" value="copy row upward"  onclick="copyRowUpward('occurrence')" />
-
+<input type="button" value="add row"  onclick="cloneRows('occurrence')" />
+<input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">
+<input type="button" value="sort"  onclick="sortTable('occurrence')" />
 
 <script>
+function sortTable(id_table){
+var id_table = "occurrence";
+  var table = document.getElementById(id_table);
+  var trs = table.rows;
+  var key = "occ_" + "no";
+  var key_cols = getInnerHTML(document.getElementsByClassName(key));
+  var new_order = rank(key_cols, order="desc");
+  // th=0, add 1 to others
+  for(let i=0; i<new_order.length; i++){ new_order[i]++; }
+  new_order.unshift(0);
+  var new_trs = sortByOrder(trs, new_order);
+  for(let i=0; i<new_trs.length; i++){
+    table.appendChild(new_trs[i]);
+  }
+  table.removeChild()
+}
 
 // // // // // // // // // // // // // // // // // // // 
 // 
@@ -70,171 +88,7 @@
 //    } else {
 //      row.children[i].firstChild.value
 //    }
-
-
-
-// Create occurrence table accoding to table settings
-//    
-//    
-//    
-function createOccurrenceTable(){
-  var table = document.getElementById("occurrence");
-  const col_names = getFirstChild(document.getElementsByClassName("table_setting_1"));
-  const dat_types = getFirstChild(document.getElementsByClassName("table_setting_2"));
-  const optionals = getFirstChild(document.getElementsByClassName("table_setting_3"));
-  const n_col = col_names.length;
-  const n_row = table.rows.length;  // n_row means next column number because starting with 0
-  if(n_row != 0){
-    alert("Can not create table, \n table already exists")
-    return;
-  }
-  createTable(table, getValues(col_names));
-  var tr = document.createElement('tr');
-  for(let i=0; i<n_col; i++){
-    var td = document.createElement('td');
-    switch(dat_types[i].value){
-        case "auto":
-          if(col_names[i].value==="date") td.innerHTML = getNow();
-          if(col_names[i].value==="no")   td.innerHTML = 1;
-          break;
-        case "button":
-  //      createInput(ty, va, pl, on, im);
-          td.appendChild(createInput("button", "DELETE", "", "deleteRow(this)", ""));
-          break;
-        case "checkbox":
-          td.appendChild(createInput("checkbox", "", "", "", ""));
-          break;
-        case "fixed":
-          td.innerHTML = optionals[i].value;
-          break;
-        case "list":
-          td.appendChild(createSelectOpt("", optionals[i].value.split(',')));
-          break;
-        case "text":
-          td.appendChild(createInput("text", "", "", "", ""));
-          break;
-        case "number":
-          td.appendChild(createInput("number", "", "", "", "numeric"));
-          break;
-      }
-    if(col_names[i].value !== ""){ 
-    // IF "occurrence_data" is NOT used anywhere DELETE it!
-      var cl = "occurrence_data occ_" + col_names[i].value;
-      var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
-      td.setAttribute("class", cl);
-      td.setAttribute("id"   , id);
-      tr.appendChild(td);
-    }
-  }
-  table.appendChild(tr);
-}
-
-// Helper to get first child from html elements
-//    @params elements   html elements by document.getElementsByClassName()
-//    @return        An array.
-function getFirstChild(elements){
-  var res = [];
-  for(let i = 0; i < elements.length; i++){ res[i] = elements[i].firstChild; }
-  return res
-}
-
-// Helper to get values from input objects
-//    @params objs   list objects by document.getElementsByClassName()
-//    @return        An array.
-function getValues(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
-  return res
-}
-
-function getColNames(table){
-  const row_0 = table.rows[0];
-  const col_names = [];
-  for(let Ri=0; Ri<row_0.cells.length; Ri++){
-    col_names[Ri] = row_0.cells[Ri].innerHTML;
-  }
-  return col_names
-}
-
-
-// Copy bottom row and paste it as new rows
-//    id of each cell will be updated: "occ_date_001" -> "occ_date_002"
-//    Column date  getNow() will be applied.
-//    Column fixed and <select> <option> will be used the same selection.
-//    Column "checkbox" and "text" will be made in unchecked and blank.
-//    
-function copyRowUpward(id_table){
-var id_table = "occurrence"
-  var table = document.getElementById(id_table);
-  const col_names = getColNames(table);
-  const n_col = col_names.length;
-  const n_row = table.rows.length;
-  var last_row = table.rows[n_row - 1];  // to get selectedIndex
-  var next_row = table.rows[n_row - 1].cloneNode(true);
-  for(let Ci = 0; Ci < n_col; Ci++){
-    var next_id = updateId(next_row.children[Ci].getAttribute("id"));
-    next_row.children[Ci].setAttribute("id", next_id);
-    switch(col_names[Ci]){
-      case "date":  // update "date"
-        next_row.children[Ci].innerHTML = getNow();
-        break;
-      case "delButton": // do nothing
-        break;
-      case "no":   // no++
-        next_row.children[Ci].innerHTML = Number(next_row.children[Ci].innerHTML) + 1;
-        break;
-      default:
-        if(next_row.children[Ci].firstChild.value === void 0){  // void 0 means undifined
-          // fixed :do nothing
-        } else {
-          switch(next_row.children[Ci].firstChild.getAttribute("type")){
-            case "checkbox": // clear checkbox
-              next_row.children[Ci].firstChild.checked = false;
-              break;
-            case "text":    // clear input text
-            case "number":  // clear input text
-              next_row.children[Ci].firstChild.value = "";
-              break;
-            case null: // select from list
-              selected_opt = last_row.children[Ci].firstChild.selectedIndex;
-              next_row.children[Ci].firstChild.selectedIndex = selected_opt;
-              break;
-          }
-        }
-        break;
-    }
-  }
-  table.appendChild(next_row);
-}
-
-// Helper to updateId: Get next id from id_items
-//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
-//    return "occ_date_005"
-//    
-// updateId('occ_date_001')
-// 'occ_date_001'.split("_").slice(0,-1).join("_");
-// getNextId('occ_date')
-function updateId(id){
-  var id_items = id.split("_").slice(0,-1).join("_");
-  return getNextId(id_items);
-}
-
-// Helper to updateId: Get next id from id_items
-//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
-//    return "occ_date_005"
-//    
-function getNextId(id_items){
-  var ids = [];
-  const items = document.getElementsByClassName(id_items);
-  for(it of items){
-    ids.push(Number(it.getAttribute("id").split("_").slice(-1)));
-  }
-  const max = Math.max.apply(Math, ids);
-  return id_items + "_" + String(max + 1).padStart(3, `0`);
-}
-
 </script>
-
 
 </body>
 </html>

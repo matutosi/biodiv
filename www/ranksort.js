@@ -1,3 +1,19 @@
+// Sort array with rank_array
+//    order="desc" reverse rank
+function sortByOrder(array, rank_array, order="asc"){
+  const n = array.length;
+  if(n !== rank_array.length){
+    alert("Length of array and rank_array must be same!");
+    return array;
+  }
+  var sorted_array = [];
+  if(order === "desc") rank_array = reverseRank(rank_array);
+  for(let Ni=0; Ni<n; Ni++){
+    sorted_array[rank_array[Ni]] = array[Ni];
+  }
+  return sorted_array;
+}
+
 // Rank of each element in an array
 //    Rank starts with 0, because rank will be used to sort arrays.
 //    In case of tie, return former element with a smaller index.
@@ -16,6 +32,7 @@ function rank(array, order="asc"){
     if(order === "desc") return reverseRank(rank);
     return rank;
 }
+
 // Helper to reverse rank. 
 //    reverseRank([4, 1, 2, 0, 3])
 //    >>          [0, 3, 2, 4, 1]
@@ -26,22 +43,6 @@ function reverseRank(array){
     res_array[i] = (n - 1) - array[i];
   }
   return res_array;
-}
-// Sort array with rank_array
-//    order="desc" reverse rank
-//    
-function sortByOrder(array, rank_array, order="asc"){
-  const n = array.length;
-  if(n !== rank_array.length){
-    alert("Length of array and rank_array must be same!");
-    return array;
-  }
-  var sorted_array = [];
-  if(order === "desc") rank_array = reverseRank(rank_array);
-  for(let Ni=0; Ni<n; Ni++){
-    sorted_array[rank_array[Ni]] = array[Ni];
-  }
-  return sorted_array;
 }
 
 // Sort function to test functions: sortByOrder() and rank()
