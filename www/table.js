@@ -265,6 +265,7 @@ function addCol_1(id){
     const n_col = table.rows[0].cells.length; // number of cols
     const position = n_col - 2;               // 2: delete and date
     const col_name = document.getElementById('col_name');
+
     var cell = table.rows[0].insertCell(position);
     cell.innerHTML = '<th>' + col_name.value + '</th>';
     const editable_cell = '<span contenteditable="true"><pre> </pre></span>';  // enable to input easily

@@ -12,8 +12,9 @@
 //        option     : Available in "fixed" and list "input_typpe". 
 //                     Omitted if other types are selected.
 // 
-function createOccurrenceTable(){
-  var table = document.getElementById("occurrence");
+function createOccurrenceTable(id_table){
+// const id_table = "occurrence"
+  var table = document.getElementById(id_table);
   const col_names = getFirstChild(document.getElementsByClassName("table_setting_1"));
   const dat_types = getFirstChild(document.getElementsByClassName("table_setting_2"));
   const optionals = getFirstChild(document.getElementsByClassName("table_setting_3"));
@@ -26,42 +27,41 @@ function createOccurrenceTable(){
   createTable(table, getValues(col_names));
   var tr = document.createElement('tr');
   for(let i=0; i<n_col; i++){
-    var td = document.createElement('td');
-    switch(dat_types[i].value){
-        case "auto":
-          if(col_names[i].value==="date") td.innerHTML = getNow();
-          if(col_names[i].value==="no")   td.innerHTML = 1;
-          break;
-        case "button":
-  //      createInput(ty, va, pl, on, im);
-          td.appendChild(createInput("button", "DELETE", "", "deleteRow(this)", ""));
-          break;
-        case "checkbox":
-          td.appendChild(createInput("checkbox", "", "", "", ""));
-          break;
-        case "fixed":
-          td.innerHTML = optionals[i].value;
-          break;
-        case "list":
-          td.appendChild(createSelectOpt("", optionals[i].value.split(',')));
-          break;
-        case "text":
-          td.appendChild(createInput("text", "", "", "", ""));
-          break;
-        case "number":
-          td.appendChild(createInput("number", "", "", "", "numeric"));
-          break;
-      }
-    if(col_names[i].value !== ""){ 
-    // IF "occurrence_data" is NOT used anywhere DELETE it!
-      var cl = "occurrence_data occ_" + col_names[i].value;
-      var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
-      td.setAttribute("class", cl);
-      td.setAttribute("id"   , id);
-      tr.appendChild(td);
+    if(col_names[i].value !== ""){
+      var td = document.createElement('td');
+      switch(dat_types[i].value){
+          case "auto": // date or no
+            if(col_names[i].value === "date") td.innerHTML = getNow();
+            if(col_names[i].value === "no")   td.innerHTML = 1;
+            break;
+          case "button": // delButton
+    //      createInput(ty, va, pl, on, im);
+            td.appendChild(createInput("button", "DELETE", "", "deleteRow(this)", ""));
+            break;
+          case "checkbox":
+            td.appendChild(createInput("checkbox", "", "", "", ""));
+            break;
+          case "fixed":
+            td.innerHTML = optionals[i].value;
+            break;
+          case "list":
+            td.appendChild(createSelectOpt("", optionals[i].value.split(',')));
+            break;
+          case "text":
+            td.appendChild(createInput("text", "", "", "", ""));
+            break;
+          case "number":
+            td.appendChild(createInput("number", "", "", "", "numeric"));
+            break;
+        }
+        var cl = "occ_" + col_names[i].value;
+        var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
+        td.setAttribute("class", cl);
+        td.setAttribute("id"   , id);
+        tr.appendChild(td);
     }
+    table.appendChild(tr);
   }
-  table.appendChild(tr);
 }
 
 // Helper to get first child from html elements

@@ -3,9 +3,10 @@
 <!--  <script src="js/prototype.js"></script>    -->
 <!--  <script src="js/fabtabulous.js"></script>  -->
 <!--  <script src="js/tablekit.js"></script>     -->
+<!--  <script src="sort.js"></script>     -->
+
 
 <script src="table.js"></script>
-<script src="sort.js"></script>
 <script src="date.js"></script>
 <script src="download.js"></script>
 
@@ -39,11 +40,13 @@
 <!--  タブ切り替え https://allabout.co.jp/gm/gc/23969/  -->
 
 <p>
-  <table id="table_setting" class="sortable resizable">
+  <table id="table_setting">
   </table>
+
   <script>
   createSettingTable('table_setting')
   </script>
+
 <!--  
   <input type="button" value="table setting"  onclick="createSettingTable('table_setting')" />
 -->
@@ -51,17 +54,49 @@
 
 <hr>
 
-<table id="occurrence">
-</table>
+<p>
+  <table id='occurrence'>
+  </table>
 
-<input type="button" value="create occurrence table"  onclick="createOccurrenceTable()" />
-<input type="button" value="add row"  onclick="cloneRows('occurrence')" />
+  <script>
+  createOccurrenceTable('occurrence')
+  </script>
+</p>
+
+<input type="button" value="create occurrence table"  onclick="createOccurrenceTable(occ_tbl)" />
+<input type="button" value="add row"  onclick="cloneRows(occ_tbl)" />
 <input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">
-<input type="button" value="sort"  onclick="sortTable('occurrence')" />
+<input type="button" value="sort"  onclick="sortTable(occ_tbl)" />
 
 <script>
+let occ_tbl = 'occurrence';
+
+// https://blog.ver001.com/javascript-table-sort/
+let column_no = 0;       // now clicked
+let column_no_prev = 0;  // previous clicked
+
+  //document.querySelectorAll('#table_setting th').forEach(elm => {
+  //  elm.onclick = function () {
+  //    column_no = this.cellIndex;  // now clicked
+  //    alert(column_no);
+  //  };
+  //});
+
+document.querySelectorAll('#occurrence th').forEach(elm => {
+  elm.onclick = function () {
+  column_no = this.cellIndex;  // now clicked
+      alert(column_no);
+  };
+});
+
+
+
+
+
+
+
 function sortTable(id_table){
-var id_table = "occurrence";
+// var id_table = "occurrence";
   var table = document.getElementById(id_table);
   var trs = table.rows;
   var key = "occ_" + "no";
@@ -101,6 +136,8 @@ function string2Numeric(array){
 //      row.children[i].firstChild.value
 //    }
 </script>
+
+
 
 </body>
 </html>
