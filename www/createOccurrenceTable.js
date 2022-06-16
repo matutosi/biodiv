@@ -129,12 +129,14 @@ function cloneRow(id_table){
         break;
       case "delButton": // do nothing
         break;
-      case "no":   // no++
-        next_row.children[Ci].innerHTML = Number(next_row.children[Ci].innerHTML) + 1;
+      case "no":   // no = max(no) + 1
+        var nos = getInnerHTML(document.getElementsByClassName("occ_no"));
+        next_row.children[Ci].innerHTML = Math.max.apply(Math, string2Numeric(nos)) + 1;
         break;
       default:
-        if(next_row.children[Ci].firstChild.value === void 0){  // void 0 means undifined
-          // fixed :do nothing
+        if(next_row.children[Ci].firstChild.value === void 0){  
+          // void 0 means undifined -> fixed text: do nothing
+          break;
         } else {
           switch(next_row.children[Ci].firstChild.getAttribute("type")){
             case "checkbox": // clear checkbox

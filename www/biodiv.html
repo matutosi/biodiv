@@ -65,7 +65,7 @@ var id_table = "occurrence";
   var table = document.getElementById(id_table);
   var trs = table.rows;
   var key = "occ_" + "no";
-  var key_cols = getInnerHTML(document.getElementsByClassName(key));
+  var key_cols = string2Numeric(getInnerHTML(document.getElementsByClassName(key)));
   var new_order = rank(key_cols, order="desc");
   // th=0, add 1 to others
   for(let i=0; i<new_order.length; i++){ new_order[i]++; }
@@ -74,7 +74,19 @@ var id_table = "occurrence";
   for(let i=0; i<new_trs.length; i++){
     table.appendChild(new_trs[i]);
   }
-  table.removeChild()
+}
+
+
+// Convert string array to numeric array
+//    Available when all element of array can be convert to numeric by Number().
+//    Some element can NOT be converted, return input array.
+function string2Numeric(array){
+  var res_array = [];
+  for(let i=0; i<array.length; i++){
+    if(isNaN(Number(array[i]))){ return array; }
+    res_array[i] = Number(array[i]);
+  }
+  return res_array;
 }
 
 // // // // // // // // // // // // // // // // // // // 
