@@ -83,6 +83,15 @@ function getValues(objs){
   return res
 }
 
+// Helper to get checked (Boolean) from input objects
+//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
+//    @return        An array.
+function getChecked(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].checked; }
+  return res
+}
+
 // Helper to get selectedIndex from input objects
 //    @params objs   list objects by getFirstChild(document.getElementsByClassName())
 //    @return        An array.

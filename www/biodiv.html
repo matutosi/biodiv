@@ -40,18 +40,24 @@
 let occ_tbl = 'occurrence';
 
 // https://blog.ver001.com/javascript-table-sort/
-let column_no = 0;       // now clicked
-let column_no_prev = 0;  // previous clicked
-let dir = "asc";
+var column_no = 0;       // now clicked
+var column_no_prev = 0;  // previous clicked
+var dir = "asc";
 function setSortFunction(){
     document.querySelectorAll('#occurrence th').forEach(elm => {
         elm.onclick = function (){
+            // settings
             var id_table = 'occurrence';
             var table = document.getElementById(id_table);
             column_no = this.cellIndex; // now clicked
             // sort direction: clicked: sort reverse
-            if(column_no_prev === column_no) { dir = "desc"; } 
-                else                         { dir = "asc"; }
+            if(column_no_prev !== column_no) {
+              dir = "asc"; 
+            } else if(column_no_prev === column_no && dir === "desc") {
+              dir = "asc"; 
+            } else if(column_no_prev === column_no && dir === "asc"){
+              dir = "desc"; 
+            } 
             column_no_prev = column_no;
             // rank_index: sorting order
             var col_name = getColNames(table)[column_no];
@@ -60,7 +66,8 @@ function setSortFunction(){
             switch(col_name){
                 case "date":  // do nothing
                 case "delButton":
-                    // dammy rank_index: [0, 1, 2, ..., i]
+                    // dammy rank_index(do not sort): [0, 1, 2, ..., i]
+                    // avoid error in "rank_index.unshift(0)"
                     var rank_index = [];
                     for(let i=0; i<table.rows.length - 1; i++){ rank_index[i] = i; }
                     break;
@@ -77,6 +84,8 @@ function setSortFunction(){
                     } else {
                         switch(document.getElementsByClassName(cl)[0].firstChild.getAttribute("type")){
                             case "checkbox":
+                                var rank_index = rank(getChecked(getFirstChild(document.getElementsByClassName(cl))), dir);
+                                break;
                             case "text": 
                             case "number":
                                 var rank_index = rank(getValues(getFirstChild(document.getElementsByClassName(cl))), dir);
@@ -91,8 +100,10 @@ function setSortFunction(){
             }
             // sort table
             var trs = table.rows;
-            for(let i=0; i<rank_index; i++){ rank_index[i]++; }
+            for(let i=0; i<rank_index.length; i++){ rank_index[i]++; }
             rank_index.unshift(0);
+console.log(column_no);
+console.log(rank_index);
             var new_trs = sortByOrder(trs, rank_index);
             for(let i=0; i<new_trs.length; i++){
                 table.appendChild(new_trs[i]);
@@ -108,8 +119,8 @@ function sortTable(id_table){
   var table = document.getElementById(id_table);
   var trs = table.rows;
   var key = "occ_" + "no";
-  var key_cols = string2Numeric(getInnerHTML(document.getElementsByClassName(key)));
-  var new_order = rank(key_cols, order="desc");
+  var key_cols = getInnerHTML(document.getElementsByClassName(key));
+  var new_order = rank(key_cols, dir="desc");
   // th=0, add 1 to others
   for(let i=0; i<new_order.length; i++){ new_order[i]++; }
   new_order.unshift(0);
@@ -119,18 +130,6 @@ function sortTable(id_table){
   }
 }
 
-
-// Convert string array to numeric array
-//    Available when all element of array can be convert to numeric by Number().
-//    Some element can NOT be converted, return input array.
-function string2Numeric(array){
-  var res_array = [];
-  for(let i=0; i<array.length; i++){
-    if(isNaN(Number(array[i]))){ return array; }
-    res_array[i] = Number(array[i]);
-  }
-  return res_array;
-}
 
 // // // // // // // // // // // // // // // // // // // 
 // 
