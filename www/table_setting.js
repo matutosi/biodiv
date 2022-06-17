@@ -36,7 +36,7 @@ function createSettingTable(id_table){
     tr.appendChild(td);
     // input_typpe
     var td = document.createElement('td');
-    td.appendChild(createSelectOpt(data_type[i], data_list));
+    td.appendChild(createSelectOpt(Array(data_type[i]).concat(data_list)));
     td.setAttribute("class", clss+'_2');
     td.setAttribute("id"   , 'ts_2_'+id[i]);
     tr.appendChild(td);
@@ -62,14 +62,12 @@ function createInput(ty, va, pl, on, im){
 }
 
 // Helper to create input with select options
-function createSelectOpt(first, list, clss, id){
-  var list = Array(first).concat(list);
+function createSelectOpt(list, selected_no = 0){
   const n_list = list.length;
   var select = document.createElement('select');
-  if(clss !== void 0){ select.setAttribute("class", clss); }
-  if(clss !== void 0){ select.setAttribute("id"   , id); }
   for(let j = 0; j < n_list; j++){
     var option = document.createElement('option');
+    if(selected_no === j){ option.setAttribute('selected', 'true'); }
     option.innerHTML = list[j];
     select.appendChild(option);
   }

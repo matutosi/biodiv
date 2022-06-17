@@ -45,7 +45,8 @@ function createOccurrenceTable(id_table){
             td.innerHTML = optionals[i].value;
             break;
           case "list":
-            td.appendChild(createSelectOpt("", optionals[i].value.split(',')));
+            arry_list = optionals[i].value.split(',').concat(Array(""));
+            td.appendChild(createSelectOpt(arry_list, arry_list.length - 1));
             break;
           case "text":
             td.appendChild(createInput("text", "", "", "", ""));
