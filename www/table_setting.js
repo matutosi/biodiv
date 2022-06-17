@@ -6,13 +6,6 @@
 function createSettingTable(id_table){
   // // // settings // // // 
   const clss        = "table_setting";
-  //   const id          = "01,02,03,04,05,06,07,08,09".split(',');
-  //   const type        = "text";
-  //   const value       = "date,delButton,no,Identified,Sampled,Stand,Layer,Species,Cover".split(',');
-  //   const placeholder = ",,,,,,,,".split(',');
-  //   const data_type   = "auto,button,auto,checkbox,checkbox,fixed,list,text,number,,".split(',');
-  //   const data_list = "auto,button,auto,checkbox,fixed,list,text,number".split(',');
-  //   const opt_val = ";;;;;Stand_01;B1,B2,S1,S2,K;;".split(';');
   const id          = "01,02,03,04,05,06,07,08,09,10,11,12".split(',');
   const type        = "text";
   const value       = "date,delButton,no,Identified,Sampled,Stand,Layer,Species,Cover,,,".split(',');

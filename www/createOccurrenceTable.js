@@ -39,7 +39,7 @@ function createOccurrenceTable(id_table){
             td.appendChild(createInput("button", "DELETE", "", "deleteRow(this)", ""));
             break;
           case "checkbox":
-            td.appendChild(createInput("checkbox", "", "", "", ""));
+            td.appendChild(createInput("checkbox", "1", "", "", ""));
             break;
           case "fixed":
             td.innerHTML = optionals[i].value;
@@ -62,6 +62,7 @@ function createOccurrenceTable(id_table){
     }
     table.appendChild(tr);
   }
+  setSortFunction();
 }
 
 // Helper to get first child from html elements
@@ -79,6 +80,15 @@ function getFirstChild(elements){
 function getValues(objs){
   var res = [];
   for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
+  return res
+}
+
+// Helper to get selectedIndex from input objects
+//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
+//    @return        An array.
+function getSelectedIndex(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].selectedIndex; }
   return res
 }
 

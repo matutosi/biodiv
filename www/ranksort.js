@@ -1,13 +1,13 @@
 // Sort array with rank_array
-//    order="desc" reverse rank
-function sortByOrder(array, rank_array, order="asc"){
+//    dir="desc" reverse rank
+function sortByOrder(array, rank_array, dir="asc"){
   const n = array.length;
   if(n !== rank_array.length){
     alert("Length of array and rank_array must be same!");
     return array;
   }
   var sorted_array = [];
-  if(order === "desc") rank_array = reverseRank(rank_array);
+  if(dir === "desc") rank_array = reverseRank(rank_array);
   for(let Ni=0; Ni<n; Ni++){
     sorted_array[rank_array[Ni]] = array[Ni];
   }
@@ -19,7 +19,7 @@ function sortByOrder(array, rank_array, order="asc"){
 //    In case of tie, return former element with a smaller index.
 //      rank([5, 3, 2, 4, 1, 3])
 //      >>   [5, 2, 1, 4, 0, 3]
-function rank(array, order="asc"){
+function rank(array, dir="asc"){
     var rank = [];
     var n_array = array.length;
     for (let i=0; i<n_array; i++) { rank[i] = 0; }
@@ -29,7 +29,7 @@ function rank(array, order="asc"){
             if( array[j] >  array[i] ){ rank[j]++; }
         }
     }
-    if(order === "desc") return reverseRank(rank);
+    if(dir === "desc") return reverseRank(rank);
     return rank;
 }
 

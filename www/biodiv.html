@@ -3,53 +3,24 @@
 <!--  <script src="js/prototype.js"></script>    -->
 <!--  <script src="js/fabtabulous.js"></script>  -->
 <!--  <script src="js/tablekit.js"></script>     -->
-<!--  <script src="sort.js"></script>     -->
-
-
+<!--  <script src="sort.js"></script>            -->
 <script src="table.js"></script>
 <script src="date.js"></script>
 <script src="download.js"></script>
-
 <script src="table_setting.js"></script>
 <script src="createOccurrenceTable.js"></script>
 <script src="ranksort.js"></script>
-
-<style>
-  table{
-    border-collapse:collapse;
-  }
-  table td{
-    font-size   : 12pt;
-    border-width: 1.5px 0px; /* line width: horizontal, vertical */
-    border-color: #00552e;   /* line color    */
-    border-style: solid;     /* line type     */
-    padding     : 0.3em 1em; /* innder margin */
-  }
-  table th{
-    cursor:pointer;
-    background-color:#00552e;
-    color:white;
-    border-color: white;
-    border-style: solid;
-    padding: 0.3em 1em;
-  }
-</style>
+<link rel="stylesheet" href="table.css">
 </head>
 
 <body>
 <!--  タブ切り替え https://allabout.co.jp/gm/gc/23969/  -->
 
 <p>
-  <table id="table_setting">
-  </table>
-
+  <table id="table_setting"></table>
   <script>
   createSettingTable('table_setting')
   </script>
-
-<!--  
-  <input type="button" value="table setting"  onclick="createSettingTable('table_setting')" />
--->
 </p>
 
 <hr>
@@ -58,15 +29,12 @@
   <table id='occurrence'>
   </table>
 
-  <script>
-  createOccurrenceTable('occurrence')
-  </script>
-</p>
-
 <input type="button" value="create occurrence table"  onclick="createOccurrenceTable(occ_tbl)" />
 <input type="button" value="add row"  onclick="cloneRows(occ_tbl)" />
 <input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">
 <input type="button" value="sort"  onclick="sortTable(occ_tbl)" />
+
+</p>
 
 <script>
 let occ_tbl = 'occurrence';
@@ -74,24 +42,64 @@ let occ_tbl = 'occurrence';
 // https://blog.ver001.com/javascript-table-sort/
 let column_no = 0;       // now clicked
 let column_no_prev = 0;  // previous clicked
-
-  //document.querySelectorAll('#table_setting th').forEach(elm => {
-  //  elm.onclick = function () {
-  //    column_no = this.cellIndex;  // now clicked
-  //    alert(column_no);
-  //  };
-  //});
-
-document.querySelectorAll('#occurrence th').forEach(elm => {
-  elm.onclick = function () {
-  column_no = this.cellIndex;  // now clicked
-      alert(column_no);
-  };
-});
-
-
-
-
+let dir = "asc";
+function setSortFunction(){
+    document.querySelectorAll('#occurrence th').forEach(elm => {
+        elm.onclick = function (){
+            var id_table = 'occurrence';
+            var table = document.getElementById(id_table);
+            column_no = this.cellIndex; // now clicked
+            // sort direction: clicked: sort reverse
+            if(column_no_prev === column_no) { dir = "desc"; } 
+                else                         { dir = "asc"; }
+            column_no_prev = column_no;
+            // rank_index: sorting order
+            var col_name = getColNames(table)[column_no];
+            var cl = "occ_" + col_name;
+            const n_row = table.rows.length;
+            switch(col_name){
+                case "date":  // do nothing
+                case "delButton":
+                    // dammy rank_index: [0, 1, 2, ..., i]
+                    var rank_index = [];
+                    for(let i=0; i<table.rows.length - 1; i++){ rank_index[i] = i; }
+                    break;
+                case "no":
+                    var rank_index = rank(getInnerHTML(document.getElementsByClassName(cl)), dir);
+                    break;
+                default:
+                    // fixed // for debug: var cl = "occ_"+getColNames(table)[2]
+                    var val_0 = document.getElementsByClassName(cl)[0].firstChild.value;
+                    if(val_0    === void 0){ // void 0 means undifined -> fixed text
+                        // for debug:    var cl = "occ_"+getColNames(table)[5]
+                        var rank_index = rank(getInnerHTML(document.getElementsByClassName(cl)), dir);
+                        break;
+                    } else {
+                        switch(document.getElementsByClassName(cl)[0].firstChild.getAttribute("type")){
+                            case "checkbox":
+                            case "text": 
+                            case "number":
+                                var rank_index = rank(getValues(getFirstChild(document.getElementsByClassName(cl))), dir);
+                                break;
+                            case null: // select from list
+                                // for debug: var cl = "occ_"+getColNames(table)[6]
+                                var rank_index = rank(getSelectedIndex(getFirstChild(document.getElementsByClassName(cl))), dir);
+                                break;
+                        }
+                    }
+                    break;
+            }
+            // sort table
+            var trs = table.rows;
+            for(let i=0; i<rank_index; i++){ rank_index[i]++; }
+            rank_index.unshift(0);
+            var new_trs = sortByOrder(trs, rank_index);
+            for(let i=0; i<new_trs.length; i++){
+                table.appendChild(new_trs[i]);
+            }
+        }
+    })
+}
 
 
 
