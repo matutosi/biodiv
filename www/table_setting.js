@@ -62,6 +62,8 @@ function createInput(ty, va, pl, on, im){
 }
 
 // Helper to create input with select options
+//    when selected_no is given, 
+//    its <option> (start with 0) will be set as "selected".
 function createSelectOpt(list, selected_no = 0){
   const n_list = list.length;
   var select = document.createElement('select');
