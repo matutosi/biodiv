@@ -1,14 +1,15 @@
 // Convert string array to numeric array
 //    Available when all element of array can be convert to numeric by Number().
 //    Some element can NOT be converted, return input array.
-//    "" will be converted to null.
+//    "" in number will be converted into null for sorting in last element.
+//    "" in string keep "" (NOT null) for sorting in last element.
 function string2Numeric(array){
-  array = blank2Null(array);
+  new_array = blank2Null(array);  // keep original for return in string
   var res_array = [];
   for(let i=0; i<array.length; i++){
-    if(isNaN(Number(array[i]))){ return array; }
-    if(array[i] === null){ res_array[i] = null;             }
-    else                 { res_array[i] = Number(array[i]); }
+    if(isNaN(Number(new_array[i]))){ return array; } // string: return original array
+    if(new_array[i] === null){ res_array[i] = null;                }
+    else                     { res_array[i] = Number(new_array[i]); }
   }
   return res_array;
 }
@@ -27,13 +28,18 @@ function blank2Null(array){
 //    
 //    Rank starts with 0, because rank will be used to sort arrays.
 //    In case of tie, return former element with a smaller index.
-//    null return as the last element. 
-//    "" will be converted into null, and return as the last element. 
+//    null return as the last element.
+//    "" in number will be converted into null, and return as the last element.
+//    "" in string keep "" (NOT null), and return as the last element.
 //      rank([5, 3, 2, 4, null, 1, 3])
 //      >>   [5, 2, 1, 4, 6,    0, 3]
 function rank(array, dir = "asc"){
 // var array = ["3","1","","", "2"];
 // var array = [3,2,"","", 2];
+// var array = ["c","","a","", "b", "c"];
+// 
+// string MUST keep "", do NOT convert into null 
+//    in string2Numeric
     array = string2Numeric(array);
     var rank = [];
     var n_array = array.length;
@@ -50,14 +56,14 @@ function rank(array, dir = "asc"){
       for (let i=1; i<n_array; i++) {
           for (let j=0; j<i; j++) {
               if( array[j] > array[i]){
-                  if( array[i] === null ){ rank[i]++; }
-                  else                   { rank[j]++; }
+                  if( array[i] === null || array[i] === "" ){ rank[i]++; }
+                  else                                      { rank[j]++; }
               }
               if( array[j] < array[i]){
-                  if(array[j] === null) { rank[j]++; }
-                  else                  { rank[i]++; }
+                  if(array[j] === null || array[j] === "" ) { rank[j]++; }
+                  else                                      { rank[i]++; }
               }
-              if( array[j] === array[i]){ rank[i]++; }
+              if( array[j] === array[i])                    { rank[i]++; }
           }
       }
     }
