@@ -65,64 +65,38 @@ function createOccurrenceTable(id_table){
     }
     table.appendChild(tr);
   }
-  setSortFunction();
+  setSortable(id_table);
 }
 
-// Helper to get first child from html elements
-//    @params elements   html elements by document.getElementsByClassName()
-//    @return        An array.
-function getFirstChild(elements){
-  var res = [];
-  for(let i = 0; i < elements.length; i++){ res[i] = elements[i].firstChild; }
-  return res
-}
-
-// Helper to get values from input objects
-//    @params objs   list objects by document.getElementsByClassName()
-//    @return        An array.
-function getValues(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
-  return res
-}
-
-// Helper to get checked (Boolean) from input objects
-//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
-//    @return        An array.
-function getChecked(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].checked; }
-  return res
-}
-
-// Helper to get selectedIndex from input objects
-//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
-//    @return        An array.
-function getSelectedIndex(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].selectedIndex; }
-  return res
-}
-
-// Helper to get innerHTML from input objects
-//    @params objs   list objects by document.getElementsByClassName()
-//    @return        An array.
-function getInnerHTML(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].innerHTML; }
-  return res
-}
-
-function getColNames(table){
-  const row_0 = table.rows[0];
-  const col_names = [];
-  for(let Ri=0; Ri<row_0.cells.length; Ri++){
-    col_names[Ri] = row_0.cells[Ri].innerHTML;
+// Create (new) table
+//   Create (new) table, but exactly not new. 
+//   When id of exsiting table with no data and col item are given, 
+//   createTable() add header to the table.
+//   When table with header are given, return nothing and alert.
+//   
+function createTable(table, col_names){
+  const n_row = table.rows.length;
+  if(n_row != 0){
+    alert("Can not create table, \n table already exists")
+    return;
   }
-  return col_names
+  const n_col = col_names.length;
+  var tr = document.createElement('tr');
+  for(let Ni = 0; Ni < n_col; Ni++){
+    if(col_names[Ni] !== "") addTh(tr, col_names[Ni]);
+  }
+  table.appendChild(tr)
 }
 
-// Helper to call cloneRow() muutiple times
+// Helper function for createTable
+//   add "th" to "tr"
+function addTh(tr, col_name){
+    var th = document.createElement('th');
+    th.innerHTML = col_name;
+    tr.appendChild(th);  // return by side effect
+}
+
+// Helper to call cloneRow() multiple times
 function cloneRows(id_table){
   const n_row = document.getElementById("clone_n_row").value;
   for(let i=0; i<n_row; i++) cloneRow(id_table)
@@ -178,30 +152,4 @@ function cloneRow(id_table){
     }
   }
   table.appendChild(next_row);
-}
-
-// Helper to updateId: Get next id from id_items
-//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
-//    return "occ_date_005"
-//    
-// updateId('occ_date_001')
-// 'occ_date_001'.split("_").slice(0,-1).join("_");
-// getNextId('occ_date')
-function updateId(id){
-  var id_items = id.split("_").slice(0,-1).join("_");
-  return getNextId(id_items);
-}
-
-// Helper to updateId: Get next id from id_items
-//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
-//    return "occ_date_005"
-//    
-function getNextId(id_items){
-  var ids = [];
-  const items = document.getElementsByClassName(id_items);
-  for(it of items){
-    ids.push(Number(it.getAttribute("id").split("_").slice(-1)));
-  }
-  const max = Math.max.apply(Math, ids);
-  return id_items + "_" + String(max + 1).padStart(3, `0`);
 }
