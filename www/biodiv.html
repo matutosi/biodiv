@@ -62,37 +62,41 @@ function setSortFunction(){
             // rank_index: sorting order
             var col_name = getColNames(table)[column_no];
             var cl = "occ_" + col_name;
+            var elements = document.getElementsByClassName(cl);
             const n_row = table.rows.length;
             switch(col_name){
-                case "date":  // do nothing
+                case "date":
                 case "delButton":
-                    // dammy rank_index(do not sort): [0, 1, 2, ..., i]
-                    // avoid error in "rank_index.unshift(0)"
+                    // do nothing
+                    //    rank_index ([0, 1, 2, ..., i]) is dammy, which can not sort array.
+                    //    avoid error by "rank_index.unshift(0)"
                     var rank_index = [];
                     for(let i=0; i<table.rows.length - 1; i++){ rank_index[i] = i; }
                     break;
                 case "no":
-                    var rank_index = rank(getInnerHTML(document.getElementsByClassName(cl)), dir);
+                    var rank_index = rank(getInnerHTML(elements), dir);
                     break;
                 default:
                     // fixed // for debug: var cl = "occ_"+getColNames(table)[2]
-                    var val_0 = document.getElementsByClassName(cl)[0].firstChild.value;
+                    var val_0 = elements[0].firstChild.value;
                     if(val_0    === void 0){ // void 0 means undifined -> fixed text
                         // for debug:    var cl = "occ_"+getColNames(table)[5]
-                        var rank_index = rank(getInnerHTML(document.getElementsByClassName(cl)), dir);
+                        var rank_index = rank(getInnerHTML(elements), dir);
                         break;
                     } else {
-                        switch(document.getElementsByClassName(cl)[0].firstChild.getAttribute("type")){
+                        switch(elements[0].firstChild.getAttribute("type")){
                             case "checkbox":
-                                var rank_index = rank(getChecked(getFirstChild(document.getElementsByClassName(cl))), dir);
+                                var rank_index = rank(getChecked(getFirstChild(elements)), dir);
                                 break;
                             case "text": 
                             case "number":
-                                var rank_index = rank(getValues(getFirstChild(document.getElementsByClassName(cl))), dir);
+                                var rank_index = rank(getValues(getFirstChild(elements)), dir);
+console.log(getValues(getFirstChild(elements)));
+console.log(rank_index);
                                 break;
                             case null: // select from list
                                 // for debug: var cl = "occ_"+getColNames(table)[6]
-                                var rank_index = rank(getSelectedIndex(getFirstChild(document.getElementsByClassName(cl))), dir);
+                                var rank_index = rank(getSelectedIndex(getFirstChild(elements)), dir);
                                 break;
                         }
                     }
@@ -102,8 +106,6 @@ function setSortFunction(){
             var trs = table.rows;
             for(let i=0; i<rank_index.length; i++){ rank_index[i]++; }
             rank_index.unshift(0);
-console.log(column_no);
-console.log(rank_index);
             var new_trs = sortByOrder(trs, rank_index);
             for(let i=0; i<new_trs.length; i++){
                 table.appendChild(new_trs[i]);
