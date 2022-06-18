@@ -47,7 +47,7 @@ window.addEventListener('load', function () {
   });
 });
 
-function compareNumber    (a, b) { return a.value - b.value; }   // numeric sort (asc)
+function compareNumber    (a, b) { return a.value - b.value; }  // numeric sort (asc)
 function compareNumberDesc(a, b) { return b.value - a.value; }  // numeric sort (desc)
 function compareString(a, b) {  // string sort (asc)
   if (a.value < b.value) { return -1; } else { return 1; }
