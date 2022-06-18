@@ -52,7 +52,9 @@ function createOccurrenceTable(id_table){
             td.appendChild(createInput("text", "", "", "", ""));
             break;
           case "number":
-            td.appendChild(createInput("number", "", "", "", "numeric"));
+            input = createInput("number", "", "", "", "numeric");
+            input.setAttribute("min", "0");
+            td.appendChild(input);
             break;
         }
         var cl = "occ_" + col_names[i].value;
