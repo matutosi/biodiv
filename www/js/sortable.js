@@ -1,4 +1,11 @@
-// TODO: write documents
+// Set table sortable
+//    Inspired by https://blog.ver001.com/javascript-table-sort/
+//    Click th, and sort table by its th order.
+//    The same th clicked again, sort by descending order.
+//    "" in number will be converted into null for sorting in last element.
+//    "" in string keep "" (NOT null) for sorting in last element.
+//    This function should be executed after a table is created, 
+//    If executed before creation, a table will not be sortable.
 //    
 function setSortable(id_table){
     document.querySelectorAll('#' + id_table + ' th').forEach(elm => {
@@ -143,15 +150,13 @@ function rank(array, dir = "asc"){
 }
 
 // Sort array with rank_array
-//    dir="desc" reverse rank
-function sortByOrder(array, rank_array, dir="asc"){
+function sortByOrder(array, rank_array){
   const n = array.length;
   if(n !== rank_array.length){
     alert("Length of array and rank_array must be same!");
     return array;
   }
   var sorted_array = [];
-  if(dir === "desc") rank_array = reverseRank(rank_array);
   for(let Ni=0; Ni<n; Ni++){
     sorted_array[rank_array[Ni]] = array[Ni];
   }

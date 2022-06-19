@@ -1,3 +1,39 @@
+// // // // // // // // // // // // // // // // // // 
+// 
+// Data CAN be sent Email directory.
+// But should not send directory, because of security problem.
+//   However, not good save password as local data in a browser for security problem.
+//   Other web site including JavaScript can get local data easily.
+// 
+// // // // // // // // // // // // // // // // // // 
+// 
+// https://programmercollege.jp/column/8922/
+// https://developer.mozilla.org/ja/docs/Learn/Forms/Sending_and_retrieving_form_data
+
+
+// // // // // // // // // // // // // // // // // // 
+// 
+// Save data using IndexedDB_API
+//     Work but can not convert html DOM to Json,
+//     local data is enough because easy to use.
+// 
+// // // // // // // // // // // // // // // // // // 
+// https://developer.mozilla.org/ja/docs/Web/API/IndexedDB_API
+// 
+// Work, but can NOT get input values after rendering html
+// a = domJSON.toJSON(document.getElementById('table_setting'));
+// b = domJSON.toDOM(a);
+// b.firstChild
+// occ = domJSON.toJSON(document.getElementById('occurrence'));
+// oc = domJSON.toDOM(occ);
+// oc.firstChild
+// 
+// script below should be set at the BOTTOM of html
+// <script src="domJSON.js"></script>
+
+
+
+
 // Rank of each element in an array (1st version)
 //    
 //    CAUTION: null or "" will be return as first index
