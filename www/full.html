@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>GRAYCODE JavaScript</title>
+
+<script>
+// https://gray-code.com/javascript/display-the-page-in-full-screen/
+window.addEventListener('load', function(){
+  document.getElementById('full_screan').addEventListener('click', switchFullScreen);
+});
+
+function switchFullScreen(event) {
+  if(event.type === "click" ) {
+    if( checkFullScreen() ) {
+      if( document.exitFullscreen ) { document.exitFullscreen(); }
+    } else {
+      if( document.body.requestFullscreen ) { document.body.requestFullscreen(); }
+    }
+  }
+}
+function checkFullScreen() {
+  var fullscreen_flag = false;
+  if(document.fullscreenElement) { fullscreen_flag = true; }
+  return fullscreen_flag;
+}
+</script>
+
+</head>
+<body>
+
+<button id="full_screan">Switch screan show</button>
+
+
+
+</body>
+</html>
