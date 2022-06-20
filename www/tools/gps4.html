@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>Gsi Map - Leaflet</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+        <!-- plugin fullscreen-->
+        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    </head>
+
+    <body>
+        <div id="map" style="width: 600px; height: 400px;"></div>
+        <script>
+            var mymap = new L.map('map').setView([35.0045, 135], 13);
+            
+            L.control.scale({maxWidth:200,position:'bottomright',imperial:false}).addTo(mymap);  // スケールを表示
+            mymap.zoomControl.setPosition('bottomright');  //ズームコントロール
+            mymap.addControl(new L.Control.Fullscreen({position:'topright'})); // フルスクリーン
+
+            let osm = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                maxZoom: 18,
+                attribution: 'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1
+            });
+            
+            let gsiattr = "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>";
+            let gsiattrLF =  '<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>';
+            let gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', { minZoom:5, attribution: gsiattr });
+            let gsipale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', { minZoom:5, attribution: gsiattr });
+            let gsiphot = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { minZoom:5, attribution: gsiattr });
+            
+            //オーバーレイ用のタイル
+            let gsirelief = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png', { opacity: 0.4, maxNativeZoom: 15, minZoom:5, attribution: gsiattr });
+            let gsirehillshademap = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png', { opacity: 0.35, maxNativeZoom: 16, attribution: gsiattr });
+            
+            //地図の照応
+            let baseMaps = {
+                "地理院標準地図": gsi,
+                "地理院淡色地図": gsipale,
+                "地理院写真": gsiphot,
+                "OpenStreetMap": osm
+            };
+            let overlayMaps = {
+                "色別標高図": gsirelief,
+                "陰影起伏図": gsirehillshademap
+            };
+            L.control.layers(baseMaps,overlayMaps,{maxWidth:200,position:'topright',imperial:false}).addTo(mymap); 
+            gsi.addTo(mymap);  // 初期設定で地理院標準地図を表示
+            
+            L.marker([35, 135]).addTo(mymap)
+                .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+            L.circle([35.00767, 134.987136], 300, {
+                color: 'green',
+                fillColor: '#0f0',
+                fillOpacity: 0.5
+            }).addTo(mymap).bindPopup("I am a circle.");
+
+            L.polygon([
+                [35.005, 135.001],
+                [35.005, 135.005],
+                [35.009, 135.005],
+                [35.009, 135.001]
+            ]).addTo(mymap).bindPopup("I am a polygon.");
+
+            var popup = L.popup();
+
+            function onMapClick(e) {
+                popup
+                    .setLatLng(e.latlng)
+                    .setContent("You clicked the map at " + e.latlng.toString())
+                    .openOn(mymap);
+            }
+            
+            mymap.on('click', onMapClick);
+        </script>
+    </body>
+</html>
