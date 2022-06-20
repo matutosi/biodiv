@@ -8,7 +8,9 @@
       <script src="js/inhibitClose.js"></script>
     -->
     <script src="download.js"></script>
-    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="css/table.css">
+
+
 </head>
 
 <body>
@@ -17,33 +19,19 @@
 <script>
 // // // // // // // // // // // // // // // // // // // 
 // 
-//      get data for download
+// TODO    if(data_types === "select_option") [[ GET OPTIONS ]]
 // 
 // // // // // // // // // // // // // // // // // // // 
+// 
+// get data from a table for download
+// getTableData("occurrence");
+
+
 // local data
 // https://developer.mozilla.org/ja/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage
 // https://qiita.com/masuda-sankosc/items/cff6131efd6e1b5138e6
 // https://qiita.com/w-tdon/items/81034bd3006806f7d7c3
-// 
-//    if(row.children[i].firstChild.value === void 0){  // void 0 means undifined
-//      row.children[i].innerHTML
-//    } else {
-//      row.children[i].firstChild.value
-//    }
 </script>
-
-<script>
-// // // // // // // // // // // // // // // // // // // 
-// 
-//       Launch mailer (OK)
-// 
-// // // // // // // // // // // // // // // // // // // 
-//    https://rukiadia.hatenablog.jp/entry/2014/02/19/132445
-function launchMailer(){
-  location.href = 'mailto: matutosi@gmail.com' + '?subject="text"' + '&body="testmail"';
-}
-</script>
-<input type='button' value="launch mailer" onclick="launchMailer()" />
 
 
 <script>
@@ -56,6 +44,9 @@ function launchMailer(){
 // 
 // https://syncer.jp/how-to-use-geolocation-api
 // https://syncer.jp/how-to-use-geolocation-api/demo/watch-position.html
+// gps.html
+// gps.js
+// gps.css
 </script>
 
 <script>
@@ -69,6 +60,7 @@ function launchMailer(){
 // tab.js
 // tab.css
 </script>
+
 
 
 <hr>
@@ -122,6 +114,49 @@ function generateTable(id_table){
 generateTable("a");
 generateTable("b");
 </script>
+
+
+<hr>
+
+<script>
+// // // // // // // // // // // // // // // // // // // 
+// 
+// Launch mailer
+// 
+// // // // // // // // // // // // // // // // // // // 
+//    https://rukiadia.hatenablog.jp/entry/2014/02/19/132445
+function launchMailer(){
+  location.href = 'mailto: matutosi@gmail.com' + '?subject="text"' + '&body="testmail"';
+}
+</script>
+<input type='button' value="launch mailer" onclick="launchMailer()" />
+
+<hr>
+
+<script>
+// // // // // // // // // // // // // // // // // // // 
+// 
+// Swith full screen mode
+// 
+// // // // // // // // // // // // // // // // // // // 
+// https://gray-code.com/javascript/display-the-page-in-full-screen/
+function switchFullScreen() {
+  if( checkFullScreen() ) { document.exitFullscreen(); }
+  else                    { document.body.requestFullscreen(); }
+}
+function checkFullScreen() {
+  var fullscreen_flag = false;
+  if(document.fullscreenElement) { fullscreen_flag = true; }
+  return fullscreen_flag;
+}
+</script>
+<input type="button" value="Switch screan show"  onclick="switchFullScreen()" />
+<style>
+:not(:root):fullscreen::backdrop {
+    background-color: white;
+}
+</style>
+
 
 </body>
 </html>
