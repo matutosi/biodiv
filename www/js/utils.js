@@ -168,3 +168,9 @@ function getNow(){
   //    return(`${yr}_${mo}_${dd}_${hh}_${mi}_${ss}_${ms}`)
    return(`${yr}_${mo}_${dd}_${hh}_${mi}_${ss}`)
 }
+
+// delete a row
+function deleteRow(obj){
+    var tr = obj.parentNode.parentNode;          // clicked row
+    tr.parentNode.deleteRow(tr.sectionRowIndex); // delete clicked row
+}
