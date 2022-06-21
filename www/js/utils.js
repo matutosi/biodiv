@@ -1,18 +1,20 @@
 
 
 
-
+// TODO:
+//    make select option input in HTML
+//         (group) for data_types: "text", "select_option"
+//         (array) for data_types: "number"
+// 
 // Sum by group
-//     
+//     sumByGroup("occurrence", "Cover", "Layer")
 //     
 function sumByGroup(id_table, array, group){
-  // var id_table = "occurrence";
-  // var array = "Cover"; 
-  // var group = "Layer"; 
-  var array_val = getColData(id_table, array);
-  var group_val = getColData(id_table, group);
+  const table = document.getElementById(id_table);
+  var array_val = getColData(table, array);
+  var group_val = getColData(table, group);
   var grouped_array = splitByGroup(array_val, group_val);
-  var groups = Object.keys(grouped_array);
+  var groups = Object.keys(grouped_array).sort();
   var sum_array = [];
   for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
   for(let i = 0; i < groups.length; i++){
@@ -21,15 +23,27 @@ function sumByGroup(id_table, array, group){
       sum_array[groups[i]] += Number(gr_ar[j]);
     }
   }
-  return sum_array;
+  // use all select options
+  if(getDataType(table)[col_no] === "select_option"){
+    var col_no = getColNames(table).indexOf(group);
+    var all_groups = getSelectOptionInCell(table.rows[1].cells[col_no].firstChild); 
+    var ordered_sum_array = [];
+    for(let i=0; i < all_groups.length; i++){
+      if(sum_array[all_groups[i]] !== void 0){
+        ordered_sum_array[[all_groups[i]]] = sum_array[all_groups[i]];
+      }
+    }
+    return ordered_sum_array;
+  } else {
+    return sum_array;
+  }
 }
 
 // Get column data in a table
 //    @params id_table A string.
 //    @params col_name A string.
 //    @return An array.
-function getColData(id_table, col_name){
-  const table = document.getElementById(id_table);
+function getColData(table, col_name){
   const col_no   = getColNames(table).indexOf(col_name);
   const col_type = getDataType(table)[col_no];
   var group_value = [];
