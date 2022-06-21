@@ -1,7 +1,32 @@
 
 
-function sumByGroup(array, array_group){
+
+  // getSelectOption()
+  // splitByGroup()
+
+
+// Sum by group
+function sumByGroup(grouped_array){
   
+}
+
+// Split array by group
+//    @params array An array.
+//    @params group An array.
+//    @return Grouped array. 
+//    @examples
+//    var array = [ 1,   2,   3,   4];
+//    var group = ["a", "b", "a", "b"];
+//    splitByGroup(array, group);
+//    // [a: [1,3], b: [2,4]]
+function splitByGroup(array, group){
+  if(array.length !== group.length){ return array; }
+  var grouped = [];
+  for(let i=0; i < array.length; i++){ grouped[group[i]] = []; }
+  for(let i=0; i < array.length; i++){
+    grouped[group[i]].push(array[i]);
+  }
+  return grouped;
 }
 
 // Get data from occurrence table.
@@ -42,6 +67,29 @@ function getTableData(id_table){
     table_data[Rj] = row_data;
   }
   return table_data;
+}
+
+function getCellData(cell_data, data_type){
+  switch(cell_data, data_type){
+    case "delButton":  //  skip
+      return null;
+      break;
+    case "date":
+    case "no":
+    case "fixed":
+      return cell_data.innerHTML;
+      break;
+    case "text":
+    case "number":
+      return cell_data.firstChild.value;
+      break;
+    case "checkbox": 
+      return cell_data.firstChild.checked;
+      break;
+    case "select_option":
+      return cell_data.firstChild.selectedIndex;
+      break;
+  }
 }
 
 // Get options in select tag
