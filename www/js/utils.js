@@ -1,13 +1,43 @@
 
 
 
-  // getSelectOption()
-  // splitByGroup()
-
 
 // Sum by group
-function sumByGroup(grouped_array){
-  
+//     
+//     
+function sumByGroup(id_table, array, group){
+  // var id_table = "occurrence";
+  // var array = "Cover"; 
+  // var group = "Layer"; 
+  var array_val = getColData(id_table, array);
+  var group_val = getColData(id_table, group);
+  var grouped_array = splitByGroup(array_val, group_val);
+  var groups = Object.keys(grouped_array);
+  var sum_array = [];
+  for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
+  for(let i = 0; i < groups.length; i++){
+    var gr_ar = grouped_array[groups[i]];
+    for(let j = 0; j < gr_ar.length; j++){
+      sum_array[groups[i]] += Number(gr_ar[j]);
+    }
+  }
+  return sum_array;
+}
+
+// Get column data in a table
+//    @params id_table A string.
+//    @params col_name A string.
+//    @return An array.
+function getColData(id_table, col_name){
+  const table = document.getElementById(id_table);
+  const col_no   = getColNames(table).indexOf(col_name);
+  const col_type = getDataType(table)[col_no];
+  var group_value = [];
+  for(Ri = 0; Ri < table.rows.length - 1; Ri++){
+    // except th (rows[0])
+    group_value[Ri] = getCellData(table.rows[Ri + 1].cells[col_no], col_type);
+  }
+  return group_value;
 }
 
 // Split array by group
@@ -34,35 +64,27 @@ function splitByGroup(array, group){
 //    Each array means a row in the table. 
 //    
 function getTableData(id_table){
+// var id_table = "occurrence";
   const table = document.getElementById(id_table);
   const col_names = getColNames(table);
   const n_col = col_names.length;
   const n_row = table.rows.length;
   const data_types = getDataType(table);
   var table_data = [];
-  for(let Rj=0; Rj<n_row; Rj++){
+  // th
+  var Rj = 0;
+  var row_rj = table.rows[Rj].cells;
+  var row_data = [];
+  for(let Ci = 0; Ci < n_col; Ci++){
+    row_data[Ci] = row_rj[Ci].innerHTML;
+  }
+  table_data[Rj] = row_data;
+  // td
+  for(let Rj=1; Rj<n_row; Rj++){
     var row_rj = table.rows[Rj].cells;
     var row_data = [];
-    for(let Ci=0; Ci<n_col; Ci++){
-      switch(data_types[Ci]){
-        case "delButton":  //  skip
-          break;
-        case "date":
-        case "no":
-        case "fixed":
-          row_data[Ci] = row_rj[Ci].innerHTML;
-          break;
-        case "text":
-        case "number":
-          row_data[Ci] = row_rj[Ci].firstChild.value;
-          break;
-        case "checkbox": 
-          row_data[Ci] = row_rj[Ci].firstChild.checked;
-          break;
-        case "select_option":
-          row_data[Ci] = row_rj[Ci].firstChild.selectedIndex;
-          break;
-      }
+    for(let Ci = 0; Ci < n_col; Ci++){
+      row_data[Ci] = getCellData(row_rj[Ci], data_types[Ci]);
     }
     table_data[Rj] = row_data;
   }
@@ -70,7 +92,7 @@ function getTableData(id_table){
 }
 
 function getCellData(cell_data, data_type){
-  switch(cell_data, data_type){
+  switch(data_type){
     case "delButton":  //  skip
       return null;
       break;
@@ -87,15 +109,25 @@ function getCellData(cell_data, data_type){
       return cell_data.firstChild.checked;
       break;
     case "select_option":
-      return cell_data.firstChild.selectedIndex;
+      var opts = getSelectOptionInCell(cell_data.firstChild);
+      var index = cell_data.firstChild.selectedIndex;
+      return opts[index];
       break;
   }
+}
+
+// Get options in select tag in a cell
+//    Retrun string array.
+function getSelectOptionInCell(select){
+  var select_opt = [];
+  var opts = select.children;
+  for(let i = 0; i < opts.length; i++){ select_opt.push(opts[i].value); }
+  return select_opt;
 }
 
 // Get options in select tag
 //    Retrun string like "B1,B2,..." for select tag,
 //    "" (vacant string) for pother input tag
-//    
 function getSelectOption(table){
   const data_types = getDataType(table);
   const row_1 = table.rows[1].cells;  // table row except th (rows[0])
