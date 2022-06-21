@@ -15,9 +15,9 @@
 function createOccurrenceTable(id_table){
 // const id_table = "occurrence"
   var table = document.getElementById(id_table);
-  const col_names = getFirstChild(document.getElementsByClassName("table_setting_1"));
-  const dat_types = getFirstChild(document.getElementsByClassName("table_setting_2"));
-  const optionals = getFirstChild(document.getElementsByClassName("table_setting_3"));
+  const col_names = getFirstChild(document.getElementsByClassName("ts_cnames"));
+  const dat_types = getFirstChild(document.getElementsByClassName("ts_itypes"));
+  const optionals = getFirstChild(document.getElementsByClassName("ts_option"));
   const n_col = col_names.length;
   const n_row = table.rows.length;  // n_row means next column number because starting with 0
   if(n_row != 0){
@@ -32,7 +32,6 @@ function createOccurrenceTable(id_table){
       switch(dat_types[i].value){
           case "auto": // date or no
             if(col_names[i].value === "date")   td.innerHTML = getNow();
-console.log(getLat());
             if(col_names[i].value === "locLat") td.innerHTML = getLat();
             if(col_names[i].value === "locLon") td.innerHTML = getLon();
             if(col_names[i].value === "locAcc") td.innerHTML = getAcc();

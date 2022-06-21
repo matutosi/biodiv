@@ -5,18 +5,18 @@
 //    Occurrence table will be generated accoding to the setting table.
 function createSettingTable(id_table){
   // // // settings // // // 
-  const clss        = "table_setting";
+  const clss        = "ts_";
   const id          = "01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16".split(',');
   const type        = "text";
   const value       = "date,locLat,locLon,locAcc,delButton,no,Identified,Sampled,Stand,Layer,Species,Cover,memo,,,".split(',');
   const placeholder = ",,,,,,,,,,,,,optional,optional,optional".split(',');
   const data_type   = "auto,auto,auto,auto,button,auto,checkbox,checkbox,fixed,list,text,number,text,,,,,".split(',');
-  const data_list = "auto,auto,auto,auto,button,auto,checkbox,fixed,list,text,number,text".split(',');
+  const data_list = "auto,button,checkbox,fixed,list,text,number".split(',');
   const opt_val = ";;;;;;;;Stand_01;B1,B2,S1,S2,K;;;;;;".split(';');
   // create table
   var table = document.getElementById(id_table);
   // table head
-  const head = "col_name,input_typpe,option".split(',');
+  const head = "col_name,input_typpe,option,hide".split(',');
   var tr = document.createElement('tr');
   for(item of head){
       var th = document.createElement('th');
@@ -31,25 +31,45 @@ function createSettingTable(id_table){
     // col_name
     var td = document.createElement('td');
     td.appendChild(createInput(type, value[i], placeholder[i]));
-    td.setAttribute("class", clss+'_1');
+    td.setAttribute("class", clss+'cnames');
     td.setAttribute("id"   , 'ts_1_'+id[i]);
     tr.appendChild(td);
     // input_typpe
     var td = document.createElement('td');
     td.appendChild(createSelectOpt(Array(data_type[i]).concat(data_list)));
-    td.setAttribute("class", clss+'_2');
+    td.setAttribute("class", clss+'itypes');
     td.setAttribute("id"   , 'ts_2_'+id[i]);
     tr.appendChild(td);
     // option
     var td = document.createElement('td');
     td.appendChild(createInput(type, opt_val[i], ""));
-    td.setAttribute("class", clss+'_3');
+    td.setAttribute("class", clss+'option');
     td.setAttribute("id"   , 'ts_3_'+id[i]);
+    tr.appendChild(td);
+    // show/hide checkbox
+    var td = document.createElement('td');
+    td.appendChild(createInput("checkbox"));
+    td.setAttribute("class"  , clss+'checkbox');
+    td.setAttribute("id"     , 'ts_4_'+id[i]);
+    td.setAttribute("onclick", "hideCol('occurrence')");
     tr.appendChild(td);
     // append
     table.appendChild(tr);
   }
 }
+
+// Hide columns checked in table setting
+function hideCol(id_table){
+  var table = document.getElementById(id_table);
+  var checkbox = document.getElementsByClassName('ts_checkbox');
+  var hide = getChecked(getFirstChild(checkbox));
+  for(let Ci = 0; Ci < table.rows[0].cells.length; Ci++){
+    for(let Rj = 0; Rj < table.rows.length; Rj++){
+      table.rows[Rj].cells[Ci].style.display = (hide[Ci]) ? 'none' : '';
+    }
+  }
+}
+
 // Helper to create input tag with class, id, type, value, and placeholder
 function createInput(ty, va, pl, on, im){
   var input = document.createElement('input');

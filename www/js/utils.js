@@ -1,14 +1,19 @@
+
+
+function sumByGroup(array, array_group){
+  
+}
+
 // Get data from occurrence table.
 //    returns [array], [array], [array], 
 //    Each array means a row in the table. 
 //    
-
 function getTableData(id_table){
   const table = document.getElementById(id_table);
   const col_names = getColNames(table);
   const n_col = col_names.length;
   const n_row = table.rows.length;
-  const data_types = getDataType(id_table);
+  const data_types = getDataType(table);
   var table_data = [];
   for(let Rj=0; Rj<n_row; Rj++){
     var row_rj = table.rows[Rj].cells;
@@ -39,14 +44,33 @@ function getTableData(id_table){
   return table_data;
 }
 
-// Get data types from occurrence table.
-//    Columns "date", "delButton", and "no" are special, 
-//    these columns can not be set by users. 
-//    Other columns can be devided into 5 data types: 
-//    "fixed", "checkbox", "text", "number", "select_option".
+// Get options in select tag
+//    Retrun string like "B1,B2,..." for select tag,
+//    "" (vacant string) for pother input tag
 //    
-function getDataType(id_table){
-  const table = document.getElementById(id_table);
+function getSelectOption(table){
+  const data_types = getDataType(table);
+  const row_1 = table.rows[1].cells;  // table row except th (rows[0])
+  var select_opt = [];
+  for(let Ci = 0; Ci < data_types.length; Ci++){ select_opt[Ci] = ""; }
+  for(let Ci = 0; Ci < data_types.length; Ci++){
+    if(data_types[Ci] === "select_option"){
+      opts = row_1[Ci].firstChild.children;
+      for(opt of opts){ select_opt[Ci] = select_opt[Ci] + "," + opt.value; }
+    }
+  }
+  return select_opt;
+}
+
+// Get data types from occurrence table.
+//    Columns shown below are special, 
+//        "date", "delButton", "no", "locLat", "locLon", "locAcc"
+//        These columns can not be set by users. 
+//    Other columns can be devided into 5 data types: 
+//        "fixed", "checkbox", "text", "number", "select_option".
+//    
+function getDataType(table){
+//   const table = document.getElementById(id_table);
   const col_names = getColNames(table);
   const n_col = col_names.length;
   const first_data_row = table.rows[1].cells;

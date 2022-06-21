@@ -1,0 +1,52 @@
+<html>
+<head>
+<script>
+window.onload = function(){
+var array = ["address","age"];
+    for(var j=0;j<array.length;j++){
+        var id = array[j] + "_display";
+        var obj = array[j] + "_check";
+        var CELL = document.getElementById(id);
+        var TABLE = CELL.parentNode.parentNode.parentNode;
+        for(var i=0;TABLE.rows[i];i++) {
+            TABLE.rows[i].cells[CELL.cellIndex].style.display = (document.getElementById(obj).checked) ? '' : 'none';
+        }
+    }
+}
+function checkbox_cell( obj, id ){
+    var CELL = document.getElementById(id);
+    var TABLE = CELL.parentNode.parentNode.parentNode;
+    for(var i=0;TABLE.rows[i];i++) {
+        TABLE.rows[i].cells[CELL.cellIndex].style.display = (obj.checked) ? '' : 'none';
+    }
+}
+</script>
+</head>
+
+<body>
+<input type="checkbox" id="address_check" onclick="checkbox_cell(this,'address_display')" checked="checked">住所
+<input type="checkbox" id="age_check" onclick="checkbox_cell(this,'age_display')" checked="checked">年齢
+<table>
+ <tr>
+  <th>氏名</th>
+  <th id="address_display">住所</th>
+  <th id="age_display">年齢</th>
+ </tr>
+ <tr>
+  <td>山田</td>
+  <td>東京</td>
+  <td>20</td>
+ </tr>
+ <tr>
+  <td>佐藤</td>
+  <td>神奈川</td>
+  <td>24</td>
+ </tr>
+ <tr>
+  <td>渡辺</td>
+  <td>大阪</td>
+  <td>18</td>
+ </tr>
+</table>
+</body>
+</html>
