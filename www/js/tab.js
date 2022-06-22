@@ -1,12 +1,11 @@
-// 対象の要素を得る
+// get elements
 var tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
 var pages = document.getElementById('tabbody').getElementsByTagName('div');
 
 function changeTab() {
-  // ▼href属性値から対象のid名を抜き出す
+  // get id
   var targetid = this.href.substring(this.href.indexOf('#')+1,this.href.length);
-
-  // ▼指定のページだけを表示する
+  // show delected tab
   for(var i=0; i<pages.length; i++) {
     if( pages[i].id != targetid ) {
       pages[i].style.display = "none";
@@ -15,21 +14,20 @@ function changeTab() {
       pages[i].style.display = "block";
     }
   }
-
-  // ▼クリックされたタブを前面に表示する
+  // show front
   for(var i=0; i<tabs.length; i++) {
     tabs[i].style.zIndex = "0";
   }
   this.style.zIndex = "10";
 
-  // ▼ページ遷移しないようにfalseを返す
+  // needs not to move tab
   return false;
 }
 
-// すべてのタブに対して、クリック時にchangeTab関数が実行されるよう指定する
+// when clicked, enable to run changeTab() in all tab
 for(var i=0; i<tabs.length; i++) {
   tabs[i].onclick = changeTab;
 }
 
-// 最初は先頭のタブを選択
+// tab at first 
 tabs[0].onclick();
