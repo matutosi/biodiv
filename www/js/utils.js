@@ -5,7 +5,20 @@
 //    make select option input in HTML
 //         (group) for data_types: "text", "select_option"
 //         (array) for data_types: "number"
-// 
+//   decide how to show results
+  // function showResult(id_show, obj){
+  //   var div = document.getElementById(id_show);
+  //   div.innerHTML = obj;
+  // }
+  // 
+  // function showSumByGroup(id_table, array, group, id_show){
+  //   const sum = sumByGroup(id_table, array, group);
+  //   showResult(id_show, sum);
+  // }
+  // ocnsole.log(sumByGroup("occurrence", "Cover", "Layer"))
+
+
+
 // Sum by group
 //     sumByGroup("occurrence", "Cover", "Layer")
 //     
