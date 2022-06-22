@@ -1,29 +1,45 @@
-
-
-
 // TODO:
 //    make select option input in HTML
 //         (group) for data_types: "text", "select_option"
 //         (array) for data_types: "number"
 //   decide how to show results
-  // function showResult(id_show, obj){
-  //   var div = document.getElementById(id_show);
-  //   div.innerHTML = obj;
-  // }
-  // 
-  // function showSumByGroup(id_table, array, group, id_show){
-  //   const sum = sumByGroup(id_table, array, group);
-  //   showResult(id_show, sum);
-  // }
-  // ocnsole.log(sumByGroup("occurrence", "Cover", "Layer"))
+// ocnsole.log(sumByGroup("occurrence", "Cover", "Layer"))
 
 
+// Convert hasy array table
+//    In progress: can not convert hasy that has array as a value
+//    @example 
+//    var hash_array = sumByGroup("occurrence", "Cover", "Layer");
+//    hash2table(hasy_array);
+//    
+function hash2table(hash_array){
+  var table = document.createElement('table');
+  for(let i = 0; i < Object.keys(hash_array).length; i++){
+    var tr = document.createElement('tr');
+    var td = document.createElement("td");
+    td.textContent = Object.keys(hash_array)[i];
+    tr.appendChild(td);
+    var td = document.createElement("td");
+    td.textContent = Object.values(hash_array)[i];
+    tr.appendChild(td);
+    table.appendChild(tr);
+  }
+  return table
+}
+
+function showSumByGroup(id_table, array, group, id_show){
+  const table = sumByGroup(id_table, array, group);
+  document.getElementById(id_show).appendChild(table);
+}
 
 // Sum by group
 //     sumByGroup("occurrence", "Cover", "Layer")
 //     
 function sumByGroup(id_table, array, group){
-  const table = document.getElementById(id_table);
+  // var id_table = "occurrence";
+  // var array = "Cover";
+  // var group = "Layer";
+  var table = document.getElementById(id_table);
   var array_val = getColData(table, array);
   var group_val = getColData(table, group);
   var grouped_array = splitByGroup(array_val, group_val);
@@ -46,10 +62,22 @@ function sumByGroup(id_table, array, group){
         ordered_sum_array[[all_groups[i]]] = sum_array[all_groups[i]];
       }
     }
-    return ordered_sum_array;
+    var sum = ordered_sum_array;
   } else {
-    return sum_array;
+    var sum = sum_array;
   }
+  sum = hash2table(sum);
+  // add th
+  var tr = document.createElement('tr');
+  var th = document.createElement("th");
+  th.textContent = array;
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = group;
+  tr.appendChild(th);
+  // add as header
+  sum.insertBefore(tr, sum.firstChild);
+  return sum;
 }
 
 // Get column data in a table

@@ -77,9 +77,9 @@ Biodiversity Investigation System (BIS)
 <div class="sample-area">
 
   <p id="tabcontrol">
-    <a href="#tab1">tab1</a>
-    <a href="#tab2">tab2</a>
-    <a href="#tab3">tab3</a>
+    <a href="#tab1">observation settings</a>
+    <a href="#tab2">input observation</a>
+    <a href="#tab3">tools</a>
     <a href="#tab4">tab4</a>
   </p>
 
@@ -89,16 +89,22 @@ Biodiversity Investigation System (BIS)
       <script>
         createSettingTable('table_setting')
       </script>
-      <input type="button" value="create occurrence table"  onclick="createOccurrenceTable(occ_tbl)" />
+      <p>
+        <input type="button" value="create occurrence table"  onclick="createOccurrenceTable(occ_tbl)" />
+      </p>
     </div>
 
     <div id="tab2">
       <input type="search" id="search_text" onkeyup="searchTable('occurrence', this.id)" placeholder="Search text input">
       <table id='occurrence'></table>
-      <div   id='calc_result'></div>
-      <input type="button" value="calc" onclick="showSumByGroup('occurrence', 'Cover', 'Layer', 'calc_result')">
-      <input type="button" value="add row"  onclick="cloneRows(occ_tbl)" />
-      <input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">
+      <p>
+        <input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">
+        <input type="button" value="add row"  onclick="cloneRows(occ_tbl)" />
+      </p>
+      <p>
+        <input type="button" value="calc" onclick="showSumByGroup('occurrence', 'Cover', 'Layer', 'calc_result')">
+        <span  id='calc_result'></span>
+      </p>
 
       <script>
         // variables for sotable table
