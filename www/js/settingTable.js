@@ -1,3 +1,47 @@
+function createSpanSettings(ns){
+  // main-span
+  var main = document.getElementById('setting');
+  var span = document.createElement('span');
+  span.setAttribute("id", ns + "_span");
+  main.appendChild(span);
+  // span-contents
+  var contents = document.createElement('span');
+  contents.setAttribute("id", ns + "_contents");
+  contents.style.display  = "block"; // default: show contents
+  // contents
+  contents.appendChild(createSetting(       ns + "_table", "data." + ns + "_json"));
+  contents.appendChild(createInputNrow(     ns + "_table_n_row"     ));
+  contents.appendChild(createButtonAddRow(  ns + "_table"           ));  // input: table name to add rows
+  contents.appendChild(createButtonNewTable(ns + "_new_table"       ));
+  span.appendChild(contents);
+
+  // switch to hide/show
+  span.appendChild(createButtonHideShow(ns + "_contents" ));
+  span.appendChild(document.createElement('hr'));
+}
+
+// Create captions for settings
+function createInputNrow(id_input){
+  return createInput({ id: id_input, type: "number", value: "3", step: "1", min: "1", max:"20" });
+}
+function createButtonAddRow(table){
+  return createInput({ type: "button", value: "add row", onclick: "cloneRows('" + table + "')" });
+}
+function createButtonNewTable(id_table){
+  var name = id_table.split('_')[0]; // meta, plot, occ
+  return createInput({ type: "button", value: "Create new " + name + " table", 
+    onclick: "createOccurrenceTable('setting', name+'-setting', name+'-table')" });
+}
+function createButtonHideShow(id){
+  return createInput({ type: "button", value: "show / hide", onclick: "switchHideShow('" + id +"')" })
+}
+function switchHideShow(id){
+  var contents = document.getElementById(id);
+  if(contents.style.display=="block"){ contents.style.display = "none";  }  // show -> hide
+  else                               { contents.style.display = "block"; }  // hide -> show
+}
+
+
 function createTd(child){
   var td = document.createElement('td');
   td.appendChild(child);
@@ -8,6 +52,58 @@ function createTd(child){
 //    TODO: Write documents !!!!!!!!!!!!
 //    
 //    
+function createSetting(id_table, json){
+// var json = data.stand_json;
+// var id_table = "setting_stand";
+  var json = eval(json);  // convert String to JSON object
+  // // // settings // // // 
+  // data.stand_json: item, type, value, option, hide
+  for(key of jsonKeys(json)){
+    eval("var " + key + " = extractJson(json)['" + key + "'];");
+  }
+  var heads = jsonKeys(json);
+  const data_types = data.data_types;
+
+  // table
+  var table = document.createElement('table');
+  table.setAttribute("id", id_table);
+
+  // head
+  var tr = document.createElement('tr');
+  for(head of heads){
+    var th = document.createElement('th');
+    th.innerHTML = head;
+    tr.appendChild(th);
+  }
+  table.appendChild(tr);
+
+  // body
+  for(let i = 0; i < json.length; i++){
+    var tr = document.createElement('tr');
+    // item
+    var td = createTd( createInput({ type: "text", value: item[i] }) );
+    tr.appendChild(td);
+    // type
+    var td = createTd( createSelectOpt( Array(type[i]).concat(data_types) ) );
+    tr.appendChild(td);
+    // value
+    var td = createTd( createInput({ type: "text", placeholder: option[i] }) );
+    tr.appendChild(td);
+    // option
+    var td = createTd( createInput({ type: "text", value: value[i] }) );
+    tr.appendChild(td);
+    // show/hide checkbox
+    var td = createTd( createInput({ type: "checkbox", onclick: "hideCol('occurrence')" }) );
+    tr.appendChild(td);
+    // delButton
+    var td = createTd( createDelButton() );
+    tr.appendChild(td);
+    // append
+    table.appendChild(tr);
+  }
+  return table;
+}
+
 function createSettingTable(id_span, id_table, json){
 // var json = data.stand_json;
 // var id_span = "setting_stand";
@@ -156,9 +252,7 @@ function createSelectOpt(list, selected_no = 0){
 
 
 // Helper to create input tag with class, id, type, value, and placeholder
-function createInput( {type = "text", value = null, placeholder = null, 
-  checked = null, max = null, min = null, step = null, 
-  inputmode = null, onclick = null, required = null, id = null, clss = null} ){
+function createInput({type = "text", value = null, placeholder = null, checked = null, max = null, min = null, step = null, inputmode = null, onclick = null, required = null, id = null, clss = null }){
   var input = document.createElement('input');
   if( type        != null){ input.setAttribute("type"       , type       ); }
   if( value       != null){ input.setAttribute("value"      , value      ); }
@@ -171,6 +265,8 @@ function createInput( {type = "text", value = null, placeholder = null,
   if( onclick     != null){ input.setAttribute("onclick"    , onclick    ); }
   if( required    != null){ input.setAttribute("required"   , required   ); }
   if( id          != null){ input.setAttribute("id"         , id         ); }
+  if( clss        != null){ input.setAttribute("class"      , clss       ); }
+  return input;
 }
 
 // Helper to create input tag with class, id, type, value, and placeholder (old version)

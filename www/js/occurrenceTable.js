@@ -76,20 +76,6 @@ function createInputTd(dat_types, col_names, optionals){
   return td;
 }
 
-function createInput( {type = "text", value = null, placeholder = null, checked = null, max = null, min = null, inputmode = null, onclick = null, required = null} ){
-  var input = document.createElement('input');
-  if( type        != null){ input.setAttribute("type"       , type       ); }
-  if( value       != null){ input.setAttribute("value"      , value      ); }
-  if( placeholder != null){ input.setAttribute("placeholder", placeholder); }
-  if( checked     != null){ input.setAttribute("checked"    , checked    ); }
-  if( max         != null){ input.setAttribute("max"        , max        ); }
-  if( min         != null){ input.setAttribute("min"        , min        ); }
-  if( inputmode   != null){ input.setAttribute("inputmode"  , inputmode  ); }
-  if( onclick     != null){ input.setAttribute("onclick"    , onclick    ); }
-  if( required    != null){ input.setAttribute("required"   , required   ); }
-  return input;
-}
-
 // Create delete button
 function createDelButton(){
   return createInput({ type: "button", value: "DELETE", onclick: "deleteRow(this)" });
@@ -125,7 +111,7 @@ function addTh(tr, col_name){
 
 // Helper to call cloneRow() multiple times
 function cloneRows(id_table){
-  const n_row = document.getElementById("clone_n_row").value;
+  const n_row = document.getElementById(id_table + "_n_row").value;
   for(let i=0; i<n_row; i++) cloneRow(id_table)
 }
 

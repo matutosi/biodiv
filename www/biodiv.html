@@ -79,73 +79,28 @@
 
 <p>
 Biodiversity Investigation System (BIS)
-
 <!--            Switch full screen           -->
-<input type="button" value="Switch screan show"  onclick="switchFullScreen()" />
+<input id="switch_screen_show" type="button" value="TO FULL SCREEN"  onclick="switchScreenShow(this.id)" />
 </p>
 
-
 <div class="sample-area">
-
   <p id="tabcontrol">
     <a href="#tab1">Settings</a>
     <a href="#tab2">Inputs</a>
-    <a href="#tab3">tools</a>
+    <a href="#tab3">Tools</a>
     <a href="#tab4">tab4</a>
   </p>
 
   <div id="tabbody">
     <div id="tab1">
-<!--  
-      <table id="table_setting"></table>
-      <script>
-        createSettingTable('table_setting')
-      </script>
-      <p>
-        <input type="button" value="create occurrence table"  onclick="createOccurrenceTable(occ_tbl)" />
-      </p>
--->
       <span id="setting"></span>
-      <script>
-        createSettingTable("setting", "setting_meta", data.meta_json);
-//        createSettingTable("setting", "setting_stand", data.stand_json);
-      </script>
-      <input id="clone_n_row" type="number" value="3" step="1", min="1" max="20">
-      <input type="button" value="add row"  onclick="cloneRows('setting_meta')" />
-      <input type="button" value="Create meta table"  onclick="createOccurrenceTable('setting', 'setting_meta', 'stand_table')" />
-
-      <hr>
 
       <script>
-        createSettingTable("setting", "setting_plot", data.plot_json);
-
-function createInputNrow(ns){
-  return createInput({ id: ns+"n_row", type: "number", value: "3", step: "1", min: "1", max:"20" });
-}
-function createButtonAddRow(ns){
-  return createInput({ type: "button", value: "add row", onclick: "cloneRows(ns+'setting_plot'" });
-}
-function createButtonNewTable(ns){
-  return createInput({ type: "button", value: "Create new " + ns + " table", 
-    onclick: "createOccurrenceTable('setting', 'setting_'+ns, ns+'_table')" });
-}
-
-
-  var span = document.getElementById("setting");
-  span.appendChild(createInputNrow("plot"));
-  span.appendChild(createButtonAddRow("plot"));
-  span.appendChild(createButtonNewTable("plot"));
-
+        createSpanSettings("meta_setting");
+        createSpanSettings("plot_setting");
+        createSpanSettings("occ_setting");
       </script>
 
-
-      <hr>
-
-      <script>
-        createSettingTable("setting", "setting_occ", data.occ_json);
-      </script>
-      <input id="clone_n_row" type="number" value="3" step="1", min="1" max="20">
-      <input type="button" value="add row"  onclick="cloneRows('setting_occ')" />
     </div>
 
 
@@ -160,6 +115,7 @@ function createButtonNewTable(ns){
         <input type="button" value="calc" onclick="showSumByGroup('occurrence', 'Cover', 'Layer', 'calc_result')">
         <span  id='calc_result'></span>
       </p>
+      </script>
 
       <script>
         // variables for sotable table
