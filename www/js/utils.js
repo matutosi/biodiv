@@ -6,6 +6,11 @@
 // ocnsole.log(sumByGroup("occurrence", "Cover", "Layer"))
 
 
+// Unique array
+function uniq(array){
+  return Array.from(new Set(array));
+}
+
 // Convert hasy array table
 //    In progress: can not convert hasy that has array as a value
 //    @example 
