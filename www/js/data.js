@@ -1,20 +1,20 @@
 // Data for default settings
 //    
 //    data_types: input data types in setting table.
-//    plot_json : plot settings.
+//    plot-setting-json : plot settings.
 //    occ_json  : occurrence settings.
 //    @examples
 //    data.data_types;
-//    data.plot_json[0].item;
+//    data.plot-setting-json[0].item;
 //    data.occ_json;
 const data = {
   data_types: ["auto", "button", "checkbox", "fixed", "list", "text", "number"],
 
-  meta_json: [{"item":"Project","type":"fixed","value":" ","option":"Biodiv","hide":" ","delButton":" "},{"item":"Investigator","type":"text"},{"item":"delButton","type":"button","option":"Don't change"},{"item":"Date","type":"auto","option":"Don't change"},{"item":"No","type":"auto","option":"Don't change"},{"item":"Location","type":"text"}],
+  meta_setting_json: [{"item":"Project","type":"fixed","value":" ","option":"Biodiv","hide":" ","delButton":" "},{"item":"Investigator","type":"text"},{"item":"delButton","type":"button","option":"Don't change"},{"item":"Date","type":"auto","option":"Don't change"},{"item":"No","type":"auto","option":"Don't change"},{"item":"Location","type":"text"}],
 
-  plot_json: [{"item":"Investigator","type":"text","value":" ","option":" ","hide":" ","delButton":" "},{"item":"delButton","type":"button","option":"Don't change"},{"item":"Date","type":"auto","option":"Don't change"},{"item":"No","type":"auto","option":"Don't change"},{"item":"Location","type":"text"},{"item":"Plot","type":"text"},{"item":"locLatitude","type":"auto","option":"Don't change"},{"item":"locLongitude","type":"auto","option":"Don't change"},{"item":"locAccurracy","type":"auto","option":"Don't change"},{"item":"Altitude","type":"number"},{"item":"Aspect","type":"text"},{"item":"Inclination","type":"number"},{"item":"B1Height","type":"number"},{"item":"B1Cover","type":"number"},{"item":"B2Height","type":"number"},{"item":"B2Cover","type":"number"},{"item":"S1Height","type":"number"},{"item":"S1Cover","type":"number"},{"item":"S2Height","type":"number"},{"item":"S21Cover","type":"number"},{"item":"K1Hieght","type":"number"},{"item":"K1Cover","type":"number"},{"item":"Memo"}],
+  plot_setting_json: [{"item":"Investigator","type":"text","value":" ","option":" ","hide":" ","delButton":" "},{"item":"delButton","type":"button","option":"Don't change"},{"item":"Date","type":"auto","option":"Don't change"},{"item":"No","type":"auto","option":"Don't change"},{"item":"Location","type":"text"},{"item":"Plot","type":"text"},{"item":"locLatitude","type":"auto","option":"Don't change"},{"item":"locLongitude","type":"auto","option":"Don't change"},{"item":"locAccurracy","type":"auto","option":"Don't change"},{"item":"Altitude","type":"number"},{"item":"Aspect","type":"text"},{"item":"Inclination","type":"number"},{"item":"B1Height","type":"number"},{"item":"B1Cover","type":"number"},{"item":"B2Height","type":"number"},{"item":"B2Cover","type":"number"},{"item":"S1Height","type":"number"},{"item":"S1Cover","type":"number"},{"item":"S2Height","type":"number"},{"item":"S21Cover","type":"number"},{"item":"K1Hieght","type":"number"},{"item":"K1Cover","type":"number"},{"item":"Memo"}],
 
-  occ_json: [{"item":"Date","type":"auto","value":" ","option":"Don't change","hide":" ","delButton":" "},{"item":"locLat","type":"auto","option":"Don't change"},{"item":"locLon","type":"auto","option":"Don't change"},{"item":"locAcc","type":"auto","option":"Don't change"},{"item":"delButton","type":"button","option":"Don't change"},{"item":"No","type":"auto"},{"item":"Identified","type":"checkbox"},{"item":"Sampled","type":"checkbox"},{"item":"Plot","type":"fixed","value":"Plot_01"},{"item":"Layer","type":"list","value":"B1;B2;S1;S2;K"},{"item":"Species","type":"text"},{"item":"Cover","type":"number"},{"item":"Memo","type":"text"}],
+  occ_setting_json: [{"item":"Date","type":"auto","value":" ","option":"Don't change","hide":" ","delButton":" "},{"item":"locLat","type":"auto","option":"Don't change"},{"item":"locLon","type":"auto","option":"Don't change"},{"item":"locAcc","type":"auto","option":"Don't change"},{"item":"delButton","type":"button","option":"Don't change"},{"item":"No","type":"auto"},{"item":"Identified","type":"checkbox"},{"item":"Sampled","type":"checkbox"},{"item":"Plot","type":"fixed","value":"Plot_01"},{"item":"Layer","type":"list","value":"B1;B2;S1;S2;K"},{"item":"Species","type":"text"},{"item":"Cover","type":"number"},{"item":"Memo","type":"text"}],
 };
 
 // arrange JSON https://tools.m-bsys.com/development_tooles/json-beautifier.php
