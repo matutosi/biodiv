@@ -1,68 +1,74 @@
 // Data for default settings
 //    
 //    data_types: input data types in setting table.
-//    stand_json : stand settings.
+//    plot_json : plot settings.
 //    occ_json  : occurrence settings.
 //    @examples
 //    data.data_types;
-//    data.stand_json[0].item;
+//    data.plot_json[0].item;
 //    data.occ_json;
 const data = {
   data_types: ["auto", "button", "checkbox", "fixed", "list", "text", "number"],
 
-  stand_json: [{"item":"Project","type":"fixed","value":"","option":"Biodiv","hide":""},{"item":"Investigator","type":"text","value":"","option":"","hide":""},{"item":"Date","type":"auto","value":"","option":"","hide":""},{"item":"Location","type":"text","value":"","option":"","hide":""},{"item":"No","type":"auto","value":"","option":"","hide":""},{"item":"Stand","type":"text","value":"","option":"","hide":""},{"item":"locLatitude","type":"auto","value":"","option":"","hide":""},{"item":"locLongitude","type":"auto","value":"","option":"","hide":""},{"item":"locAccurracy","type":"auto","value":"","option":"","hide":""},{"item":"Altitude","type":"number","value":"","option":"","hide":""},{"item":"Aspect","type":"text","value":"","option":"","hide":""},{"item":"Inclination","type":"number","value":"","option":"","hide":""},{"item":"B1Height","type":"number","value":"","option":"","hide":""},{"item":"B1Cover","type":"number","value":"","option":"","hide":""},{"item":"B2Height","type":"number","value":"","option":"","hide":""},{"item":"B2Cover","type":"number","value":"","option":"","hide":""},{"item":"S1Height","type":"number","value":"","option":"","hide":""},{"item":"S1Cover","type":"number","value":"","option":"","hide":""},{"item":"S2Height","type":"number","value":"","option":"","hide":""},{"item":"S21Cover","type":"number","value":"","option":"","hide":""},{"item":"K1Hieght","type":"number","value":"","option":"","hide":""},{"item":"K1Cover","type":"number","value":"","option":"","hide":""},{"item":"memo","type":"text","value":"","option":"","hide":""},{"item":"","type":"","value":"","option":"","hide":""},{"item":"","type":"","value":"","option":"","hide":""},{"item":"","type":"","value":"","option":"","hide":""}],
+  meta_json: [{"item":"Project","type":"fixed","value":" ","option":"Biodiv","hide":" ","delButton":" "},{"item":"Investigator","type":"text"},{"item":"delButton","type":"button","option":"Don't change"},{"item":"Date","type":"auto","option":"Don't change"},{"item":"No","type":"auto","option":"Don't change"},{"item":"Location","type":"text"}],
 
-  occ_json: [{"item":"date","type":"auto","value":"","option":"","hide":""},{"item":"locLat","type":"auto","value":"","option":"","hide":""},{"item":"locLon","type":"auto","value":"","option":"","hide":""},{"item":"locAcc","type":"auto","value":"","option":"","hide":""},{"item":"delButton","type":"button","value":"","option":"","hide":""},{"item":"no","type":"auto","value":"","option":"","hide":""},{"item":"Identified","type":"checkbox","value":"","option":"","hide":""},{"item":"Sampled","type":"checkbox","value":"","option":"","hide":""},{"item":"Stand","type":"fixed","value":"Stand_01","option":"","hide":""},{"item":"Layer","type":"list","value":"B1;B2;S1;S2;K","option":"","hide":""},{"item":"Species","type":"text","value":"","option":"","hide":""},{"item":"Cover","type":"number","value":"","option":"","hide":""},{"item":"memo","type":"text","value":"","option":"","hide":""},{"item":"","type":"","value":"","option":"optional","hide":""},{"item":"","type":"","value":"","option":"optional","hide":""},{"item":"","type":"","value":"","option":"optional","hide":""}]
+  plot_json: [{"item":"Investigator","type":"text","value":" ","option":" ","hide":" ","delButton":" "},{"item":"delButton","type":"button","option":"Don't change"},{"item":"Date","type":"auto","option":"Don't change"},{"item":"No","type":"auto","option":"Don't change"},{"item":"Location","type":"text"},{"item":"Plot","type":"text"},{"item":"locLatitude","type":"auto","option":"Don't change"},{"item":"locLongitude","type":"auto","option":"Don't change"},{"item":"locAccurracy","type":"auto","option":"Don't change"},{"item":"Altitude","type":"number"},{"item":"Aspect","type":"text"},{"item":"Inclination","type":"number"},{"item":"B1Height","type":"number"},{"item":"B1Cover","type":"number"},{"item":"B2Height","type":"number"},{"item":"B2Cover","type":"number"},{"item":"S1Height","type":"number"},{"item":"S1Cover","type":"number"},{"item":"S2Height","type":"number"},{"item":"S21Cover","type":"number"},{"item":"K1Hieght","type":"number"},{"item":"K1Cover","type":"number"},{"item":"Memo"}],
+
+  occ_json: [{"item":"Date","type":"auto","value":" ","option":"Don't change","hide":" ","delButton":" "},{"item":"locLat","type":"auto","option":"Don't change"},{"item":"locLon","type":"auto","option":"Don't change"},{"item":"locAcc","type":"auto","option":"Don't change"},{"item":"delButton","type":"button","option":"Don't change"},{"item":"No","type":"auto"},{"item":"Identified","type":"checkbox"},{"item":"Sampled","type":"checkbox"},{"item":"Plot","type":"fixed","value":"Plot_01"},{"item":"Layer","type":"list","value":"B1;B2;S1;S2;K"},{"item":"Species","type":"text"},{"item":"Cover","type":"number"},{"item":"Memo","type":"text"}],
 };
 
 // arrange JSON https://tools.m-bsys.com/development_tooles/json-beautifier.php
 // csv2JSON https://www.site24x7.com/ja/tools/csv-to-json.html
 // JSON2csv https://qiita.com/_s_/items/79c24b62cebb02e9304a
 // 
-// stand_csv
-// item,type,value,option,hide
-// Project,fixed,,Biodiv,
-// Investigator,text,,,
-// Date,auto,,,
-// Location,text,,,
-// No,auto,,,
-// Stand,text,,,
-// locLatitude,auto,,,
-// locLongitude,auto,,,
-// locAccurracy,auto,,,
-// Altitude,number,,,
-// Aspect,text,,,
-// Inclination,number,,,
-// B1Height,number,,,
-// B1Cover,number,,,
-// B2Height,number,,,
-// B2Cover,number,,,
-// S1Height,number,,,
-// S1Cover,number,,,
-// S2Height,number,,,
-// S21Cover,number,,,
-// K1Hieght,number,,,
-// K1Cover,number,,,
-// memo,,,,
-// ,,,,
-// ,,,,
-// ,,,,
+// meta_tsv
+// item	type	value	option	hide	delButton
+// Project	fixed	 	Biodiv	 	 
+// Investigator	text				
+// delButton	button		Don't change		
+// Date	auto		Don't change		
+// No	auto		Don't change		
+// Location	text				
+// 
+// plot_tsv
+// item	type	value	option	hide	delButton
+// Investigator	text	 	 	 	 
+// delButton	button		Don't change		
+// Date	auto		Don't change		
+// No	auto		Don't change		
+// Location	text				
+// Plot	text				
+// locLatitude	auto		Don't change		
+// locLongitude	auto		Don't change		
+// locAccurracy	auto		Don't change		
+// Altitude	number				
+// Aspect	text				
+// Inclination	number				
+// B1Height	number				
+// B1Cover	number				
+// B2Height	number				
+// B2Cover	number				
+// S1Height	number				
+// S1Cover	number				
+// S2Height	number				
+// S21Cover	number				
+// K1Hieght	number				
+// K1Cover	number				
+// Memo					
+// 		 	 	 	 
 // 
 // occ_csv
-// item,type,value,option,hide
-// date,auto,,,
-// locLat,auto,,,
-// locLon,auto,,,
-// locAcc,auto,,,
-// delButton,button,,,
-// no,auto,,,
-// Identified,checkbox,,,
-// Sampled,checkbox,,,
-// Stand,fixed,Stand_01,,
-// Layer,list,B1;B2;S1;S2;K,,
-// Species,text,,,
-// Cover,number,,,
-// memo,text,,,
-// ,,,optional,
-// ,,,optional,
-// ,,,optional,
+// item	type	value	option	hide	delButton
+// Date	auto	 	Don't change	 	 
+// locLat	auto		Don't change		
+// locLon	auto		Don't change		
+// locAcc	auto		Don't change		
+// delButton	button		Don't change		
+// No	auto				
+// Identified	checkbox				
+// Sampled	checkbox				
+// Plot	fixed	Plot_01			
+// Layer	list	B1;B2;S1;S2;K			
+// Species	text				
+// Cover	number				
+// Memo	text				
