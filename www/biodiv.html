@@ -24,8 +24,6 @@
     <link rel="stylesheet" href="css/fullScreen.css">
 
   <script> // test script
-
-
   </script>
 
   <script>
@@ -81,6 +79,7 @@ Biodiversity Investigation System (BIS)
     <div id="tab2">
       <span id="input"></span>
 
+
       <input type="search" id="search_text" onkeyup="searchTable('occurrence', this.id)" placeholder="Search text input">
       <table id='occurrence'></table>
       <p>
@@ -91,7 +90,41 @@ Biodiversity Investigation System (BIS)
         <input type="button" value="calc" onclick="showSumByGroup('occurrence', 'Cover', 'Layer', 'calc_result')">
         <span  id='calc_result'></span>
       </p>
-      </script>
+<script>
+function createInputTable(ns){
+  var span = document.getElementById(ns + "");
+
+// ? function createInputSearch(){}
+  var id = ns + "search_text";
+  var onkeyup = "searchTable('" + ns + "', this.id)";
+  span.appendChild(createInput({ type:"search", id: id, onkeyup: onkeyup,  placeholder: "Search text input" }));
+
+// ? function createTable(){}
+  var table = document.createElement('table');
+  table.setAttribute("id", ns);
+  span.appendChild(table);
+
+  span.appendChild(createInputNrow(     ns + "_table_n_row"     ));
+  span.appendChild(createButtonAddRow(  ns + "_table"           ));  // input: table name to add rows
+
+// ? function createButtonCalc(){}
+  var onclick = "showSumByGroup('occ" + ns + "', 'Cover', 'Layer', '" + ns + "calc_result')"; 
+  span.appendChild(createInput({ type: "Button", value: "Calculate", onclick: onclick }));
+
+  var span_calc_result = document.createElement('span');
+  span_calc_result.setAttribute("id", ns + "calc_result");
+  span.appendChild(span_calc_result);
+
+// <input type="search" id="search_text" onkeyup="searchTable('occ', this.id)" placeholder="Search text input">
+// <table id='occ'></table>
+// <input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">
+// <input type="button" value="add row"  onclick="cloneRows(occ_tbl)" />
+// <input type="button" value="calc" onclick="showSumByGroup('occ', 'Cover', 'Layer', 'calc_result')">
+// <span  id='calc_result'></span>
+
+}
+</script>
+
 
       <script>
         // variables for sotable table
@@ -101,24 +134,6 @@ Biodiversity Investigation System (BIS)
         var dir = "asc";
       </script>
 
-      <script>
-      //  <p id="table">
-      //   <!--  Test code for generate ENTIRELY NEW table  -->
-      // TODO: generate ENTIRELY NEW table for each plotrow_rj
-      // get table name from input tag as text and use itrow_rj
-      //   <input id="new_table_name" type="text"  placeholder="table name: stand_01" />row_rj
-      //   <input type="button" value="create occurrence table"  onclick="createNewOccurrenceTable()" />row_rj
-      // TODO: generate add row button and clone_n_row input like belowrow_rj
-      // <input type="button" value="add row"  onclick="cloneRows()" />row_rj
-      // <input id="clone_n_row" type="number" value="5" step="1", min="1" max="20">row_rj
-      //   function generateTable(id_table){
-      //     table = document.createElement('table');
-      //     table.setAttribute('id', id_table);
-      //     document.getElementById('table').appendChild(table);
-      //   }
-      //   generateTable("a");
-      //  generateTable("b");
-      </script>
 
     </div>
     <div id="tab3">
