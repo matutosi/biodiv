@@ -23,28 +23,16 @@
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/fullScreen.css">
 
-<script>
-// js/occurrenceTable.js(18):   const col_names = getFirstChild(document.getElementsByClassName("ts_cnames"));
-// occurrenceTable.js(19):   const dat_types = getFirstChild(document.getElementsByClassName("ts_itypes"));
-// occurrenceTable.js(20):   const optionals = getFirstChild(document.getElementsByClassName("ts_option"));
-// getTableData("setting_stand")
+  <script> // test script
 
-</script>
 
+  </script>
 
   <script>
   // // // // // // // // // // // // // // // // // // // 
   // 
   // TODO: 
   //    var -> const ?
-  //    Can remove data_id if do not use it
-  //    Can remove class in data table if do not use it
-  //    
-  //    Compute cover in each layer
-  //    generate 2 selectOpt tag with options (colnames)
-  //        group
-  //        caluculate: sum, mean, max, min
-  // 
   // // // // // // // // // // // // // // // // // // // 
 
   // Get data from a table for download
@@ -59,23 +47,9 @@
   // https://qiita.com/w-tdon/items/81034bd3006806f7d7c3
   </script>
 
-
-  <script>
-  // // // // // // // // // // // // // // // // // // // 
-  // 
-  //       tab (OK)
-  // 
-  // // // // // // // // // // // // // // // // // // // 
-  // https://allabout.co.jp/gm/gc/23969/
-  // tab.html
-  // tab.js
-  // tab.css
-  </script>
-
 </head>
 
 <body>
-
 
 <p>
 Biodiversity Investigation System (BIS)
@@ -105,6 +79,8 @@ Biodiversity Investigation System (BIS)
 
 
     <div id="tab2">
+      <span id="input"></span>
+
       <input type="search" id="search_text" onkeyup="searchTable('occurrence', this.id)" placeholder="Search text input">
       <table id='occurrence'></table>
       <p>
