@@ -1,7 +1,7 @@
 function createSpanSettings(ns){
   // main-subtitle
   var main = document.getElementById('setting');
-  var subtitle = document.createElement('h2');
+  var subtitle = document.createElement('strong');
   subtitle.innerHTML = ns;
   main.appendChild(subtitle);
   main.appendChild(createButtonHideShow(ns + "_contents" ));
@@ -32,8 +32,10 @@ function createButtonAddRow(table){
 }
 function createButtonNewTable(id_table){
   var name = id_table.split('_')[0]; // meta, plot, occ
-  return createInput({ type: "button", value: "Create new " + name + " table", 
-    onclick: "createOccurrenceTable('setting', name + '-setting', name + '-table')" });
+  var value = "Create new " + name + " table";
+  var onclick = "createOccurrenceTable('input', '" + name + "_setting_table', '" + name + "_table')"
+  // console.log(onclick);
+  return createInput({ type: "button", value: value, onclick: onclick });
 }
 function createButtonHideShow(id_span){
   var id      = id_span + "_hide_show";
@@ -50,7 +52,6 @@ function switchHideShow(id_span, button){
     button.setAttribute("value", "Hide table");
   }
 }
-
 
 function createTd(child){
   var td = document.createElement('td');
@@ -262,31 +263,14 @@ function createSelectOpt(list, selected_no = 0){
 
 
 // Helper to create input tag with class, id, type, value, and placeholder
-function createInput({type = "text", value = null, placeholder = null, checked = null, max = null, min = null, step = null, inputmode = null, onclick = null, required = null, id = null, clss = null }){
+//    @example
+//    createInput({ type: "text", value: "Val"});
+//    createInput({ type: "button", value: "Push here"});
+function createInput( ...args ){
   var input = document.createElement('input');
-  if( type        != null){ input.setAttribute("type"       , type       ); }
-  if( value       != null){ input.setAttribute("value"      , value      ); }
-  if( placeholder != null){ input.setAttribute("placeholder", placeholder); }
-  if( checked     != null){ input.setAttribute("checked"    , checked    ); }
-  if( step        != null){ input.setAttribute("step"       , step       ); }
-  if( max         != null){ input.setAttribute("max"        , max        ); }
-  if( min         != null){ input.setAttribute("min"        , min        ); }
-  if( inputmode   != null){ input.setAttribute("inputmode"  , inputmode  ); }
-  if( onclick     != null){ input.setAttribute("onclick"    , onclick    ); }
-  if( required    != null){ input.setAttribute("required"   , required   ); }
-  if( id          != null){ input.setAttribute("id"         , id         ); }
-  if( clss        != null){ input.setAttribute("class"      , clss       ); }
+  var keys  = Object.keys(args[0]);
+  for(key of keys){
+    input.setAttribute(key, args[0][key]);
+  }
   return input;
 }
-
-// Helper to create input tag with class, id, type, value, and placeholder (old version)
-function createInput_1(ty, va, pl, on, im){
-  var input = document.createElement('input');
-  input.setAttribute("type"       , ty);
-  input.setAttribute("value"      , va);
-  input.setAttribute("placeholder", pl);
-  input.setAttribute("onclick"    , on);
-  input.setAttribute("inputmode"  , im);
-  return input;
-}
-
