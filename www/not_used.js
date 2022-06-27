@@ -163,3 +163,32 @@ function sortTable(id_table){
   }
 }
 
+// Helper to create input tag with class, id, type, value, and placeholder (old version)
+function createInput_2({type = "text", value = null, placeholder = null, checked = null, max = null, min = null, step = null, inputmode = null, onclick = null, required = null, id = null, clss = null }){
+  var input = document.createElement('input');
+  if( type        != null){ input.setAttribute("type"       , type       ); }
+  if( value       != null){ input.setAttribute("value"      , value      ); }
+  if( placeholder != null){ input.setAttribute("placeholder", placeholder); }
+  if( checked     != null){ input.setAttribute("checked"    , checked    ); }
+  if( step        != null){ input.setAttribute("step"       , step       ); }
+  if( max         != null){ input.setAttribute("max"        , max        ); }
+  if( min         != null){ input.setAttribute("min"        , min        ); }
+  if( inputmode   != null){ input.setAttribute("inputmode"  , inputmode  ); }
+  if( onclick     != null){ input.setAttribute("onclick"    , onclick    ); }
+  if( required    != null){ input.setAttribute("required"   , required   ); }
+  if( id          != null){ input.setAttribute("id"         , id         ); }
+  if( clss        != null){ input.setAttribute("class"      , clss       ); }
+  return input;
+}
+
+// Helper to create input tag with class, id, type, value, and placeholder (old version)
+function createInput_1(ty, va, pl, on, im){
+  var input = document.createElement('input');
+  input.setAttribute("type"       , ty);
+  input.setAttribute("value"      , va);
+  input.setAttribute("placeholder", pl);
+  input.setAttribute("onclick"    , on);
+  input.setAttribute("inputmode"  , im);
+  return input;
+}
+
