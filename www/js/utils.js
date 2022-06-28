@@ -22,21 +22,15 @@ function hash2table(hash_array){
   var table = document.createElement('table');
   for(let i = 0; i < Object.keys(hash_array).length; i++){
     var tr = document.createElement('tr');
-  //     var td = document.createElement("td");
-  //     td.textContent = Object.keys(hash_array)[i];
-  //     tr.appendChild(td);
     tr.appendChild( crElAtIhTc({ el: 'td', tc: Object.keys(hash_array)[i] }) );
-  //     var td = document.createElement("td");
-  //     td.textContent = Object.values(hash_array)[i];
-  //     tr.appendChild(td);
-    tr.appendChild( crElAtIhTc({ el: 'td', ih: Object.values(hash_array)[i] }); );
-    tr.appendChild(td);
+    tr.appendChild( crElAtIhTc({ el: 'td', ih: Object.values(hash_array)[i] }) );
     table.appendChild(tr);
   }
   return table
 }
 
 function showSumByGroup(id_table, array, group, id_show){
+  // console.log(id_table + ", " + array + ", " + group + ", " + id_show);
   const table = sumByGroup(id_table, array, group);
   document.getElementById(id_show).appendChild(table);
 }
@@ -45,7 +39,7 @@ function showSumByGroup(id_table, array, group, id_show){
 //     sumByGroup("occurrence", "Cover", "Layer")
 //     
 function sumByGroup(id_table, array, group){
-  // var id_table = "occurrence";
+  // var id_table = "occ_input_table";
   // var array = "Cover";
   // var group = "Layer";
   var table = document.getElementById(id_table);
@@ -62,8 +56,8 @@ function sumByGroup(id_table, array, group){
     }
   }
   // use all select options
+  var col_no = getColNames(table).indexOf(group);
   if(getDataType(table)[col_no] === "select_option"){
-    var col_no = getColNames(table).indexOf(group);
     var all_groups = getSelectOptionInCell(table.rows[1].cells[col_no].firstChild); 
     var ordered_sum_array = [];
     for(let i=0; i < all_groups.length; i++){
@@ -78,14 +72,8 @@ function sumByGroup(id_table, array, group){
   sum = hash2table(sum);
   // add th
   var tr = document.createElement('tr');
-  //   var th = document.createElement("th");
-  //   th.textContent = array;
-  //   tr.appendChild(th);
-  tr.appendChild( crElAtIhTc({ el: 'th', tc: array }); );
-  //   var th = document.createElement("th");
-  //   th.textContent = group;
-  //   tr.appendChild(th);
-  tr.appendChild( crElAtIhTc({ el: 'th', tc: group }); );
+  tr.appendChild( crElAtIhTc({ el: 'th', tc: group }) );
+  tr.appendChild( crElAtIhTc({ el: 'th', tc: array }) );
   // add as header
   sum.insertBefore(tr, sum.firstChild);
   return sum;
@@ -95,13 +83,19 @@ function sumByGroup(id_table, array, group){
 //    @params id_table A string.
 //    @params col_name A string.
 //    @return An array.
-function getColData(table, col_name){
+function getColData(table, col_name, list_with_index=false){
+  // var table = document.getElementById("meta_setting_table");
+  // var col_name = "type";
   const col_no   = getColNames(table).indexOf(col_name);
   const col_type = getDataType(table)[col_no];
   var group_value = [];
   for(Ri = 0; Ri < table.rows.length - 1; Ri++){
     // except th (rows[0])
-    group_value[Ri] = getCellData(table.rows[Ri + 1].cells[col_no], col_type);
+    if(list_with_index && col_type === "select_option"){
+      group_value[Ri] = table.rows[Ri + 1].cells[col_no].firstChild.selectedIndex;
+    } else {
+      group_value[Ri] = getCellData(table.rows[Ri + 1].cells[col_no], col_type);
+    }
   }
   return group_value;
 }
@@ -245,51 +239,6 @@ function getDataType(table){
   return data_type;
 }
 
-// Helper to get first child from html elements
-//    @params elements   html elements by document.getElementsByClassName()
-//    @return        An array.
-function getFirstChild(elements){
-  var res = [];
-  for(let i = 0; i < elements.length; i++){ res[i] = elements[i].firstChild; }
-  return res
-}
-
-// Helper to get values from input objects
-//    @params objs   list objects by document.getElementsByClassName()
-//    @return        An array.
-function getValues(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
-  return res
-}
-
-// Helper to get checked (Boolean) from input objects
-//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
-//    @return        An array.
-function getChecked(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].checked; }
-  return res
-}
-
-// Helper to get selectedIndex from input objects
-//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
-//    @return        An array.
-function getSelectedIndex(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].selectedIndex; }
-  return res
-}
-
-// Helper to get innerHTML from input objects
-//    @params objs   list objects by document.getElementsByClassName()
-//    @return        An array.
-function getInnerHTML(objs){
-  var res = [];
-  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].innerHTML; }
-  return res
-}
-
 function getColNames(table){
   const row_0 = table.rows[0];
   const col_names = [];
@@ -297,32 +246,6 @@ function getColNames(table){
     col_names[Ri] = row_0.cells[Ri].innerHTML;
   }
   return col_names
-}
-
-// Helper to updateId: Get next id from id_items
-//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
-//    return "occ_date_005"
-//    
-// updateId('occ_date_001')
-// 'occ_date_001'.split("_").slice(0,-1).join("_");
-// getNextId('occ_date')
-function updateId(id){
-  var id_items = id.split("_").slice(0,-1).join("_");
-  return getNextId(id_items);
-}
-
-// Helper to updateId: Get next id from id_items
-//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
-//    return "occ_date_005"
-//    
-function getNextId(id_items){
-  var ids = [];
-  const items = document.getElementsByClassName(id_items);
-  for(it of items){
-    ids.push(Number(it.getAttribute("id").split("_").slice(-1)));
-  }
-  const max = Math.max.apply(Math, ids);
-  return id_items + "_" + String(max + 1).padStart(3, `0`);
 }
 
 // Get time like 2022_05_18_15_51_28: yyyy-mm-dd-hh-mm-ss
@@ -366,4 +289,3 @@ function crElAtIhTc({ el, ats, ih, tc }){
   if(tc != void 0){ ele.textContent = tc; }
   return ele;
 }
-crElAtIhTc({ el: 'p', ats: {id: "test"}, ih: "aa", tc: "text"})
