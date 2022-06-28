@@ -192,3 +192,120 @@ function createInput_1(ty, va, pl, on, im){
   return input;
 }
 
+
+// Helper to updateId: Get next id from id_items
+//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
+//    return "occ_date_005"
+//    
+// updateId('occ_date_001')
+// 'occ_date_001'.split("_").slice(0,-1).join("_");
+// getNextId('occ_date')
+function updateId(id){
+  var id_items = id.split("_").slice(0,-1).join("_");
+  return getNextId(id_items);
+}
+
+// Helper to updateId: Get next id from id_items
+//    class when id_items = "occ_date", which includes "occ_date_001", "occ_date_002", "occ_date_004",
+//    return "occ_date_005"
+//    
+function getNextId(id_items){
+  var ids = [];
+  const items = document.getElementsByClassName(id_items);
+  for(it of items){
+    ids.push(Number(it.getAttribute("id").split("_").slice(-1)));
+  }
+  const max = Math.max.apply(Math, ids);
+  return id_items + "_" + String(max + 1).padStart(3, `0`);
+}
+
+// Create occurrence table accoding to table settings
+//    Three columns as shown below will generate automatically.
+//        date (auto), delButton (button), no (auto)
+//        These columns should not be operated from users.
+//          "date" is hidden only recorded and output.
+//          "delButton" is hidden unless clicked "show delButton".
+//          "no" is only readable.
+//    Other columns will generate accoding to user input.
+//        col_name   : Any text. 
+//        input_typpe: Select from lists. 
+//                     Used as "types" in <input> tag.
+//        option     : Available in "fixed" and list "input_typpe". 
+//                     Omitted if other types are selected.
+// 
+function createOccurrenceTable(id_span, id_setting, id_table){
+// var id_table = "setting_occ"
+  // console.log(id_span);
+  // console.log(id_setting);
+  // console.log(id_table);
+  // var id_span    = "input";
+  // var id_setting = "meta_setting_table" ;
+  // var id_table   = "meta_table";
+  var setting_table = document.getElementById(id_setting);
+  var st_cnames = getColNames(setting_table);
+  const col_names = getColData(setting_table, st_cnames[0]);
+  const dat_types = getColData(setting_table, st_cnames[1]);
+  const optionals = getColData(setting_table, st_cnames[2]);
+  //   const optionals = getColData(table, col_names[3]);
+
+  // 
+  var table = document.createElement('table');
+  var span = document.getElementById(id_span);
+  span.appendChild(table);
+  createTable(table, col_names); // add th
+
+  var tr = document.createElement('tr');
+  for(let i = 0; i < col_names.length; i++){
+    if(col_names[i] !== ""){
+      var td = createInputTd(dat_types[i], col_names[i], optionals[i]);
+      tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+  setSortable(id_table);
+}
+
+// Helper to get first child from html elements
+//    @params elements   html elements by document.getElementsByClassName()
+//    @return        An array.
+function getFirstChild(elements){
+  var res = [];
+  for(let i = 0; i < elements.length; i++){ res[i] = elements[i].firstChild; }
+  return res
+}
+
+// Helper to get values from input objects
+//    @params objs   list objects by document.getElementsByClassName()
+//    @return        An array.
+function getValues(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].value; }
+  return res
+}
+
+// Helper to get checked (Boolean) from input objects
+//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
+//    @return        An array.
+function getChecked(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].checked; }
+  return res
+}
+
+// Helper to get selectedIndex from input objects
+//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
+//    @return        An array.
+function getSelectedIndex(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].selectedIndex; }
+  return res
+}
+
+// Helper to get innerHTML from input objects
+//    @params objs   list objects by document.getElementsByClassName()
+//    @return        An array.
+function getInnerHTML(objs){
+  var res = [];
+  for(let i = 0; i < objs.length; i++){ res[i] = objs[i].innerHTML; }
+  return res
+}
