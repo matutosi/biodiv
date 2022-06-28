@@ -22,11 +22,14 @@ function hash2table(hash_array){
   var table = document.createElement('table');
   for(let i = 0; i < Object.keys(hash_array).length; i++){
     var tr = document.createElement('tr');
-    var td = document.createElement("td");
-    td.textContent = Object.keys(hash_array)[i];
-    tr.appendChild(td);
-    var td = document.createElement("td");
-    td.textContent = Object.values(hash_array)[i];
+  //     var td = document.createElement("td");
+  //     td.textContent = Object.keys(hash_array)[i];
+  //     tr.appendChild(td);
+    tr.appendChild( crElAtIhTc({ el: 'td', tc: Object.keys(hash_array)[i] }) );
+  //     var td = document.createElement("td");
+  //     td.textContent = Object.values(hash_array)[i];
+  //     tr.appendChild(td);
+    tr.appendChild( crElAtIhTc({ el: 'td', ih: Object.values(hash_array)[i] }); );
     tr.appendChild(td);
     table.appendChild(tr);
   }
@@ -75,12 +78,14 @@ function sumByGroup(id_table, array, group){
   sum = hash2table(sum);
   // add th
   var tr = document.createElement('tr');
-  var th = document.createElement("th");
-  th.textContent = array;
-  tr.appendChild(th);
-  var th = document.createElement("th");
-  th.textContent = group;
-  tr.appendChild(th);
+  //   var th = document.createElement("th");
+  //   th.textContent = array;
+  //   tr.appendChild(th);
+  tr.appendChild( crElAtIhTc({ el: 'th', tc: array }); );
+  //   var th = document.createElement("th");
+  //   th.textContent = group;
+  //   tr.appendChild(th);
+  tr.appendChild( crElAtIhTc({ el: 'th', tc: group }); );
   // add as header
   sum.insertBefore(tr, sum.firstChild);
   return sum;

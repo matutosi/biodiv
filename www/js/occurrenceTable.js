@@ -102,18 +102,11 @@ function createTable(table, col_names){
   const n_col = col_names.length;
   var tr = document.createElement('tr');
   for(let Ni = 0; Ni < n_col; Ni++){
-    if(col_names[Ni] !== "") addTh(tr, col_names[Ni]);
+    if(col_names[Ni] !== "") tr.appendChild( crElAtIhTc({ el: 'th', ih: col_names[Ni] }) );
   }
   table.appendChild(tr)
 }
 
-// Helper function for createTable
-//   add "th" to "tr"
-function addTh(tr, col_name){
-    var th = document.createElement('th');
-    th.innerHTML = col_name;
-    tr.appendChild(th);  // return by side effect
-}
 
 // Helper to call cloneRow() multiple times
 function cloneRows(id_table){
@@ -180,33 +173,4 @@ function cloneRow(id_table){
     }
   }
   table.appendChild(next_row);
-}
-
-// TODO: write documents
-function createOccurrenceTable_1(id_table){
-// const id_table = "occurrence"
-  var table = document.getElementById(id_table);
-  const col_names = getFirstChild(document.getElementsByClassName("ts_cnames"));
-  const dat_types = getFirstChild(document.getElementsByClassName("ts_itypes"));
-  const optionals = getFirstChild(document.getElementsByClassName("ts_option"));
-  const n_col = col_names.length;
-  const n_row = table.rows.length;  // n_row means next column number because starting with 0
-  if(n_row != 0){
-    alert("Can not create table, \n table already exists")
-    return;
-  }
-  createTable(table, getValues(col_names));
-  var tr = document.createElement('tr');
-  for(let i=0; i<n_col; i++){
-    if(col_names[i].value !== ""){
-      var td = createInputTd(dat_types[i].value, col_names[i].value, optionals[i].value);
-      var cl = "occ_" + col_names[i].value;
-      var id = "occ_" + col_names[i].value + "_" + "1".padStart(3, `0`);
-      td.setAttribute("class", cl);
-      td.setAttribute("id"   , id);
-      tr.appendChild(td);
-    }
-    table.appendChild(tr);
-  }
-  setSortable(id_table);
 }
