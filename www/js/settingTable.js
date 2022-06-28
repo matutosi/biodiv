@@ -1,19 +1,19 @@
-function createSpanSettings(ns){
+function createSettingSpan(ns){
   // main-subtitle
   var main = document.getElementById('setting');
   main.appendChild( crElAtIhTc({ el: 'strong',ih: ns }) );
   main.appendChild( createButtonHideShow(ns + "_contents" ) );
   // main-span
-  var span = crElAtIhTc({ el: 'span', ats: {id: ns + "_span" } });
+  var span = crElAtIhTc({ el: 'span', ats: {id: ns } });
   main.appendChild(span);
   // span-contents
   var contents = crElAtIhTc({ el: 'span', ats: {id: ns + "_contents" } });
   contents.style.display  = "block"; // default: show contents
   // contents
-  contents.appendChild(createSetting(       ns + "_table", "data." + ns + "_json"));
-  contents.appendChild(createInputNrow(     ns + "_table_n_row"     ));
-  contents.appendChild(createButtonAddRow(  ns + "_table"           ));  // input: table name to add rows
-  contents.appendChild(createButtonNewTable(ns + "_new_table"       ));
+  contents.appendChild( createSetting(       ns + "_table", "data." + ns + "_json"));
+  contents.appendChild( createInputNrow(     ns + "_table_n_row"     ));
+  contents.appendChild( createButtonAddRow(  ns + "_table"           ));  // input: table name to add rows
+  contents.appendChild( createButtonNewTable(ns + "_new_table"       ));
   span.appendChild(contents);
   // hr for division
   span.appendChild(document.createElement('hr'));
@@ -29,7 +29,8 @@ function createButtonAddRow(table){
 function createButtonNewTable(id_table){
   var name = id_table.split('_')[0]; // meta, plot, occ
   var value = "Create new " + name + " table";
-  var onclick = "createOccurrenceTable('input', '" + name + "_setting_table', '" + name + "_table')"
+  var onclick = "createInputSpan('" + name + "')";
+  //   var onclick = "createOccurrenceTable('input', '" + name + "_setting_table', '" + name + "_input_table')"
   // console.log(onclick);
   return createInput({ type: "button", value: value, onclick: onclick });
 }
@@ -91,7 +92,8 @@ function createSetting(id_table, json){
     // option
     tr.appendChild( createTd( createInput({ type: "text", value: value[i] }) ) );
     // show/hide checkbox
-    tr.appendChild( createTd( createInput({ type: "checkbox", onclick: "hideCol('occurrence')" }) ) );
+    var input_table = id_table.split("_")[0] + "_input_table";    // id_table: setting_table
+    tr.appendChild( createTd( createInput({ type: "checkbox", onclick: "hideCol('" + id_table + "', '" + input_table + "')" }) ) );
     // delButton
     tr.appendChild( createTd( createDelButton() ) );
     // append
@@ -101,10 +103,9 @@ function createSetting(id_table, json){
 }
 
 // Hide columns checked in table setting
-function hideCol(id_table){
-  var table = document.getElementById(id_table);
-  var checkbox = document.getElementsByClassName('ts_checkbox');
-  var hide = getChecked(getFirstChild(checkbox));
+function hideCol(setting_table, input_table){
+  var hide = getColData(document.getElementById(setting_table), "hide");
+  var table = document.getElementById(input_table);
   for(let Ci = 0; Ci < table.rows[0].cells.length; Ci++){
     for(let Rj = 0; Rj < table.rows.length; Rj++){
       table.rows[Rj].cells[Ci].style.display = (hide[Ci]) ? 'none' : '';
