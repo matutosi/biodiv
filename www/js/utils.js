@@ -22,27 +22,27 @@ function hash2table(hash_array){
   var table = document.createElement('table');
   for(let i = 0; i < Object.keys(hash_array).length; i++){
     var tr = document.createElement('tr');
-    tr.appendChild( crElAtIhTc({ el: 'td', tc: Object.keys(hash_array)[i] }) );
-    tr.appendChild( crElAtIhTc({ el: 'td', ih: Object.values(hash_array)[i] }) );
+    tr.appendChild( crEl({ el: 'td', tc: Object.keys(hash_array)[i] }) );
+    tr.appendChild( crEl({ el: 'td', ih: Object.values(hash_array)[i] }) );
     table.appendChild(tr);
   }
   return table
 }
 
-function showSumByGroup(id_table, array, group, id_show){
+function showSumByGroup(id_input_table, array, group, id_result){
   // console.log(id_table + ", " + array + ", " + group + ", " + id_show);
-  const table = sumByGroup(id_table, array, group);
-  document.getElementById(id_show).appendChild(table);
+  var table = document.getElementById(id_result);
+  table.replaceWith( sumByGroup(id_input_table, array, group, id_result) );
 }
 
 // Sum by group
 //     sumByGroup("occurrence", "Cover", "Layer")
 //     
-function sumByGroup(id_table, array, group){
+function sumByGroup(id_input_table, array, group, id_result){
   // var id_table = "occ_input_table";
   // var array = "Cover";
   // var group = "Layer";
-  var table = document.getElementById(id_table);
+  var table = document.getElementById(id_input_table);
   var array_val = getColData(table, array);
   var group_val = getColData(table, group);
   var grouped_array = splitByGroup(array_val, group_val);
@@ -70,10 +70,11 @@ function sumByGroup(id_table, array, group){
     var sum = sum_array;
   }
   sum = hash2table(sum);
+  sum.setAttribute("id", id_result);
   // add th
   var tr = document.createElement('tr');
-  tr.appendChild( crElAtIhTc({ el: 'th', tc: group }) );
-  tr.appendChild( crElAtIhTc({ el: 'th', tc: array }) );
+  tr.appendChild( crEl({ el: 'th', tc: group }) );
+  tr.appendChild( crEl({ el: 'th', tc: array }) );
   // add as header
   sum.insertBefore(tr, sum.firstChild);
   return sum;
@@ -177,7 +178,7 @@ function getCellData(cell_data, data_type){
 }
 
 // Get options in select tag in a cell
-//    Retrun string array.
+//    Return string array.
 function getSelectOptionInCell(select){
   var select_opt = [];
   var opts = select.children;
@@ -186,7 +187,7 @@ function getSelectOptionInCell(select){
 }
 
 // Get options in select tag
-//    Retrun string like "B1,B2,..." for select tag,
+//    Return string like "B1,B2,..." for select tag,
 //    "" (vacant string) for pother input tag
 function getSelectOption(table){
   const data_types = getDataType(table);
@@ -213,7 +214,7 @@ function getDataType(table){
 //   const table = document.getElementById(id_table);
   const col_names = getColNames(table);
   const n_col = col_names.length;
-  const first_data_row = table.rows[1].cells;
+  const first_row = table.rows[1].cells;
   var data_type = [];
   for(let Ci = 0; Ci < n_col; Ci++){
     switch(col_names[Ci]){
@@ -223,7 +224,7 @@ function getDataType(table){
         data_type[Ci] = col_names[Ci];
         break;
       default:
-        var f_child = first_data_row[Ci].firstChild;
+        var f_child = first_row[Ci].firstChild;
         if(f_child.value === void 0){
           data_type[Ci] = "fixed";
         } else {
@@ -237,6 +238,17 @@ function getDataType(table){
     }
   }
   return data_type;
+}
+
+function get_data_type(cell){
+  return (cell.firstChild.type === void 0) ? "fixed" : cell.firstChild.type;
+}
+function get_data_types(table){
+  var types = [];
+  for(cell of table.rows[1].cells){ // 1: first td row
+    types.push(get_data_type(cell));
+  }
+  return types;
 }
 
 function getColNames(table){
@@ -277,9 +289,9 @@ function deleteRow(obj){
 //            Both of them are given, ih is overwritten by tc.
 //   @return HTML An object.
 //   @examples 
-//   crElAtIhTc({ el: 'p', ats: {id: "id_test", class: "some_class"}, ih: "test" });
+//   crEl({ el: 'p', ats: {id: "id_test", class: "some_class"}, ih: "test" });
 //   
-function crElAtIhTc({ el, ats, ih, tc }){
+function crEl({ el, ats, ih, tc }){
   var ele = document.createElement(el);
   if(ats != void 0){
     var keys  = Object.keys(ats);
