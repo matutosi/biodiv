@@ -17,39 +17,19 @@
     <script src="js/inhibitClose.js"></script>
     -->
 
-
     <link rel="stylesheet" href="css/tab.css">
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/fullScreen.css">
 
   <script> // test script
-  // var table = document.getElementById("occ_setting_table");
-
-var json = getInputData("occ_input_table");
-localStorage.setItem('bis_occ_example_plot_01', json)
-
-for(var i=0; i < localStorage.length; i++){ console.log(localStorage.key(i)); }
-localStorage.clear();
-
-  </script>
-
-  <script>
   // // // // // // // // // // // // // // // // // // // 
-  // 
   // TODO: 
   //    var -> const ?
+  //    Add update button for "Date"  and "GPS data"
+  //    Create table according to plot_id
+  //    make "input" tag for sum group (data_type: 'select-one') and number (data_type: 'number')
+  //    
   // // // // // // // // // // // // // // // // // // // 
-
-  // Get data from a table for download
-  // Can restore table?
-  //    getTableData("occurrence")
-  //    getSelectOption(table)
-  //    getDataType(table)
-  // 
-  // local data
-  // https://developer.mozilla.org/ja/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage
-  // https://qiita.com/masuda-sankosc/items/cff6131efd6e1b5138e6
-  // https://qiita.com/w-tdon/items/81034bd3006806f7d7c3
   </script>
 
 </head>
@@ -73,32 +53,26 @@ Biodiversity Investigation System (BIS)
   <div id="tabbody">
     <div id="tab1">
       <span id="setting"></span>
-
       <script>
         createSettingSpan("occ_setting");
-        createSettingSpan("meta_setting");
-        createSettingSpan("plot_setting");
+//        createSettingSpan("meta_setting");
       </script>
-
     </div>
 
 
     <div id="tab2">
       <span id="input"></span>
-
       <script>
+        createSettingSpan("plot_setting");
         // variables for sotable table
         let occ_tbl = 'occurrence';
         var column_no = 0;       // now clicked
         var column_no_prev = 0;  // previous clicked
         var dir = "asc";
       </script>
-
-<script>
-</script>
-
-
     </div>
+
+
     <div id="tab3">
       <!--            Launch Mailer                -->
       <input type='button' value="launch mailer" onclick="launchMailer()" />
@@ -115,6 +89,18 @@ Biodiversity Investigation System (BIS)
   </div>
 
 </div>
+
+  <script>
+  fetchLSKeys();
+
+  saveTable("occ_setting_table");
+  saveTable("plot_setting_table");
+
+  restoreTable("occ_setting_table");
+  restoreTable("plot_setting_table");
+
+  </script>
+
 
 
 <div>
