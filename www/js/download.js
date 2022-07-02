@@ -77,12 +77,13 @@ function getSelectOne(table, col_name){
 //                        localStorage key name is "bis_" + table_name.
 //    @return             A table element with id: table_name.
 //    @examples
-//    var table_name = 'occ_input_example_01'; 
-//    localStorage.setItem("bis_" + table_name, data.bis_occ_input_example_01);
-//    restoreTable(table_name)
+//    var table_name = 'occ_input_table_example_01'; 
+//    localStorage.setItem("bis_" + table_name, data.bis_occ_input_table_example_01);
+//    restoreTable(table_name);
 function restoreTable(table_name){
   // input data
   // var table_name = "occ_setting_table";
+  // console.log(table_name);
   var plot  = localStorage[ "bis_" + table_name ].split(";")
   var col_names = JSON.parse(plot[0])["sys_c_names"];
   var dat_types = JSON.parse(plot[1])["sys_d_types"];
@@ -135,7 +136,7 @@ function restoreTd(table_data, data_type, select){
       break;
     case "button":
       if(table_data === "DELETE")           { var td = createTd( createDelButton() ); }
-      if(table_data === "Update Time & GPS"){ var td = createTd( createUpButton()  ); }
+      if(table_data === "Update Time & GPS"){ var td = createTd( createUpdateButton()  ); }
       break;
     case "select-one":
       var sel_no = select.indexOf(table_data);

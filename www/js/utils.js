@@ -160,7 +160,7 @@ function getCellData(cell_data, data_type){
       return cell_data.innerHTML;
       break;
     case "delButton":
-    case "upButton":
+    case "updatebutton":
     case "text":
     case "number":
       return cell_data.firstChild.value;
@@ -219,10 +219,12 @@ function getDataType(table){
     switch(col_names[Ci]){
       case "date":
       case "delButton":
+      case "updateButton":
       case "no":
         data_type[Ci] = col_names[Ci];
         break;
       default:
+  // console.log(col_names[Ci]);
         var f_child = first_row[Ci].firstChild;
         if(f_child.value === void 0){
           data_type[Ci] = "fixed";
@@ -299,4 +301,26 @@ function crEl({ el, ats, ih, tc }){
   if(ih != void 0){ ele.innerHTML   = ih; }
   if(tc != void 0){ ele.textContent = tc; }
   return ele;
+}
+
+//    @paramas id_table  A string to specify a table.
+//    @paramas type      A string to specify a data type, 
+//                       which can be retrive by get_data_types() as shown below.
+//                       "fixed", "text", "button", "checkbox", 'select-one','number'. 
+//    @return  A string array.
+//    @examples
+//    var id_table = "occ_input_example_01";
+//    var type = "number";
+//    selectColByType(id_table, type);
+//    var type = "select-one";
+//    selectColByType(id_table, type);
+function selectColByType(id_table, type){
+  var table = document.getElementById(id_table);
+  var types = get_data_types(table);
+  var c_names = getColNames(table);
+  var cols = [];
+  for(let i = 0; i < types.length; i++){
+    if(types[i] === type){ cols.push(c_names[i]); }
+  }
+  return cols;
 }
