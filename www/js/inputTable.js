@@ -1,10 +1,11 @@
 // TODO: Write documents
 //    
 function createInputSpan(ns){
-  var main = document.getElementById('input');
+  var main = document.getElementById('tab_inputs');
   var table_name = ns + "_input_table";
   // search
   var id = ns + "search_text";
+  // console.log(ns);
   var onkeyup = "searchTable('" + table_name + "', this)";
   main.appendChild( createInput({ type:"text", id: id, onkeyup: onkeyup,  placeholder: "Search text input" }) );
 
@@ -74,8 +75,9 @@ function createInputTd(dat_type, col_name, optional){
       if(col_name === "locacc") td.innerHTML = getAcc();
       if(col_name === "no")     td.innerHTML = 1;
       break;
-    case "button": // delButton
-      td.appendChild(createDelButton());
+    case "button": // delButton, update button
+      if(table_data === "DELETE")           { td.appendChild( createDelButton() ); };
+      if(table_data === "Update Time & GPS"){ td.appendChild( createUpButton()  ); };
       break;
     case "fixed":
       if(optional === ""){ 
@@ -101,7 +103,12 @@ function createInputTd(dat_type, col_name, optional){
 
 // Create delete button
 function createDelButton(){
-  return createInput({ type: "button", value: "DELETE", onclick: "deleteRow(this)" });
+  return createInput({ type: "button", value: "DELETE", onclick: "delRow(this)" });
+}
+
+// Create update time and GPS button
+function createUpButton(){
+  return createInput({ type: "button", value: "Update Time & GPS", onclick: "updateTimeGPS(this)" });
 }
 
 // Create (new) table
