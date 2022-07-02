@@ -30,21 +30,6 @@
   //    
   // // // // // // // // // // // // // // // // // // // 
 
-function updateTimeGPS(obj){
-  // settings
-  var cols = ["Date", "locLat", "locLon", "locAcc"];
-  var funs = [getNow, getLat, getLon, getAcc]
-  // clicked things
-  var table = obj.parentNode.parentNode.parentNode;
-  var tr = obj.parentNode.parentNode;
-  var row_no = tr.sectionRowIndex;
-  // update
-  for(let i = 0; i < cols.length; i++){
-    var col_no = getColNames(table).indexOf(cols[i]);
-    var cell = table.rows[row_no].cells[col_no];
-    cell.replaceWith( crEl({ el:'td', ih: funs[col_no]() }) );
-  }
-}
   </script>
 
 </head>
@@ -60,9 +45,9 @@ Biodiversity Investigation System (BIS)
 <div class="Biodiversity Investigation System (BIS)">
   <p id="tabcontrol">
     <a href="#tab_setting">Settings </a>
-    <a href="#tab_inputs"> Inputs   </a>
-    <a href="#tab_tools">  Tools    </a>
-    <a href="#tab4">       Spare    </a>
+    <a href="#tab_inputs" >Inputs   </a>
+    <a href="#tab_tools"  >Tools    </a>
+    <a href="#tab4"       >Spare    </a>
   </p>
 
   <div id="tabbody">
@@ -71,6 +56,13 @@ Biodiversity Investigation System (BIS)
         var setting_tab = document.getElementById("tab_setting");
         setting_tab.appendChild( createSettingSpan("occ_setting") );
         setting_tab.appendChild( createSettingSpan("plot_setting") );
+
+// var id_table = "occ_input_example_01";
+// var type = "number";
+// selectColByType(id_table, type);
+
+
+
       </script>
     </div>
 
@@ -78,7 +70,8 @@ Biodiversity Investigation System (BIS)
     <div id="tab_inputs">
       <script>
         var input_tab = document.getElementById("tab_inputs");
-        input_tab.appendChild( restoreTable('occ_input_example_01') );
+//        input_tab.appendChild( restoreTable('occ_input_table_example_01') );
+        input_tab.appendChild( restoreInputPart("occ", "example_01") );
 
         // variables for sotable table
         let occ_tbl = 'occ_input_table';
