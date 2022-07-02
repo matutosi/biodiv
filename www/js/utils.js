@@ -154,14 +154,13 @@ function getTableData(id_table){
 
 function getCellData(cell_data, data_type){
   switch(data_type){
-    case "delButton":  //  skip
-      return null;
-      break;
     case "date":
     case "no":
     case "fixed":
       return cell_data.innerHTML;
       break;
+    case "delButton":
+    case "upButton":
     case "text":
     case "number":
       return cell_data.firstChild.value;
@@ -264,7 +263,7 @@ function getColNames(table){
 function getNow(){
    var now = new Date();
    const yr  = now.getFullYear();
-   const mo  = String(now.getMonth()).padStart(2, `0`);
+   const mo  = String(now.getMonth()+1).padStart(2, `0`); // getMonth() return 0 when January
    const dd  = String(now.getDate()).padStart(2, `0`);
    const hh  = String(now.getHours()).padStart(2, `0`);
    const mi  = String(now.getMinutes()).padStart(2, `0`);
@@ -275,7 +274,7 @@ function getNow(){
 }
 
 // delete a row
-function deleteRow(obj){
+function delRow(obj){
     var table = obj.parentNode.parentNode.parentNode; // clicked table
     if(table.rows.length > 2){                        // delete more than 3 rows (th + tb*2)
       var tr = obj.parentNode.parentNode;             // clicked row

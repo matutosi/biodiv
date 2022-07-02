@@ -25,11 +25,26 @@
   // // // // // // // // // // // // // // // // // // // 
   // TODO: 
   //    var -> const ?
-  //    Add update button for "Date"  and "GPS data"
   //    Create table according to plot_id
   //    make "input" tag for sum group (data_type: 'select-one') and number (data_type: 'number')
   //    
   // // // // // // // // // // // // // // // // // // // 
+
+function updateTimeGPS(obj){
+  // settings
+  var cols = ["Date", "locLat", "locLon", "locAcc"];
+  var funs = [getNow, getLat, getLon, getAcc]
+  // clicked things
+  var table = obj.parentNode.parentNode.parentNode;
+  var tr = obj.parentNode.parentNode;
+  var row_no = tr.sectionRowIndex;
+  // update
+  for(let i = 0; i < cols.length; i++){
+    var col_no = getColNames(table).indexOf(cols[i]);
+    var cell = table.rows[row_no].cells[col_no];
+    cell.replaceWith( crEl({ el:'td', ih: funs[col_no]() }) );
+  }
+}
   </script>
 
 </head>
@@ -44,36 +59,38 @@ Biodiversity Investigation System (BIS)
 
 <div class="Biodiversity Investigation System (BIS)">
   <p id="tabcontrol">
-    <a href="#tab1">Settings</a>
-    <a href="#tab2">Inputs</a>
-    <a href="#tab3">Tools</a>
-    <a href="#tab4">Spare</a>
+    <a href="#tab_setting">Settings </a>
+    <a href="#tab_inputs"> Inputs   </a>
+    <a href="#tab_tools">  Tools    </a>
+    <a href="#tab4">       Spare    </a>
   </p>
 
   <div id="tabbody">
-    <div id="tab1">
-      <span id="setting"></span>
+    <div id="tab_setting">
       <script>
-        createSettingSpan("occ_setting");
-//        createSettingSpan("meta_setting");
+        var setting_tab = document.getElementById("tab_setting");
+        setting_tab.appendChild( createSettingSpan("occ_setting") );
+        setting_tab.appendChild( createSettingSpan("plot_setting") );
       </script>
     </div>
 
 
-    <div id="tab2">
-      <span id="input"></span>
+    <div id="tab_inputs">
       <script>
-        createSettingSpan("plot_setting");
+        var input_tab = document.getElementById("tab_inputs");
+        input_tab.appendChild( restoreTable('occ_input_example_01') );
+
         // variables for sotable table
-        let occ_tbl = 'occurrence';
+        let occ_tbl = 'occ_input_table';
         var column_no = 0;       // now clicked
         var column_no_prev = 0;  // previous clicked
         var dir = "asc";
       </script>
     </div>
+    
 
 
-    <div id="tab3">
+    <div id="tab_tools">
       <!--            Launch Mailer                -->
       <input type='button' value="launch mailer" onclick="launchMailer()" />
 
@@ -91,14 +108,11 @@ Biodiversity Investigation System (BIS)
 </div>
 
   <script>
-  fetchLSKeys();
-
-  saveTable("occ_setting_table");
-  saveTable("plot_setting_table");
-
-  restoreTable("occ_setting_table");
-  restoreTable("plot_setting_table");
-
+//  fetchLSKeys();
+//  saveTable("occ_setting_table");
+//  saveTable("plot_setting_table");
+//  restoreTable("occ_setting_table");
+//  restoreTable("plot_setting_table");
   </script>
 
 
