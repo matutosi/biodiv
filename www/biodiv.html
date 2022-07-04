@@ -23,12 +23,16 @@
 
   <script> // test script
   // // // // // // // // // // // // // // // // // // // 
+  // TODO: var -> const ?
   // TODO: 
-  //    var -> const ?
   //    Create table according to plot_id
-  //    make "input" tag for sum group (data_type: 'select-one') and number (data_type: 'number')
+  //    Make "input" tag for sum group (data_type: 'select-one') and number (data_type: 'number')
+  //        can use selectColByType(id_table, type)
+  // TODO: Write documents for functions.
+  // TODO: use hiddenInputCols() with showInputCols() and hideInputCol(). 
   //    
   // // // // // // // // // // // // // // // // // // // 
+
 
   </script>
 
@@ -56,13 +60,6 @@ Biodiversity Investigation System (BIS)
         var setting_tab = document.getElementById("tab_setting");
         setting_tab.appendChild( createSettingSpan("occ_setting") );
         setting_tab.appendChild( createSettingSpan("plot_setting") );
-
-// var id_table = "occ_input_example_01";
-// var type = "number";
-// selectColByType(id_table, type);
-
-
-
       </script>
     </div>
 
@@ -70,11 +67,12 @@ Biodiversity Investigation System (BIS)
     <div id="tab_inputs">
       <script>
         var input_tab = document.getElementById("tab_inputs");
-//        input_tab.appendChild( restoreTable('occ_input_table_example_01') );
+//        input_tab.appendChild( restoreTable('bis_occ_input_table_example_01', "data") );
         input_tab.appendChild( restoreInputPart("occ", "example_01") );
+        setSortable("occ_input_table_example_01");
+
 
         // variables for sotable table
-        let occ_tbl = 'occ_input_table';
         var column_no = 0;       // now clicked
         var column_no_prev = 0;  // previous clicked
         var dir = "asc";
@@ -85,7 +83,7 @@ Biodiversity Investigation System (BIS)
 
     <div id="tab_tools">
       <!--            Launch Mailer                -->
-      <input type='button' value="launch mailer" onclick="launchMailer()" />
+      <input type='button' value="Launch mailer" onclick="launchMailer()" />
 
       <!--            GPS                           -->
       <!--      TODO: Use different background color or something CLEAR for users in switching on / off       -->
