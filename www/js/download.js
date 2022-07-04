@@ -80,11 +80,19 @@ function getSelectOne(table, col_name){
 //    var table_name = 'occ_input_table_example_01'; 
 //    localStorage.setItem("bis_" + table_name, data.bis_occ_input_table_example_01);
 //    restoreTable(table_name);
-function restoreTable(table_name){
+function restoreTable(table_name, from = "localStorage"){
   // input data
-  // var table_name = "occ_setting_table";
   // console.log(table_name);
-  var plot  = localStorage[ "bis_" + table_name ].split(";")
+  // var table_name ="occ_input_table_example_01";
+  // var from = "localStorage";
+  switch(from){
+    case "localStorage":
+      var plot = localStorage[ "bis_" + table_name ].split(";")
+      break;
+    default:
+      var plot = data[table_name].split(";");
+      break;
+  }
   var col_names = JSON.parse(plot[0])["sys_c_names"];
   var dat_types = JSON.parse(plot[1])["sys_d_types"];
   var selects   = JSON.parse(plot[2])["sys_selects"];
@@ -95,7 +103,12 @@ function restoreTable(table_name){
   const n_col = col_names.length;
   var tr = document.createElement('tr');
   for(let Ni = 0; Ni < n_col; Ni++){
-    if(col_names[Ni] !== "") tr.appendChild( crEl({ el: 'th', ih: col_names[Ni] }) );
+  //     if(col_names[Ni] !== "") tr.appendChild( crEl({ el: 'th', ih: col_names[Ni] }) );
+    if(col_names[Ni] !== ""){
+      var th = crEl({ el: 'th', ih: col_names[Ni] });
+      th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide col", onclick:"hideInputCol(this)"} }) );
+      tr.appendChild(th);
+    }
   }
   table.appendChild(tr)
   // td
@@ -144,33 +157,4 @@ function restoreTd(table_data, data_type, select){
       break;
   }
   return td;
-}
-
-
-// https://phper.pro/352
-function download(id){
-  var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  var table = document.getElementById(id);
-  var data_tsv = "";                             // data_tsv is data holder
-
-  for(var i = 0;  i < table.rows.length; i++) {
-    for(var j = 0; j < table.rows[i].cells.length; j++) {
-      data_tsv += table.rows[i].cells[j].innerText;           // save data in cellls
-      if(j == table.rows[i].cells.length-1) data_tsv += "\n";  // add line break
-      else data_tsv += "\t";                                   // add "\t" as separater
-    }
-  }
-
-  var blob = new Blob([ bom, data_tsv], { "type" : "text/tsv" });  // download tsv data from data_tsv
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.download = getNow() + ".tsv";
-  a.href = url;
-  a.click();
-  a.remove();
-
-  URL.revokeObjectURL(url);
-  delete data_tsv;
 }
