@@ -20,7 +20,9 @@ function tableModule(ns){
   dn.appendChild( createNrowInput() );
   dn.appendChild( createAddRowButton() );
   dn.appendChild( crEl({ el: 'br' }) );
+  dn.appendChild( crEl({ el: 'span', tc: "Value: " }) );
   dn.appendChild( createSelectOpt( colByType(table, "number") ) );
+  dn.appendChild( crEl({ el: 'span', tc: "; Group: " }) );
   dn.appendChild( createSelectOpt( colByType(table, "select-one") ) );
   dn.appendChild( createSumButton() );
 
@@ -30,6 +32,19 @@ function tableModule(ns){
 
   return main;
 }
+
+
+function showAllCols(obj){
+  // console.log(obj.parentNode.parentNode.nextElementSibling);
+  var table = obj.parentNode.parentNode.nextElementSibling;
+  for(let Ci = 0; Ci < table.rows[0].cells.length; Ci++){
+    for(let Rj = 0; Rj < table.rows.length; Rj++){
+      table.rows[Rj].cells[Ci].style.display = '';
+    }
+  }
+  obj.parentNode.textContent = "";
+}
+
 
 
 // Hide a column in a table.
@@ -42,7 +57,10 @@ function hideInputCol(obj){
   }
   var span = obj.parentNode.parentNode.parentNode.previousElementSibling.lastElementChild;
   // tc: "Show "
-  if(span.children.length === 0){ span.textContent = "Show: "; }
+  if(span.children.length === 0){
+    span.textContent = "Show: ";
+    span.appendChild( createInput({ type:"button", value:"All cols", onclick:"showAllCols(this)"}) );
+  }
   span.appendChild( createShowColButton(c_name) );
 }
 
@@ -67,7 +85,7 @@ function createShowColButton(c_name){
 
 // Sum with group
 function sumWithGroup(obj){
-  var array = obj.previousElementSibling.previousElementSibling.value;
+  var array = obj.previousElementSibling.previousElementSibling.previousElementSibling.value;
   var group = obj.previousElementSibling.value;
   var table = obj.parentNode.previousElementSibling;
   var array_val = getColData(table, array);
