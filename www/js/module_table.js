@@ -29,6 +29,7 @@ function tableModule(ns){
   main.appendChild(up);
   main.appendChild(table);
   main.appendChild(dn);
+  main.appendChild( crEl({ el: 'hr' }) );
 
   return main;
 }
@@ -46,9 +47,8 @@ function showAllCols(obj){
 }
 
 
-
 // Hide a column in a table.
-function hideInputCol(obj){
+function hideTableCol(obj){
   var table = obj.parentNode.parentNode.parentNode;
   var c_name = obj.parentNode.innerText;
   var c_no = getColNames(table).indexOf(c_name);
