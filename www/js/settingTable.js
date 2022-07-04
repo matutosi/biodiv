@@ -38,10 +38,10 @@ function createButtonNewTable(id_table){
 }
 function createButtonHideShow(id_span){
   var id      = id_span + "_hide_show";
-  var onclick = "switchHideShow('" + id_span + "', this)";
+  var onclick = "switchHideShowSpan('" + id_span + "', this)";
   return createInput({id: id, type: "button", value: "Hide table", onclick: onclick })
 }
-function switchHideShow(id_span, button){
+function switchHideShowSpan(id_span, button){
   var contents = document.getElementById(id_span);
   if(contents.style.display === "block"){ // show -> hide
     contents.style.display = "none";
@@ -79,7 +79,7 @@ function createSetting(id_table, json){
 
   // head
   var tr = document.createElement('tr');
-  for(head of heads){  tr.appendChild(crEl({ el: 'th', ih: head })); }
+  for(head of heads){ tr.appendChild(crEl({ el: 'th', ih: head })); }
   table.appendChild(tr);
 
   // body
@@ -114,7 +114,6 @@ function hideCol(setting_table, input_table){
     }
   }
 }
-
 
 // Helper to create input with select options
 //    when selected_no is given, 
