@@ -80,7 +80,7 @@ function getSelectOne(table, col_name){
 //    var table_name = 'occ_input_table_example_01'; 
 //    localStorage.setItem("bis_" + table_name, data.bis_occ_input_table_example_01);
 //    restoreTable(table_name);
-function restoreTable(table_name, from = "localStorage"){
+function restoreTable(table_name, from = "localStorage", hide_col = true){
   // input data
   // console.log(table_name);
   // var table_name ="occ_input_table_example_01";
@@ -106,8 +106,7 @@ function restoreTable(table_name, from = "localStorage"){
   //     if(col_names[Ni] !== "") tr.appendChild( crEl({ el: 'th', ih: col_names[Ni] }) );
     if(col_names[Ni] !== ""){
       var th = crEl({ el: 'th', ih: col_names[Ni] });
-      th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide col", onclick:"hideTableCol(this)"} }) );
-  //       th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide col", onclick:"hideInputCol(this)"} }) );
+      if(hide_col){ th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide col", onclick:"hideTableCol(this)"} }) ); }
       tr.appendChild(th);
     }
   }
