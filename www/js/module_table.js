@@ -1,3 +1,184 @@
+function createMakePlotButton(){
+  return createInput({ type:"button", value: "Make plot table", onclick: "makePlotInputModule(this)" });
+}
+function createFileButton(){
+  return createInput({ type: "file", accept: ".conf", onchange: "replaceTable(this)" });
+}
+function createSaveSettingButton(){
+  return createInput({ type: "button", value: "Save settings", onclick: "saveSettings(this)" });
+}
+function createSaveInputButton(){
+  return createInput({ type: "button", value: "Save inputs", onclick: "saveInputs(this)" });
+}
+function createShowColButton(c_name){
+  return createInput({ type: "Button", value: c_name, onclick: "showCol(this)" });
+}
+function createSumButton(){
+  return createInput({ type: "Button", value: "Calculate", onclick: "sumWithGroup(this)" });
+}
+function createSearchInput(){
+  return createInput({ type:"text", onkeyup: "searchTableText(this)", placeholder: "Search text" });
+}
+function createNrowInput(){
+  return createInput({ type: "number", value: "3", step: "1", min: "1", max:"20" });
+}
+function createAddRowButton(){
+  return createInput({ type: "button", value: "Add row(s)", onclick: "addRows(this)" });
+}
+function createHideButton(){
+  return createInput({ type: "button", value: "Hide table", onclick: "hideShowNext(this)" });
+}
+function createNewOccButton(){
+  return createInput({ type: "button", value: "occ table", onclick: "makeNewOccTableModule(this)" });
+}
+
+
+function makeNewOccTableModule(obj){
+  var table = makeNewOccTable(obj)
+  var module = inputTableModule(table.id, table = table);
+  var tab_inputs = document.getElementById("tab_inputs");
+  tab_inputs.appendChild(module);
+}
+
+function makeNewOccTable(obj){
+  // var obj = temp1;
+  var tr = obj.parentElement.parentElement;
+  var table = obj.parentElement.parentElement.parentElement;
+  var c_no = getColNames(table).indexOf("Plot");
+  var plot = tr.cells[c_no].firstChild.value;
+  // create new input table for occurrence and appendChild()
+
+  var tab_settings = document.getElementById("tab_settings");
+  var setting_table = tab_settings.querySelectorAll("table")[1];
+  
+  var table = makeOccTable(setting_table, plot);
+  return table;
+}
+
+function makeOccTable(setting_table, plot){
+  var setting_c_names = getColNames(setting_table);
+  var c_names = getColData(setting_table, setting_c_names[0]);
+  var d_types = getColData(setting_table, setting_c_names[1]);
+  var selects = getColData(setting_table, setting_c_names[2]);
+  var id_table = setting_table.id.replace("setting", "input");
+  var old_plot = id_table.split("_")[2];
+  id_table = id_table.replace(old_plot, plot);
+
+  var table = crEl({ el: 'table', ats: {id: id_table} });
+  // th
+  const n_col = c_names.length;
+  var tr = document.createElement('tr');
+  tr.appendChild( crEl({ el: 'th', ih: "Plot" }) );
+  for(let Ni = 0; Ni < n_col; Ni++){
+    if(c_names[Ni] !== ""){
+      var th = crEl({ el: 'th', ih: c_names[Ni] });
+      th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide", onclick:"hideTableCol(this)"} }) ); 
+      tr.appendChild(th);
+    }
+  }
+  table.appendChild(tr)
+  // td
+  var tr = document.createElement('tr');
+  var td = crEl({ el: 'td' })
+  tr.appendChild( crEl({ el: 'td', ih: plot }) );
+  for(let i = 0; i < c_names.length; i++){
+    if(setting_c_names[i] !== ""){
+      var td = createInputTd(d_types[i], c_names[i], selects[i]);
+      tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+  return table;
+}
+
+
+function inputTableModule(ns, table = null){
+  // var ns = "occ_input_table_example_01";
+  var main   = crEl({ el:'span', id: "main_"   + ns});
+
+  // Up span
+  var up = crEl({ el:'span', ats:{id: "up_" + ns} });
+  up.appendChild( crEl({ el: 'B', tc: ns}) );
+  up.appendChild( createSearchInput() );
+
+  up.appendChild( createSaveInputButton() );
+
+  up.appendChild( createHideButton() );
+  up.appendChild( crEl({ el: 'br' }) );
+  up.appendChild( crEl({ el: 'span'}) );
+  main.appendChild(up);
+
+  // Table
+  if(table === null){ var table = restoreTable(ns, ""); }
+
+  // Down span
+  var dn = crEl({ el:'span', ats:{id: "dn_" + ns} });
+  dn.appendChild( createNrowInput() );
+  dn.appendChild( createAddRowButton() );
+
+  var occ = ns.split("_")[1] === "occ";
+  if(occ){
+    dn.appendChild( crEl({ el: 'br' }) );
+    dn.appendChild( crEl({ el: 'span', tc: "Value: " }) );
+    dn.appendChild( createSelectOpt( colByType(table, "number") ) );
+    dn.appendChild( crEl({ el: 'span', tc: "; Group: " }) );
+    dn.appendChild( createSelectOpt( colByType(table, "select-one") ) );
+    dn.appendChild( createSumButton() );
+  }
+
+  main.appendChild(up);
+  main.appendChild(table);
+  main.appendChild(dn);
+  main.appendChild( crEl({ el: 'hr' }) );
+
+  return main;
+}
+
+function makePlotInputModule(obj){
+  var table = makePlotTable(obj);
+  var module = inputTableModule(table.id, table);
+  var tab_inputs = document.getElementById("tab_inputs");
+  tab_inputs.appendChild(module);
+  setSortable(table.id);  // Should setSortable() after appendChild()
+  tabs[1].click();        // move to tab_inputs
+}
+
+function makePlotTable(obj){
+  var setting_table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  var setting_c_names = getColNames(setting_table);
+  var c_names = getColData(setting_table, setting_c_names[0]);
+  var d_types = getColData(setting_table, setting_c_names[1]);
+  var selects = getColData(setting_table, setting_c_names[2]);
+  var id_table = setting_table.id.replace("setting", "input");
+  var table = crEl({ el: 'table', ats: {id: id_table} });
+  // th
+  const n_col = c_names.length;
+  var tr = document.createElement('tr');
+  var th = crEl({ el: 'th', ih: "New" });
+  th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide", onclick:"hideTableCol(this)"} }) ); 
+  tr.appendChild(th);
+  for(let Ni = 0; Ni < n_col; Ni++){
+    if(c_names[Ni] !== ""){
+      var th = crEl({ el: 'th', ih: c_names[Ni] });
+      th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide", onclick:"hideTableCol(this)"} }) ); 
+      tr.appendChild(th);
+    }
+  }
+  table.appendChild(tr)
+  // td
+  var tr = document.createElement('tr');
+  var td = crEl({ el: 'td' })
+  td.appendChild( createNewOccButton() );
+  tr.appendChild( td );
+  for(let i = 0; i < c_names.length; i++){
+    if(setting_c_names[i] !== ""){
+      var td = createInputTd(d_types[i], c_names[i], selects[i]);
+      tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+  return table;
+}
 
 function settingTableModule(ns){
   // var ns = "occ_input_table_example_01";
@@ -12,7 +193,7 @@ function settingTableModule(ns){
   up.appendChild( createFileButton() );
 
   up.appendChild( createInput({ type: "text", placeholder: "File name" }) );
-  up.appendChild( createSaveButton() );
+  up.appendChild( createSaveSettingButton() );
 
   up.appendChild( createHideButton() );
   up.appendChild( crEl({ el: 'br' }) );
@@ -20,12 +201,15 @@ function settingTableModule(ns){
   main.appendChild(up);
 
   // Table
-  var table = restoreTable(ns, "", false);
+  var table = restoreTable(ns, "");
 
   // Down span
   var dn = crEl({ el:'span', ats:{id: "dn_" + ns} });
   dn.appendChild( createNrowInput() );
   dn.appendChild( createAddRowButton() );
+
+  var plot = (ns.split("_")[1] === 'plot');
+  if(plot){ dn.appendChild( createMakePlotButton() );}  
 
   main.appendChild(up);
   main.appendChild(table);
@@ -36,42 +220,46 @@ function settingTableModule(ns){
 }
 
 
+async function replaceTable(obj){
+  var text = await readFile(obj.files[0]);
+  var text = text.split(";");
+  var table_name = obj.value.split("\\").slice(-1)[0].replace("\.conf", "")
+  var new_table = makeTable(text, table_name, false);
+
+  var old_table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  old_table.replaceWith(new_table);
+
+  var old_title = obj.parentNode.parentNode.querySelectorAll("b")[0];
+  var new_title = crEl({ el: 'B', tc: table_name})
+  old_title.replaceWith( new_title );
+
+}
 
   // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
-function readFile(file) {
+function readFile(file){
   return new Promise((resolve, reject) => {
-    let freader = new FileReader();
-    freader.onload = x=> resolve(freader.result);
-    freader.readAsText(file);
+    let reader = new FileReader();
+    reader.onload = x=> resolve(reader.result);
+    reader.readAsText(file);
   })
 }
-async function readInputFile(input) {
-  text = await readFile(input.files[0]);
-//  console.log(text);
-  var tab = document.getElementById("tab_setting")
-  tab.appendChild( crEl({ el: 'span', tc: text }))
-}
 
-function createFileButton(){
-  return createInput({ type: "file", accept: ".conf", onchange: "readInputFile(this)" });
-}
-
-
-function createSaveButton(){
-  return createInput({ type: "button", value: "Save settings", onclick: "saveSettings(this)" });
-}
 
 function saveSettings(obj){
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
   var table_data = getTableDataPlus(table.id);
   var f_name = obj.previousElementSibling.value;
-  if(f_name === ""){ f_name = "temp_settings"; }
-   var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-   var blob = new Blob([bom, table_data], { "type" : "text/tsv" });
-   const url = URL.createObjectURL(blob);
-   const a = document.createElement("a");
-   document.body.appendChild(a);
-   a.download = f_name + ".conf";
+  if(f_name === ""){ 
+    f_name = table.id + ".conf"; 
+  } else {
+    f_name = table.id.split("_")[0] + "_" + table.id.split("_")[1] + "_" + f_name  + ".conf";
+  }
+  var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
+  var blob = new Blob([bom, table_data], { "type" : "text/tsv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  document.body.appendChild(a);
+  a.download = f_name
   a.href = url;
   a.click();
   a.remove();
@@ -80,39 +268,22 @@ function saveSettings(obj){
 }
 
 
-function inputTableModule(ns){
-  // var ns = "occ_input_table_example_01";
-  var main   = crEl({ el:'span', id: "main_"   + ns});
 
-  // Up span
-  var up = crEl({ el:'span', ats:{id: "up_" + ns} });
-  up.appendChild( crEl({ el: 'B', tc: ns}) );
-  up.appendChild( createSearchInput() );
-  up.appendChild( createHideButton() );
-  up.appendChild( crEl({ el: 'br' }) );
-  //   up.appendChild( crEl({ el: 'span'}) );
-  main.appendChild(up);
-
-  // Table
-  var table = restoreTable(ns, "", true);
-
-  // Down span
-  var dn = crEl({ el:'span', ats:{id: "dn_" + ns} });
-  dn.appendChild( createNrowInput() );
-  dn.appendChild( createAddRowButton() );
-  dn.appendChild( crEl({ el: 'br' }) );
-  dn.appendChild( crEl({ el: 'span', tc: "Value: " }) );
-  dn.appendChild( createSelectOpt( colByType(table, "number") ) );
-  dn.appendChild( crEl({ el: 'span', tc: "; Group: " }) );
-  dn.appendChild( createSelectOpt( colByType(table, "select-one") ) );
-  dn.appendChild( createSumButton() );
-
-  main.appendChild(up);
-  main.appendChild(table);
-  main.appendChild(dn);
-  main.appendChild( crEl({ el: 'hr' }) );
-
-  return main;
+function saveInputs(obj){
+  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  var table_data = getTableDataPlus(table.id);
+  var f_name = table.id + "_" + getNow() + ".bis"
+  var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
+  var blob = new Blob([bom, table_data], { "type" : "text/tsv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  document.body.appendChild(a);
+  a.download = f_name;
+  a.href = url;
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  delete table_data;
 }
 
 
@@ -130,8 +301,10 @@ function showAllCols(obj){
 
 // Hide a column in a table.
 function hideTableCol(obj){
-  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  // console.log(obj.parentNode.parentNode.parentNode);
+  var table = obj.parentNode.parentNode.parentNode.parentNode.querySelectorAll("table")[0];
   var c_name = obj.parentNode.innerText;
+  // console.log(c_name);
   var c_no = getColNames(table).indexOf(c_name);
   for(let Rj = 0; Rj < table.rows.length; Rj++){
     table.rows[Rj].cells[c_no].style.display = 'none';
@@ -148,7 +321,7 @@ function hideTableCol(obj){
 function showCol(obj){
   // show col
   var c_name = obj.value;
-  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  var table = obj.parentNode.parentNode.parentNode.querySelectorAll("table")[0];
   var c_no = getColNames(table).indexOf(c_name);
   for(let Rj = 0; Rj < table.rows.length; Rj++){
       table.rows[Rj].cells[c_no].style.display = '';
@@ -159,9 +332,6 @@ function showCol(obj){
 }
 
 
-function createShowColButton(c_name){
-  return createInput({ type: "Button", value: c_name, onclick: "showCol(this)" });
-}
 
 
 // Sum with group
@@ -199,13 +369,6 @@ function sumWithGroup(obj){
   }
 }
 
-function createSumButton(){
-  return createInput({ type: "Button", value: "Calculate", onclick: "sumWithGroup(this)" });
-}
-
-function createSearchInput(){
-  return createInput({ type:"text", onkeyup: "searchTableText(this)", placeholder: "Search text" });
-}
 
 // Search text input tags in a table and show only matching rows
 //    Clear input text, all rows will be shown.
@@ -309,28 +472,20 @@ function addRow(table){
 }
 
 
-function createNrowInput(){
-  return createInput({ class: "n_row", type: "number", value: "3", step: "1", min: "1", max:"20" });
-}
-
-function createAddRowButton(){
-  return createInput({ class: "add_row", type: "button", value: "Add row(s)", onclick: "addRows(this)" });
-}
-
-function createHideButton(){
-  return createInput({ class: "hide_show",  type: "button", value: "Hide table", onclick: "hideShowNext(this)" });
-}
 
 function hideShowNext(obj){
   // console.log(obj);
   // console.log(obj.parentNode.nextElementSibling);
+  var span   = obj.nextElementSibling.nextElementSibling;
   var next   = obj.parentNode.nextElementSibling;
   var next_2 = obj.parentNode.nextElementSibling.nextElementSibling;
   if(next.style.display === 'none'){
+    span.style.display = '';
     next.style.display = '';
     next_2.style.display = '';
     obj.value = "Hide table";
   } else {
+    span.style.display = 'none';
     next.style.display = 'none';
     next_2.style.display = 'none';
     obj.value = "Show table";
@@ -351,4 +506,15 @@ function colByType(table, type){
     if(types[i] === type){ cols.push(c_names[i]); }
   }
   return cols;
+}
+
+function loadExample(obj){
+  // console.log(obj.parentNode);
+  var main = obj.parentNode;
+
+  var example_name = "input_occ_example";
+  main.appendChild( inputTableModule(example_name) );
+  setSortable(example_name); // Can not set sortable in a function
+  obj.nextElementSibling.remove(); // <br>
+  obj.remove();
 }

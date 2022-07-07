@@ -40,47 +40,55 @@
 Biodiversity Investigation System (BIS)
 <!--            Switch full screen           -->
 <input id="switch_screen_show" type="button" value="TO FULL SCREEN"  onclick="switchScreenShow(this.id)" />
+<input type="button" value="saveHTML"  onclick="saveHTML()" />
 </p>
 
 <div class="Biodiversity Investigation System (BIS)">
   <p id="tabcontrol">
-    <a href="#tab_setting">Settings </a>
+    <a href="#tab_settings">Settings </a>
     <a href="#tab_inputs" >Inputs   </a>
     <a href="#tab_tools"  >Tools    </a>
     <a href="#tab4"       >Spare    </a>
   </p>
 
   <div id="tabbody">
-    <div id="tab_setting">
+    <div id="tab_settings">
 
       <script>
-        var setting_tab = document.getElementById("tab_setting");
+        var setting_tab = document.getElementById("tab_settings");
 
-        setting_tab.appendChild( settingTableModule("occ_setting") );
-
-
-
-//        setting_tab.appendChild( createSettingSpan("occ_setting") );
-//        setting_tab.appendChild( createSettingSpan("plot_setting") );
+        setting_tab.appendChild( settingTableModule("setting_plot_default") );
+        setting_tab.appendChild( settingTableModule("setting_occ_default" ) );
       </script>
-
-
     </div>
 
     <div id="tab_inputs">
       <script>
         var input_tab = document.getElementById("tab_inputs");
-
-        var  ns = "occ_input_table_example_01";
-        input_tab.appendChild( inputTableModule(ns) );
-        setSortable(ns); // Can not set sortable in a function
-
+        input_tab.appendChild( createInput({ type:"button", value: "Load Example", onclick: "loadExample(this)" }) );
+        input_tab.appendChild( crEl({ el: 'br' }) );
 
         // variables for sotable table
         var column_no = 0;       // now clicked
         var column_no_prev = 0;  // previous clicked
         var dir = "asc";
       </script>
+
+<script> // example data
+
+function saveHTML(obj){
+  var doc = document.documentElement.outerHTML;
+  var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
+  var blob = new Blob([bom, doc], { "type" : "text/tsv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.download = "biodiv.html"
+  a.href = url;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+</script>
     </div>
 
 
