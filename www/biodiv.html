@@ -22,11 +22,13 @@
     <link rel="stylesheet" href="css/tab.css">
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/fullScreen.css">
+    <!--  Show th and td as if not like a table
+    <link rel="stylesheet" href="css/table2.css">
+    -->
 
   <script> // test script
   // // // // // // // // // // // // // // // // // // // 
   // TODO: var -> const ?
-  // TODO: Create table according to plot_id
   // TODO: Write documents for functions.
   // 
   // // // // // // // // // // // // // // // // // // // 
@@ -37,10 +39,15 @@
 <body>
 
 <p>
-Biodiversity Investigation System (BIS)
+Biodiversity Investigation Support System (BISS)
 <!--            Switch full screen           -->
 <input id="switch_screen_show" type="button" value="TO FULL SCREEN"  onclick="switchScreenShow(this.id)" />
 <input type="button" value="saveHTML"  onclick="saveHTML()" />
+<!--      TODO: Use different background color or something CLEAR for users in switching on / off       -->
+<input type="button" value="Start GPS" onclick="startWatchPosition()" />
+<input type="button" value="Stop GPS"  onclick="stopWatchPosition()" />
+<input type='button' value="Launch mailer" onclick="launchMailer()" />
+<a href="exam01.html">Show example</a>
 </p>
 
 <div class="Biodiversity Investigation System (BIS)">
@@ -65,42 +72,19 @@ Biodiversity Investigation System (BIS)
     <div id="tab_inputs">
       <script>
         var input_tab = document.getElementById("tab_inputs");
-        input_tab.appendChild( createInput({ type:"button", value: "Load Example", onclick: "loadExample(this)" }) );
-        input_tab.appendChild( crEl({ el: 'br' }) );
+//         input_tab.appendChild( createInput({ type:"button", value: "Load Example", onclick: "loadExample(this)" }) );
+//         input_tab.appendChild( crEl({ el: 'br' }) );
 
         // variables for sotable table
         var column_no = 0;       // now clicked
         var column_no_prev = 0;  // previous clicked
         var dir = "asc";
       </script>
-
-<script> // example data
-
-function saveHTML(obj){
-  var doc = document.documentElement.outerHTML;
-  var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  var blob = new Blob([bom, doc], { "type" : "text/tsv" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.download = "biodiv.html"
-  a.href = url;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-</script>
     </div>
 
 
 
     <div id="tab_tools">
-      <!--            Launch Mailer                -->
-      <input type='button' value="Launch mailer" onclick="launchMailer()" />
-
-      <!--            GPS                           -->
-      <!--      TODO: Use different background color or something CLEAR for users in switching on / off       -->
-      <input type="button" value="Start GPS" onclick="startWatchPosition()" />
-      <input type="button" value="Stop GPS"  onclick="stopWatchPosition()" />
     </div>
 
     <div id="tab4">
