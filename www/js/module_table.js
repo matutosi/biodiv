@@ -1,9 +1,53 @@
+function showRow(obj){
+  var tr = obj.parentNode.parentNode;
+  var table = obj.parentNode.parentNode.parentNode;
+  var c_names = getColNames(table);
+  if(table.rows[0].style.display === 'none'){
+    var disp = 'inline-block';
+  }else{
+    var disp = '';
+  }
+  for(let i = 0; i < tr.cells.length; i++){
+    var td = tr.cells[i];
+    var label = c_names[i].toLowerCase();
+    switch(label){
+      case "new":
+        td.firstChild.nextElementSibling.replaceWith( createHideRowButton("plot info") );
+        break;
+      case "plot": // remain td
+        break;
+      default:
+        td.style.display = disp;
+        break;
+    }
+  }
+}
+function hideRow(obj){
+  var tr = obj.parentNode.parentNode;
+  var table = obj.parentNode.parentNode.parentNode;
+  var c_names = getColNames(table);
+  for(let i = 0; i < tr.cells.length; i++){
+    var td = tr.cells[i];
+    var label = c_names[i].toLowerCase();
+    switch(label){
+      case "new":
+        td.firstChild.nextElementSibling.replaceWith( createShowRowButton("plot info") );
+        break;
+      case "plot": // remain td
+        break;
+      default:
+        td.style.display = 'none';
+        break;
+    }
+  }
+}
 function createHideRowButton(row = "row"){
   return createInput({ type:"button", value: "Hide " + row, onclick: "hideRow(this)" });
 }
 function createShowRowButton(row = "row"){
   return createInput({ type:"button", value: "Show " + row, onclick: "showRow(this)" });
 }
+
 function createMakePlotButton(){
   return createInput({ type:"button", value: "Make plot table", onclick: "makePlotInputModule(this)" });
 }
@@ -38,40 +82,6 @@ function createNewOccButton(){
   return createInput({ type: "button", value: "occ table", onclick: "makeNewOccTableModule(this)" });
 }
 
-function showRow(obj){
-  var tr = obj.parentNode.parentNode;
-  for(let i = 0; i < tr.cells.length; i++){
-    var td = tr.cells[i];
-    var label = td.getAttribute("th-lab").toLowerCase();
-    switch(label){
-      case "":
-      td.firstChild.nextElementSibling.replaceWith( createHideRowButton("plot info") );
-        break;
-      case "plot": // remain td
-        break;
-      default:
-        td.style.display = 'inline-block';
-        break;
-    }
-  }
-}
-function hideRow(obj){
-  var tr = obj.parentNode.parentNode;
-  for(let i = 0; i < tr.cells.length; i++){
-    var td = tr.cells[i];
-    var label = td.getAttribute("th-lab").toLowerCase();
-    switch(label){
-      case "":
-      td.firstChild.nextElementSibling.replaceWith( createShowRowButton("plot info") );
-        break;
-      case "plot": // remain td
-        break;
-      default:
-        td.style.display = 'none';
-        break;
-    }
-  }
-}
 
 
 function makeNewOccTableModule(obj){
@@ -174,6 +184,7 @@ function inputTableModule(ns, table = null){
 
   up.appendChild( createSaveInputButton() );
 
+  up.appendChild( createShowShortTable() );
   up.appendChild( createHideButton() );
   up.appendChild( crEl({ el: 'br' }) );
   up.appendChild( crEl({ el: 'span'}) );
@@ -232,12 +243,12 @@ function makePlotTable(obj){
   var td = crEl({ el: 'td' })
   td.appendChild( createNewOccButton() );
   td.appendChild( createHideRowButton("plot info") );
-  td.setAttribute("th-lab", "");
+  //   td.setAttribute("th-lab", "");
   tr.appendChild( td );
   for(let i = 0; i < c_names.length; i++){
     if(setting_c_names[i] !== ""){
       var td = createInputTd(d_types[i], c_names[i], selects[i]);
-      td.setAttribute("th-lab", c_names[i])
+  //       td.setAttribute("th-lab", c_names[i])
       tr.appendChild(td);
     }
     table.appendChild(tr);
@@ -405,23 +416,24 @@ function sumWithGroup(obj){
   var array_val = getColData(table, array);
   var group_val = getColData(table, group);
   var grouped_array = splitByGroup(array_val, group_val);
-  // set groups by 'select-one' order
+  // set groups order with 'select-one'
   var c_no = getColNames(table).indexOf(group);
   var opts = table.rows[1].cells[c_no].firstChild.options;
   var groups = [];
-  for(o of opts){
-    if(o.value !== ''){ groups.push(o.value); }
-  }
+  for(o of opts){ groups.push(o.value); }
   var sum_array = [];
   for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
   for(let i = 0; i < groups.length; i++){
-    var gr_ar = grouped_array[groups[i]];
-    for(let j = 0; j < gr_ar.length; j++){
-      sum_array[groups[i]] += Number(gr_ar[j]) * 10000;  // avoid dicimal error
+    if(grouped_array[groups[i]] !== void 0){
+      var gr_ar = grouped_array[groups[i]];
+      for(let j = 0; j < gr_ar.length; j++){
+        sum_array[groups[i]] += Number(gr_ar[j]);
+      }
     }
   }
   for(let i = 0; i < groups.length; i++){
-    sum_array[groups[i]] = Math.round(sum_array[groups[i]]) / 10000;  // avoid dicimal error
+    sum_array[groups[i]] = Math.round(sum_array[groups[i]] * 10000) / 10000;  // avoid dicimal error
+    if(sum_array[groups[i]] === 0){ delete sum_array[groups[i]]; }
   }
   sum = hash2table(sum_array);
   // add th
@@ -477,7 +489,7 @@ function addRows(obj){
   // console.log(obj.parentNode.previousElementSibling);
   var n_row = obj.previousElementSibling.value;
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  for(let i = 0; i < n_row; i++) addRow(table)
+  for(let i = 0; i < n_row; i++){ addRow(table); }
 }
 
 // Copy buttom row and paste it as new rows
@@ -602,4 +614,64 @@ function loadExample(obj){
 
   obj.nextElementSibling.remove(); // <br>
   obj.remove();
+}
+
+
+function shortTable(obj){
+  var table = obj.parentNode.nextElementSibling;
+  var rows = table.rows;
+  rows[0].style.display = 'none';
+  for(let Ri = 1; Ri < rows.length; Ri++){
+    var row = rows[Ri];
+    for(let Cj = 0; Cj < row.cells.length; Cj++){
+      var td = row.cells[Cj];
+      td.style.display = 'inline-block';
+  //       td.style.display = 'block';
+    }
+  }
+  addThLabel(table);
+  obj.replaceWith( createShowWideTable() );
+  //   var tds = table.querySelectorAll("td");
+  //   for(let i = 0; i < tds.length; i++){ tds[i].style.border = "0px"; }
+}
+function wideTable(obj){
+  var table = obj.parentNode.nextElementSibling;
+  var rows = table.rows;
+  rows[0].style.display = '';
+  for(let Ri = 1; Ri < rows.length; Ri++){
+    var row = rows[Ri];
+    for(let Cj = 0; Cj < row.cells.length; Cj++){
+      var td = row.cells[Cj];
+      td.style.display = '';
+    }
+  }
+  removeThLabel(table);
+  obj.replaceWith( createShowShortTable() );
+}
+function addThLabel(table){
+  var c_names = getColNames(table);
+  var rows = table.rows;
+  for(let Ri = 1; Ri < rows.length; Ri++){
+    var row = rows[Ri];
+    for(let Cj = 0; Cj < row.cells.length; Cj++){
+      var td = row.cells[Cj];
+      td.setAttribute("th-lab", c_names[Cj] + ": ")
+    }
+  }
+}
+function removeThLabel(table){
+  var rows = table.rows;
+  for(let Ri = 1; Ri < rows.length; Ri++){
+    var row = rows[Ri];
+    for(let Cj = 0; Cj < row.cells.length; Cj++){
+      var td = row.cells[Cj];
+      td.removeAttribute("th-lab");
+    }
+  }
+}
+function createShowShortTable(){
+  return createInput({ type:"button", value: "Show short table", onclick: "shortTable(this)" });
+}
+function createShowWideTable(){
+  return createInput({ type:"button", value: "Show wide table", onclick: "wideTable(this)" });
 }
