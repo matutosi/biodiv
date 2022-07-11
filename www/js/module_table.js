@@ -625,30 +625,17 @@ function shortTable(obj){
     var tr = rows[Ri];
     tr.style.display = "flex";
     tr.style["flex-wrap"] = "wrap";
-  //     for(let Cj = 0; Cj < tr.cells.length; Cj++){
-  //       var td = tr.cells[Cj];
-  //       td.style.display = 'inline-block';
-  //       td.style.display = 'block';
-  //       td.style.display = 'inline';
-  //     }
   }
   addThLabel(table);
   obj.replaceWith( createShowWideTable() );
-  //   var tds = table.querySelectorAll("td");
-  //   for(let i = 0; i < tds.length; i++){ tds[i].style.border = "0px"; }
 }
 function wideTable(obj){
   var table = obj.parentNode.nextElementSibling;
   var rows = table.rows;
-  //   rows[0].style.display = '';
   for(let Ri = 0; Ri < rows.length; Ri++){
     var tr = rows[Ri];
-    tr.style.display = "inline";
-    tr.style["flex-wrap"] = "nowrap";
-  //     for(let Cj = 0; Cj < tr.cells.length; Cj++){
-  //       var td = tr.cells[Cj];
-  //       td.style.display = '';
-  //     }
+    tr.style.display = "";
+    tr.style["flex-wrap"] = "";
   }
   removeThLabel(table);
   obj.replaceWith( createShowShortTable() );
