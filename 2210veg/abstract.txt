@@ -20,6 +20,7 @@
 
 [仕様]
 HTML, JavaScript, CSS
+htmlファイルにJavaScripとCSSを格納済み．
 
 [動作確認環境]
   GoogleChrome
@@ -31,10 +32,10 @@ HTML, JavaScript, CSS
 
 
 [インストール・起動]
-biodiv.html，jsおよびcssディレクトリのファイルを各自の端末にダウンロードする．
-https://github.com/matutosi/biodiv/
+以下のファイルディレクトリのファイルを各自の端末にダウンロードする．
+https://github.com/matutosi/biodiv/tree/main/www/biss.html
 
-biodiv.html を起動する．
+biss.html を起動する．
 
 
 [使用方法]
@@ -48,7 +49,10 @@ Inputsタブで，地点情報や観察情報を入力する．
 [出力されるファイルの形式]
 設定ファイルおよび入力データともに，列名・データ形式・選択リスト・データの4項目からなるテキストファイルである．
 各項目はJSON形式であり，";"(セミコロン)で区切られている．
-Rではテキストファイルを読み込み，";"で区切れば，jsonlite等のパッケージを使ってデータフレームへの変換ができる(実際のコードは)．
+Rではテキストファイルを読み込み，";"で区切れば，jsonlite等のパッケージを使ってデータフレームへの変換ができる．
+筆者作成の関数(ecan::read_biss())も適宜，ご利用ください．
 
-(未作成)
-筆者作成の関数もあるので，適宜利用頂きたい．
+https://github.com/matutosi/ecan
+
+
+

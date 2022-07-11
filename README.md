@@ -19,9 +19,56 @@ Can use: alphabet, number, "-", and other characters.
 Can not use: "_" (underbar).
 
 
+## Use data in R
+
+Use `ecan::read_biss()` in ecan.
+
+https://github.com/matutosi/ecan
+
+``` r
+  # install.packages("devtools")
+devtools::install_github("matutosi/ecan")
+```
+
+
 
 
 ## Citation
 
 Toshikazu Matsumura (2022) Biodiversity Investigation Support System <https://matutosi.shinyapps.io/ecanvis/>.
+
+
+
+
+
+# Memo: tools used for making BISS
+
+## Node.js
+
+Download installer and run. 
+
+https://nodejs.org/ja/download/
+
+## inliner
+
+Install inliner
+
+```
+npm install -g inliner
+```
+
+Run inliner
+
+```
+inliner -m biodiv.html > biss.html
+```
+
+
+
+## eslint
+
+```
+npm install -g eslint
+```
+
 
