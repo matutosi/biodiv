@@ -127,7 +127,10 @@ setdiff(all_funs[[1]], used_funs_15)
  # 
 
   # 使われているが，コードの途中で落ちた関数
-  #  "getTableData" "getSelectOption" "selectColByType"  "searchTable" "loadExample" "changeTab" 
+  # "changeTab" # 定義が()ではされていないので，拾えなかった
+  # 
+  # exampleで使われている
+  # "loadExample" 
 
  # コードの中では使っていないが，残しておく
  # keep in json.js: "uniq" "csv2json" "extractJson" "json2Array" "jsonKeys" 
@@ -140,4 +143,4 @@ setdiff(all_funs[[1]], used_funs_15)
  #   "createInputTable" "createTable" "cloneRows" "cloneRow"  "hiddenInputCols"  "showInputCols" "hideInputCol" 
  # "createInputNrow" "createButtonAddRow" "createButtonHideShow" "switchHideShowSpan"  "createSetting"  "hideCol" 
  # "getNs" "setNs" "showSumByGroup" "sumByGroup" 
-
+ # "getSelectOption" "getTableData" "selectColByType" "searchTable"

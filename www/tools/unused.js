@@ -466,3 +466,101 @@ function updateTimeGPS_2(obj){
     }
   }
 }
+
+// Get options in select tag
+//    Return string like "B1,B2,..." for select tag,
+//    "" (vacant string) for pother input tag
+function getSelectOption(table){
+  const data_types = getDataType(table);
+  const row_1 = table.rows[1].cells;  // table row except th (rows[0])
+  var select_opt = [];
+  for(let Ci = 0; Ci < data_types.length; Ci++){ select_opt[Ci] = ""; }
+  for(let Ci = 0; Ci < data_types.length; Ci++){
+    if(data_types[Ci] === "select-one"){
+      opts = row_1[Ci].firstChild.children;
+      for(opt of opts){ select_opt[Ci] = select_opt[Ci] + "," + opt.value; }
+    }
+  }
+  return select_opt;
+}
+
+// Get data from occurrence table.
+//    returns [array], [array], [array], 
+//    Each array means a row in the table. 
+//    
+function getTableData(id_table){
+// var id_table = "occurrence";
+  const table = document.getElementById(id_table);
+  const col_names = getColNames(table);
+  const n_col = col_names.length;
+  const n_row = table.rows.length;
+  const data_types = getDataType(table);
+  var table_data = [];
+  // th
+  var Rj = 0;
+  var row_rj = table.rows[Rj].cells;
+  var row_data = [];
+  for(let Ci = 0; Ci < n_col; Ci++){
+    row_data[Ci] = row_rj[Ci].innerHTML;
+  }
+  table_data[Rj] = row_data;
+  // td
+  for(let Rj=1; Rj<n_row; Rj++){
+    var row_rj = table.rows[Rj].cells;
+    var row_data = [];
+    for(let Ci = 0; Ci < n_col; Ci++){
+      row_data[Ci] = getCellData(row_rj[Ci], data_types[Ci]);
+    }
+    table_data[Rj] = row_data;
+  }
+  return table_data;
+}
+
+//    @paramas id_table  A string to specify a table.
+//    @paramas type      A string to specify a data type, 
+//                       which can be retrive by get_data_types() as shown below.
+//                       "fixed", "text", "button", "checkbox", 'select-one','number'. 
+//    @return  A string array.
+//    @examples
+//    var id_table = "occ_input_example_01";
+//    var type = "number";
+//    selectColByType(id_table, type);
+//    var type = "select-one";
+//    selectColByType(id_table, type);
+function selectColByType(id_table, type){
+  var table = document.getElementById(id_table);
+  var types = get_data_types(table);
+  var c_names = getColNames(table);
+  var cols = [];
+  for(let i = 0; i < types.length; i++){
+    if(types[i] === type){ cols.push(c_names[i]); }
+  }
+  return cols;
+}
+
+// Search text input tags in a table and show only matching rows
+//    Clear input text, all rows will be shown.
+//    Regular expression can be used.
+//    
+function searchTable(id_table, text){
+  var input = text.value;
+  var reg_ex = new RegExp(input, 'i');  // i: case-insensitive
+  var table  = document.getElementById(id_table);
+  var trs    = table.rows;
+  var data_types = getDataType(table);
+  var display_flag = [1];                // 1: show first row (th)
+  for(let Rj = 1; Rj < trs.length; Rj++){ display_flag[Rj] = 0; }
+  for(let Ci = 0; Ci < data_types.length; Ci++){
+    if(data_types[Ci] === "text"){
+      for(let Rj = 1; Rj < trs.length; Rj++){
+        var text = trs[Rj].cells[Ci].firstChild.value;
+        if(reg_ex.test(text)){ display_flag[Rj]++; }
+      }
+    }
+  }
+  for(let k = 1; k < display_flag.length; k++){
+    if(display_flag[k] > 0) { trs[k].style.display = "";     }
+    else                    { trs[k].style.display = "none"; }
+    if(input === "")        { trs[k].style.display = "";     } // no input, show all
+  }
+}
