@@ -133,7 +133,7 @@ setdiff(all_funs[[1]], used_funs_15)
  # keep in json.js: "uniq" "csv2json" "extractJson" "json2Array" "jsonKeys" 
 
 
- #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-07-11 16:20ぐらい
+ #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-07-11 16:18ぐらい
  #              D:/matu/work/ToDo/biodiv/www/tools/unused.js
  #  #  #  #  #  #  #  #  MAYBE UNUSED  #  #  #  #  #  #  #  #  
  # "fetchLSKeys" "saveTable" "getPosition" "restoreInputPart" "createInputPart" "createSettingSpan"  "createButtonNewTable"

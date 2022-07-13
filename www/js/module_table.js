@@ -201,9 +201,9 @@ function inputTableModule(ns, table = null){
   var occ = ns.split("_")[1] === "occ";
   if(occ){
     dn.appendChild( crEl({ el: 'br' }) );
-    dn.appendChild( crEl({ el: 'span', tc: "Value: " }) );
+    dn.appendChild( crEl({ el: 'span', ih: "<b>Value: </b>" }) );
     dn.appendChild( createSelectOpt( colByType(table, "number") ) );
-    dn.appendChild( crEl({ el: 'span', tc: "; Group: " }) );
+    dn.appendChild( crEl({ el: 'span', ih: "; <b>Group: </b>" }) );
     dn.appendChild( createSelectOpt( colByType(table, "select-one") ) );
     dn.appendChild( createSumButton() );
   }
@@ -243,16 +243,14 @@ function makePlotTable(obj){
   var td = crEl({ el: 'td' })
   td.appendChild( createNewOccButton() );
   td.appendChild( createHideRowButton("plot info") );
-  //   td.setAttribute("th-lab", "");
   tr.appendChild( td );
-  for(let i = 0; i < c_names.length; i++){
-    if(setting_c_names[i] !== ""){
+  for(let i = 0; i < n_col; i++){
+    if(c_names[i] !== ""){
       var td = createInputTd(d_types[i], c_names[i], selects[i]);
-  //       td.setAttribute("th-lab", c_names[i])
       tr.appendChild(td);
     }
-    table.appendChild(tr);
   }
+  table.appendChild(tr);
   return table;
 }
 
@@ -265,7 +263,7 @@ function settingTableModule(ns){
   up.appendChild( crEl({ el: 'B', tc: ns}) );
   up.appendChild( crEl({ el: 'br' }) );
 
-  up.appendChild( crEl({ el: 'span', tc: "Load settings: " }) );
+  up.appendChild( crEl({ el: 'span', ih: "<b>Load settings: </b>" }) );
   up.appendChild( createFileButton() );
 
   up.appendChild( createInput({ type: "text", placeholder: "File name" }) );

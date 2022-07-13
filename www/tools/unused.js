@@ -440,3 +440,29 @@ function sumByGroup(id_input_table, array, group, id_result){
   return sum;
 }
 
+// Made as altenertive function for updateTimeGPS()
+//   to avoid the wrong pisition in view (data are correct)
+//   however updateTimeGPS_2() result in the same as updateTimeGPS()
+function updateTimeGPS_2(obj){
+  var table = obj.parentNode.parentNode.parentNode;
+  var tr = obj.parentNode.parentNode;
+  var c_names = getColNames(table);
+  var tds = tr.cells;
+  // update
+  for(let i = 0; i < tds.length; i++){
+    switch(c_names[i]){
+      case "Date":
+        tds[i].replaceWith( crEl({ el:'td', ih: getNow() }) );
+        break;
+      case "locLat":
+        tds[i].replaceWith( crEl({ el:'td', ih: getLat() }) );
+        break;
+      case "locLon":
+        tds[i].replaceWith( crEl({ el:'td', ih: getLon() }) );
+        break;
+      case "locAcc":
+        tds[i].replaceWith( crEl({ el:'td', ih: getAcc() }) );
+        break;
+    }
+  }
+}
