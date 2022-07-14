@@ -1,3 +1,5 @@
+// TODO: write documents
+
 function showRow(obj){
   var tr = obj.parentNode.parentNode;
   var table = obj.parentNode.parentNode.parentNode;
@@ -487,6 +489,7 @@ function searchTableText(obj){
 //    @paramas obj  A input element.
 //                  Normally use "this". 
 function searchTableTextShow(obj){
+// TODO: Limit show rows 
   var input = obj.value;
   var reg_ex = new RegExp(input, 'i');  // i: case-insensitive
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
@@ -510,7 +513,7 @@ function addRows(obj){
 // Copy buttom row and paste it as new rows
 //    Column date  getNow() will be applied.
 //    Column fixed and <select> <option> will be used the same selection.
-//    Column "checkbox" and "text" will be made in unchecked and blank.
+//    Column "checkbox" and "text" will be made as unchecked and blank one.
 //    
 function addRow(table){
   // console.log(table);
