@@ -133,12 +133,12 @@ function restoreTd(table_data, data_type, select){
       var td = crEl({ el:'td', ih: table_data });
       break;
     case "button":
-      if(table_data === "DELETE")           { var td = createTd( createDelButton() ); }
-      if(table_data === "Update Time & GPS"){ var td = createTd( createUpdateButton() ); }
+      if(table_data === "DELETE")           { var td = createTdWithChild( createDelButton() ); }
+      if(table_data === "Update Time & GPS"){ var td = createTdWithChild( createUpdateButton() ); }
       break;
     case "select-one":
       var sel_no = select.indexOf(table_data);
-      var td = createTd( createSelectOpt(select, sel_no) );
+      var td = createTdWithChild( createSelectOpt(select, sel_no) );
       break;
   }
   return td;

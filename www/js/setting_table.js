@@ -1,11 +1,11 @@
-
-function createTd(child){
+// Create td with a child element. 
+//    @paramas child A child element.
+//    @return  A td element with a child element
+function createTdWithChild(child){
   var td = document.createElement('td');
   td.appendChild(child);
   return td;
 }
-
-
 
 // Helper to create input with select options
 //    when selected_no is given, 
