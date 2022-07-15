@@ -1,3 +1,6 @@
+// TODO: write documents
+
+
 function inputTableModule(ns, table = null){
   // Up span
   var up = crEl({ el:'span', ats:{id: "up_" + ns} });
@@ -189,24 +192,6 @@ function makePlotTable(obj){
   return table;
 }
 
-
-async function replaceTable(obj){
-  var text = await readFile(obj.files[0]);
-  var text = text.split(";");
-  var table_name = obj.value.split("\\").slice(-1)[0].replace("\.conf", "")
-  var new_table = makeTable(text, table_name, false);
-
-  var old_table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  old_table.replaceWith(new_table);
-
-  var old_title = obj.parentNode.parentNode.querySelectorAll("b")[0];
-  var new_title = crEl({ el: 'B', tc: table_name})
-  old_title.replaceWith( new_title );
-
-}
-
-
-
 function createInputTd(dat_type, col_name, optional){
   // console.log(dat_type);
   // console.log(col_name);
@@ -247,6 +232,10 @@ function createInputTd(dat_type, col_name, optional){
   return td;
 }
 
+
+
+## DONE: update date GPS
+
 // Update "Date", "locLat", "locLon", "locAcc"
 //    When "Update" bottun clicked, update informations in the row.
 //    @paramas obj Clicked row.
@@ -267,9 +256,13 @@ function updateTimeGPS(obj){
   }
 }
 
-## 
+## DONE: 
 
-// Sum with group
+// Sum numeric with groups.
+//     In BISS, number input is the subject to sum, 
+//     select-one input is the options to group.
+//   @paramas obj  A input element.
+//                 Normally use "this". 
 function sumWithGroup(obj){
   var array = obj.previousElementSibling.previousElementSibling.previousElementSibling.value;
   var group = obj.previousElementSibling.value;
@@ -312,7 +305,7 @@ function sumWithGroup(obj){
 
 
 
-
+## DONE: utils ???
 //    @paramas table  A table element.
 //    @paramas type   A string to specify a data type, 
 //                    which can be retrive by get_data_types() as shown below.
@@ -328,8 +321,6 @@ function colByType(table, type){
   }
   return cols;
 }
-
-
 
 // Create td with a child element. 
 //    @paramas child A child element.
@@ -355,7 +346,9 @@ function createSelectOpt(list, selected_no = 0){
   return select;
 }
 
-
+// Check if the same plot has already existed. 
+//   @paramas plot A string to specify plot.
+//   @return  A logical.
 function hasDupPlot(plot){
   var tab_inputs = document.getElementById("tab_inputs");
   var input_tables = tab_inputs.querySelectorAll("table");
@@ -371,9 +364,27 @@ function hasDupPlot(plot){
 }
 
 
-## 
-  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
+## DONE: Save and load Settings 
+
+// Load settings and replace setting table for plot or occurrence.
+//   @paramas obj  A input element.
+//                 Normally use "this". 
+async function replaceTable(obj){
+  var text = await readFile(obj.files[0]);
+  var text = text.split(";");
+  var table_name = obj.value.split("\\").slice(-1)[0].replace("\.conf", "")
+  var new_table = makeTable(text, table_name, false);
+  // Table
+  var old_table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  old_table.replaceWith(new_table);
+  // Title
+  var old_title = obj.parentNode.parentNode.querySelectorAll("b")[0];
+  var new_title = crEl({ el: 'B', tc: table_name})
+  old_title.replaceWith( new_title );
+}
+// Helper for replaceTable(). 
 function readFile(file){
+  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
   return new Promise((resolve, reject) => {
     let reader = new FileReader();
     reader.onload = x=> resolve(reader.result);
@@ -381,6 +392,9 @@ function readFile(file){
   })
 }
 
+// Save settings of plot or occurrence data.
+//   @paramas obj  A input element.
+//                 Normally use "this". 
 function saveSettings(obj){
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
   var table_data = getTableDataPlus(table.id);
@@ -402,6 +416,9 @@ function saveSettings(obj){
   URL.revokeObjectURL(url);
   delete table_data;
 }
+// Save inputs of a table
+//   @paramas obj  A input element.
+//                 Normally use "this". 
 function saveInputs(obj){
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
   var table_data = getTableDataPlus(table.id);
@@ -419,6 +436,10 @@ function saveInputs(obj){
   delete table_data;
 }
 
+// Load example data
+//   Using in example.html, run like as click buttons in html.
+//   @paramas obj  A input element.
+//                 Normally use "this". 
 function loadExample(obj){
   // plot
   var make_plot_button = document.getElementById("dn_setting_plot_default").children[2];
