@@ -1,6 +1,12 @@
 // TODO: write documents
 
 
+// Create input table module
+//   In a module has a table and other input elements, 
+//   which operate the table.
+// @paramas ns    A string to specify input table module.
+// @paramas table A table element.
+// @retrun  A span including a table and other elements.
 function inputTableModule(ns, table = null){
   // Up span
   var up = crEl({ el:'span', ats:{id: "up_" + ns} });
@@ -42,6 +48,11 @@ function inputTableModule(ns, table = null){
   return main;
 }
 
+// Create setting table module
+//   In a module has a table and other input elements, 
+//   which operate the table.
+// @paramas ns    A string to specify input table module.
+// @retrun  A span including a table and other elements.
 function settingTableModule(ns){
   // var ns = "occ_input_table_example_01";
   var main  = crEl({ el:'span', id: "main_"   + ns});
@@ -81,6 +92,11 @@ function settingTableModule(ns){
   return main;
 }
 
+
+// Create occurrence table module
+//   @paramas obj  A input element.
+//                 Normally use "this". 
+//   @retrun  A span including a table and other elements.
 function makeNewOccTableModule(obj){
   var table = makeNewOccTable(obj);
   if(table === null){ return void 0 ;}  // no table
@@ -91,15 +107,10 @@ function makeNewOccTableModule(obj){
   obj.setAttribute("disabled", true)
 }
 
-function makePlotInputModule(obj){
-  var table = makePlotTable(obj);
-  var module = inputTableModule(table.id, table);
-  var tab_inputs = document.getElementById("tab_inputs");
-  tab_inputs.appendChild(module);
-  setSortable(table.id);  // Should setSortable() after appendChild()
-  tabs[1].click();        // move to tab_inputs
-}
-
+// Helper for makeNewOccTableModule()
+//   @paramas obj  A input element.
+//                 Normally use "this". 
+//   @retrun  A table element.
 function makeNewOccTable(obj){
   // var obj = temp1;
   var tr = obj.parentElement.parentElement;
@@ -118,6 +129,23 @@ function makeNewOccTable(obj){
   return table;
 }
 
+// Make plot input module
+//   @paramas obj  A input element.
+//                 Normally use "this". 
+//   @retrun  A plot input module and change input tab.
+function makePlotInputModule(obj){
+  var table = makePlotTable(obj);
+  var module = inputTableModule(table.id, table);
+  var tab_inputs = document.getElementById("tab_inputs");
+  tab_inputs.appendChild(module);
+  setSortable(table.id);  // Should setSortable() after appendChild()
+  tabs[1].click();        // move to tab_inputs
+}
+
+// Helper for makeNewOccTableModule() and makeNewOccTable()
+//   @paramas setting_table  A setting table
+//   @paramas plot           A string to specify a plot name
+//   @return  A occurrence table
 function makeOccTable(setting_table, plot){
   var setting_c_names = getColNames(setting_table);
   var c_names = getColData(setting_table, setting_c_names[0]);
@@ -154,6 +182,10 @@ function makeOccTable(setting_table, plot){
   return table;
 }
 
+// Helper for makePlotInputModule(
+//   @paramas obj  A input element.
+//                 Normally use "this". 
+//   @return  A plot table
 function makePlotTable(obj){
   var setting_table = obj.parentNode.parentNode.querySelectorAll("table")[0];
   var setting_c_names = getColNames(setting_table);
@@ -192,6 +224,13 @@ function makePlotTable(obj){
   return table;
 }
 
+// Helper for makeOccTable() and makePlotTable()
+//   td is basic element, createInputTd() create 
+//   from data type, column name, and  optional.
+//   @paramas dat_type  A string to specify data type.
+//   @paramas col_name  A string to specify column name.
+//   @paramas optional  A string to specify optional.
+//   @return  A td element
 function createInputTd(dat_type, col_name, optional){
   // console.log(dat_type);
   // console.log(col_name);
@@ -231,8 +270,6 @@ function createInputTd(dat_type, col_name, optional){
   }
   return td;
 }
-
-
 
 ## DONE: update date GPS
 
