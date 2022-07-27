@@ -8,12 +8,12 @@ The goal of BISS is to support biodiversity investigation.
 Download biodiv.html from URL below and save it in your mobile device or PC.
 https://github.com/matutosi/biodiv/tree/main/www
 
-Launch biodiv.html with browser (Chrome etc.).
-
 
 ## How to use
 
+Launch biodiv.html with browser (Chrome etc.).
 
+  # See example
 
 ## Caution
 
