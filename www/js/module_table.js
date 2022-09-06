@@ -197,7 +197,7 @@ function makePlotTable(obj){
   // th
   const n_col = c_names.length;
   var tr = document.createElement('tr');
-  var th = crEl({ el: 'th', ih: "New" });
+  var th = crEl({ el: 'th', ih: "" });
   th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide", onclick:"hideTableCol(this)"} }) ); 
   tr.appendChild(th);
   for(let Ni = 0; Ni < n_col; Ni++){
@@ -271,7 +271,7 @@ function createInputTd(dat_type, col_name, optional){
   return td;
 }
 
-## DONE: update date GPS
+// DONE: update date GPS
 
 // Update "Date", "locLat", "locLon", "locAcc"
 //    When "Update" bottun clicked, update informations in the row.
@@ -293,7 +293,7 @@ function updateTimeGPS(obj){
   }
 }
 
-## DONE: 
+// DONE: 
 
 // Sum numeric with groups.
 //     In BISS, number input is the subject to sum, 
@@ -342,7 +342,7 @@ function sumWithGroup(obj){
 
 
 
-## DONE: utils ???
+// DONE: utils ???
 //    @paramas table  A table element.
 //    @paramas type   A string to specify a data type, 
 //                    which can be retrive by get_data_types() as shown below.
@@ -401,7 +401,7 @@ function hasDupPlot(plot){
 }
 
 
-## DONE: Save and load Settings 
+// DONE: Save and load Settings 
 
 // Load settings and replace setting table for plot or occurrence.
 //   @paramas obj  A input element.
