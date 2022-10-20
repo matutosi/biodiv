@@ -137,18 +137,7 @@ function makePlotInputModule(obj){
   var tab_inputs = document.getElementById("tab_inputs");
   tab_inputs.appendChild(module);
   setSortable(table.id);  // Should setSortable() after appendChild()
-
-    // Convert to short table
-  shortTable(table.previousElementSibling.children[3])
-  //   var rows = table.rows;
-  //   rows[0].style.display = 'none';
-  //   for(let Ri = 1; Ri < rows.length; Ri++){
-  //     var tr = rows[Ri];
-  //     tr.style.display = "flex";
-  //     tr.style["flex-wrap"] = "wrap";
-  //   }
-  //   addThLabel(table);
-
+  shortTable(table.previousElementSibling.children[3])  // Short table
   tabs[1].click();        // move to tab_inputs
 }
 
