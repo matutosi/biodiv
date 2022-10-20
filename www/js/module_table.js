@@ -12,10 +12,8 @@ function inputTableModule(ns, table = null){
   var up = crEl({ el:'span', ats:{id: "up_" + ns} });
   up.appendChild( crEl({ el: 'B', tc: ns}) );
   up.appendChild( createSearchInput() );
-
   up.appendChild( createSaveInputButton() );
-
-  up.appendChild( createShowShortTable() );
+  up.appendChild( createWideTable() ); 
   up.appendChild( createHideButton() );
   up.appendChild( crEl({ el: 'br' }) );
   up.appendChild( crEl({ el: 'span'}) );
@@ -139,6 +137,18 @@ function makePlotInputModule(obj){
   var tab_inputs = document.getElementById("tab_inputs");
   tab_inputs.appendChild(module);
   setSortable(table.id);  // Should setSortable() after appendChild()
+
+    // Convert to short table
+  shortTable(table.previousElementSibling.children[3])
+  //   var rows = table.rows;
+  //   rows[0].style.display = 'none';
+  //   for(let Ri = 1; Ri < rows.length; Ri++){
+  //     var tr = rows[Ri];
+  //     tr.style.display = "flex";
+  //     tr.style["flex-wrap"] = "wrap";
+  //   }
+  //   addThLabel(table);
+
   tabs[1].click();        // move to tab_inputs
 }
 
@@ -197,7 +207,7 @@ function makePlotTable(obj){
   // th
   const n_col = c_names.length;
   var tr = document.createElement('tr');
-  var th = crEl({ el: 'th', ih: "" });
+  var th = crEl({ el: 'th', ih: "Make" });
   th.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide", onclick:"hideTableCol(this)"} }) ); 
   tr.appendChild(th);
   for(let Ni = 0; Ni < n_col; Ni++){
