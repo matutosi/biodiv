@@ -7,12 +7,12 @@ main <- readr::read_tsv(main_path, col_names = "main", show_col_types = FALSE)
 
 funs_path <- "D:/matu/work/ToDo/biodiv/www/js/"
 
-  # funs <- 
+  # fun <- 
 codes_funs <-
    dir(funs_path) %>%
   .[!stringr::str_detect(., "data")] %>%
   map(~str_c(funs_path, .)) %>%
-  map(readr::read_tsv, col_names = "funs", show_col_types = FALSE) %>%
+  map(readr::read_tsv, col_names = "fun", show_col_types = FALSE) %>%
   bind_rows()
 
 ## main
@@ -30,13 +30,13 @@ main_funs <-
 ## code
 all_funs <- 
   codes_funs %>%
-  #   dplyr::filter(! stringr::str_detect(funs, ' *//')) %>%
-  dplyr::mutate(funs = stringr::str_replace_all(funs, "//.*", "")) %>%
-  #   dplyr::filter(stringr::str_detect(funs, fun_name))
+  #   dplyr::filter(! stringr::str_detect(fun, ' *//')) %>%
+  dplyr::mutate(fun = stringr::str_replace_all(fun, "//.*", "")) %>%
+  #   dplyr::filter(stringr::str_detect(fun, fun_name))
     # function
     # ( fun ) "fun" { fun }
     # = fun( 
-  dplyr::filter(stringr::str_detect(funs, '^.{0,6}function|= *[A-z0-9]+\\(|[\\(\\"\\{] *[A-z0-9]+\\(' )) %>%
+  dplyr::filter(stringr::str_detect(fun, '^.{0,6}function|= *[A-z0-9]+\\(|[\\(\\"\\{] *[A-z0-9]+\\(' )) %>%
   #   print()
   unlist() %>%
   purrr::reduce(stringr::str_c) %>%
@@ -61,7 +61,7 @@ split_code <- function(x){
 
 codes <- 
   codes_funs %>%
-  dplyr::mutate(funs = stringr::str_replace_all(funs, "//.*", "")) %>%
+  dplyr::mutate(fun = stringr::str_replace_all(fun, "//.*", "")) %>%
   unlist() %>%
   purrr::reduce(stringr::str_c) %>%
   stringr::str_replace_all("[A-z]*\\.[A-z]*", "") %>%  # "document.getElementById"  -> ""
@@ -144,3 +144,43 @@ setdiff(all_funs[[1]], used_funs_15)
  # "createInputNrow" "createButtonAddRow" "createButtonHideShow" "switchHideShowSpan"  "createSetting"  "hideCol" 
  # "getNs" "setNs" "showSumByGroup" "sumByGroup" 
  # "getSelectOption" "getTableData" "selectColByType" "searchTable"
+
+## check_duplicated
+rm(list=ls(all=TRUE));gc();gc();
+library(tidyverse)
+
+  # read file
+main_path <- "D:/matu/work/ToDo/biodiv/www/biodiv.html"
+main <- readr::read_tsv(main_path, col_names = "main", show_col_types = FALSE)
+
+funs_path <- "D:/matu/work/ToDo/biodiv/www/js/"
+
+detect_fun <- function(code){
+  for(i in 2:length(code)) if(code[i] == "") code[i] <- code[i-1]
+  return(code)
+}
+
+codes_funs <-
+   dir(funs_path) %>%
+  .[!stringr::str_detect(., "data")] %>%
+  map(~str_c(funs_path, .)) %>%
+  map(readr::read_tsv, col_names = "code", show_col_types = FALSE) %>%
+  bind_rows() %>%
+  dplyr::mutate(f = case_when(
+       stringr::str_detect(code, "^function") ~ code,
+       TRUE ~ ""
+  )) %>%
+  dplyr::mutate(f = stringr::str_replace(f, "^function ", "")) %>%
+  dplyr::mutate(f = stringr::str_replace(f, "\\(.+", "")) %>%
+  dplyr::mutate(f = detect_fun(.$f)) %>%
+  dplyr::filter(!stringr::str_detect(code, "^//")) %>%
+  dplyr::filter(stringr::str_length(code) > 10)
+
+codes_funs %>%
+  dplyr::group_by(code) %>%
+  dplyr::mutate(n = n()) %>%
+  dplyr::filter(n > 1) %>%
+  print(n = nrow(.)) %>%
+  dplyr::ungroup() %>%
+  count(f) %>%
+  arrange(desc(n))
