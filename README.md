@@ -5,13 +5,13 @@ The goal of BISS is to support biodiversity investigation.
 
 ## How to install
 
-Download biodiv.html from URL below and save it in your mobile device or PC.
+Download biss.html from URL below and save it in your mobile device or PC.
 https://github.com/matutosi/biodiv/tree/main/www
 
 
 ## How to use
 
-Launch biodiv.html with browser (Chrome etc.).
+Launch biss.html with browser (Chrome etc.).
 
   # See example
 
@@ -74,5 +74,3 @@ inliner -m biodiv.html > biss.html
 ```
 npm install -g eslint
 ```
-
-

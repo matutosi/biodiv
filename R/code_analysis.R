@@ -176,11 +176,29 @@ codes_funs <-
   dplyr::filter(!stringr::str_detect(code, "^//")) %>%
   dplyr::filter(stringr::str_length(code) > 10)
 
-codes_funs %>%
+  # codes_funs %>%
+  #   dplyr::left_join(transmute(codes_funs, code, f2 = f)) %>%
+  #   dplyr::filter(f != f2)
+
+dup <- 
+  codes_funs %>%
   dplyr::group_by(code) %>%
   dplyr::mutate(n = n()) %>%
-  dplyr::filter(n > 1) %>%
-  print(n = nrow(.)) %>%
+  dplyr::filter(n > 1) 
+
+dup_funs <- 
+  dup %>%
   dplyr::ungroup() %>%
-  count(f) %>%
-  arrange(desc(n))
+  dplyr::count(f) %>%
+  dplyr::arrange(desc(n)) %>%
+  print() %>%
+  dplyr::arrange(n) %>%
+  dplyr::filter(n > 4) %>%
+  `$`("f")
+
+ecodes_funs %>%
+  dplyr::left_join(dup) %>%
+  dplyr::mutate(n = tidyr::replace_na(as.character(n), "")) %>%
+  dplyr::filter(f %in% dup_funs) %>%
+  dplyr::distinct() %>%
+  readr::write_tsv("d:/dup_codes.txt")
