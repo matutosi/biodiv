@@ -8,3 +8,4 @@ typings/
 node_modules
 .Rproj.user
 .Rhistory
+merge_push.bat
