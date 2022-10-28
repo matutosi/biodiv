@@ -12,7 +12,7 @@
 ## 和名の検索
 
 - Toolsタブを選択  
-![tools_tab](img/03.png)  
+![tools_tab](img/03_00.png)    
 
 - wameiに検索したい和名を入力して，Search Textを選択すると，検索結果が表示される  
 ![search_wamei](img/03_01.png)  

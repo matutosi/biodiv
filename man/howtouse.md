@@ -12,7 +12,7 @@
 ## Search wamei
 
 - Choose "Tools" tab
-![tools_tab](img/03.png)    
+![tools_tab](img/03_00.png)    
 
 - Input wamei and Choose "Search Text"  
 - Show results  
