@@ -29,18 +29,36 @@ function updateTab(){
   }
 }
 
-// add a tab
+// Add a tab
+//   in progress
 function addTab(obj){
+  var id = prompt("Input plot name", "");
 
-  id = prompt("表示させたい値", "初期値");
-  confirm();
   var a = crEl({ el: 'a', ats: {href: "#" + id}, ih: id });
-  var div = crEl({ el: 'div', ats: {id: id} });
-  //   var a = crEl({ el: 'a' });
-  //   var div = crEl({ el: 'div' });
   document.getElementById('tabcontrol').insertBefore(a, obj);
-  document.getElementById('tabbody').appendChild(div);
 
+  var tabbody = document.getElementById('tabbody');
+  var div = crEl({ el: 'div', ats: {id: id} });
+
+  var change_tab = crEl({ el:'span', id: "change_tab"   + ns});
+  var text_input = createInput({ type:"text", placeholder: "New plot name" });
+
+  div.appendChild();
+  tabbody.appendChild(div);
+  
   updateTab()
   tabs[tabs.length - 1].onclick();  // move tab
 }
+
+function changePlotName(obj){
+  var new_name = obj.previousElementSibling.value;
+ // var old_name = obj.parentNode.
+  // change tab name
+  //   document.getElementById('tabcontrol').insertBefore(a, obj);
+  //   document.getElementById('tabbody').appendChild(div);
+  // 
+
+  //   var document.
+  
+}
+
