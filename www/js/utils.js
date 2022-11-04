@@ -15,6 +15,34 @@ function hash2table(hash_array){
   return table
 }
 
+// Check if an object is or has table. 
+//    @params obj An object.
+//    @return A logical.
+function isTable(obj){
+  return obj.tagName === 'TABLE';
+}
+function hasTable(obj){
+  return obj.getElementsByTagName('table').length > 0;
+}
+
+// Search parent table of a object
+//    Search parentNode of a object.
+//    When object has multiple tables, return the first table in default.
+//    Can return another table by using index.
+//    @params obj   An object.
+//    @params index A numeric.
+//    @return A table.
+function searchParentTable(obj, index = 0){
+  while( !isTable(obj) && !hasTable(obj) ){
+    var obj = obj.parentNode;
+  }
+  if(isTable(obj)){
+    return obj;
+  }else{
+    return obj.getElementsByTagName("table")[index];
+  }
+}
+
 // Get column data in a table
 //    @params id_table A string.
 //    @params col_name A string.
