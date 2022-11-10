@@ -112,6 +112,9 @@ function updateAllInputsTables(obj){
   var pl_c_names = uniq(pl_c_names);
   var oc_c_names = uniq(oc_c_names);
 
+  // editing now
+  // no need cols: DELETE DATE UPDATE_TIME_GPS
+
   var pl_inputs = [];
   for(c_name of pl_c_names){
     pl_inputs[c_name] = [];
@@ -145,10 +148,13 @@ function updateAllInputsTables(obj){
   }
 
   // var table_data_jo = oc_data;
-  makeTableJO(pl_data, "pl_all");
-  makeTableJO(oc_data, "oc_all");
+  var all_pl_table = makeTableJO(pl_data, 'pl_all');
+  var all_oc_table = makeTableJO(oc_data, 'oc_all');
 
-
+  document.getElementById('pl_all').replaceWith(all_pl_table);
+  document.getElementById('oc_all').replaceWith(all_oc_table);
+  setSortable("pl_all");
+  setSortable("oc_all");
 }
 
 function changePlotName(obj){
