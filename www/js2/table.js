@@ -117,16 +117,17 @@ function getTableData(table){
 //   @paramas 
 //   @paramas 
 //   @return  A table
-function makeTableJO(table_data_json, table_name){
+function makeTableJO(table_data_jo, table_name){
   // data for test
   //   var col_names = data_00[table_name]["biss_c_names"];
   //   var dat_types = data_00[table_name]["biss_d_types"];
   //   var selects   = data_00[table_name]["biss_selects"];
   //   var tab_data  = data_00[table_name]["biss_inputs"];
-  var col_names = table_data_json["biss_c_names"];
-  var dat_types = table_data_json["biss_d_types"];
-  var selects   = table_data_json["biss_selects"];
-  var tab_data  = table_data_json["biss_inputs"];
+  // var table_data_jo = oc_data; var table_name = "a";
+  var col_names = table_data_jo["biss_c_names"];
+  var dat_types = table_data_jo["biss_d_types"];
+  var selects   = table_data_jo["biss_selects"];
+  var tab_data  = table_data_jo["biss_inputs"];
 
   var table = crEl({ el: 'table', ats:{id: table_name} });
   var table = addThTr(table, col_names);                                    // tr with th (col names)

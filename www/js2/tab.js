@@ -100,6 +100,57 @@ function addTab(obj){
   setSortable('input_occ_' + id + '_tb');  // Should setSortable() after appendChild()
 }
 
+function updateAllInputsTables(obj){
+  var plots = document.querySelectorAll("table[id^='input_plot']");
+  var occs  = document.querySelectorAll("table[id^='input_occ']");
+  var pl_c_names = [];
+  var oc_c_names = [];
+  for(let i = 0; i < plots.length; i++) {
+    var pl_c_names = pl_c_names.concat(getColNames(plots[i]));
+    var oc_c_names = oc_c_names.concat(getColNames(occs[i] ));
+  }
+  var pl_c_names = uniq(pl_c_names);
+  var oc_c_names = uniq(oc_c_names);
+
+  var pl_inputs = [];
+  for(c_name of pl_c_names){
+    pl_inputs[c_name] = [];
+    for(pl of plots){
+      pl_inputs[c_name] = pl_inputs[c_name].concat(getColData(pl, c_name));
+    }
+  }
+  var oc_inputs = [];
+  for(c_name of oc_c_names){
+    oc_inputs[c_name] = [];
+    for(oc of occs){
+      oc_inputs[c_name] = oc_inputs[c_name].concat(getColData(oc, c_name));
+    }
+  }
+  var pl_d_types = []; for(let i = 0; i <pl_c_names.length; i++){ pl_d_types.push('fixed'); }
+  var pl_selects = []; for(let i = 0; i <pl_c_names.length; i++){ pl_selects.push(''); }
+  var pl_data = {
+    biss_c_names: pl_c_names,
+    biss_d_types: pl_d_types,
+    biss_selects: pl_selects,
+    biss_inputs : pl_inputs
+  }
+
+  var oc_d_types = []; for(let i = 0; i <oc_c_names.length; i++){ oc_d_types.push('fixed'); }
+  var oc_selects = []; for(let i = 0; i <oc_c_names.length; i++){ oc_selects.push(''); }
+  var oc_data = {
+    biss_c_names: oc_c_names,
+    biss_d_types: oc_d_types,
+    biss_selects: oc_selects,
+    biss_inputs : oc_inputs
+  }
+
+  // var table_data_jo = oc_data;
+  makeTableJO(pl_data, "pl_all");
+  makeTableJO(oc_data, "oc_all");
+
+
+}
+
 function changePlotName(obj){
   var new_name = obj.previousElementSibling.value;
  // var old_name = obj.parentNode.

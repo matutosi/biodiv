@@ -68,13 +68,12 @@ Biodiversity Investigation Support System (BISS)
 <a href="exam01.html">Show example</a>
 </p>
 
+
 <div class="Biodiversity Investigation System (BIS)">
   <p id="tabcontrol">
-    <a href="#tab_tools"  >Tools    </a>
+    <a href="#tab_tools"  >Tools     </a>
     <a href="#tab_settings">Settings </a>
-<!--
-    <a href="#tab_inputs" >Inputs   </a>
--->
+    <a href="#tab_all"     >All plots</a>
     <input id = "add_tab" type = "button" value = "+ PLOT" onclick = "addTab(this)" />
   </p>
 
@@ -106,6 +105,14 @@ Biodiversity Investigation Support System (BISS)
                                    add_button: true }) );
       </script>
     </div>
+
+    <div id="tab_all">
+      <script>
+        var setting_tab = document.getElementById("tab_all");
+        setting_tab.appendChild( updateAllInputsTablesButton() );
+      </script>
+    </div>
+
   </div>
 </div>
 
