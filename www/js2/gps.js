@@ -23,10 +23,10 @@ function getAcc() { return String(locations.acc[locations.acc.length - 1]); }
 
 // GPS success
 //   Use with tags below in html
-//   <input type="button" value="start" onclick="startWatchPosition()" />
-//   <input type="button" value="stop" onclick="stopWatchPosition()" />
+//   <input type="button" value="start" onclick="startGPS()" />
+//   <input type="button" value="stop" onclick="stopGPS()" />
 //   <div id="poslog" ></div>
-function successCallback(position) {
+function successCallback(position){
   locations.lat.push(position.coords.latitude);
   locations.lon.push(position.coords.longitude);
   locations.acc.push(position.coords.accuracy);
@@ -38,11 +38,13 @@ function errorCallback(positionError) {
 }
 
 // stop GPS
-function stopWatchPosition() {
+function stopGPS(obj) {
   navigator.geolocation.clearWatch(watchId);
+  obj.replaceWith( createStartGPSButton() );
 }
 
 // start GPS
-function startWatchPosition() {
+function startGPS(obj) {
   watchId = navigator.geolocation.watchPosition(successCallback, errorCallback, positionOptions);
+  obj.replaceWith( createStopGPSButton() );
 }

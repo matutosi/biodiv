@@ -178,7 +178,7 @@ function restoreTd(table_data, data_type, select){
       break;
     case "button":
       if(table_data === "DELETE")           { var td = createTdWithChild( createDelButton() ); }
-      if(table_data === "Update Time & GPS"){ var td = createTdWithChild( createUpdateButton() ); }
+      if(table_data === "UPDATE_TIME_GPS"){ var td = createTdWithChild( createUpdateButton() ); }
       break;
     case "list":
       var sel_no = select.indexOf(table_data);

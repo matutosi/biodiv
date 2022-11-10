@@ -162,10 +162,10 @@ function createInputTd(dat_type, col_name, optional){
 //    @return null.
 function updateTimeGPS(obj){
   // settings
+  // var obj = temp1;
   var cols = ["DATE", "LOC_LAT", "LOC_LON", "LOC_ACC"];
   var funs = [getNow, getLat, getLon, getAcc]
-  // clicked things
-  var table = obj.parentNode.parentNode.parentNode;
+  var table = searchParentTable(obj);
   var tr = obj.parentNode.parentNode;
   var row_no = tr.sectionRowIndex;
   // update

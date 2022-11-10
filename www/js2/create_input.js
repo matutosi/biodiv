@@ -17,7 +17,13 @@ function createDelButton(){
   return createInput({ type: "button", value: "DELETE", onclick: "delRow(this)" });
 }
 function createUpdateButton(){
-  return createInput({ type: "button", value: "Update Time & GPS", onclick: "updateTimeGPS(this)" });
+  return createInput({ type: "button", value: "UPDATE_TIME_GPS", onclick: "updateTimeGPS(this)" });
+}
+function createStartGPSButton(){
+  return createInput({ type: "button", value: "Start GPS", onclick: "startGPS(this)" });
+}
+function createStopGPSButton(){
+  return createInput({ type: "button", value: "Stop GPS", onclick: "stopGPS(this)" });
 }
 function createFitTable(id){
   return createInput({ type:"button", value: "Fit width", onclick: "shortTable(this)", id: id});

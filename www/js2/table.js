@@ -26,6 +26,7 @@ function createTd(col_name, data_type, select, table_data){
       if(col_name === "UPDATE_TIME_GPS"){ var td = createTdWithChild( createUpdateButton() ); }
       break;
     case "list":
+      select.push('');
       if(select.indexOf(table_data) === -1){ var selected_no = 0;                          }
       else                                 { var selected_no = select.indexOf(table_data); }
       var td = createTdWithChild( createSelectOpt(select, selected_no) );
