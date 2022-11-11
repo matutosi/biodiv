@@ -52,8 +52,6 @@ function hideRow(obj){
   obj.replaceWith( createShowRowButton("plot info") );
 }
 function showAllCols(obj){
-console.log(obj.parentNode.parentNode.nextElementSibling);
-  //  var table = obj.parentNode.parentNode.parentNode.querySelectorAll("table")[0];
   var table = searchParentTable(obj);
   for(let Ci = 0; Ci < table.rows[0].cells.length; Ci++){
     for(let Rj = 0; Rj < table.rows.length; Rj++){

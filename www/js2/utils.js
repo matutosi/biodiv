@@ -177,7 +177,7 @@ function splitByGroup(array, group){
 function getDataTypes(table){
   var types = [];
   var table = table.querySelectorAll("tr:not([class=hide_button]"); // remove tr with hide buttons
-  for(cell of table[1].cells){                                      // 1: first data row (0: colnames)
+  for(let cell of table[1].cells){                                  // 1: first data row (0: colnames)
     types.push(getDataTypeCell(cell));
   }
   return types;
@@ -185,6 +185,7 @@ function getDataTypes(table){
 
 // Helper for getDataType()
 function getDataTypeCell(cell){
+  if(cell.firstChild === null){ return "fixed"; }
   var type = (cell.firstChild.type === void 0) ? "fixed" : cell.firstChild.type;
   if(type === 'select-one') var type = 'list';
   return type;
@@ -238,7 +239,7 @@ function crEl({ el, ats, ih, tc }){
   var ele = document.createElement(el);
   if(ats != void 0){
     var keys  = Object.keys(ats);
-    for(key of keys){ ele.setAttribute(key, ats[key]); }
+    for(let key of keys){ ele.setAttribute(key, ats[key]); }
   }
   if(ih != void 0){ ele.innerHTML   = ih; }
   if(tc != void 0){ ele.textContent = tc; }

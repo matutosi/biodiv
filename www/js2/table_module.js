@@ -7,7 +7,7 @@
 function tableModule({ table_data, ns, 
                        id_text, search_input, load_button, save_button, hide_button, fit_button, 
                        add_button, calc_button }){
-  var main  = crEl({ el:'span', id: ns});
+  var main  = crEl({ el:'span', ats:{id: ns} });
   // Up span
   var up = crEl({ el:'span', ats:{id: ns + "_up"} });
   if(id_text      != void 0){   up.appendChild( crEl({ el: 'B', tc: ns}) ); 
@@ -194,7 +194,7 @@ function sumWithGroup(obj){
   var c_no = getColNames(table).indexOf(group);
   var opts = table.rows[2].cells[c_no].firstChild.options;
   var groups = [];
-  for(o of opts){ groups.push(o.value); }
+  for(let o of opts){ groups.push(o.value); }
   var sum_array = [];
   for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
   for(let i = 0; i < groups.length; i++){
@@ -273,7 +273,7 @@ function createSelectOpt(list, selected_no = 0){
 function hasDupPlot(plot){
   var tab_inputs = document.getElementById("tab_inputs");
   var input_tables = tab_inputs.querySelectorAll("table");
-  for(table of input_tables){
+  for(let table of input_tables){
     if(table.id.split("_")[1] === "occ"){
       if(table.id.split("_")[2] === plot){
         alert("Duplicated PLOT!");

@@ -50,7 +50,7 @@ function addPlotNo(plot_data, no){
 function getPlotMaxNo(){
   var tables = document.querySelectorAll("table[id^='input_plot']");
   var max_no = [0];
-  for(tb of tables){
+  for(let tb of tables){
     max_no.push(getColData(tb, "NO")[0]);
   }
   return Math.max.apply(Math, string2Numeric(max_no));
@@ -58,11 +58,18 @@ function getPlotMaxNo(){
 
 // Add a tab
 //   in progress
-function addTab(obj){
+function addInputTab(obj){
   // input PLOT name
   var id = prompt("Input PLOT name", "");
+  if(null === id){ 
+    return void 0;
+  }
+  if("" === id){
+    alert("PLOT should NOT be empty!");
+    return void 0; 
+  }
   if(null !== document.getElementById(id)){
-    alert(id + " is already exist. PLOT should NOT be DUPLICATED !");
+    alert(id + " is already exist. PLOT should NOT be DUPLICATED!");
     return void 0; 
   }
   // create tabcontrol
@@ -83,78 +90,119 @@ function addTab(obj){
   var occ_setting  = convertTableData( getTableData( document.getElementById("setting_occ_tb" )))
   var occ_setting  = addPlotId(occ_setting, id);
   // console.log(occ_setting );
-  div.appendChild( tableModule({
-                      table_data: plot_setting, ns: 'input_plot_' + id, 
-                      id_text: true, 
-                      hide_button: true, fit_button: true }) );
+  var pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
+                              id_text: true, 
+                              hide_button: true, fit_button: true })
+  div.appendChild( pl_table );
   document.getElementById('input_plot_' + id + '_fit').onclick();
-  div.appendChild( tableModule({
-                      table_data: occ_setting, ns: 'input_occ_' + id, 
-                      id_text: true, search_input: true,
-                      hide_button: true, fit_button: true, 
-                      add_button: true, calc_button: true}) );
+  var oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
+                              id_text: true, search_input: true,
+                              hide_button: true, fit_button: true, 
+                              add_button: true, calc_button: true})
+  div.appendChild( oc_table );
   document.getElementById('input_occ_' + id + '_nrow').value = 3;
   document.getElementById('input_occ_' + id + '_add_rows').onclick();
   updateTab();
   tabs[tabs.length - 1].onclick();  // move tab
-  setSortable('input_occ_' + id + '_tb');  // Should setSortable() after appendChild()
+  var table = searchParentTable(oc_table);
+  setSortable(table.id);  // Should setSortable() after appendChild()
 }
 
 function updateAllInputsTables(obj){
-  var plots = document.querySelectorAll("table[id^='input_plot']");
-  var occs  = document.querySelectorAll("table[id^='input_occ']");
-  var pl_c_names = [];
-  var oc_c_names = [];
-  for(let i = 0; i < plots.length; i++) {
-    var pl_c_names = pl_c_names.concat(getColNames(plots[i]));
-    var oc_c_names = oc_c_names.concat(getColNames(occs[i] ));
+  var pl_table = createAllInputsTable('input_plot')
+  var oc_table = createAllInputsTable('input_occ' )
+  document.getElementById('plot_all').replaceWith(pl_table);
+  document.getElementById('occ_all' ).replaceWith(oc_table);
+  setSortable( searchParentTable(pl_table).id );
+  setSortable( searchParentTable(oc_table).id );
+
+  var tables = document.querySelectorAll("table[id^='input_occ']");
+  var comp_table = createCompositionTable(tables);
+  document.getElementById('comp_table').replaceWith(comp_table);
+  setSortable( searchParentTable(comp_table).id );
+}
+
+function createAllInputsTable(table_name){
+  // var table_name = "input_occ"
+  var tables = document.querySelectorAll("table[id^='" + table_name + "']");
+
+  var c_names = getUniqeColNames(tables);
+  var removals = ['DATE', 'DATE', "LOC_LAT","LOC_LON","LOC_ACC","DELETE","\_TIME_GPS"];
+  var c_names = c_names.filter(item => ! removals.includes(item));
+
+  var inputs = getMultiTableInputs(tables, c_names);
+  var d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
+  var selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+
+  var all_data = {
+    biss_c_names: c_names,
+    biss_d_types: d_types,
+    biss_selects: selects,
+    biss_inputs : inputs
   }
-  var pl_c_names = uniq(pl_c_names);
-  var oc_c_names = uniq(oc_c_names);
 
-  // editing now
-  // no need cols: DELETE DATE UPDATE_TIME_GPS
-
-  var pl_inputs = [];
-  for(c_name of pl_c_names){
-    pl_inputs[c_name] = [];
-    for(pl of plots){
-      pl_inputs[c_name] = pl_inputs[c_name].concat(getColData(pl, c_name));
+  var all_table_name = table_name.split("_")[1] + '_all';
+  //   var all_table = makeTableJO(all_data, all_table_name);
+  var all_table = tableModule({table_data: all_data, ns: all_table_name,
+                              id_text: true, search_input: true,
+                              hide_button: true})
+  return all_table;
+}
+function getUniqeColNames(tables){
+  var c_names = [];
+  for(let i = 0; i < tables.length; i++) {
+    var c_names = c_names.concat(getColNames(tables[i]));
+  }
+  return uniq(c_names);
+}
+function getMultiTableInputs(tables, c_names){
+  var inputs = [];
+  for(let c_name of c_names){
+    inputs[c_name] = [];
+    for(let pl of tables){
+      inputs[c_name] = inputs[c_name].concat(getColData(pl, c_name));
     }
   }
-  var oc_inputs = [];
-  for(c_name of oc_c_names){
-    oc_inputs[c_name] = [];
-    for(oc of occs){
-      oc_inputs[c_name] = oc_inputs[c_name].concat(getColData(oc, c_name));
+  return inputs;
+}
+
+
+function createCompositionTable(tables, pl = "PLOT", sp = "Species", ab = "Cover"){
+  // var pl = "PLOT";var sp = "Species"; var ab = "Cover"; var tables = document.querySelectorAll("table[id^='input_occ']");
+  var inputs = getMultiTableInputs(tables, [pl, sp, ab]);
+  var uniq_pl = uniq(inputs[pl]);
+  var uniq_sp = uniq(inputs[sp]);
+  var c_names = [sp].concat(uniq_pl);
+  var data_table = [];
+  data_table[sp] = uniq_sp;
+  for(let p of uniq_pl){
+    var data_col = [];
+    for(let s of uniq_sp){
+      var value = 0;
+      for(let i=0; i < inputs[ab].length; i++){
+        if(inputs[pl][i] === p && inputs[sp][i] === s ){
+          value = value + Number(inputs[ab][i]);
+        }
+      }
+      if(value === 0){ var value = ''; }
+      data_col.push(value);
     }
+    data_table[p] = data_col;
   }
-  var pl_d_types = []; for(let i = 0; i <pl_c_names.length; i++){ pl_d_types.push('fixed'); }
-  var pl_selects = []; for(let i = 0; i <pl_c_names.length; i++){ pl_selects.push(''); }
-  var pl_data = {
-    biss_c_names: pl_c_names,
-    biss_d_types: pl_d_types,
-    biss_selects: pl_selects,
-    biss_inputs : pl_inputs
+  data_table;
+
+  var d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
+  var selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+  var comp_data = {
+    biss_c_names: c_names,
+    biss_d_types: d_types,
+    biss_selects: selects,
+    biss_inputs : data_table
   }
-
-  var oc_d_types = []; for(let i = 0; i <oc_c_names.length; i++){ oc_d_types.push('fixed'); }
-  var oc_selects = []; for(let i = 0; i <oc_c_names.length; i++){ oc_selects.push(''); }
-  var oc_data = {
-    biss_c_names: oc_c_names,
-    biss_d_types: oc_d_types,
-    biss_selects: oc_selects,
-    biss_inputs : oc_inputs
-  }
-
-  // var table_data_jo = oc_data;
-  var all_pl_table = makeTableJO(pl_data, 'pl_all');
-  var all_oc_table = makeTableJO(oc_data, 'oc_all');
-
-  document.getElementById('pl_all').replaceWith(all_pl_table);
-  document.getElementById('oc_all').replaceWith(all_oc_table);
-  setSortable("pl_all");
-  setSortable("oc_all");
+  var comp_table = tableModule({table_data: comp_data, ns: 'comp_table',
+                              id_text: true, search_input: true,
+                              hide_button: true})
+  return comp_table;
 }
 
 function changePlotName(obj){
