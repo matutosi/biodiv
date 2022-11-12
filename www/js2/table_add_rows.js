@@ -16,9 +16,8 @@
 //      main.appendChild( crEl({ el: 'hr' }) );
 function addRows(obj){
   // console.log(obj);
-  // console.log(obj.parentNode.previousElementSibling);
-  var n_row = obj.previousElementSibling.value;
   //   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  var n_row = obj.previousElementSibling.value;
   var table = searchParentTable(obj);
   for(let i = 0; i < n_row; i++){ addRow(table); }
 }
