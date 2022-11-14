@@ -1,3 +1,19 @@
+function addRowWithSpecies({ table, layer, species }){
+  // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species';
+  addRow(table);
+
+  var c_names = getColNames(table);
+  if(layer == void 0){ var layer =  '' }; 
+  var index_sp = c_names.indexOf('Species');
+  var index_ly = c_names.indexOf('Layer');
+  var row_no   = table.rows.length - 1;
+  var options = getSelectOptionInCell(table.rows[row_no].cells[index_ly].firstChild);
+  var index_selected = options.indexOf(layer);
+
+  table.rows[row_no].cells[index_ly].firstChild.selectedIndex = index_selected;
+  table.rows[row_no].cells[index_sp].firstChild.value = species;
+}
+
 // Helper to call addRow() multiple times
 //    @paramas obj  A input element.
 //                  Normally use "this". 
@@ -36,14 +52,6 @@ function addRow(table){
   var next_row = table.rows[n_row - 1].cloneNode(true);
   for(let Ci = 0; Ci < n_col; Ci++){
     switch(col_names[Ci]){  // // toLowerCase  // // 
-  //     switch(col_names[Ci].toLowerCase()){  // // toLowerCase  // // 
-      case "Make":  // Make bottun
-        if(next_row.children[Ci].firstChild === null){
-          next_row.children[Ci].appendChild( createNewOccButton() );
-        } else {
-          next_row.children[Ci].firstChild.replaceWith( createNewOccButton() );
-        }
-        break;
       case "DATE":  // update "DATE"
         next_row.children[Ci].innerHTML = getNow();
         break;

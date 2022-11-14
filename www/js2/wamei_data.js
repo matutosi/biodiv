@@ -1,4 +1,4 @@
-const species = [
+const sp_list = [
 "アオナラ",
 "アオナラガシワ",
 "アオミズナラ",

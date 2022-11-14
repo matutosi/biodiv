@@ -68,3 +68,9 @@ table tr{
 #tab_settings table tr:nth-child(odd){  /*  zebra  */
   background:#BAD3FF;
 }
+
+#tab_tools table td{
+  text-align    : left;
+  vertical-align: top;
+  background-color: #FFFFF2;
+}
