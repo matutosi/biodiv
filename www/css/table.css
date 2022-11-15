@@ -36,8 +36,7 @@ table td{
   border-width: 0px 0px;   /* line width: horizontal, vertical */
   border-color: #00552e;   /* line color    */
 }
-table tr:nth-child(odd){
-  /*  zebra  */
+table tr:nth-child(odd){  /*  zebra  */
   background:#AEFFBD;
 }
 table td:before{
@@ -69,8 +68,13 @@ table tr{
   background:#BAD3FF;
 }
 
-#tab_tools table td{
+#tab_tools td{
   text-align    : left;
   vertical-align: top;
-  background-color: #FFFFF2;
+  background: #FFFFF0;
+}
+
+  /*  Don't work! Why?  */
+td #sp_staged{
+  background: #FF6E00;
 }

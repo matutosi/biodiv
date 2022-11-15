@@ -1,47 +1,99 @@
-function inputSpecies(){
-  
+function addSpecies(obj){
+  //   var input  = document.getElementById('sp_input');
+  //   var staged = document.getElementById('sp_staged');
+  //   var plot   = document.getElementById('plot_select');
+  //   var layer  = document.getElementById('layer_select');
+  //   var list   = obj.parentNode.children[1];
+  var staged = obj.parentNode.children[2];
+  var input  = obj.parentNode.children[4];
+  var plot   = obj.parentNode.children[6];
+  var layer  = obj.parentNode.children[10];
+
+
+
 }
 
-  // function generateSpeciesTable(species){
-  //   var main = crEl({ el: 'span', ats: {id: 'species'} });
-  //   var sp_list = crEl({ el: 'span', ats: {id: 'sp_list'} });
-  //   for(let sp of species){
-  //     sp_list.appendChild( createSpeciesButton({ sp: sp, to_stage: true }) );
-  //     sp_list.appendChild( crEl({ el: 'br' }) );
-  //   }
-  //   main.appendChild( sp_list );
-  //   main.appendChild( crEl({ el: 'hr' }) );
-  //   main.appendChild( crEl({ el: 'span', ats: {id: 'sp_staged'} }) );
-  //   main.appendChild( crEl({ el: 'hr' }) );
-  //   return main;
-  // }
+function updateSpeciesList(){
+  var old_sp_list = document.getElementById('sp_list');
+  var new_sp_list = createSpeciesList(sp_list);
+  old_sp_list.replaceWith(new_sp_list);
 
-function generateSpeciesTable(species){
-  var main = crEl({ el: 'span', ats: {id: 'species'} });
+  var tables = document.querySelectorAll("table[id^='input_occ']");
+  var old_plot_list = document.getElementById('plot_select');
+  var new_plot_list = createPlotSelect(tables);
+  old_plot_list.replaceWith(new_plot_list);
 
+  var old_layer_list = document.getElementById('layer_select');
+  var new_layer_list = createLayerSelect(tables);
+  old_layer_list.replaceWith(new_layer_list);
+}
+
+// Helper functions for generateSpeciesTable()
+// species list
+function createSpeciesList(species, n=15){
   var table = crEl({ el: 'table', ats: {id: 'sp_list'} });
-  var n = 35;
   var ncol_sp = Math.ceil(species.length / n);
-  var c_names = ['Staged', 'Layer', 'Add'];
+  var c_names = [];
   for(i = 0; i < ncol_sp; i++){ c_names.unshift('Species'); }
   addThTr(table, c_names);
-
   var tr = crEl({ el: 'tr' });
-  //   var td = crEl({ el: 'td', ats: {align: 'left', valign: 'top'}  });
   var td = crEl({ el: 'td'} );
   for(let j = 0; j < species.length; j++){
     td.appendChild( createSpeciesButton({ sp: sp_list[j], to_stage: true }) );
     td.appendChild( crEl({ el: 'br' }) );
-    if( ((j+1) % n) === 0 ){
+    if( ((j+1) % n) === 0){
       tr.appendChild(td);
-      var td = crEl({ el: 'td'} );
+      if( species.length !== j+1 ){ var td = crEl({ el: 'td'} ); }
     }
   }
-  tr.appendChild(td);
-  table.appendChild(tr)
+  if(n * ncol_sp !== species.length){ tr.appendChild(td); }
+  table.appendChild(tr);
   return table;
+}
+// plot select
+function createPlotSelect(tables, pl = 'PLOT'){
+  var pl = 'PLOT';
+  var plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]);
+  var plot_select = createSelectOpt(plot_list, 0);
+  plot_select.id = 'plot_select';
+  return plot_select;
+}
+// layer select
+function createLayerSelect(tables, pl = 'PLOT'){
+  var ly = 'Layer';
+  var layer_list = uniq(getMultiTableOptions(tables, [ly])[ly]);
+  var layer_select = createSelectOpt(layer_list, layer_list.length - 1);
+  layer_select.id = 'layer_select';
+  return layer_select;
+}
 
-  // document.getElementById('sp_list').appendChild(table);
+
+function generateSpeciesTable(species){
+  var main = crEl({ el: 'span', ats: {id: 'species_list'} });
+  main.appendChild( createInput({ type:'button', value: 'Update input species list', onclick: 'updateSpeciesList()'}) );
+
+  // species list
+  main.appendChild(createSpeciesList(species, 15));
+
+  // species staged
+  var sp_staged = crEl({ el: 'span', ats:{ id: 'sp_staged'} })
+  main.appendChild(sp_staged);
+  main.appendChild( crEl({ el: 'br' }) );
+  var placeholder = "Input species (separate with ',')";
+  main.appendChild( crEl({ el:'input', ats:{type: 'text', id: 'sp_input', placeholder: placeholder, size:'100'} }) );
+  main.appendChild( crEl({ el: 'br' }) );
+
+  // plot, layer, add
+  var tables = document.querySelectorAll("table[id^='input_occ']");
+  main.appendChild( crEl({ el:'span', ih: 'PLOT:' }) );
+  main.appendChild( createPlotSelect(tables) );
+  main.appendChild( crEl({ el:'span', ih: ', ' }) );
+  main.appendChild( crEl({ el:'span', ih: 'Layer:' }) );
+  main.appendChild( createLayerSelect(tables) );
+  main.appendChild( crEl({ el:'input', ats:{type: 'button', value: 'Add species', onclick: 'addSpecies(this)' } }) );
+
+  main.appendChild( crEl({ el: 'hr' }) );
+  return main;
 }
 
 
@@ -61,12 +113,13 @@ function stageSpecies(obj){
   var sp = obj.value;
   obj.setAttribute("disabled", true);
   sp_staged.appendChild( createSpeciesButton({ sp, to_stage: false }) );
+  //   sp_staged.appendChild( crEl({ el: 'br' }) );
 }
 function unStageSpecies(obj){
-  var sp_list = document.getElementById('sp_list');
   var id = 'sp_' + obj.value;
   var sp_button = document.getElementById(id);
   sp_button.removeAttribute("disabled");
+  //   obj.nextElementSibling.remove();
   obj.remove();
 }
 

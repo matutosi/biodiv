@@ -1,3 +1,16 @@
+// Use namespace like shiny::NS.
+//  @examples
+//  var ns = NS('plot');
+//  ns('table');
+//  // 'plot-table'
+//  
+function NS(namespace){
+  var f = function f(id){
+    return namespace + '-' + id;
+  }
+  return f;
+}
+
 // Convert hasy array table
 //    In progress: can not convert hasy that has array as a value
 //    @example 

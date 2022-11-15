@@ -159,11 +159,23 @@ function getMultiTableInputs(tables, c_names){
   var inputs = [];
   for(let c_name of c_names){
     inputs[c_name] = [];
-    for(let pl of tables){
-      inputs[c_name] = inputs[c_name].concat(getColData(pl, c_name));
+    for(let tb of tables){
+      inputs[c_name] = inputs[c_name].concat(getColData(tb, c_name));
     }
   }
   return inputs;
+}
+
+function getMultiTableOptions(tables, c_names){
+  var options = [];
+  for(let c_name of c_names){
+    options[c_name] = [];
+    for(let tb of tables){
+      options[c_name] = options[c_name].concat(getSelectOne(tb, c_name));
+    }
+  }
+  options
+  return options;
 }
 
 
