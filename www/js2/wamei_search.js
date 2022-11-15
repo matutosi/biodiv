@@ -1,16 +1,32 @@
+function getChildrenValues(element){
+  var values = [];
+  for(let child of element.children){
+    values.push(child.value);
+  }
+  return values;
+}
 function addSpecies(obj){
-  //   var input  = document.getElementById('sp_input');
-  //   var staged = document.getElementById('sp_staged');
-  //   var plot   = document.getElementById('plot_select');
-  //   var layer  = document.getElementById('layer_select');
-  //   var list   = obj.parentNode.children[1];
+  // get data
   var staged = obj.parentNode.children[2];
   var input  = obj.parentNode.children[4];
-  var plot   = obj.parentNode.children[6];
+  var plot   = obj.parentNode.children[7].innerText;
   var layer  = obj.parentNode.children[10];
+  var layer = layer.children[layer.selectedIndex].value;
+  var sp = getChildrenValues(staged);
+  var sp = sp.concat(input.value.split(','));
 
+  // add species
+  var table = document.getElementById('input_occ_' + plot + '_tb')
+  for(let s of sp){
+    addRowWithSpecies({ table: table, layer: layer, species: s})
+  }
 
-
+  // clear inputs
+  input.value = '';
+    // Delete from the front, elements will be shifted and don't work well
+  for(let i = staged.children.length; 0 < i; i--){ // loop backwards
+    staged.children[i-1].click();
+  }
 }
 
 function updateSpeciesList(){
