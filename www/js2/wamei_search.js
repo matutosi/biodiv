@@ -6,19 +6,21 @@ function getChildrenValues(element){
   return values;
 }
 function addSpecies(obj){
+  // var obj = temp1;
   // get data
   var staged = obj.parentNode.children[2];
-  var input  = obj.parentNode.children[4];
-  var plot   = obj.parentNode.children[7].innerText;
+  var input  = obj.parentNode.children[4].value;
+  var plot   = obj.parentElement.children[7]; // parentNode don't work (can't specify the reason)
+  var plot   = plot.children[plot.selectedIndex].value;
   var layer  = obj.parentNode.children[10];
   var layer = layer.children[layer.selectedIndex].value;
   var sp = getChildrenValues(staged);
-  var sp = sp.concat(input.value.split(','));
+  if(input !== ''){ var sp = sp.concat(input.split(',')); }
 
   // add species
-  var table = document.getElementById('input_occ_' + plot + '_tb')
+  var table = document.getElementById('input_occ_' + plot + '_tb');
   for(let s of sp){
-    addRowWithSpecies({ table: table, layer: layer, species: s})
+    addRowWithSpecies({ table: table, layer: layer, species: s});
   }
 
   // clear inputs
@@ -86,7 +88,7 @@ function createLayerSelect(tables, pl = 'PLOT'){
 
 function generateSpeciesTable(species){
   var main = crEl({ el: 'span', ats: {id: 'species_list'} });
-  main.appendChild( createInput({ type:'button', value: 'Update input species list', onclick: 'updateSpeciesList()'}) );
+  main.appendChild( crEl({ el:'input', ats:{type:'button', id:'update_input_species_list', value: 'Update input species list', onclick: 'updateSpeciesList()'} }) );
 
   // species list
   main.appendChild(createSpeciesList(species, 15));
