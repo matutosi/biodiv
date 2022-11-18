@@ -18,27 +18,6 @@ function addRowWithValues({ table, values }){
   }
 }
 
-function addRowWithSpecies({ table, layer, species, cover }){
-  // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species';
-  addRow(table);
-
-  var c_names = getColNames(table);
-  if(layer == void 0){ var layer =  '' }; 
-  var index_sp = c_names.indexOf('Species');
-  var index_ly = c_names.indexOf('Layer');
-  var row_no   = table.rows.length - 1;
-  var options = getSelectOptionInCell(table.rows[row_no].cells[index_ly].firstChild);
-  var index_selected = options.indexOf(layer);
-
-  table.rows[row_no].cells[index_ly].firstChild.selectedIndex = index_selected;
-  table.rows[row_no].cells[index_sp].firstChild.value = species;
-
-  if(cover !== void 0){ 
-    var index_cv = c_names.indexOf('Cover');
-    table.rows[row_no].cells[index_cv].firstChild.value = cover;
-  }
-}
-
 // Helper to call addRow() multiple times
 //    @paramas obj  A input element.
 //                  Normally use "this". 

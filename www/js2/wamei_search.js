@@ -20,7 +20,6 @@ function addSpecies(obj){
   // add species
   var table = document.getElementById('input_occ_' + plot + '_tb');
   for(let s of sp){
-  //     addRowWithSpecies({ table: table, layer: layer, species: s});
     addRowWithValues({ table: table, values: {Layer: layer, Species: s} });
   }
 
