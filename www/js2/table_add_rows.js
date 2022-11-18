@@ -1,3 +1,23 @@
+
+  // addRowWithValues({ table:document.getElementById('full_plot_tb'), values:{ item:"new_item", type:"auto", value:"new_value", DELETE:"del"} });
+function addRowWithValues({ table, values }){
+  // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species';
+  // var table = document.getElementById('full_plot_tb'); var key = "item"; value = "new_val";
+  addRow(table);
+  var c_names = getColNames(table);
+  var keys = Object.keys(values);
+  var row_no   = table.rows.length - 1;
+  for(let key of keys){
+    var col_no = c_names.indexOf(key);
+    var td = table.rows[row_no].cells[col_no];
+    if(td.firstChild.value === void 0){
+      td.innerHTML = values[key];
+    }else{
+      td.firstChild.value = values[key];
+    }
+  }
+}
+
 function addRowWithSpecies({ table, layer, species, cover }){
   // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species';
   addRow(table);
