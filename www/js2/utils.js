@@ -60,6 +60,12 @@ function searchParentTable(obj, index = 0){
 //    @params id_table A string.
 //    @params col_name A string.
 //    @return An array.
+//    @examples
+//    var table = document.getElementById('input_occ_pl_1_tb');
+//    var tds = table.rows[2].cells;
+//    for(let name of getColNames(table)){ console.log(getColData(table, name, true)) }
+//    for(let td of tds                 ){ console.log(getCellData(td, true)) }
+//    for(let td of tds                 ){ console.log(getCellData(td)) }
 function getColData(table, col_name, list_with_index = false){
   const col_no   = getColNames(table).indexOf(col_name);
   var group_value = [];
