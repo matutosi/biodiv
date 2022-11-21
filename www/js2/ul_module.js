@@ -63,22 +63,7 @@ function createSpeciesButton({ sp, to_stage, ns }){
   }
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
 }
-function stageSpecies(obj){
-  var ns = obj.parentNode.parentNode.id.split('-')[1];
-  var sp_staged = document.getElementById('sp_list_staged-' + ns);
-  var sp = obj.value;
-  obj.setAttribute("disabled", true);
-  sp_staged.appendChild( createSpeciesButton({ sp: sp, to_stage: false }) );
-}
-function unStageSpecies(obj){
-  // console.log(obj)
-  var ns = obj.parentNode.parentNode.id.split('-')[1];
-  var id = ns + '_sp_' + obj.value;
-  var sp_button = document.getElementById(id);
-  sp_button.removeAttribute("disabled");
-  obj.remove();
-}
-function createSLInput({ id }){
+function createSLInput( id ){
   //   var span = crEl({ el:'span' });
   var placeholder = "Input species (separate with ',')";
   return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: placeholder, size:'100'} });
@@ -110,6 +95,7 @@ function createSLAdd(id){
   return crEl({ el:'input', ats:{type: 'button', id: id, value: 'Add species', onclick: 'addSpecies(this)' } });
 }
 
+
 function updateSpeciesList(obj){
   var ns = obj.id.split('-')[1];
   var base_name = 'sp_list_';
@@ -130,6 +116,54 @@ function updateSpeciesList(obj){
   var new_layer = createSelectLayer(layer_id);
   old_layer.replaceWith(new_layer);
 }
+function stageSpecies(obj){
+  var ns = obj.parentNode.parentNode.id.split('-')[1];
+  var sp_staged = document.getElementById('sp_list_staged-' + ns);
+  var sp = obj.value;
+  obj.setAttribute("disabled", true);
+  sp_staged.appendChild( createSpeciesButton({ sp: sp, to_stage: false }) );
+}
+function unStageSpecies(obj){
+  // console.log(obj)
+  var ns = obj.parentNode.parentNode.id.split('-')[1];
+  var id = ns + '_sp_' + obj.value;
+  var sp_button = document.getElementById(id);
+  sp_button.removeAttribute("disabled");
+  obj.remove();
+}
+function addSpecies(obj){
+  // console.log(obj);
+  // console.log(obj.id);
+  var base_name = 'sp_list_';
+  var ns = obj.id.split('-')[1];
+  var staged = document.getElementById(base_name + 'staged-' + ns);
+  var input  = document.getElementById(base_name + 'input_'  + ns);
+  var plot   = document.getElementById(base_name + 'plot-'   + ns).children[0].value;
+  var layer  = document.getElementById(base_name + 'layer-'  + ns).children[0].value;
+  var sp = getChildrenValues(staged);
+  if(input.value !== ''){ var sp = sp.concat(input.value.split(',')); }
+  // add species
+  var table = document.getElementById('input_occ_' + plot + '_tb');
+  for(let s of sp){
+    addRowWithValues({ table: table, values: {Layer: layer, Species: s} });
+  }
+
+  // clear inputs
+  input.value = '';
+    // Delete from the front, elements will be shifted and don't work well
+  for(let i = staged.children.length; 0 < i; i--){ // loop backwards
+    staged.children[i-1].click();
+  }
+}
+function getChildrenValues(element){
+  var values = [];
+  for(let child of element.children){
+    values.push(child.value);
+  }
+  return values;
+}
+
+
 
 
 
@@ -156,39 +190,6 @@ function createLayerSelect(tables, ly = 'Layer'){
   layer_select.id = 'layer_select';
   return layer_select;
 }
-function getChildrenValues(element){
-  var values = [];
-  for(let child of element.children){
-    values.push(child.value);
-  }
-  return values;
-}
-function addSpecies(obj){
-  // var obj = temp1;
-  // get data
-  var staged = obj.parentNode.children[2];
-  var input  = obj.parentNode.children[4];    // Here, don't use "obj.parentNode.children[4].value" ; this don't work in clear inputs
-  var plot   = obj.parentElement.children[7]; // parentNode don't work (can't specify the reason)
-  var plot   = plot.children[plot.selectedIndex].value;
-  var layer  = obj.parentNode.children[10];
-  var layer = layer.children[layer.selectedIndex].value;
-  var sp = getChildrenValues(staged);
-  if(input.value !== ''){ var sp = sp.concat(input.value.split(',')); }
-
-  // add species
-  var table = document.getElementById('input_occ_' + plot + '_tb');
-  for(let s of sp){
-    addRowWithValues({ table: table, values: {Layer: layer, Species: s} });
-  }
-
-  // clear inputs
-  input.value = '';
-    // Delete from the front, elements will be shifted and don't work well
-  for(let i = staged.children.length; 0 < i; i--){ // loop backwards
-    staged.children[i-1].click();
-  }
-}
-
 
 
 
