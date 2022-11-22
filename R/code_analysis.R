@@ -2,10 +2,10 @@ rm(list=ls(all=TRUE));gc();gc();
 library(tidyverse)
 
 ## read file
-main_path <- "D:/matu/work/ToDo/biodiv/www/biodiv.html"
+main_path <- "D:/matu/work/ToDo/biodiv/www/biodiv2.html"
 main <- readr::read_tsv(main_path, col_names = "main", show_col_types = FALSE)
 
-funs_path <- "D:/matu/work/ToDo/biodiv/www/js/"
+funs_path <- "D:/matu/work/ToDo/biodiv/www/js2/"
 
   # fun <- 
 codes_funs <-
@@ -153,7 +153,7 @@ library(tidyverse)
 main_path <- "D:/matu/work/ToDo/biodiv/www/biodiv.html"
 main <- readr::read_tsv(main_path, col_names = "main", show_col_types = FALSE)
 
-funs_path <- "D:/matu/work/ToDo/biodiv/www/js/"
+funs_path <- "D:/matu/work/ToDo/biodiv/www/js2/"
 
 detect_fun <- function(code){
   for(i in 2:length(code)) if(code[i] == "") code[i] <- code[i-1]
