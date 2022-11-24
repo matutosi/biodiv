@@ -1,10 +1,19 @@
+function createSelectSL(id){
+  var span = crEl({ el:'span', ih: 'Species list:' });
+  var ns = id.split('-')[1];
+  var species_list = getKeysOfSLinLS().replaceAll('biss_sl-', '');
+  var species_list_select = createSelectOpt(species_list, 0, id);
+  return span;
+}
+
+
 // Load 
 //   @paramas obj  A input element.
 //                 Normally use "this". 
 async function loadSL(obj){
   var text = await readFile(obj.files[0]);
   var add_sp = text.replaceAll('\r', '').split('\n');
-  var ns = obj.parentNode.id.split('-')[1];
+  var ns = obj.id.split('-')[1];
   var id = 'sp_list_sp_list-'+ ns;
   replaceSpeciesList(add_sp, id);
 }
@@ -24,7 +33,7 @@ function createSpecieUlModule(species, ns){
   var base_name = 'sp_list_';
   var main          = createSpanWithId             ( base_name + 'module-' + ns);
   var load_button   = createLoadSLButton           ( base_name + 'load-'   + ns);
-  var ncol_select   = createNumberSelect           ( base_name + 'ncols-'  + ns);
+  var ncol_select   = createSelectNumber           ( base_name + 'ncols-'  + ns);
   var update_button = createUpdateSLButton         ( base_name + 'update-' + ns);
   var sp_list       = createSpecieList     (species, base_name + 'sp_list-'+ ns);
   var staged        = createSpanWithId             ( base_name + 'staged-' + ns);
@@ -55,14 +64,14 @@ function createSpanWithId(id){
   return crEl({ el: 'span', ats:{ id: id} });
 }
 function createLoadSLButton(id){
-  var span = crEl({el:'span', ats:{id: id}, ih: "<b>Add species to list: </b>" });
-  var file_input = crEl({ el:'input', ats:{ type: "file", onchange: "loadSL(this)" } });
+  var span = crEl({el:'span', ih: "<b>Add species to list: </b>" });
+  var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "loadSL(this)" } });
   span.appendChild(file_input);
   return span;
 }
-function createNumberSelect(id){
-  var span = crEl({el:'span', ats:{id: id}, ih: "<b>No. of Column: </b>" });
-  var select = createSelectOpt([1,2,3,4,5,6,7,8,9], 5);
+function createSelectNumber(id){
+  var span = crEl({el:'span', ih: "<b>No. of Column: </b>" });
+  var select = createSelectOpt([1,2,3,4,5,6,7,8,9], 5, id);
   select.setAttribute('onchange', 'changeUlColumns(this)');
   span.appendChild(select);
   return span;
@@ -72,7 +81,7 @@ function changeUlColumns(obj){
   document.documentElement.style.setProperty('--cc', ncols);
 }
 function createUpdateSLButton(id){
-  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Update species list', onclick: 'updateSpeciesList(this)'} });
+  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Update plot and layer', onclick: 'updateSpeciesList(this)'} });
 }
 function createSpecieList(species, id){
   var ns = id.split('-')[1];
@@ -95,13 +104,13 @@ function createSpeciesButton({ sp, to_stage, ns }){
   }
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
 }
-function createSLInput( id ){
+function createSLInput(id){
   //   var span = crEl({ el:'span' });
   var placeholder = "Input species (separate with ',')";
   return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: placeholder, size:'100'} });
 }
 function createSelectPlot(id){
-  var span = crEl({ el:'span', ih: 'PLOT:', ats:{id:id} });
+  var span = crEl({ el:'span', ih: 'PLOT:' });
   var ns = id.split('-')[1];
   if(ns === 'all'){
     var tables = document.querySelectorAll("table[id^='input_occ']");
@@ -110,17 +119,17 @@ function createSelectPlot(id){
   }else{
     var plot_list = [ns];
   }
-  var plot_select = createSelectOpt(plot_list, 0);
+  var plot_select = createSelectOpt(plot_list, 0, id);
   span.appendChild(plot_select)
   if(ns !== 'all'){ span.setAttribute('style', 'display:none'); }
   return span;
 }
 function createSelectLayer(id){
-  var span = crEl({ el:'span', ih: 'Layer:', ats:{id:id} });
+  var span = crEl({ el:'span', ih: 'Layer:' });
   var tables = document.querySelectorAll("table[id^='input_occ']");
   var ly = 'Layer';
   var layer_list = uniq(getMultiTableOptions(tables, [ly])[ly]);
-  var layer_select = createSelectOpt(layer_list, layer_list.length - 1);
+  var layer_select = createSelectOpt(layer_list, layer_list.length - 1, id);
   span.appendChild(layer_select)
   return span;
 }
