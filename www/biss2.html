@@ -1215,7 +1215,9 @@ function addRowWithValues({ table, values }){
     var col_no = c_names.indexOf(key); 
     var td = table.rows[row_no].cells[col_no]; 
     var value = (values[key] === void 0) ? '' : values[key]; 
-  // console.log(td) 
+  // console.log(td); 
+  // console.log(values); 
+  // console.log(key); 
     if(td.firstChild === null){ 
       td.innerHTML = value; 
     }else{ 
@@ -1279,13 +1281,13 @@ function addRow(table){
         next_row.children[Ci].innerHTML = getAcc(); 
         break; 
       case "UPDATE_TIME_GPS": // do nothing 
-      case "DELETE":    // do nothing 
+      case "DELETE":          // do nothing 
         break; 
-      case "NO":        // no = max(no) + 1 
+      case "NO":             // no = max(no) + 1 
         var nos = getColData(table, col_names[Ci]); 
         next_row.children[Ci].innerHTML = Math.max.apply(Math, string2Numeric(nos)) + 1; 
         break; 
-      case "SameAs":   // clear 
+      case "SameAs":        // clear 
         next_row.children[Ci].innerHTML = ""; 
         break; 
       default: 
@@ -1301,7 +1303,7 @@ function addRow(table){
             case "number":  // clear input text 
               next_row.children[Ci].firstChild.value = ""; 
               break; 
-            case null: // select from list 
+            case null:      // select from list 
               selected_opt = last_row.children[Ci].firstChild.selectedIndex; 
               next_row.children[Ci].firstChild.selectedIndex = selected_opt; 
               break; 
@@ -2095,8 +2097,8 @@ function addSpecies(obj){
   var ns = obj.id.split('-')[1]; 
   var staged  = document.getElementById(base_name + 'staged-' + ns); 
   var input   = document.getElementById(base_name + 'input-'  + ns); 
-  var plot    = document.getElementById(base_name + 'plot-'   + ns).children[0].value; 
-  var layer   = document.getElementById(base_name + 'layer-'  + ns).children[0].value; 
+  var plot    = document.getElementById(base_name + 'plot-'   + ns).value; 
+  var layer   = document.getElementById(base_name + 'layer-'  + ns).value; 
   var species = getChildrenValues(staged); 
   if(input.value !== ''){ var sp = sp.concat(input.value.split(',')); } 
   // add species 
@@ -2104,6 +2106,7 @@ function addSpecies(obj){
   for(let spec of species){ 
     var [sp, sa] = spec.split('_'); 
     if(sa === void 0) var sa = ''; 
+  // console.log(layer); 
     addRowWithValues({ table: table, values: {Layer: layer, Species: sp, SameAs: sa} }); 
   } 
  
