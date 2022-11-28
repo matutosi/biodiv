@@ -41,25 +41,30 @@ function createSettingSelect(){
   var main = crEl({ el:'span' });
   main.appendChild( crEl({ el: 'span', ih: 'Choose <b>main</b> setting: ' }) );
   var settings = Object.keys(data_settings);
-  var selects = createSelectOpt(settings, selected_no = 0, id = 'selectSettings');
+  var selects = createSelectOpt(settings, selected_no = 0, id = 'select_settings');
   selects.setAttribute('onChange', 'changeSettings(this)');
   main.appendChild(selects);
   main.appendChild( crEl({ 'el': 'br' }) );
   return main;
 }
 
+function changeSettingsByName(ns){
+  var select = document.getElementById('select_settings');
+  select.selectedIndex = getSelectOptionInCell(select).indexOf(ns)
+  changeSettings(select);
+}
 function changeSettings(obj){
   var setting = obj.value;
-  var plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot',
-                                  id_text: true, load_button: true, save_button: true, hide_button: true, 
-                                  add_button: true });
-  var next = obj.parentNode.nextSibling.nextSibling.nextSibling.nextSibling;
-  next.replaceWith(plot_module);
-  var occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ',
-                                  id_text: true, load_button: true, save_button: true, hide_button: true, 
-                                  add_button: true });
-  plot_module.nextSibling.replaceWith(occ_module);
-
+  var new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot',
+                                      id_text: true, load_button: true, save_button: true, hide_button: true, 
+                                      add_button: true });
+  var new_occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ',
+                                      id_text: true, load_button: true, save_button: true, hide_button: true, 
+                                      add_button: true });
+  var old_plot_module = obj.parentNode.nextSibling.nextSibling.nextSibling.nextSibling;
+  old_plot_module.replaceWith(new_plot_module);
+  var old_occ_module = new_plot_module.nextSibling;
+  old_occ_module.replaceWith(new_occ_module);
   setSortable(setting + '_plot_tb');
   setSortable(setting + '_occ_tb');
 }
@@ -67,8 +72,8 @@ function changeSettings(obj){
 // Create table module
 //   In a module has a table and other input elements, 
 //   which operate the table.
-// @paramas table_data    
-// @paramas ns            A string to specify input table module.
+// @param table_data    
+// @param ns            A string to specify input table module.
 // @retrun  A span including a table and other elements.
 function tableModule({ table_data, ns, 
                        id_text, search_input, load_button, save_button, hide_button, fit_button, 
@@ -120,7 +125,7 @@ function tableModule({ table_data, ns,
 
 
 // Create occurrence table module
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 //   @retrun  A span including a table and other elements.
 function makeNewOccTableModule(obj){
@@ -134,7 +139,7 @@ function makeNewOccTableModule(obj){
 }
 
 // Helper for makeNewOccTableModule()
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 //   @retrun  A table element.
 function makeNewOccTable(obj){
@@ -156,7 +161,7 @@ function makeNewOccTable(obj){
 }
 
 // Make plot input module
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 //   @retrun  A plot input module and change input tab.
 function makePlotInputModule(obj){
@@ -173,9 +178,9 @@ function makePlotInputModule(obj){
 // Helper for makeOccTable() and makePlotTable()
 //   td is basic element, createInputTd() create 
 //   from data type, column name, and  optional.
-//   @paramas dat_type  A string to specify data type.
-//   @paramas col_name  A string to specify column name.
-//   @paramas optional  A string to specify optional.
+//   @param dat_type  A string to specify data type.
+//   @param col_name  A string to specify column name.
+//   @param optional  A string to specify optional.
 //   @return  A td element
 function createInputTd(dat_type, col_name, optional){
   // console.log(dat_type);
@@ -225,7 +230,7 @@ function createInputTd(dat_type, col_name, optional){
 
 // Update "DATE", "LOC_LAT", "LOC_LON", "LOC_ACC"
 //    When "Update" bottun clicked, update informations in the row.
-//    @paramas obj Clicked row.
+//    @param obj Clicked row.
 //    @return null.
 function updateTimeGPS(obj){
   // settings
@@ -248,7 +253,7 @@ function updateTimeGPS(obj){
 // Sum numeric with groups.
 //     In BISS, number input is the subject to sum, 
 //     list input is the options to group.
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 function sumWithGroup(obj){
   var array = obj.previousElementSibling.previousElementSibling.previousElementSibling.value;
@@ -293,8 +298,8 @@ function sumWithGroup(obj){
 
 
 // DONE: utils ???
-//    @paramas table  A table element.
-//    @paramas type   A string to specify a data type, 
+//    @param table  A table element.
+//    @param type   A string to specify a data type, 
 //                    which can be retrive by getDataTypes() as shown below.
 //                    "fixed", "text", "button", "checkbox", 'list','number'. 
 //    @return  A string array.
@@ -310,7 +315,7 @@ function colByType(table, type){
 }
 
 // Create td with a child element. 
-//    @paramas child A child element.
+//    @param child A child element.
 //    @return  A td element with a child element
 function createTdWithChild(child){
   var td = document.createElement('td');
@@ -319,7 +324,7 @@ function createTdWithChild(child){
 }
 
 // Check if the same plot has already existed. 
-//   @paramas plot A string to specify plot.
+//   @param plot A string to specify plot.
 //   @return  A logical.
 function hasDupPlot(plot){
   var tab_inputs = document.getElementById("tab_inputs");
@@ -339,7 +344,7 @@ function hasDupPlot(plot){
 // DONE: Save and load Settings 
 
 // Load settings and replace setting table for plot or occurrence.
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 async function replaceTable(obj){
   var text = await readFile(obj.files[0]);
@@ -365,7 +370,7 @@ function readFile(file){
 }
 
 // Save settings of plot or occurrence data.
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 function saveSettings(obj){
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
@@ -380,7 +385,7 @@ function saveSettings(obj){
 }
 
 // Save inputs of a table
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 function saveInputs(obj){
   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
@@ -391,7 +396,7 @@ function saveInputs(obj){
 
 // Load example data
 //   Using in example.html, run like as click buttons in html.
-//   @paramas obj  A input element.
+//   @param obj  A input element.
 //                 Normally use "this". 
 function loadExample(obj){
   // PLOT
