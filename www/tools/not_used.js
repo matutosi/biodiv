@@ -266,7 +266,7 @@ function createOccurrenceTable(id_span, id_setting, id_table){
 }
 
 // Helper to get first child from html elements
-//    @params elements   html elements by document.getElementsByClassName()
+//    @param elements   html elements by document.getElementsByClassName()
 //    @return        An array.
 function getFirstChild(elements){
   var res = [];
@@ -275,7 +275,7 @@ function getFirstChild(elements){
 }
 
 // Helper to get values from input objects
-//    @params objs   list objects by document.getElementsByClassName()
+//    @param objs   list objects by document.getElementsByClassName()
 //    @return        An array.
 function getValues(objs){
   var res = [];
@@ -284,7 +284,7 @@ function getValues(objs){
 }
 
 // Helper to get checked (Boolean) from input objects
-//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
+//    @param objs   list objects by getFirstChild(document.getElementsByClassName())
 //    @return        An array.
 function getChecked(objs){
   var res = [];
@@ -293,7 +293,7 @@ function getChecked(objs){
 }
 
 // Helper to get selectedIndex from input objects
-//    @params objs   list objects by getFirstChild(document.getElementsByClassName())
+//    @param objs   list objects by getFirstChild(document.getElementsByClassName())
 //    @return        An array.
 function getSelectedIndex(objs){
   var res = [];
@@ -302,7 +302,7 @@ function getSelectedIndex(objs){
 }
 
 // Helper to get innerHTML from input objects
-//    @params objs   list objects by document.getElementsByClassName()
+//    @param objs   list objects by document.getElementsByClassName()
 //    @return        An array.
 function getInnerHTML(objs){
   var res = [];
