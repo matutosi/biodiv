@@ -11,9 +11,12 @@ funs_path <- "D:/matu/work/ToDo/biodiv/www/js2/"
 codes_funs <-
    dir(funs_path) %>%
   .[!stringr::str_detect(., "data")] %>%
+  .[!stringr::str_detect(., "wamei_data")] %>%
+  .[!stringr::str_detect(., "wamei.txt")] %>%
   map(~str_c(funs_path, .)) %>%
   map(readr::read_tsv, col_names = "fun", show_col_types = FALSE) %>%
-  bind_rows()
+  bind_rows() %>%
+  dplyr::select(fun)
 
 ## main
 main_funs <- 
@@ -37,8 +40,7 @@ all_funs <-
     # ( fun ) "fun" { fun }
     # = fun( 
   dplyr::filter(stringr::str_detect(fun, '^.{0,6}function|= *[A-z0-9]+\\(|[\\(\\"\\{] *[A-z0-9]+\\(' )) %>%
-  #   print()
-  unlist() %>%
+  `$`("fun") %>%
   purrr::reduce(stringr::str_c) %>%
   stringr::str_split("function") %>%
   data.frame() %>%
@@ -62,9 +64,9 @@ split_code <- function(x){
 codes <- 
   codes_funs %>%
   dplyr::mutate(fun = stringr::str_replace_all(fun, "//.*", "")) %>%
-  unlist() %>%
+  dplyr::mutate(fun = stringr::str_replace_all(fun, "[A-z]*\\.[A-z]*", "")) %>% # "document.getElementById"  -> ""
+  `$`("fun") %>%
   purrr::reduce(stringr::str_c) %>%
-  stringr::str_replace_all("[A-z]*\\.[A-z]*", "") %>%  # "document.getElementById"  -> ""
   stringr::str_split("function") %>%
   data.frame() %>%
   tibble::tibble() %>%
@@ -108,42 +110,31 @@ used_funs_15 <- trace_fun(main_funs, codes, i = 0, n = 15) %>% unlist() %>% uniq
   # used_funs_20 <- trace_fun(main_funs, codes, i = 0, n = 20) %>% unlist() %>% unique()
 used_funs_15
 
-setdiff(all_funs[[1]], used_funs_15)
+setdiff(sort(all_funs[[1]]), sort(main_funs[[1]])) %>%
+  setdiff(used_funs_15)
 
 
- # > used_funs_15
- # [1] "addRow" "addRows" "addThLabel" "blank2Null" "checkFullScreen" "colByType" "createAddRowButton" "createDelButton" 
- # [9] "createFileButton" "createHideButton" "createHideRowButton" "createInput" "createInputTd" "createMakePlotButton" "createNewOccButton" "createNrowInput" 
- # [17] "createSaveInputButton" "createSaveSettingButton" "createSearchInput" "createSelectOpt" "createShowColButton" "createShowRowButton" "createShowShortTable" "createShowWideTable" 
- # [25] "createSumButton" "createTd" "createUpdateButton" "crEl" "delRow" "errorCallback" "get_data_type" "get_data_types" 
- # [33] "getAcc" "getCellData" "getColData" "getColNames" "getDataType" "getLat" "getLon" "getNow" 
- # [41] "getSelectOne" "getSelectOptionInCell" "getTableDataPlus" "hasDupPlot" "hash2table" "hideRow" "hideShowNext" "hideTableCol" 
- # [49] "inputTableModule" "launchMailer" "makeNewOccTable" "makeNewOccTableModule" "makeOccTable" "makePlotInputModule" "makePlotTable" "makeTable" 
- # [57] "rank" "readFile" "removeThLabel" "replaceTable" "restoreTable" "restoreTd" "saveHTML" "saveInputs" 
- # [65] "saveSettings" "searchTableText" "setSortable" "settingTableModule" "shortTable" "showAllCols" "showCol" "showRow" 
- # [73] "sortByOrder" "splitByGroup" "startWatchPosition" "stopWatchPosition" "string2Numeric" "successCallback" "sumWithGroup" "switchScreenShow" 
- # [81] "updateTimeGPS" "var" "wideTable" 
- # > setdiff(all_funs[[1]], used_funs_15)
- # 
-
-  # 使われているが，コードの途中で落ちた関数
-  # "changeTab" # 定義が()ではされていないので，拾えなかった
-  # 
-  # exampleで使われている
-  # "loadExample" 
-
- # コードの中では使っていないが，残しておく
- # keep in json.js: "uniq" "csv2json" "extractJson" "json2Array" "jsonKeys" 
-
-
- #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-07-11 16:18ぐらい
+ #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-12-02 16:30前後
  #              D:/matu/work/ToDo/biodiv/www/tools/unused.js
- #  #  #  #  #  #  #  #  MAYBE UNUSED  #  #  #  #  #  #  #  #  
- # "fetchLSKeys" "saveTable" "getPosition" "restoreInputPart" "createInputPart" "createSettingSpan"  "createButtonNewTable"
- #   "createInputTable" "createTable" "cloneRows" "cloneRow"  "hiddenInputCols"  "showInputCols" "hideInputCol" 
- # "createInputNrow" "createButtonAddRow" "createButtonHideShow" "switchHideShowSpan"  "createSetting"  "hideCol" 
- # "getNs" "setNs" "showSumByGroup" "sumByGroup" 
- # "getSelectOption" "getTableData" "selectColByType" "searchTable"
+ #      hideRow, showRow
+ #      createShowRowButton, createHideRowButton
+ #      restoreTable restoreTd makeTable
+ #      createMakePlotButton createNewOccButton createSaveInputButton
+ #      createSaveSettingButton createSearchShowButton
+ #      makeNewOccTableModule makePlotInputModule makeNewOccTable createInputTd
+ #      loadExample saveInputs hasDupPlot
+ #      getInputTables
+ #      searchTableTextShow
+
+
+   #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-07-11 16:18ぐらい
+   #              D:/matu/work/ToDo/biodiv/www/tools/unused.js
+   #     #  #  #  #  #  #  #  MAYBE UNUSED  #  #  #  #  #  #  #  #  
+   #    "fetchLSKeys" "saveTable" "getPosition" "restoreInputPart" "createInputPart" "createSettingSpan"  "createButtonNewTable"
+   #      "createInputTable" "createTable" "cloneRows" "cloneRow"  "hiddenInputCols"  "showInputCols" "hideInputCol" 
+   #    "createInputNrow" "createButtonAddRow" "createButtonHideShow" "switchHideShowSpan"  "createSetting"  "hideCol" 
+   #    "getNs" "setNs" "showSumByGroup" "sumByGroup" 
+   #    "getSelectOption" "getTableData" "selectColByType" "searchTable"
 
 ## check_duplicated
 rm(list=ls(all=TRUE));gc();gc();

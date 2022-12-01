@@ -595,3 +595,386 @@ function searchTable(id_table, text){
     if(input === "")        { trs[k].style.display = "";     } // no input, show all
   }
 }
+
+function showRow(obj){
+  var tr = obj.parentNode.parentNode;
+  //  var table = obj.parentNode.parentNode.parentNode;
+  var table = searchParentTable(obj);
+  var c_names = getColNames(table);
+  if(table.rows[0].style.display === 'none'){
+    var disp = 'inline-block';
+  }else{
+    var disp = '';
+  }
+  for(let i = 0; i < tr.cells.length; i++){
+    var td = tr.cells[i];
+  //     var label = c_names[i].toLowerCase();
+    var label = c_names[i];
+    switch(label){
+      case "PLOT": // remain td
+        break;
+      default:
+        td.style.display = disp;
+        break;
+    }
+  }
+  obj.replaceWith( createHideRowButton("plot info") );
+}
+function hideRow(obj){
+  var tr = obj.parentNode.parentNode;
+  //  var table = obj.parentNode.parentNode.parentNode;
+  var table = searchParentTable(obj);
+  var c_names = getColNames(table);
+  for(let i = 0; i < tr.cells.length; i++){
+    var td = tr.cells[i];
+  //     var label = c_names[i].toLowerCase();
+    var label = c_names[i];
+    switch(label){
+      case "PLOT": // remain td
+        break;
+      default:
+        td.style.display = 'none';
+        break;
+    }
+  }
+  obj.parentNode.style.display = ''; // show button
+  obj.replaceWith( createShowRowButton("plot info") );
+}
+function createHideRowButton(row = "row"){
+  return createInput({ type:"button", value: "Hide " + row, onclick: "hideRow(this)" });
+}
+function createShowRowButton(row = "row"){
+  return createInput({ type:"button", value: "Show " + row, onclick: "showRow(this)" });
+}
+
+function updateAllInputsTablesButton(){
+  return crEl({ el:'input', ats:{type:'button', id:'update_all_inputs_tables_button', value:'Update all inputs tables', onclick: 'updateAllInputsTables()'} });
+}
+
+// Restore table from localStorage
+//    Restore setting or input table data form localStorage. 
+//    The data should be saved with saveTable() and genetated by getInputData().
+//    The data has 4 parts as shown below. 
+//      c_names: Column names of table, which will be used for making th.
+//      d_types: Data types of each column for judging the td and input types.
+//      selects: Select options for 'list' element. null for other types.
+//      inputs : Table data for making td values or innnerHTML.
+//    @param table_name  A string to specify table name. 
+//                        localStorage key name is "bis_" + table_name.
+//    @return             A table element with id: table_name.
+//    @examples
+//    var table_name = 'occ_input_table_example_01'; 
+//    localStorage.setItem("bis_" + table_name, data.occ_input_table_example_01);
+//    restoreTable(table_name);
+function restoreTable(table_name, from = "localStorage"){
+  // input data
+  // console.log(table_name);
+  // var table_name ="occ_input_table_example_01";
+  // var from = "localStorage";
+  switch(from){
+    case "localStorage":
+      var plot = localStorage[ "bis_" + table_name ].split(";")
+      break;
+    default:
+      var plot = data[table_name].split(";");
+      break;
+  }
+  var table = makeTable(plot, table_name);
+  return table;
+}
+
+function makeTable(plot, table_name){
+  // console.log(plot);
+  var c_names = JSON.parse(plot[0])["biss_c_names"];
+  var d_types = JSON.parse(plot[1])["biss_d_types"];
+  var selects = JSON.parse(plot[2])["biss_selects"];
+  var inputs  = JSON.parse(plot[3]);
+  // create table
+  var table = crEl({ el: 'table', ats:{id: table_name} });
+
+  // th
+  const n_col = c_names.length;
+  var hide_col = (table_name.split("_")[0] === "input");
+  var tr = document.createElement('tr');
+  for(let Ni = 0; Ni < n_col; Ni++){
+    if(c_names[Ni] !== ""){
+      var th = crEl({ el: 'th', ih: c_names[Ni] });
+      tr.appendChild(th);
+    }
+  }
+  table.appendChild(tr)
+
+  // td: hide buttons
+  if(hide_col){
+      var tr = document.createElement('tr');
+      for(let Ni = 0; Ni < n_col; Ni++){
+        if(c_names[Ni] !== ""){
+          var td = crEl({ el: 'td', ih: "" });
+          td.appendChild( crEl({ el: 'input', ats:{type:"button", value:"Hide", onclick:"hideTableCol(this)"} }) ); 
+          tr.appendChild(td);
+        }
+      }
+      table.appendChild(tr)
+  }
+
+
+  // td
+  const n_row = inputs[c_names[0]].length;
+  for(let Ri = 0; Ri < n_row; Ri++){
+    var tr = document.createElement('tr');
+    for(let Cj = 0; Cj < n_col; Cj++){
+      tr.appendChild( restoreTd(inputs[c_names[Cj]][Ri], d_types[Cj], selects[Cj]) );
+    }
+    table.appendChild(tr);
+  }
+  return table;
+}
+
+
+// Helper for restoreTable()
+//    @param inputs   A string to specify data in td.
+//    @param d_types  A string to specify data type.
+//    @param select   An array for select-option.
+//    return          An td element with innerText or input element
+function restoreTd(inputs, d_types, select){
+  switch(d_types){
+    case "text":
+      var td = crEl({ el: "td" });
+      td.appendChild( crEl({ el:'input', ats:{type: d_types, value: inputs} }) );
+      break;
+    case "number":
+      var td = crEl({ el: "td" });
+      td.appendChild(crEl({ el:'input', ats:{type: d_types, value: inputs, inputmode: "numeric", min: "0"} }));
+      break;
+    case "checkbox":
+      var td = crEl({ el: "td" });
+      var checkbox = crEl({ el:'input', ats:{type: d_types} });
+  //       if(!!inputs) checkbox.setAttribute("checked", true);
+      checkbox.checked = !!inputs;
+      td.appendChild( checkbox );
+      break;
+    case "fixed":
+      var td = crEl({ el:'td', ih: inputs });
+      break;
+    case "button":
+      if(inputs === "DELETE"         ){ var td = createTdWithChild( createDelButton() ); }
+      if(inputs === "UPDATE_TIME_GPS"){ var td = createTdWithChild( createUpdateButton() ); }
+      break;
+    case "list":
+      var sel_no = select.indexOf(inputs);
+      var td = createTdWithChild( createSelectOpt(select, sel_no) );
+      break;
+  }
+  return td;
+}
+
+function createMakePlotButton(){
+  return createInput({ type:"button", value: "Make plot table", onclick: "makePlotInputModule(this)" });
+}
+function createSaveInputButton(){
+  return createInput({ type: "button", value: "Save inputs", onclick: "saveInputs(this)" });
+}
+function createSaveSettingButton(){
+  return createInput({ type: "button", value: "Save settings", onclick: "saveSettings(this)" });
+}
+function createSearchShowButton(){
+  return createInput({ type: "button", value: "Search text", onclick: "searchTableTextShow(this)" });
+}
+
+// Create occurrence table module
+//   @param obj  A input element.
+//                 Normally use "this". 
+//   @retrun  A span including a table and other elements.
+function makeNewOccTableModule(obj){
+  var table = makeNewOccTable(obj);
+  if(table === null){ return void 0 ;}  // no table
+  var module = inputTableModule(table.id, table = table);
+  var tab_inputs = document.getElementById("tab_inputs");
+  tab_inputs.appendChild(module);
+  setSortable(table.id);
+  obj.setAttribute("disabled", true)
+}
+
+// Helper for makeNewOccTableModule()
+//   @param obj  A input element.
+//                 Normally use "this". 
+//   @retrun  A table element.
+function makeNewOccTable(obj){
+  // var obj = temp1;
+  var tr = obj.parentElement.parentElement;
+  var table = obj.parentElement.parentElement.parentElement;
+  var c_no = getColNames(table).indexOf("PLOT");
+  var plot = tr.cells[c_no].firstChild.value;
+  if(plot === ""){
+    alert("Input PLOT!");
+    return null;
+  }
+  if(hasDupPlot(plot)){ return null;}
+  // create new input table for occurrence and appendChild()
+  var tab_settings = document.getElementById("tab_settings");
+  var setting_table = tab_settings.querySelectorAll("table")[1];
+  var table = makeOccTable(setting_table, plot);
+  return table;
+}
+
+// Make plot input module
+//   @param obj  A input element.
+//                 Normally use "this". 
+//   @retrun  A plot input module and change input tab.
+function makePlotInputModule(obj){
+  var table = makePlotTable(obj);
+  var module = inputTableModule(table.id, table);
+  var tab_inputs = document.getElementById("tab_inputs");
+  tab_inputs.appendChild(module);
+  setSortable(table.id);  // Should setSortable() after appendChild()
+  shortTable(table.previousElementSibling.children[3])  // Short table
+  tabs[1].click();        // move to tab_inputs
+}
+// Helper for makeOccTable() and makePlotTable()
+//   td is basic element, createInputTd() create 
+//   from data type, column name, and  optional.
+//   @param dat_type  A string to specify data type.
+//   @param col_name  A string to specify column name.
+//   @param optional  A string to specify optional.
+//   @return  A td element
+function createInputTd(dat_type, col_name, optional){
+  // console.log(dat_type);
+  // console.log(col_name);
+  // console.log(optional);
+  var td = document.createElement('td');
+  //   var col_name = col_name.toLowerCase();
+  switch(dat_type){
+    case "auto": // date, no, GPS
+      if(col_name === "DATE")    td.innerHTML = getNow();
+      if(col_name === "LOC_LAT") td.innerHTML = getLat();
+      if(col_name === "LOC_LON") td.innerHTML = getLon();
+      if(col_name === "LOC_ACC") td.innerHTML = getAcc();
+      if(col_name === "NO")      td.innerHTML = 1;
+      if(col_name === "SameAs")  td.innerHTML = '';
+      break;
+    case "button": // DELETE, update button
+      if(col_name === "DELETE")   { td.appendChild( createDelButton() );    };
+      if(col_name === "UPDATE_TIME_GPS"){ td.appendChild( createUpdateButton() ); };
+      break;
+    case "fixed":
+      if(optional === ""){ 
+//        alert("Fixed columns should be input!");
+        var optional = "NO INPUT";
+      }
+      td.innerHTML = optional;
+      break;
+    case "checkbox":
+      td.appendChild(createInput({ type: dat_type }));
+      td.firstChild.checked = !!optional;
+      break;
+    case "text":
+      td.appendChild(createInput({ type: dat_type }));
+      break;
+    case "number":
+      td.appendChild(createInput({ type: dat_type, inputmode: "numeric", min: "0"} ));
+      break;
+    case "list":
+      arry_list = optional.split(':').concat(Array(""));
+      td.appendChild(createSelectOpt(arry_list, arry_list.length - 1));
+      break;
+  }
+  return td;
+}
+
+
+// Load example data
+//   Using in example.html, run like as click buttons in html.
+//   @param obj  A input element.
+//                 Normally use "this". 
+function loadExample(obj){
+  // PLOT
+  var make_plot_button = document.getElementById("dn_setting_plot_default").children[2];
+  make_plot_button.click();
+  var table = document.getElementById("input_plot_default");
+  table.rows[2].cells[1].firstChild.value = "exam01";
+  table.rows[2].cells[0].firstChild.click()
+  // occ
+  var main = obj.parentNode;
+  var main = document.getElementById("tab_inputs");
+  var occ_example = "input_occ_exam01";
+  var new_module = inputTableModule(occ_example);
+  main.children[4].replaceWith(new_module);
+  setSortable(occ_example); // Can not set sortable in a function
+
+  obj.nextElementSibling.remove(); // <br>
+  obj.remove();
+}
+
+// Save inputs of a table
+//   @param obj  A input element.
+//                 Normally use "this". 
+function saveInputs(obj){
+  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  var table_data = getTableDataPlus(table);
+  var f_name = table.id + "_" + getNow() + ".txt"
+  downloadStrings(strings = table_data, file_name = f_name)
+}
+
+// Check if the same plot has already existed. 
+//   @param plot A string to specify plot.
+//   @return  A logical.
+function hasDupPlot(plot){
+  var tab_inputs = document.getElementById("tab_inputs");
+  var input_tables = tab_inputs.querySelectorAll("table");
+  for(let table of input_tables){
+    if(table.id.split("_")[1] === "occ"){
+      if(table.id.split("_")[2] === plot){
+        alert("Duplicated PLOT!");
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function getInputTables(id_tab){
+var id_tab = 'tab_inputs';
+  var tab = document.getElementById(id_tab);
+  var tables = tab.getElementsByTagName('table');
+  // plot table
+  var data_table = getTableDataPlus(tables[0]);
+  for(var i = 1; i < tables.length; i++){   // occ tables
+    data_table = data_table + getTableDataPlus(tables[i]);
+  }
+  data_table
+}
+
+// Search text input tags in a table and show only matching rows
+//    Results are shown after button is pushed.
+//    Using in Wamei saerch. 
+//    Clear input text, NO rows will be shown.
+//    Regular expression can be used.
+//    Spaces means match all text. 
+//        ex.) "aaa bbb" matches texts including both "aaa" and "bbb".
+//    @param obj  A input element.
+//                  Normally use "this". 
+function searchTableTextShow(obj){
+  var input = obj.previousElementSibling.value;
+  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  var trs    = table.rows;
+  if(input === ""){
+    for(let Rj = 1; Rj < trs.length; Rj++){
+      trs[Rj].style.display = "none";
+    }
+    return void 0;
+  }
+  var reg_ex = makeLookAheadReg(input);
+  var matches = 0;
+  for(let Rj = 1; Rj < trs.length; Rj++){ trs[Rj].style.display = "none"; }
+  for(let Rj = 1; Rj < trs.length; Rj++){
+    if(matches > 101){
+      alert("Over 100 matches, showing 100 matches")
+      return void 0;
+    }
+    var text = trs[Rj].cells[0].innerText;
+    if(reg_ex.test(text)){
+      trs[Rj].style.display = "";
+      matches++;
+    }
+  }
+}
