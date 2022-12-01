@@ -36,3 +36,30 @@
 - 空欄でSearch Textを選択すると，検索結果がクリアされる  
 ![search_wamei_clear](img/03_09.png)  
 ![search_wamei](img/03_01.png)  
+
+
+## Inport data into R
+
+```{r}
+read_biss <- function(json, join = TRUE){
+  biss <- jsonlite::fromJSON(json)
+  plot <- data.frame(biss$plot)
+  occ  <- data.frame(biss$occ)
+  if(join){
+    return(dplyr::left_join(plot, occ))
+  }else{
+    return(list(plot = plot, occ = occ))
+  }
+}
+
+library(jsonlite)
+url <- "https://raw.githubusercontent.com/matutosi/biodiv/main/man/example.json"
+json <- readr::read_tsv(url, col_names = FALSE)$X1
+
+read_biss(json)
+read_biss(json, join = FALSE)
+
+
+
+```
+
