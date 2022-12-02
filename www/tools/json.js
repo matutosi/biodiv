@@ -1,13 +1,13 @@
 // Convert csv to json format
 //    can convert from tsv using by sep="\t"
 //    @example
-//    var csv = `item	type	value	option
-//    Project	fixed		Biodiv
-//    Investigator	text		
-//    DELETE	button		Don't change
-//    Date	auto		Don't change
-//    No	auto		Don't change
-//    Location	text		`
+//    var csv = `item type value option
+//    Project fixed  Biodiv
+//    Investigator text  
+//    DELETE button  Don't change
+//    Date auto  Don't change
+//    No auto  Don't change
+//    Location text  `
 //    var json = csv2json(csv, sep="\t");
 //    var json_2 = JSON.parse(json);
 //    jsonKeys(json_2);
@@ -62,9 +62,4 @@ function jsonKeys(json){
   var arr = [];
   for(let j of json){ arr = arr.concat(Object.keys(j)); }
   return uniq(arr);
-}
-
-// Unique array
-function uniq(array){
-  return Array.from(new Set(array));
 }
