@@ -276,3 +276,10 @@ function saveHTML(obj){
 function uniq(array){
   return Array.from(new Set(array));
 }
+
+function removeEmptyInArray(array){
+  while(array.indexOf('') >= 0){
+    array.splice(array.indexOf(''), 1);
+  }
+  return array;
+}
