@@ -1,0 +1,99 @@
+Huperzia × muramatsui
+Huperzia carinata
+Huperzia cryptomerina
+Huperzia cunninghamioides
+Huperzia fargesii
+Huperzia fordii
+Huperzia jejuensis
+Huperzia miyoshiana
+Huperzia phlegmaria
+Huperzia quasipolytrichoides
+Huperzia salvinioides
+Huperzia selago
+Huperzia selago var. appressa
+Huperzia selago var. patens
+Huperzia selago var. selago
+Huperzia serrata
+Huperzia serrata var. intermedia
+Huperzia serrata var. longipetiolata
+Huperzia serrata var. myriophyllifolia
+Huperzia serrata var. serrata
+Huperzia serrata var. serrata f. intermedia
+Huperzia sieboldii
+Huperzia sieboldii var. christenseniana
+Huperzia somae
+Huperzia squarrosa
+Huperzia taiwanensis
+Lycopodiella caroliniana
+Lycopodiella cernua
+Lycopodiella inundata
+Lycopodium alpinum
+Lycopodium annotinum
+Lycopodium annotinum var. acrifolium
+Lycopodium annotinum var. latifolium
+Lycopodium casuarinoides
+Lycopodium clavatum
+Lycopodium clavatum var. asiaticum
+Lycopodium clavatum var. nipponicum
+Lycopodium complanatum
+Lycopodium dendroideum
+Lycopodium multispicatum
+Lycopodium nikoense
+Lycopodium obscurum
+Lycopodium obscurum f. strictum
+Lycopodium serratum var. alpestre
+Lycopodium sitchense var. nikoense
+Lycopodium veitchii
+Lycopodium yueshanense
+Phlegmariurus carinatus
+Phlegmariurus cryptomerinus
+Phlegmariurus cunninghamioides
+Phlegmariurus fargesii
+Phlegmariurus hamiltonii
+Phlegmariurus phlegmaria
+Phlegmariurus salvinioides
+Phlegmariurus sieboldii
+Isoetes × michinokuana
+Isoëtes × michinokuana
+Isoetes asiatica
+Isoëtes asiatica
+Isoetes hallasanensis
+Isoetes japonica
+Isoëtes japonica
+Isoetes jejuensis
+Isoetes pseudojaponica
+Isoëtes pseudojaponica
+Isoetes sinensis
+Isoetes sinensis var. coreana
+Isoëtes sinensis var. coreana
+Isoetes sinensis var. sinensis
+Isoëtes sinensis var. sinensis
+Isoetes taiwanensis
+Selaginella aristata
+Selaginella boninensis
+Selaginella ciliaris
+Selaginella davidii
+Selaginella delicatula
+Selaginella devolii
+Selaginella doederleinii
+Selaginella flagellifera
+Selaginella helvetica
+Selaginella heterostachys
+Selaginella involvens
+Selaginella labordei
+Selaginella limbata
+Selaginella lutchuensis
+Selaginella moellendorffii
+Selaginella nipponica
+Selaginella remotifolia
+Selaginella repanda
+Selaginella rossii
+Selaginella sanguinolenta
+Selaginella selaginoides
+Selaginella shakotanensis
+Selaginella shensiensis
+Selaginella sibirica
+Selaginella sinensis
+Selaginella stauntoniana
+Selaginella tamamontana
+Selaginella tamariscina
