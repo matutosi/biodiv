@@ -68,11 +68,11 @@ const data_settings = {
       biss_d_types: ["text","list" ,"text" ,"button","text"],
       biss_selects: [null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],
       biss_inputs :{
-        item:   ["DATE","Investigator","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],
-        type:   ["auto","fixed"       ,"text"        ,"text"    ,"auto"   ,"auto"   ,"auto"   ,"button"         ,"number"  ,"text"  ,"number"     ,"number"   ,"number"   ,"number"   ,"number"   ,"number"  ,"number"  ,"number"  ,"number"  ,"number"  ,"number" ,"text" ,"text"],
-        value:  [""    ,""            ,""            ,""        ,""       ,""       ,""       ,""               ,""        ,""      ,""           ,""         ,""         ,""         ,""         ,""        ,""        ,""        ,""        ,""        ,""       ,""     ,""    ],
-        DELETE: [""    ,""            ,""            ,""        ,""       ,""       ,""       ,""               ,""        ,""      ,""           ,""         ,""         ,""         ,""         ,""        ,""        ,""        ,""        ,""        ,""       ,""     ,""    ],
-        memo  : [""    ,""            ,""            ,""        ,""       ,""       ,""       ,""               ,""        ,""      ,""           ,""         ,""         ,""         ,""         ,""        ,""        ,""        ,""        ,""        ,""       ,""     ,""    ]
+        item:   ["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],
+        type:   ["auto","fixed"         ,"text"        ,"text"    ,"auto"   ,"auto"   ,"auto"   ,"button"         ,"number"  ,"text"  ,"number"     ,"number"   ,"number"   ,"number"   ,"number"   ,"number"  ,"number"  ,"number"  ,"number"  ,"number"  ,"number" ,"text" ,"text"],
+        value:  [""    ,""              ,""            ,""        ,""       ,""       ,""       ,""               ,""        ,""      ,""           ,""         ,""         ,""         ,""         ,""        ,""        ,""        ,""        ,""        ,""       ,""     ,""    ],
+        DELETE: [""    ,""              ,""            ,""        ,""       ,""       ,""       ,""               ,""        ,""      ,""           ,""         ,""         ,""         ,""         ,""        ,""        ,""        ,""        ,""        ,""       ,""     ,""    ],
+        memo  : [""    ,""              ,""            ,""        ,""       ,""       ,""       ,""               ,""        ,""      ,""           ,""         ,""         ,""         ,""         ,""        ,""        ,""        ,""        ,""        ,""       ,""     ,""    ]
       }
     },
     occ: {
@@ -234,19 +234,24 @@ const data_settings_part = {
       type: ["button"],
     },
     _5_layers:{
-      item: ["Layer"        ,"Species","Cover" ],
-      type: ["list"         ,"text"   ,"number"],
-      value:["T1:T2:S1:S2:H",""       ,""      ]
+      item: ["Layer"        ],
+      type: ["list"         ],
+      value:["T1:T2:S1:S2:H"]
     },
     _3_layers:{
-      item: ["Layer","Species","Cover" ],
-      type: ["list" ,"text"   ,"number"],
-      value:["T:S:H",""       ,""      ]
+      item: ["Layer"],
+      type: ["list" ],
+      value:["T:S:H"]
+    },
+    species:{
+      item: ["Species"],
+      type: ["text"   ],
+      value:[""       ]
     },
     cover_rank:{
-      item: ["Rank"         ],
-      type: ["list"         ],
-      value:["5:4:3:2:1:+:r"]
+      item: ["Cover" ,"Rank"         ],
+      type: ["number","list"         ],
+      value:[""      ,"5:4:3:2:1:+:r"]
     },
     sampled_identified:{
       item: ["Sampled" ,"Identified"],
