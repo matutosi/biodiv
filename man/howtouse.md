@@ -1,54 +1,142 @@
 # How to use Investigation Support System (BISS)
 
+## Settings 設定
 
-## Settings
+### Initial settings 初期画面
 
-### 
+Initial settings is as below. 
+Can use auto saving and select several setting for plots and occurrences. 
 
-![search_wamei](img/allplots00.png)  
-![search_wamei](img/crop_example01.png)  
-![search_wamei](img/crop_example02.png)  
-![search_wamei](img/crop_example02_01.png)  
-![search_wamei](img/crop_example03.png)  
-![search_wamei](img/crop_settings00.png)  
-![search_wamei](img/crop_settings_autosave01.png)  
-![search_wamei](img/crop_settings_autosave02.png)  
-![search_wamei](img/crop_settings_autosave04.png)  
-![search_wamei](img/crop_settings_autosave05.png)  
-![search_wamei](img/crop_settings_hide_show.png)  
-![search_wamei](img/crop_settings_main01.png)  
-![search_wamei](img/crop_settings_main02.png)  
-![search_wamei](img/crop_settings_main03.png)  
-![search_wamei](img/crop_settings_main04.png)  
-![search_wamei](img/crop_settings_main05.png)  
-![search_wamei](img/crop_settings_main06save.png)  
-![search_wamei](img/crop_settings_main07save.png)  
-![search_wamei](img/crop_tools02.png)  
-![search_wamei](img/crop_tools02en.png)  
-![search_wamei](img/settings_autosave03.png)  
+初期画面は以下のとおり．
+自動保存やプロット・観察データの設定が可能である．
 
-![search_wamei](img/tools00.png)  
-![search_wamei](img/tools00en.png)  
-![search_wamei](img/tools01.png)  
-![search_wamei](img/tools02.png)  
-![search_wamei](img/tools02en.png)  
-![search_wamei](img/tools03en.png)  
-![search_wamei](img/tools04en.png)  
-![search_wamei](img/tools05en.png)  
-![search_wamei](img/tools06en.png)  
-![search_wamei](img/tools07en.png)  
-![search_wamei](img/tools08en.png)  
-![search_wamei](img/tools09en.png)  
-![search_wamei](img/tools10en.png)  
-![search_wamei](img/tools11en.png)  
-![search_wamei](img/tools12en.png)  
-![search_wamei](img/tools13en.png)  
+<img src="img/crop_settings00.png" width="30%">
+
+### Auto save
+
+Select auto save interval (minutes). 
+After setting interval, all plots and occurrences data will be downloaded. 
+Directory for download depends on your browser settings.
+
+自動保存の間隔(分)を選択する．
+保存間隔を設定すると，プロット情報と観察情報の全てがダウンロードされる．
+ダウンロード先のフォルダは，ブラウザの設定による．
+
+<img src="img/crop_settings_autosave01.png" width="30%">
+
+5分間隔に設定した場合は，設定後5分後に1回目のデータがダウンロードされる．
+When set to 5-minute intervals, the first data will be downloaded 5 minutes after setting.
+
+<img src="img/crop_settings_autosave02.png" width="30%">
+
+During the second download of 10 minutes, a warning may appear about allowing multiple files to be downloaded.
+In that case, select "Allow".
+
+10分の2回目のダウンロード時には，複数ファイルのダウンロードの許可の警告が出る場合がある．
+その場合は，「許可」を選択する．
+
+<img src="img/settings_autosave03.png" width="10%">
+
+Data is then downloaded according to the interval setting.
+
+その後，設定した間隔に従ってデータがダウンロードされる．
+
+
+<img src="img/crop_settings_autosave04.png" width="30%">
+
+
+自動保存したデータのファイル名は以下のとおり．
+
+yyyy_mm_dd_hh_mm_ss.json
+
+データは，JSON形式のテキストファイル(UTF-8)．
+データをRで読み込むには，「Rでのデータの取り込み」の項目を参照．
+
+
+Inport data into R 
+
+
+<img src="img/crop_settings_autosave05.png" width="30%">
+
+### Setting of input items 入力項目の設定
+
+データを入力する前に，地点情報と観察情報の項目を設定する．
+
+- 基本的な組み合わせを選んで，微調整する(推奨)   
+- 空の設定をもとに，必要な項目を追加する(推奨)   
+- 全て自分で設定する(非推奨)   
+
+基本的な組み合わせを選んで，微調整する場合，まず使用する近い設定を選ぶ．
+- empty: 空の設定
+- full: 植生調査や植物相調査で必要になりそうな項目を全て含む   
+- _5_layers: 5階層(T1, T2, S1, S2, H)の植生調査用   
+- _3_layers: 3階層(T, S, H)の植生調査用   
+- no_layers: 階層なしの植生調査用   
+- flora: 植物相調査用   
+
+まずは，fullか_5_layersをもとにするのが良い．
+項目がない場合は，一番下の「Add rows」で行を追加する．
+複数行を追加したい場合は，左の数値を変更してから「Add rows」を押す．
+
+
+調査データの入力表での横並びの順序(左右)は，設定表の縦並びの順序(上下)に従う．
+入力表での順序を並び替えたい場合は，「memo」の項目に数値を入力してから列名の「memo」をクリックする．
+そうすることで，入力した数値の順序に並び替え可能．
+さらにクリックすると，昇順・降順が入れ替わる．
+
+
+空の設定をもとに，必要な項目を追加する場合は，上記のemptyを選択する．
+その後，
+
+<img src="img/crop_settings_main01.png" width="30%">
+
+
+<img src="img/crop_settings_main02.png" width="30%">
+<img src="img/crop_settings_main03.png" width="30%">
+<img src="img/crop_settings_main04.png" width="30%">
+<img src="img/crop_settings_main05.png" width="30%">
+<img src="img/crop_settings_main06save.png" width="30%">
+<img src="img/crop_settings_main07save.png" width="30%">
+
+<img src="img/crop_settings_hide_show.png" width="30%">
+
+
+## Use example サンプルデータを使ってみる
+
+<img src="img/crop_example01.png" width="30%">
+<img src="img/crop_example02.png" width="30%">
+<img src="img/crop_example02_01.png" width="30%">
+<img src="img/crop_example03.png" width="30%">
+
+<img src="img/allplots00.png" width="30%">
+
+<img src="img/crop_tools02.png" width="30%">
+<img src="img/crop_tools02en.png" width="30%">
+
 
 ## Input data
 
 
 
 ## Search wamei
+
+<img src="img/tools00.png" width="30%">
+<img src="img/tools00en.png" width="30%">
+<img src="img/tools01.png" width="30%">
+<img src="img/tools02.png" width="30%">
+<img src="img/tools02en.png" width="30%">
+<img src="img/tools03en.png" width="30%">
+<img src="img/tools04en.png" width="30%">
+<img src="img/tools05en.png" width="30%">
+<img src="img/tools06en.png" width="30%">
+<img src="img/tools07en.png" width="30%">
+<img src="img/tools08en.png" width="30%">
+<img src="img/tools09en.png" width="30%">
+<img src="img/tools10en.png" width="30%">
+<img src="img/tools11en.png" width="30%">
+<img src="img/tools12en.png" width="30%">
+<img src="img/tools13en.png" width="30%">
+
 
 - Choose "Tools" tab
 ![tools_tab](img/03_00.png)    
@@ -77,7 +165,7 @@
 ![search_wamei](img/03_01.png)  
 
 
-## Inport data into R
+## Inport data into R Rでのデータの取り込み
 
 ```{r}
 read_biss <- function(json, join = TRUE){
