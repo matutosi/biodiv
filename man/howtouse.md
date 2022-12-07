@@ -14,6 +14,10 @@ Can use auto saving and select several setting for plots and occurrences.
 
 ## Auto save 自動保存
 
+一定間隔(1,3,5,10,15,30,60分)で入力したデータを保存できる．
+自動保存を有効にするには，以下の設定が必要．
+一定間隔で保存を続けるので，10分や15分間隔程度での保存を推奨．
+
 ### Select auto save intervals 保存間隔の選択
 
 Select auto save interval (minutes) form the pull-down menu.
@@ -23,7 +27,6 @@ After setting interval, all plots and occurrences data will be downloaded.
 保存間隔を設定すると，プロット情報と観察情報の全てがダウンロードされる．
 
 <img src="img/crop_settings_autosave01.png" width="50%">
-
 
 ### Downloading the first data データのダウンロード開始
 
@@ -162,9 +165,32 @@ However, this is not recommended because it requires understandings of the syste
 Explanation of the setting method and system specifications has not yet been prepared.
 
 全項目を手動で設定することも可能．
-ただし，システムの仕様を理解する必要があるため，非推奨．
-設定方法やシステムの仕様の説明は未作成．
+ただし，システム仕様を理解する必要があるため，非推奨．
 
+<!--
+設定方法やシステムの仕様の説明は未作成．
+-->
+<!--  -->
+
+- item: 項目の名称   
+  - 変更不可の項目名: 「DATE」「LOC_LAT」「LOC_LON」「LOC_ACC」「UPDATE_TIME_GPS」「DELETE」「DATE」「Layer」「Species」「Identified」「SameAs」   
+  - 使用不可の文字列: 先頭での数字   
+    <!-- 「,」「.」は不可? -->
+  - 項目名の重複不可   
+- type: 入力タイプ   
+  - auto: 自動入力(システムで利用)，項目名の変更不可   
+  - button: ボタン(システムで利用)，項目名の変更不可   
+  - checkbox: チェックボックス   
+  - fixed: 固定値のテキスト   
+  - list: プルダウンリスト   
+  - text: テキストボックス   
+  - number: 数値   
+- value: typeによって動作が異なる   
+  - checkboc: 空のときはチェックなし，入力があるときはチェックあり(分かりやすくするため，「checked」などのテキストを推奨)  
+  - fixed: 固定値の内容   
+  - list: 「:」区切りでのプルダウンメニューの項目名   
+- DELETE: 行の削除ボタン(設定自体には関係なし)   
+- memo: 使用者用のメモ(設定自体には関係なし)    
 
 
 ### Hide/Show setting tables 設定表の表示・非表示
@@ -180,8 +206,6 @@ When the table is hidden, press "Show table" to display it.
 
 表の左上ににある「Hide table」を押すと，非表示になる．
 非表示のときに，「Show table」を押すと，表示される．
-
-
 
 <img src="img/crop_settings_hide_show.png" width="50%">
 
@@ -236,14 +260,15 @@ Click "Show example" in the upper right corner to display example data.
 
 <img src="img/crop_example01.png" width="80%">
 
-## 表の表示方法などの設定(地点・観察共通)
+## 表の表示変更・操作(地点・観察共通)
 
-地点情報と観察情報の表は以下の操作が可能
+地点情報と観察情報の表は以下の操作が可能．
 
 - 表の表示/非表示   
 - 表の幅の設定変更  
 - 列の表示/非表示   
-- 行の並べ替え(地点情報は1行のため無意味)   
+- 行の並べ替え   
+- テキストデータの検索   
 
 ### 表の表示/非表示   
 
@@ -274,13 +299,23 @@ Click "Show example" in the upper right corner to display example data.
 そうすることで，入力した数値の順序に並べ替え可能．
 さらにクリックすると，昇順・降順が入れ替わる．
 
+なお，1地点での地点情報では1行しかないため，並べ替えは無意味．
 
-ただし，地点情報は1行のため無意味
+### テキストデータの検索
 
+表の左上のテキストボックスに入力をすると，入力情報の検索が可能．
+一致するものだけが表示されるため，種名の確認などができる．
+なお，ここでの検索対象は，表示されている列のテキストボックス・固定値(fixed)のテキストである．
+検索対象から地点名などを除外する場合は，「Hide」により非表示にしておくと良い．
 
-## 地点情報の入力
+## データの入力
 
-
+- テキストボックス: 種名などをテキストで入力   
+- チェックボックス: 「Identified」(同定済み)をチェック   
+- 数値: 数値を入力．△▽では1単位で増減．キーボードでは小数点以下の入力可能   
+- 自動入力項目: 「PLOT」「NO」
+- 「DATE」「LOC_LAT」「LOC_LON」「LOC_ACC」は，「UPDATE_TIME_GPS」ボタンを押すことで更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．    
+- 
 
 ## 観察情報の行の追加・削除
 
@@ -324,6 +359,25 @@ so it is possible to calculate other than "Cover" and "Layer".
 <img src="img/crop_tools02en.png" width="50%">
 
 
+
+# Show all inputs 全入力情報の表示
+
+「All Plots」のタブには，入力済みの全データが表示されている．
+具体的には，全ての地点情報と観察情報である．
+また，組成表形式の表も表示される．
+
+「All Plots」の3つの表のいずれも，地点情報や観察情報の表と同様に以下の操作が可能である．
+
+- 表の表示/非表示   
+- 表の幅の設定変更  
+- 列の表示/非表示   
+- 行の並べ替え   
+- テキストデータの検索   
+
+詳細は，「地点情報と観察情報の入力」の「表の表示変更・操作」を参照．
+
+
+なお，内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
 
 # Tools 
 
@@ -398,7 +452,7 @@ read_biss(json, join = FALSE)
 ```
 
 
-<!-- 
+<!--
 - Toolsタブを選択  
 - wameiに検索したい和名を入力して，Search Textを選択すると，検索結果が表示される  
 - 「A かつ Bを含む」で検索したいときは，スペースで区切る  
