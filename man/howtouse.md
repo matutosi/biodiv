@@ -172,12 +172,6 @@ To restore the saved settings, click the "Choose file" button to the right of "L
 
 ### Setting all items by yourself (not recommended) 全項目を手動で設定(非推奨)
 
-All items can also be set manually.
-However, this is not recommended because it requires understandings of the system specifications.
-Explanation of the setting method and system specifications has not yet been prepared.
-
-全項目を手動で設定することも可能．
-ただし，システム仕様を理解する必要があるため，非推奨．
 
 <!--
 設定方法やシステムの仕様の説明は未作成．
@@ -186,6 +180,16 @@ Explanation of the setting method and system specifications has not yet been pre
 Layerを使っているのは，ulModuleのaddRowsWithValuesのところ．
 selectの項目を全て出すようにcodeを変更すれば，Layerを変更不可にしなくても大丈夫かも．
 -->
+
+<details>
+<summary>
+All items can also be set manually.
+However, this is not recommended because it requires understandings of the system specifications.
+Explanation of the setting method and system specifications has not yet been prepared.
+
+全項目を手動で設定することも可能．
+ただし，システム仕様を理解する必要があるため，非推奨．
+</summary>
 
 - item: Item name   
   - Item names that cannot be changed: "DATE", "LOC\_LAT", "LOC\_LON", "LOC\_ACC", "UPDATE\_TIME\_GPS", "DELETE", "DATE", "Layer", "Species", "Identified", "SameAs".   
@@ -200,8 +204,8 @@ selectの項目を全て出すようにcodeを変更すれば，Layerを変更�
   - text: Text box   
   - number: Numeric value   
 - value: behavior depends on type   
-  - checkboc: unchecked if empty, checked if input is present (text such as "checked" is recommended for clarity)  
-<! --checkboc 
+  - checkbox: unchecked if empty, checked if input is present (text such as "checked" is recommended for clarity)  
+<!--  
   - number: number of width of increase/decrease, 1 if empty   
 -->
   - fixed: content of fixed value   
@@ -223,7 +227,7 @@ selectの項目を全て出すようにcodeを変更すれば，Layerを変更�
   - text: テキストボックス   
   - number: 数値   
 - value: typeによって動作が異なる   
-  - checkboc: 空のときはチェックなし，入力があるときはチェックあり(分かりやすくするため，「checked」などのテキストを推奨)  
+  - checkbox: 空のときはチェックなし，入力があるときはチェックあり(分かりやすくするため，「checked」などのテキストを推奨)  
 <!-- 
   - number: 増減幅の数値，空のときは1   
 TODO code変更の必要あり
@@ -232,7 +236,7 @@ TODO code変更の必要あり
   - list: 「:」区切りでのプルダウンメニューの項目名   
 - DELETE: 行の削除ボタン(設定自体には関係なし)   
 - memo: 使用者用のメモ(設定自体には関係なし)    
-
+</details>
 
 ### Hide/Show setting tables 設定表の表示・非表示
 
@@ -404,7 +408,8 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 ## 観察情報の行の追加・削除
 
 When a new location is added with "+ PLOT", four lines of occurrence rows are displayed.
-Select the number of rows from the pull-down number in the lower left corner, and click "Add rows" to add a new input row.
+Select the number of rows from the pull-down number in the lower left corner, 
+and click "Add rows" to add a new input row.
 
 「+ PLOT」で新規の地点を追加すると，観察情報は4行の入力欄が表示される．
 左下のプルダウンの数字で行数を選択して，「Add rows」をクリックすると，新たな入力行が追加できる．
@@ -412,9 +417,13 @@ Select the number of rows from the pull-down number in the lower left corner, an
 # editing now
 
 
-## 観察情報の入力
+## Add species from a list リストから種名を追加
 
-種名リストからの種名の追加
+観察情報の表の下に種名のリストを表示することができる．
+また，全地点での入力済の種名も合わせてリストに表示される．
+
+種名リストの追加・削除は，「Tools」の「○○」を参照．
+
 
 
 <img src="img/crop_example02_add.png" width="80%">
