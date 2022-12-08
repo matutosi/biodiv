@@ -8,7 +8,7 @@ Initial settings is as below.
 Can use auto saving and select several setting for plots and occurrences. 
 
 初期画面は以下のとおり．
-自動保存やプロット・観察データの設定が可能である．
+自動保存や地点・観察の入力項目の設定が可能である．
 
 <img src="img/crop_settings00.png" width="50%">
 
@@ -24,7 +24,7 @@ Select auto save interval (minutes) form the pull-down menu.
 After setting interval, all plots and occurrences data will be downloaded. 
 
 自動保存の間隔(分)をプルダウンメニューから選択する．
-保存間隔を設定すると，プロット情報と観察情報の全てがダウンロードされる．
+保存間隔を設定すると，地点情報と観察情報の全てがダウンロードされる．
 
 <img src="img/crop_settings_autosave01.png" width="50%">
 
@@ -314,7 +314,7 @@ Click "Show example" in the upper right corner to display example data.
 - チェックボックス: 「Identified」(同定済み)をチェック   
 - 数値: 数値を入力．△▽では1単位で増減．キーボードでは小数点以下の入力可能   
 - 自動入力項目: 「PLOT」「NO」
-- 「DATE」「LOC_LAT」「LOC_LON」「LOC_ACC」は，「UPDATE_TIME_GPS」ボタンを押すことで更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．    
+- 「DATE」「LOC_LAT」「LOC_LON」「LOC_ACC」は，「UPDATE_TIME_GPS」ボタンを押と更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．    
 - 
 
 ## 観察情報の行の追加・削除
@@ -365,6 +365,8 @@ so it is possible to calculate other than "Cover" and "Layer".
 「All Plots」のタブには，入力済みの全データが表示されている．
 具体的には，全ての地点情報と観察情報である．
 また，組成表形式の表も表示される．
+これらによって，地点情報や地点間での観察情報の比較ができる．
+なお，「All Plots」の表は閲覧のみで，内容の変更は不可．
 
 「All Plots」の3つの表のいずれも，地点情報や観察情報の表と同様に以下の操作が可能である．
 
@@ -376,13 +378,40 @@ so it is possible to calculate other than "Cover" and "Layer".
 
 詳細は，「地点情報と観察情報の入力」の「表の表示変更・操作」を参照．
 
-
-なお，内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
+内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
 
 # Tools 
 
+種名の検索，種名リストの作成・保存などができる．
+また，検索した種名やリストからデータ入力が可能である．
 
-# Search wamei
+種名リストはテキストファイル(UTF8)から登録可能．
+テキストファイルは，1つの種名を1行ごとに入力しておく．
+「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
+
+テキストファイル内の種名がボタン形式で表示される．
+表示されている種名を使用している端末のブラウザ内に名前をつけて保存可能．
+保存先として「browser」を選択して，「File name」にリストの名称を入力し，「Save」ボタンをクリックするとブラウザに保存される．
+
+種名リストとして登録すると，
+「Select species list:」の右側にあるプルダウンメニュー内に追加される．
+リストを選択すると，
+
+なお，種名には入力済みの種名も同時に表示される．
+未同定の種名(「Identified」にチェックされていない種)には，「種名_地点A」のような形式で地点名が合わせて表示される．
+その種名を選択して，観察情報として追加すると，SameAsの列に既出の地点名(上記の例では「地点A」)が自動的に入力される．
+
+<!-- 入力済みの種名を含めるかどうか選択することができれば便利かも -->
+<!-- 種名リストの削除機能が必要 -->
+
+※註釈
+種名リストの保存にはブラウザのLocalStorageを利用している．
+LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
+そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
+
+
+## Search species name 種名の検索
+
 
 <img src="img/tools00.png" width="50%">
 <img src="img/tools00en.png" width="50%">
@@ -475,3 +504,4 @@ Basic use in a table
 * Can add species from list
    by Add species to PLOT
 -->
+<!--  -->
