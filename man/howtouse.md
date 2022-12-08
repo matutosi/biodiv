@@ -68,8 +68,19 @@ Data is then downloaded according to the interval setting.
 
 ### Data format データの形式
 
-- file name ファイル名 :yyyy\_mm\_dd\_hh\_mm_ss.json   
+- file name ファイル名 :biss_yyyy\_mm\_dd\_hh\_mm_ss.json   
 - format 形式: text file with UTF8 encoding  
+
+<details>
+<summary>
+example
+
+データ例
+
+</summary>
+
+> {"plot":{"PLOT":["biss01","biss02"],"NO":["1","2"],"DATE":["2022_12_08_20_56_33","2022_12_08_20_56_34"],"Investigator":["",""],"Location":["",""],"LOC_LAT":["undefined","undefined"],"LOC_LON":["undefined","undefined"],"LOC_ACC":["undefined","undefined"],"Altitude":["",""],"Aspect":["",""],"Inclination":["",""],"T1_height":["",""],"T2_height":["",""],"S1_height":["",""],"S2_height":["",""],"H_height":["",""],"T1_cover":["",""],"T2_cover":["",""],"S1_cover":["",""],"S2_cover":["",""],"H_cover":["",""],"Photo":["",""],"Memo":["",""]},"occ":{"PLOT":["biss01","biss01","biss01","biss01","biss01","biss01","biss02","biss02","biss02","biss02","biss02"],"Layer":["T1","T2","T1","T1","S1","S1","S1","S1","H","H","T2"],"Species":["sp1","sp3","sp7","sp4","sp4","sp9","sp1","sp9","sp5","sp7","sp7"],"Cover":["18","89","57","76","","99","","11","65","74","99"],"Sampled":["false","false","false","false","false","false","false","false","false","false","false"],"Identified":["false","true","true","true","true","true","false","true","true","true","true"],"Photo":["","","","","","","","","","",""],"Memo":["","","","","","","","","","",""],"SameAs":["","","","","","","","","","",""]}}
+<summary>
 
 <img src="img/crop_settings_autosave05.png" width="50%">
 
@@ -164,6 +175,25 @@ The saved file is a text file in JSON format (UTF8) with the extension "json".
 <img src="img/crop_settings_main06save.png" width="50%">
 <img src="img/crop_settings_main07save.png" width="50%">
 
+<details>
+<summary>
+settigs of no_layers
+
+no_layersの設定
+</summary>
+
+> {"biss_c_names":["item","type","value","DELETE","memo"],"biss_d_types":["text","list","text","button","text"],"biss_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","","","","","","","","","","","",""],null,null,null],"biss_inputs":{"item":["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],"type":["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],"value":["","","","","","","","","","","","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE"],"memo":["","","","","","","","","","","","","",""]}}
+</details>
+
+<details>
+<summary>
+settigs of flora
+
+floraの設定
+</summary>
+
+> {"biss_c_names":["item","type","value","DELETE","memo"],"biss_d_types":["text","list","text","button","text"],"biss_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","",""],null,null,null],"biss_inputs":{"item":["DATE","Investigator","Location","Memo"],"type":["auto","fixed","text","text"],"value":["","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE"],"memo":["","","",""]}}
+</details>
 
 To restore the saved settings, click the "Choose file" button to the right of "Laod" and select the saved file.
 
@@ -177,18 +207,23 @@ To restore the saved settings, click the "Choose file" button to the right of "L
 設定方法やシステムの仕様の説明は未作成．
 -->
 <!-- 
+TODO: 
 Layerを使っているのは，ulModuleのaddRowsWithValuesのところ．
 selectの項目を全て出すようにcodeを変更すれば，Layerを変更不可にしなくても大丈夫かも．
 -->
 
-<details>
-<summary>
 All items can also be set manually.
 However, this is not recommended because it requires understandings of the system specifications.
 Explanation of the setting method and system specifications has not yet been prepared.
 
 全項目を手動で設定することも可能．
 ただし，システム仕様を理解する必要があるため，非推奨．
+
+<details>
+<summary>
+Item details
+
+項目の詳細
 </summary>
 
 - item: Item name   
@@ -230,7 +265,7 @@ Explanation of the setting method and system specifications has not yet been pre
   - checkbox: 空のときはチェックなし，入力があるときはチェックあり(分かりやすくするため，「checked」などのテキストを推奨)  
 <!-- 
   - number: 増減幅の数値，空のときは1   
-TODO code変更の必要あり
+TODO:  code変更の必要あり
 -->
   - fixed: 固定値の内容   
   - list: 「:」区切りでのプルダウンメニューの項目名   
@@ -502,8 +537,8 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 未同定の種名(「Identified」にチェックされていない種)には，「種名\_地点A」のような形式で地点名が合わせて表示される．
 その種名を選択して，観察情報として追加すると，SameAsの列に既出の地点名(上記の例では「地点A」)が自動的に入力される．
 
-<!-- 入力済みの種名を含めるかどうか選択することができれば便利かも -->
-<!-- 種名リストの削除機能が必要 -->
+<!-- TODO: 入力済みの種名を含めるかどうか選択することができれば便利かも -->
+<!-- TODO: 種名リストの削除機能が必要 -->
 
 ※註釈
 種名リストの保存にはブラウザのLocalStorageを利用している．
