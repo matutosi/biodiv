@@ -14,9 +14,17 @@ Can use auto saving and select several setting for plots and occurrences.
 
 ## Auto save 自動保存
 
+Data can be saved at a interval (1, 3, 5, 10, 15, 30, 60 minutes). 
+To enable automatic saving, the following settings should be set. 
+This function continues to save a new file periodically. 
+Therefore, a large number of files are saved at short intervals. 
+Generally, it is recommended to save at intervals of 10 or 15 minutes. 
+
 一定間隔(1,3,5,10,15,30,60分)で入力したデータを保存できる．
 自動保存を有効にするには，以下の設定が必要．
-一定間隔で保存を続けるので，10分や15分間隔程度での保存を推奨．
+一定間隔で保存を新しいファイルの保存を続ける．
+そのため，短い間隔の場合は多くのファイルが保存される．
+一般的には，10分や15分間隔程度での保存を推奨．
 
 ### Select auto save intervals 保存間隔の選択
 
@@ -40,11 +48,11 @@ Directory for download depends on your browser settings.
 
 ### Allowing multiple file downloads 複数ファイルダウンロードの許可
 
-During the second download of 10 minutes, a warning may appear about allowing multiple files to be downloaded.
-In that case, select "Allow".
+During the second download of 10 minutes, a warning message may appear about allowing multiple files to be downloaded.
+In this case, select "Allow".
 
 2回目の10分後のダウンロード時に，複数ファイルのダウンロードの許可の警告が出る場合がある．
-その場合は，「許可」を選択する．
+この場合は，「許可」を選択する．
 
 <img src="img/settings_autosave03.png" width="15%">
 
@@ -75,7 +83,11 @@ Rでデータを使うには，「Rでのデータの取り込み」を参照．
 
 ## Setting of input items 入力項目の設定
 
-データを入力する前に，地点情報と観察情報の項目を設定する．
+Before inputting data, the plot and occurrence items must be set.
+The following three methods are available. 
+
+データ入力の前に，地点情報と観察情報の項目を設定する．
+設定方法としては以下の3つがある．
 
 - Select a basic combination and add/delete items (recommended)   
 - Start with the empty and add items with button (recommended)   
@@ -89,10 +101,10 @@ Rでデータを使うには，「Rでのデータの取り込み」を参照．
 To select a basic combination and add/delete items, 
 at first select the close setting to be used from pull-down menu.
 
-基本的な組み合わせを選んで追加・削除する場合，まず使用する近い設定を選ぶ．
+基本的な組み合わせを選んで追加・削除する場合，まず使用するものに近い設定を選ぶ．
 
-- empty: Empty configuration
-- full: Contains all items that might be needed in a vegetation or flora survey   
+- empty: Empty settings
+- full: Contains all items that might be needed in a vegetation survey or flora survey   
 - \_5\_layers: For vegetation survey with 5 layers (T1, T2, S1, S2, H)   
 - \_3\_layers: For vegetation survey with 3 layers (T, S, H)   
 - no\_layers: For vegetation survey without layers   
@@ -107,17 +119,17 @@ at first select the close setting to be used from pull-down menu.
 
 <img src="img/crop_settings_main01.png" width="50%">
 
-For vegetation surveys, it is recommended to use "full" or "_5_layers". 
-Delete necessary items with "DELETE" button. 
+For vegetation surveys, it is recommended to use "full" or "\_5\_layers". 
+Delete unnecessary items with "DELETE" button. 
 
-植生調査の場合は，「full」か「_5_layers」をもとにすることをおすすめする．
+植生調査の場合は，「full」か「\_5\_layers」をもとにすることをおすすめする．
 不要な行を「DELETE」で削除する．
 
 <img src="img/crop_settings_main02.png" width="50%">
 
 
-If you do not see what you need, add rows by clicking "Add rows" at the bottom. 
-If you want to add multiple rows, change the values on the left and press "Add rows". 
+If you can not find what you need, add rows by clicking "Add rows" at the bottom. 
+To add multiple rows, change the values on the left and press "Add rows". 
 
 必要な項目がない場合は，一番下の「Add rows」で行を追加する．
 複数行を追加したい場合は，左の数値を変更してから「Add rows」を押す．
@@ -128,33 +140,33 @@ If you want to add multiple rows, change the values on the left and press "Add r
 
 ### Start with the empty and add with buttons 空の設定からボタンを追加
 
-Add items based on the empty setting, select EMPTY above. 
-Add items with "date_GPS" button etc. 
+Start with the empty setting, select empty above. 
+Add items with "date\_GPS" button etc. 
 
 空の設定をもとに，必要な項目を追加する場合は，上記のemptyを選択する．
-"date_GPS"などのボタンを押して，項目を追加する．
+"date\_GPS"などのボタンで項目を追加する．
 
 <img src="img/crop_settings_main04.png" width="50%">
+<img src="img/crop_settings_main05.png" width="50%">
 
 
 
 ### Save/load settings 設定の保存・復元
 
-<img src="img/crop_settings_main06save.png" width="50%">
-<img src="img/crop_settings_main07save.png" width="50%">
-
-The settings of plots and occurrences can be saved and restored. 
+The settings of plots and occurrences can be separately saved and restored. 
 To save, enter a file name in the text box to the right of the "Save" button and click the "Save" button. 
 The saved file is a text file in JSON format (UTF8) with the extension "json". 
 
-地点項目と観察項目は，それぞれ設定を保存・復元することが可能．
-保存するには，「Save」ボタンの右にあるテキストボックスにファイル名を入力し，「Save」ボタンをクリックする．
+地点項目と観察項目の設定は，個別に保存・復元可能．
+保存するには「Save」の右にあるテキストボックスにファイル名を入力し，「Save」ボタンをクリックする．
 保存したファイルはJSON形式のテキストファイル(UTF8)で，拡張子は「json」．
 
-<img src="img/crop_settings_main05.png" width="50%">
+<img src="img/crop_settings_main06save.png" width="50%">
+<img src="img/crop_settings_main07save.png" width="50%">
 
 
 To restore the saved settings, click the "Choose file" button to the right of "Laod" and select the saved file.
+
 保存した設定を復元するには，「Laod」の右側にある「Choose file」ボタンをクリックして，保存したファイルを選択する．
 
 
@@ -170,10 +182,35 @@ Explanation of the setting method and system specifications has not yet been pre
 <!--
 設定方法やシステムの仕様の説明は未作成．
 -->
-<!--  -->
+<!-- 
+Layerを使っているのは，ulModuleのaddRowsWithValuesのところ．
+selectの項目を全て出すようにcodeを変更すれば，Layerを変更不可にしなくても大丈夫かも．
+-->
 
-- item: 項目の名称   
-  - 変更不可の項目名: 「DATE」「LOC_LAT」「LOC_LON」「LOC_ACC」「UPDATE_TIME_GPS」「DELETE」「DATE」「Layer」「Species」「Identified」「SameAs」   
+- item: Item name   
+  - Item names that cannot be changed: "DATE", "LOC\_LAT", "LOC\_LON", "LOC\_ACC", "UPDATE\_TIME\_GPS", "DELETE", "DATE", "Layer", "Species", "Identified", "SameAs".   
+  - Disabled strings: numbers at the beginning   
+  - Duplicate item names are not allowed.   
+- type: Input type   
+  - auto: Auto input (used by system), item name cannot be changed   
+  - button: button (used by system), item name cannot be changed   
+  - checkbox: Checkbox   
+  - fixed: Fixed value text   
+  - list: pull-down list   
+  - text: Text box   
+  - number: Numeric value   
+- value: behavior depends on type   
+  - checkboc: unchecked if empty, checked if input is present (text such as "checked" is recommended for clarity)  
+<! --checkboc 
+  - number: number of width of increase/decrease, 1 if empty   
+-->
+  - fixed: content of fixed value   
+  - list: pull-down menu item names separated by ":".   
+- DELETE: button to delete a row (not related to the setting itself)   
+- memo: memo for user (not related to setting itself)    
+
+- item: 項目名   
+  - 変更不可の項目名: 「DATE」「LOC\_LAT」「LOC\_LON」「LOC\_ACC」「UPDATE\_TIME\_GPS」「DELETE」「DATE」「Layer」「Species」「Identified」「SameAs」   
   - 使用不可の文字列: 先頭での数字   
     <!-- 「,」「.」は不可? -->
   - 項目名の重複不可   
@@ -187,6 +224,10 @@ Explanation of the setting method and system specifications has not yet been pre
   - number: 数値   
 - value: typeによって動作が異なる   
   - checkboc: 空のときはチェックなし，入力があるときはチェックあり(分かりやすくするため，「checked」などのテキストを推奨)  
+<!-- 
+  - number: 増減幅の数値，空のときは1   
+TODO code変更の必要あり
+-->
   - fixed: 固定値の内容   
   - list: 「:」区切りでのプルダウンメニューの項目名   
 - DELETE: 行の削除ボタン(設定自体には関係なし)   
@@ -195,10 +236,10 @@ Explanation of the setting method and system specifications has not yet been pre
 
 ### Hide/Show setting tables 設定表の表示・非表示
 
-The table of geographic features and observation features can be shown or hidden.
-To avoid accidentally changing the settings after setting each item, it is recommended to hide them.
+The setting tables can be set shown or hidden.
+To avoid accidental change of the settings, it is recommended to hide them.
 
-Press "Hide table" in the upper left corner to hide the table.
+Press "Hide table" in the upper left corner to hide it.
 When the table is hidden, press "Show table" to display it.
 
 地点項目と観察項目の表は，表示/非表示の切り替えが可能．
@@ -214,30 +255,38 @@ When the table is hidden, press "Show table" to display it.
 ### Tips for setting items 項目設定のコツ
 
 The horizontal order (left/right) of items in input tables depend on the vertical order (up/down) in setting tables. 
-To change the order in a setting table, enter a numbr in the "memo" field and click on the column name "memo". 
+To change the order, enter a numbr in the "memo" field and click on the column name "memo". 
 This will allow you to reorder the columns according to the number. 
 Clicking again switches the ascending/descending order.
 
 調査データの入力表での横並びの順序(左右)は，設定表の縦並びの順序(上下)に従う．
-入力表での順序を並べ替えたい場合は，「memo」の項目に数値を入力してから列名の「memo」をクリックする．
+順序を並べ替えたい場合は，入力表の項目「memo」に数値を入力してから列名の「memo」をクリックする．
 そうすることで，入力した数値の順序に並べ替え可能．
 さらにクリックすると，昇順・降順が入れ替わる．
 
 # Input plot and occurrence data 地点情報と観察情報の入力
 
+## Add a new plot 新しい地点の追加
+
+Before entering plot and occurrence data, click on "+ PLOT".
+Enter the PLOT name in the pop-up window. 
+Alphanumeric and Japanese characters can be used for the PLOT name. 
+Only spaces and "\_" (underscore) are not allowed.
+Duplicate PLOT names are not allowed.
+
 地点情報と観察情報を入力するには，まず「+ PLOT」をクリックする．
 ポップアップ画面に地点名を入力する．
 地点名には，英数字・日本語文字が使用可能．
-「_」(アンダーバー)「,」(カンマ)「.」(ピリオド)などの記号や空白は使用不可．
+空白のみや「\_」(アンダーバー)は使用不可．
 また，地点名の重複はできない．
 
 <!-- 
 ポップアップの画面を追加する
 -->
 
-以下では，サンプルデータを用いて，地点情報と観察情報の入力方法を説明する．
+In the following sections, you can see how to input plot and occurrence data with example.
 
-# editing now
+以下では，サンプルデータを用いて地点情報と観察情報の入力方法を説明する．
 
 ## Show example サンプルデータの表示
 
@@ -260,86 +309,129 @@ Click "Show example" in the upper right corner to display example data.
 
 <img src="img/crop_example01.png" width="80%">
 
-## 表の表示変更・操作(地点・観察共通)
+## Table display changes and operations (common to plot and occurrence) 表の表示変更・操作(地点・観察共通)
+
+Can operate the table of plot and occurrence. 
 
 地点情報と観察情報の表は以下の操作が可能．
 
+- Show/hide the table   
+- Change table width  
+- Show/hide columns   
+- Sort rows   
+- Search input text   
 - 表の表示/非表示   
-- 表の幅の設定変更  
+- 表幅の変更  
 - 列の表示/非表示   
 - 行の並べ替え   
 - テキストデータの検索   
 
-### 表の表示/非表示   
+### Show/hide the table 表の表示/非表示   
+
+Both the plot and occurrence tables can be displayed or hidden.
+To prevent accidental changes, it is recommended to hide the table.
+Press "Hide table" in the upper left corner of the table to hide the table.
+When the table is hidden, pressing "Show table" will show it.
 
 地点情報と観察情報の両方とも，表示/非表示の切り替えが可能．
-入力後に操作を誤ったデータの変更を防ぐには，非表示にしておくと良い．
+誤操作による変更を防ぐには，非表示にしておくと良い．
 表の左上ににある「Hide table」を押すと，非表示になる．
 非表示のときに，「Show table」を押すと，表示される．
 
-### 表幅の設定変更  
+### Change table width 表幅の設定変更  
+
+The initial state of the plot table is wrapped to fit the screen width, while the occurrence table is extended to the right without wrapping.
+Clicking on "Extend width" in the upper left corner of the table expands the width of the table without wrapping.
+Clicking on "Fit width" will wrap the table to fit the screen width .
 
 地点情報の初期状態は画面幅に合わせた形で折り返され，観察情報は折り返しなしで右に伸びた状態である．
 表の左上にある「Extend width」をクリックすると，表幅が広がって折り返しなしの状態になる．
 「Fit width」をクリックすると，画面幅で折り返される．
 
-### 列の表示/非表示   
+### Show/hide columns 列の表示/非表示   
 
-折り返しなしの状態のとき，表の2列目に「Hide」ボタンが表示される．
+In a no-wrap table, the "Hide" button appears in the second row.
+Clicking the "Hide" button hides the column.
+The hidden column names are displayed at the top of the table following "Show".
+Clicking the button for each column name allows the column to be displayed again.
+Click "All cols" to display all columns at once.
+
+折り返しなしの状態のとき，表の2行目に「Hide」ボタンが表示される．
 「Hide」ボタンをクリックすると，その列が非表示になる．
 非表示になった列は，表の上部に「Show」に続いて列名がボタンとして表示される．
-それぞれの列名のボタンをクリックすると，再度表示することが可能．
-また，「All cols」をクリックすると，非表示の全ての列を一斉に表示できる．
+それぞれの列名のボタンをクリックすると，再表示が可能．
+「All cols」をクリックすると全列を一斉に表示できる．
 
-### 行の並べ替え
+### Sort rows 行の並べ替え
+
+Clicking on a column name in the "no wrap" state allows sorting according to the input contents of the column.
+Clicking the column name again switches the ascending or descending order.
 
 折り返しなしの状態のときに列名をクリックすると，その列の入力内容に従って並べ替えができる．
-再度列名をクリックすると
-入力表での順序を並べ替えたい場合は，「memo」の項目に数値を入力してから列名の「memo」をクリックする．
-そうすることで，入力した数値の順序に並べ替え可能．
-さらにクリックすると，昇順・降順が入れ替わる．
+再度列名をクリックすると，昇順・降順が入れ替わる．
+
+Note that sorting is meaningless for the plot data, since there is only one row.
 
 なお，1地点での地点情報では1行しかないため，並べ替えは無意味．
 
-### テキストデータの検索
 
-表の左上のテキストボックスに入力をすると，入力情報の検索が可能．
+### Search input text テキストデータの検索
+
+Entering text in the text box in the upper left corner of the table allows you to search for text inputs.
+Only matched rows are displayed, so you can check the species name etc.
+The search targets here are the text boxes and fixed value text in the displayed columns.
+To exclude the name of a plot from the search, you can hide it by clicking "Hide".
+
+表の左上のテキストボックスに入力をすると，表示中の入力情報の検索が可能．
 一致するものだけが表示されるため，種名の確認などができる．
 なお，ここでの検索対象は，表示されている列のテキストボックス・固定値(fixed)のテキストである．
 検索対象から地点名などを除外する場合は，「Hide」により非表示にしておくと良い．
 
-## データの入力
+## データ入力
+
+- Textbox: Enter text, e.g., species name   
+- Checkbox: Check "Identified   
+- Numer: Enter a number. Decimal points can be entered using the keyboard.    
+- Auto-fill items: "PLOT", "NO", "DATE", "LOC".    
+- DATE", "LOC\_LAT", "LOC\_LON" and "LOC\_ACC" are updated by pressing "UPDATE\_TIME\_GPS" button.     
 
 - テキストボックス: 種名などをテキストで入力   
 - チェックボックス: 「Identified」(同定済み)をチェック   
-- 数値: 数値を入力．△▽では1単位で増減．キーボードでは小数点以下の入力可能   
-- 自動入力項目: 「PLOT」「NO」
-- 「DATE」「LOC_LAT」「LOC_LON」「LOC_ACC」は，「UPDATE_TIME_GPS」ボタンを押と更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．    
-- 
+- 数値: 数値を入力．△▽では1単位で増減．キーボードでは小数点以下の入力可能    
+- 自動入力項目: 「PLOT」「NO」    
+- 「DATE」「LOC\_LAT」「LOC\_LON」「LOC\_ACC」は，「UPDATE\_TIME\_GPS」ボタンを押と更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．     
 
 ## 観察情報の行の追加・削除
+
+When a new location is added with "+ PLOT", four lines of occurrence rows are displayed.
+Select the number of rows from the pull-down number in the lower left corner, and click "Add rows" to add a new input row.
 
 「+ PLOT」で新規の地点を追加すると，観察情報は4行の入力欄が表示される．
 左下のプルダウンの数字で行数を選択して，「Add rows」をクリックすると，新たな入力行が追加できる．
 
+# editing now
+
+
 ## 観察情報の入力
 
+種名リストからの種名の追加
+
+
 <img src="img/crop_example02_add.png" width="80%">
-
-
 <img src="img/crop_example03_added.png" width="80%">
 
 
 
 ## 階層ごとの被度の計算
 
-Select "Cover" for "Value" and "Layer" for "Group" in the lower left of the observation information, 
+Select "Cover" for "Value" and "Layer" for "Group" in the lower left of the occurrence table, 
 and click "Calculate" to display the result of calculating sum of cover for each layer.
-Note that "Value" displays number items in the occurrence data, and "Group" pull-down list, 
-so it is possible to calculate other than "Cover" and "Layer".
+Note that "Value" displays number items in the occurrence data, and "Group" pull-down list. 
+Thus, it is possible to calculate other than "Cover" and "Layer".
 
 観察情報の左下にある「Value」に「Cover」，「Group」に「Layer」を選択して，「Calculate」をクリックすると，階層ごとの被度を計算した結果が表示される．
-なお，「Value」には観察情報のうち数値の項目が表示され，「Group」にはプルダウンのリストの項目が表示されるため，「被度」「階層」以外の集計も可能．
+なお，「Value」には観察情報のうち数値の項目が表示され，「Group」にはプルダウンのリストの項目が表示される．
+そのため，「被度」「階層」以外の集計も可能．
 
 <img src="img/crop_example02_calc.png" width="80%">
 
@@ -398,7 +490,7 @@ so it is possible to calculate other than "Cover" and "Layer".
 リストを選択すると，
 
 なお，種名には入力済みの種名も同時に表示される．
-未同定の種名(「Identified」にチェックされていない種)には，「種名_地点A」のような形式で地点名が合わせて表示される．
+未同定の種名(「Identified」にチェックされていない種)には，「種名\_地点A」のような形式で地点名が合わせて表示される．
 その種名を選択して，観察情報として追加すると，SameAsの列に既出の地点名(上記の例では「地点A」)が自動的に入力される．
 
 <!-- 入力済みの種名を含めるかどうか選択することができれば便利かも -->
