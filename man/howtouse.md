@@ -258,14 +258,14 @@ Layerを使っているのは，ulModuleのaddRowsWithValuesのところ．
 selectの項目を全て出すようにcodeを変更すれば，Layerを変更不可にしなくても大丈夫かも．
 -->
 
-:::note info
-All items can also be set manually.
-However, this is not recommended because it requires understandings of the system specifications.
-Explanation of the setting method and system specifications has not yet been prepared.
+> **Note**
+> All items can also be set manually.
+> However, this is not recommended because it requires understandings of the system specifications.
+> Explanation of the setting method and system specifications has not yet been prepared.
+> 
+> 全項目を手動で設定することも可能．
+> ただし，システム仕様を理解する必要があるため，非推奨．
 
-全項目を手動で設定することも可能．
-ただし，システム仕様を理解する必要があるため，非推奨．
-:::
 
 <details>
 <summary>
@@ -364,13 +364,12 @@ Alphanumeric and Japanese characters can be used for the PLOT name.
 地点名には，英数字・日本語文字が使用可能．
 
 
-:::note warn
-Only spaces and "\_" (underscore) are not allowed.
-Duplicate PLOT names are not allowed.
-
-空白のみや「\_」(アンダーバー)は使用不可．
-また，地点名の重複はできない．
-:::
+> **Warning**
+> Only spaces and "\_" (underscore) are not allowed.
+> Duplicate PLOT names are not allowed.
+> 
+> 空白のみや「\_」(アンダーバー)は使用不可．
+> また，地点名の重複はできない．
 
 <!-- 
 ポップアップの画面を追加する
@@ -608,12 +607,10 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 <!-- TODO: 入力済みの種名を含めるかどうか選択することができれば便利かも -->
 <!-- TODO: 種名リストの削除機能が必要 -->
 
-:::note alert
-種名リストの保存にはブラウザのLocalStorageを利用している．
-LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
-そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
-:::
-
+> **Warning**
+> 種名リストの保存にはブラウザのLocalStorageを利用している．
+> LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
+> そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
 
 ## Search species name 種名の検索
 
