@@ -14,47 +14,52 @@ Can use auto saving and select several setting for plots and occurrences.
 
 ## 文字サイズの変更
 
+
+To change the font size of the entire screen, click "SMALLER" and "LAGER" buttons.
+The size can be changed by approximately 0.83 (1/1.2) and 1.2 times, respectively.
+
 「smaller」「LAGER」ボタンで画面全体の文字サイズの変更が可能．
 それぞれ，約0.83(1/1.2)倍・約1.2倍になる．
 
 ## 全画面表示への変更
 
-<!-- 
-TODO: ボタンの名称を変更する
-常に： 「FULL-SCREEN <--> windowed」の表示
-説明を完結にするため．
- -->
+The browser is displayed in a normal window at startup. 
+To prevent accidental termination of the application, full screen is recommended.
+Click "FULL SCREEN <=> windowed" to switch between full-screen and windowed mode.
 
 起動時のブラウザは，通常のウィンドウ表示である．
 誤操作によるアプリの終了を防ぐには，全画面表示を推奨．
-「FULL-SCREEN <--> windowed」をクリックすると，ウィンドウ表示と全画面表示が入れ替わる．
+「FULL SCREEN <=> windowed」をクリックすると，ウィンドウ表示と全画面表示が入れ替わる．
 
-<!-- 
-「FULL SCREEN」をクリックすると，全画面表示になる．
-誤操作によるアプリの終了を防ぐには，全画面表示を推奨．
-「FULL SCREEN」のボタンは「normal show」に変更される．
-
-「normal show」で通常表示に戻り，ボタンが「FULL SCREEN」になる．
-PCの場合は「ESC」キーによっても通常表示に戻るが，「normal show」のボタンはそのままである．
-この場合，全画面表示にするには，「normal show」をクリックする．
--->
 
 ## Use GPS GPSの使用
 
-<!-- 
-TODO: ボタンの名称を変更
-Use GPS
- -->
+To use GPS data obtained by a tablet or computer, permission is required.
+Click the "Use GPS" button, then a message for permission will be desplayed and click 'Allow'.
+To stop GPS, click "Stop GPS".
 
-地点や観察情報として，端末で取得したGPS情報を入手するにはGPSの使用許可が必要．
+端末で取得したGPS情報を入手するにはGPSの使用許可が必要．
 「Use GPS」のボタンをクリックするとメッセージが表示されるので，「承諾」をクリックする．
 GPSの使用を終了するには，「Stop GPS」をクリック．
 
-
 ## 電子メールアプリの起動
 
-「Launch mailer」をクリックすると既定の電子メールアプリを起動できる．
-既定の電子メールアプリについては，各OSで設定する．
+Enter an e-mail address and click "Launch mailer" to start the default e-mail application.
+The default e-mail application can be set by your tablet or computer.
+
+電子メールアドレスを入力し，「Launch mailer」をクリックすると既定の電子メールアプリを起動できる．
+既定の電子メールアプリについては，端末で設定する．
+
+- Subject: biss\_yyyy\_mm\_dd\_hh\_mm\_ss    
+- Body: Survey data in JSON format    
+- 件名: biss\_yyyy\_mm\_dd\_hh\_mm\_ss    
+- 本文: JSON形式の調査データ    
+
+To use the data in R, save the body of the email as text data.
+For the subsequent operations, see "Inport data into R".
+
+調査データをRで利用するには，メールの本文をテキストデータとして保存する．
+その後の操作は，「Rでのデータの取り込み」を参照．
 
 ## Auto save 自動保存
 
@@ -112,7 +117,7 @@ Data is then downloaded according to the interval setting.
 
 ### Data format データの形式
 
-- file name ファイル名 :biss_yyyy\_mm\_dd\_hh\_mm_ss.json   
+- file name ファイル名 :biss\_yyyy\_mm\_dd\_hh\_mm\_ss.json   
 - format 形式: text file with UTF8 encoding  
 
 <details>
@@ -125,7 +130,7 @@ example
 
 > {"plot":{"PLOT":["biss01","biss02"],"NO":["1","2"],"DATE":["2022_12_08_20_56_33","2022_12_08_20_56_34"],"Investigator":["",""],"Location":["",""],"LOC_LAT":["undefined","undefined"],"LOC_LON":["undefined","undefined"],"LOC_ACC":["undefined","undefined"],"Altitude":["",""],"Aspect":["",""],"Inclination":["",""],"T1_height":["",""],"T2_height":["",""],"S1_height":["",""],"S2_height":["",""],"H_height":["",""],"T1_cover":["",""],"T2_cover":["",""],"S1_cover":["",""],"S2_cover":["",""],"H_cover":["",""],"Photo":["",""],"Memo":["",""]},"occ":{"PLOT":["biss01","biss01","biss01","biss01","biss01","biss01","biss02","biss02","biss02","biss02","biss02"],"Layer":["T1","T2","T1","T1","S1","S1","S1","S1","H","H","T2"],"Species":["sp1","sp3","sp7","sp4","sp4","sp9","sp1","sp9","sp5","sp7","sp7"],"Cover":["18","89","57","76","","99","","11","65","74","99"],"Sampled":["false","false","false","false","false","false","false","false","false","false","false"],"Identified":["false","true","true","true","true","true","false","true","true","true","true"],"Photo":["","","","","","","","","","",""],"Memo":["","","","","","","","","","",""],"SameAs":["","","","","","","","","","",""]}}
 <summary>
-
+</details>
 
 
 ### Inport data into R Rへのデータの取り込み
