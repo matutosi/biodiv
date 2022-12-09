@@ -1,8 +1,11 @@
-# How to use Investigation Support System (BiSS) 生物多様性調査支援アプリ(BiSS)の使い方
+# How to use Investigation Support System (BiSS) 
+# 生物多様性調査支援アプリ(BiSS)の使い方
 
-# Settings 設定
+# Settings
+# 設定
 
-## Initial settings 初期画面
+## Initial settings
+## 初期画面
 
 Initial settings is as below. 
 Can use auto saving and select several setting for plots and occurrences. 
@@ -12,6 +15,7 @@ Can use auto saving and select several setting for plots and occurrences.
 
 <img src="img/crop_settings00.png" width="50%">
 
+## Change font size
 ## 文字サイズの変更
 
 
@@ -21,6 +25,7 @@ The size can be changed by approximately 0.83 (1/1.2) and 1.2 times, respectivel
 「smaller」「LAGER」ボタンで画面全体の文字サイズの変更が可能．
 それぞれ，約0.83(1/1.2)倍・約1.2倍になる．
 
+## Change to full screen
 ## 全画面表示への変更
 
 The browser is displayed in a normal window at startup. 
@@ -32,7 +37,8 @@ Click "FULL SCREEN <=> windowed" to switch between full-screen and windowed mode
 「FULL SCREEN <=> windowed」をクリックすると，ウィンドウ表示と全画面表示が入れ替わる．
 
 
-## Use GPS GPSの使用
+## Use GPS
+## GPSの使用
 
 To use GPS data obtained by a tablet or computer, permission is required.
 Click the "Use GPS" button, then a message for permission will be desplayed and click 'Allow'.
@@ -42,6 +48,7 @@ To stop GPS, click "Stop GPS".
 「Use GPS」のボタンをクリックするとメッセージが表示されるので，「承諾」をクリックする．
 GPSの使用を終了するには，「Stop GPS」をクリック．
 
+## Launch mailer
 ## 電子メールアプリの起動
 
 Enter an e-mail address and click "Launch mailer" to start the default e-mail application.
@@ -61,7 +68,8 @@ For the subsequent operations, see "Inport data into R".
 調査データをRで利用するには，メールの本文をテキストデータとして保存する．
 その後の操作は，「Rでのデータの取り込み」を参照．
 
-## Auto save 自動保存
+## Auto save
+## 自動保存
 
 Data can be saved at a interval (1, 3, 5, 10, 15, 30, 60 minutes). 
 To enable automatic saving, the following settings should be set. 
@@ -75,7 +83,8 @@ Generally, it is recommended to save at intervals of 10 or 15 minutes.
 そのため，短い間隔の場合は多くのファイルが保存される．
 一般的には，10分や15分間隔程度での保存を推奨．
 
-### Select auto save intervals 保存間隔の選択
+### Select auto save intervals
+### 保存間隔の選択
 
 Select auto save interval (minutes) form the pull-down menu.
 After setting interval, all plots and occurrences data will be downloaded. 
@@ -85,7 +94,8 @@ After setting interval, all plots and occurrences data will be downloaded.
 
 <img src="img/crop_settings_autosave01.png" width="50%">
 
-### Downloading the first data データのダウンロード開始
+### Downloading the first data
+### データのダウンロード開始
 
 When set to 5-minute intervals, the first data will be downloaded 5 minutes after setting.
 Directory for download depends on your browser settings.
@@ -95,7 +105,8 @@ Directory for download depends on your browser settings.
 <img src="img/crop_settings_autosave02.png" width="50%">
 
 
-### Allowing multiple file downloads 複数ファイルダウンロードの許可
+### Allowing multiple file downloads
+### 複数ファイルダウンロードの許可
 
 During the second download of 10 minutes, a warning message may appear about allowing multiple files to be downloaded.
 In this case, select "Allow".
@@ -106,7 +117,8 @@ In this case, select "Allow".
 <img src="img/settings_autosave03.png" width="15%">
 
 
-### Auto saving data データの自動保存
+### Auto saving data
+### データの自動保存
 
 Data is then downloaded according to the interval setting.
 
@@ -115,7 +127,8 @@ Data is then downloaded according to the interval setting.
 <img src="img/crop_settings_autosave04.png" width="50%">
 
 
-### Data format データの形式
+### Data format
+### データの形式
 
 - file name ファイル名 :biss\_yyyy\_mm\_dd\_hh\_mm\_ss.json   
 - format 形式: text file with UTF8 encoding  
@@ -132,14 +145,16 @@ example
 <summary>
 </details>
 
-### Inport data into R Rへのデータの取り込み
+### Inport data into R
+### Rへのデータの取り込み
 
 See "Inport data into R" to use data in R.
 
 Rでデータを使うには，「Rでのデータの取り込み」を参照．
 
 
-## Setting of input items 入力項目の設定
+## Setting of input items
+## 入力項目の設定
 
 Before inputting data, the plot and occurrence items must be set.
 The following three methods are available. 
@@ -154,7 +169,8 @@ The following three methods are available.
 - 空の設定に必要な項目をボタンで追加する(推奨)   
 - 全て自分で設定する(非推奨)   
 
-### Select a basic combination 基本的な組み合わせの選択
+### Select a basic combination
+### 基本的な組み合わせの選択
 
 To select a basic combination and add/delete items, 
 at first select the close setting to be used from pull-down menu.
@@ -196,7 +212,8 @@ To add multiple rows, change the values on the left and press "Add rows".
 
 
 
-### Start with the empty and add with buttons 空の設定からボタンを追加
+### Start with the empty and add with buttons
+### 空の設定からボタンを追加
 
 Start with the empty setting, select empty above. 
 Add items with "date\_GPS" button etc. 
@@ -209,7 +226,8 @@ Add items with "date\_GPS" button etc.
 
 
 
-### Save/load settings 設定の保存・復元
+### Save/load settings
+### 設定の保存・復元
 
 The settings of plots and occurrences can be separately saved and restored. 
 To save, enter a file name in the text box to the right of the "Save" button and click the "Save" button. 
@@ -246,7 +264,8 @@ To restore the saved settings, click the "Choose file" button to the right of "L
 保存した設定を復元するには，「Laod」の右側にある「Choose file」ボタンをクリックして，保存したファイルを選択する．
 
 
-### Setting all items by yourself (not recommended) 全項目を手動で設定(非推奨)
+### Setting all items by yourself (not recommended)
+### 全項目を手動で設定(非推奨)
 
 
 <!--
@@ -322,7 +341,8 @@ TODO:  code変更の必要あり
 - memo: 使用者用のメモ(設定自体には関係なし)    
 </details>
 
-### Hide/Show setting tables 設定表の表示・非表示
+### Hide/Show setting tables
+### 設定表の表示・非表示
 
 The setting tables can be set shown or hidden.
 To avoid accidental change of the settings, it is recommended to hide them.
@@ -340,7 +360,8 @@ When the table is hidden, press "Show table" to display it.
 
 
 
-### Tips for setting items 項目設定のコツ
+### Tips for setting items
+### 項目設定のコツ
 
 The horizontal order (left/right) of items in input tables depend on the vertical order (up/down) in setting tables. 
 To change the order, enter a numbr in the "memo" field and click on the column name "memo". 
@@ -352,9 +373,11 @@ Clicking again switches the ascending/descending order.
 そうすることで，入力した数値の順序に並べ替え可能．
 さらにクリックすると，昇順・降順が入れ替わる．
 
-# Input plot and occurrence data 地点情報と観察情報の入力
+# Input plot and occurrence data
+# 地点情報と観察情報の入力
 
-## Add a new plot 新しい地点の追加
+## Add a new plot
+## 新しい地点の追加
 
 Before entering plot and occurrence data, click on "+ PLOT".
 Enter the PLOT name in the pop-up window. 
@@ -381,7 +404,8 @@ In the following sections, you can see how to input plot and occurrence data wit
 
 以下では，サンプルデータを用いて地点情報と観察情報の入力方法を説明する．
 
-## Show example サンプルデータの表示
+## Show example
+## サンプルデータの表示
 
 Click "Show example" in the upper right corner to display example data.
 
@@ -391,7 +415,8 @@ Click "Show example" in the upper right corner to display example data.
 
 表の上部には地点情報，下部には観察情報の表が表示される．
 
-## Contents of example data サンプルデータの内容
+## Contents of example data
+## サンプルデータの内容
 
 - Settings of the plot and occurrence items: "\_5\_layers" (for vegetation survey with 5 layers).   
 - Plots: 2 plots (BiSS01 and BiSS02)  
@@ -402,7 +427,8 @@ Click "Show example" in the upper right corner to display example data.
 
 <img src="img/crop_example01.png" width="80%">
 
-## Table display changes and operations (common to plot and occurrence) 表の表示変更・操作(地点・観察共通)
+## Table display changes and operations (common to plot and occurrence)
+## 表の表示変更・操作(地点・観察共通)
 
 Can operate the table of plot and occurrence. 
 
@@ -419,7 +445,8 @@ Can operate the table of plot and occurrence.
 - 行の並べ替え   
 - テキストデータの検索   
 
-### Show/hide the table 表の表示/非表示   
+### Show/hide the table
+## 表の表示/非表示
 
 Both the plot and occurrence tables can be displayed or hidden.
 To prevent accidental changes, it is recommended to hide the table.
@@ -431,7 +458,8 @@ When the table is hidden, pressing "Show table" will show it.
 表の左上ににある「Hide table」を押すと，非表示になる．
 非表示のときに，「Show table」を押すと，表示される．
 
-### Change table width 表幅の設定変更  
+### Change table width
+### 表幅の設定変更
 
 The initial state of the plot table is wrapped to fit the screen width, while the occurrence table is extended to the right without wrapping.
 Clicking on "Extend width" in the upper left corner of the table expands the width of the table without wrapping.
@@ -441,7 +469,8 @@ Clicking on "Fit width" will wrap the table to fit the screen width .
 表の左上にある「Extend width」をクリックすると，表幅が広がって折り返しなしの状態になる．
 「Fit width」をクリックすると，画面幅で折り返される．
 
-### Show/hide columns 列の表示/非表示   
+### Show/hide columns
+### 列の表示/非表示
 
 In a no-wrap table, the "Hide" button appears in the second row.
 Clicking the "Hide" button hides the column.
@@ -455,7 +484,8 @@ Click "All cols" to display all columns at once.
 それぞれの列名のボタンをクリックすると，再表示が可能．
 「All cols」をクリックすると全列を一斉に表示できる．
 
-### Sort rows 行の並べ替え
+### Sort rows
+### 行の並べ替え
 
 Clicking on a column name in the "no wrap" state allows sorting according to the input contents of the column.
 Clicking the column name again switches the ascending or descending order.
@@ -468,7 +498,8 @@ Note that sorting is meaningless for the plot data, since there is only one row.
 なお，1地点での地点情報では1行しかないため，並べ替えは無意味．
 
 
-### Search input text テキストデータの検索
+### Search input text
+### テキストデータの検索
 
 Entering text in the text box in the upper left corner of the table allows you to search for text inputs.
 Only matched rows are displayed, so you can check the species name etc.
@@ -480,6 +511,7 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 なお，ここでの検索対象は，表示されている列のテキストボックス・固定値(fixed)のテキストである．
 検索対象から地点名などを除外する場合は，「Hide」により非表示にしておくと良い．
 
+## Input data
 ## データ入力
 
 - Textbox: Enter text, e.g., species name   
@@ -494,6 +526,7 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 - 自動入力項目: 「PLOT」「NO」    
 - 「DATE」「LOC\_LAT」「LOC\_LON」「LOC\_ACC」は，「UPDATE\_TIME\_GPS」ボタンを押と更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．     
 
+## Add/delete rows in a occurrence table
 ## 観察情報の行の追加・削除
 
 When a new location is added with "+ PLOT", four lines of occurrence rows are displayed.
@@ -506,7 +539,8 @@ and click "Add rows" to add a new input row.
 # editing now
 
 
-## Add species from a list リストから種名を追加
+## Add species from a list
+## リストから種名を追加
 
 観察情報の表の種名一覧が表示される．
 一覧に表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
@@ -538,6 +572,7 @@ and click "Add rows" to add a new input row.
 
 
 
+## Calculate cover in eac layer
 ## 階層ごとの被度の計算
 
 Select "Cover" for "Value" and "Layer" for "Group" in the lower left of the occurrence table, 
@@ -568,7 +603,8 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 
 
 
-# Show all inputs 全入力情報の表示
+# Show all inputs
+# 全入力情報の表示
 
 「All Plots」のタブには，入力済みの全データが表示されている．
 具体的には，全ての地点情報と観察情報である．
@@ -614,7 +650,8 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 > LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
 > そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
 
-## Search species name 種名の検索
+## Search species name
+## 種名の検索
 
 
 <img src="img/tools00.png" width="50%">
@@ -661,7 +698,8 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 ![search_wamei](img/03_01.png)  
 
 
-# Inport data into R Rでのデータの取り込み
+# Inport data into R
+# Rでのデータの取り込み
 
 ```{r}
 read_biss <- function(json, join = TRUE){
