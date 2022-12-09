@@ -19,10 +19,10 @@ Can use auto saving and select several setting for plots and occurrences.
 ## 文字サイズの変更
 
 
-To change the font size of the entire screen, click "SMALLER" and "LAGER" buttons.
+To change the font size of the entire screen, click "small" and "LAGE" buttons.
 The size can be changed by approximately 0.83 (1/1.2) and 1.2 times, respectively.
 
-「smaller」「LAGER」ボタンで画面全体の文字サイズの変更が可能．
+「small」「LAGE」ボタンで画面全体の文字サイズの変更が可能．
 それぞれ，約0.83(1/1.2)倍・約1.2倍になる．
 
 ## Change to full screen
@@ -30,11 +30,11 @@ The size can be changed by approximately 0.83 (1/1.2) and 1.2 times, respectivel
 
 The browser is displayed in a normal window at startup. 
 To prevent accidental termination of the application, full screen is recommended.
-Click "FULL SCREEN <=> windowed" to switch between full-screen and windowed mode.
+Click "FULL SC <=> windowed" to switch between full-screen and windowed mode.
 
 起動時のブラウザは，通常のウィンドウ表示である．
 誤操作によるアプリの終了を防ぐには，全画面表示を推奨．
-「FULL SCREEN <=> windowed」をクリックすると，ウィンドウ表示と全画面表示が入れ替わる．
+「FULL SC <=> windowed」をクリックすると，ウィンドウ表示と全画面表示が入れ替わる．
 
 
 ## Use GPS
