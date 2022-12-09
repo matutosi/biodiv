@@ -132,7 +132,6 @@ example
 <summary>
 </details>
 
-
 ### Inport data into R Rへのデータの取り込み
 
 See "Inport data into R" to use data in R.
