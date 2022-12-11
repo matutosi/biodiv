@@ -48,7 +48,7 @@ function createSpecieUlModule({ species, ns,
   var select_plot      = createSelectPlot    ( base_name + 'plot-'      + ns          );
   //   var select_layer     = createSelectLayer   ( base_name + 'layer-'     + ns          );
   var select_options   = createSelectOptions ( base_name + 'options-'    + ns          );
-console.log(select_options);
+  // console.log(select_options);
   var sp_list          = createSpecieList    ( base_name + 'sp_list-'   + ns, species );
 
   main.appendChild( select_button       );
@@ -304,7 +304,7 @@ function replaceSelectPlot(id){
   old_plot.replaceWith(new_plot);
 }
 function replaceSelectLayer(id){
-console.log(id);
+  // console.log(id);
   var old_layer = document.getElementById(id);
   //   var new_layer = createSelectLayer(id);
   var new_layer = createSelectOptions(id);
@@ -320,16 +320,15 @@ function createSelectOptions(id){
   var options = getMultiTableOptions(tables, selects);
   var opt_keys = Object.keys(options);
   var span = crEl({ el: 'span', ats:{id: id} });
-  for(key of opt_keys){
+  for(let key of opt_keys){
     span.appendChild( crEl({ el: 'span', ih: key}) );
     var select = uniq(options[key]);
     select.unshift('');
-    var select = createSelectOpt(uniq(select), 0, 'sp_list_' + key + '_options-' + ns);
+    var select = createSelectOpt(uniq(select), 0, 'sp_list_options_' + key + '-' + ns);
     span.appendChild( select );
   }
   return span;
 }
-
 
 
 // Add species
@@ -363,6 +362,23 @@ function unStageSpecies(obj){
   sp_button.removeAttribute("disabled");
   obj.remove();
 }
+
+function getSelectOptionsAsJSON(ns){
+  // editing now
+  // ns = 'all'
+  var selector =  "select[id^='sp_list_options_'][id$=" + ns + "]";
+  var options  = document.querySelectorAll(selector);
+  var opt_value = '{"';
+  for(let opt of options){
+    var opt_value = 
+      opt_value + 
+      opt.id.replace('sp_list_options_', '').split('-')[0] + '": "' + 
+      opt.value + '", "';
+  }
+  var opt_value = opt_value.replace(/, "$/, '') + '}';
+  return opt_value;
+}
+
 function addSpecies(obj){
   // console.log(obj);
   // console.log(obj.id);
@@ -371,7 +387,7 @@ function addSpecies(obj){
   var staged  = document.getElementById(base_name + 'staged-' + ns);
   var input   = document.getElementById(base_name + 'input-'  + ns);
   var plot    = document.getElementById(base_name + 'plot-'   + ns).value;
-  var layer   = document.getElementById(base_name + 'layer-'  + ns).value;
+  var options = getSelectOptionsAsJSON(ns);
   var species = getChildrenValues(staged);
   if(input.value !== ''){ var species = species.concat(input.value.split(',')); }
   // add species
@@ -384,8 +400,13 @@ function addSpecies(obj){
     }else{
       var iden = false;
     }
-  // console.log(layer);
-    addRowWithValues({ table: table, values: {Layer: layer, Species: sp, SameAs: sa, Identified: iden} });
+    var values = options.replace(/\}$/, '') + ', '  +
+                 '"Species": "'    + sp   + '", ' +
+                 '"SameAs": "'     + sa   + '", ' +
+                 '"Identified": "' + iden + '"}' ;
+    var values = JSON.parse(values);
+    addRowWithValues({ table: table, values: values });
+  //     addRowWithValues({ table: table, values: {Layer: layer, Species: sp, SameAs: sa, Identified: iden} });
   }
 
   // clear inputs
