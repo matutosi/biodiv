@@ -23,8 +23,7 @@ function createAddCompButton(id){
 }
 
 function createSpecieUlModule({ species, ns,
-                                show_select_button   , show_comp_checkbox, 
-                                show_button_update_sl, show_button_add_comp, 
+                                show_select_button   , show_comp_checkbox, show_delete_list, 
                                 show_select_ncol     , 
                                 show_button_load_sl  , show_button_save_sl  , 
                                 show_text_input      , 
@@ -35,9 +34,8 @@ function createSpecieUlModule({ species, ns,
 
   var select_button    = createSelectSL      ( base_name + 'select-'    + ns          );
   var select_ncol      = createSelectNumber  ( base_name + 'ncols-'     + ns          );
-  //   var button_update_sl = createUpdateSLButoon( base_name + 'update-'    + ns          );
-  //   var button_add_comp  = createAddCompButton ( base_name + 'add_comp-'  + ns          );
   var comp_checkbox    = createCompCheckbox  ( base_name + 'checkbox-'  + ns          );
+  var delete_list      = createDeleteSL      ( base_name + 'delete-'    + ns          );
 
   var button_load_sl   = createLoadSLButton  ( base_name + 'load-'      + ns          );
   var button_save_sl   = createSaveSLButoon  ( base_name + 'save-'      + ns          );
@@ -55,8 +53,7 @@ function createSpecieUlModule({ species, ns,
   main.appendChild( select_ncol         );
   main.appendChild( select_button       );
   main.appendChild( comp_checkbox       );
-  //   main.appendChild( button_update_sl    );
-  //   main.appendChild( button_add_comp     );
+  main.appendChild( delete_list         );
 
   main.appendChild( crEl({ el: 'br' })  );
   main.appendChild( button_load_sl      );
@@ -76,9 +73,8 @@ function createSpecieUlModule({ species, ns,
 
   if( show_select_ncol      === void 0){ select_ncol        .style.display = "none"; }
   if( show_select_button    === void 0){ select_button      .style.display = "none"; }
-  //   if( show_button_update_sl === void 0){ button_update_sl   .style.display = "none"; }
-  //   if( show_button_add_comp  === void 0){ button_add_comp    .style.display = "none"; }
   if( show_comp_checkbox    === void 0){ comp_checkbox      .style.display = "none"; }
+  if( show_delete_list      === void 0){ delete_list        .style.display = "none"; }
 
   if( show_button_load_sl   === void 0){ button_load_sl     .style.display = "none"; }
   if( show_button_save_sl   === void 0){ button_save_sl     .style.display = "none"; }
@@ -106,8 +102,25 @@ function createSelectSL(id){
   span.appendChild(select);
   return span;
 }
+function createDeleteSL(id){
+  var delete_name = id.replace('delete', 'delete_name');
+  var span   = crEl({ el:'span' });
+  var delete_button = crEl({ el:'input', ats:{type: 'button', value: 'DELETE', onclick: 'deleteSl(this)', id: id} });
+  var select = createSL( delete_name );
+  span.appendChild( delete_button );
+  span.appendChild( select );
+  return span;
+}
+function deleteSl(obj){
+  var delete_name = obj.id.replace('delete', 'delete_name');
+  var del_list = document.getElementById(delete_name).value;
+  var is_ok = confirm('Sure to DELETE ' + del_list);
+  if(is_ok){ removeSLinLS(del_list); }
+  return void 0;
+}
+
 function createCompCheckbox(id){
-  var span     = crEl({ el:'span', ih: '<b>Include composition</b>' });
+  var span     = crEl({ el:'span', ih: '<b>Include composition</b>' , ats:{class: 'margin_right'} });
   var checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} });
   span.appendChild(checkbox);
   return span;
