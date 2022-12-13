@@ -27,7 +27,7 @@ function createSpecieUlModule({ species, ns,
                                 show_select_ncol     , 
                                 show_button_load_sl  , show_button_save_sl  , 
                                 show_text_input      , 
-                                show_button_update_pl, show_select_plot     , show_select_layer}){
+                                show_button_update_pl, show_select_plot     , show_select_options}){
   // var ns = 'all'; var species = sp_list;
   var base_name = 'sp_list_';
   var main             = createSpanWithId    ( base_name + 'module-'    + ns          );
@@ -45,7 +45,6 @@ function createSpecieUlModule({ species, ns,
   var button_update_pl = createUpdatePLButton( base_name + 'update_pl-' + ns          );
   var button_add       = createSLAdd         ( base_name + 'add-'       + ns          );
   var select_plot      = createSelectPlot    ( base_name + 'plot-'      + ns          );
-  //   var select_layer     = createSelectLayer   ( base_name + 'layer-'     + ns          );
   var select_options   = createSelectOptions ( base_name + 'options-'    + ns          );
   // console.log(select_options);
   var sp_list          = createSpecieList    ( base_name + 'sp_list-'   + ns, species );
@@ -66,7 +65,6 @@ function createSpecieUlModule({ species, ns,
   main.appendChild( button_update_pl    );
   main.appendChild( button_add          );
   main.appendChild( select_plot         );
-  //   main.appendChild( select_layer        );
   main.appendChild( select_options      );
   main.appendChild( sp_list             );
   main.appendChild( crEl({el:'hr'})     );
@@ -81,8 +79,7 @@ function createSpecieUlModule({ species, ns,
   if( show_text_input       === void 0){ text_input         .style.display = "none"; }
   if( show_button_update_pl === void 0){ button_update_pl   .style.display = "none"; }
   if( show_select_plot      === void 0){ select_plot        .style.display = "none"; }
-  //   if( show_select_layer     === void 0){ select_layer       .style.display = "none"; }
-  if( show_select_layer     === void 0){ select_options     .style.display = "none"; }
+  if( show_select_options   === void 0){ select_options     .style.display = "none"; }
 
   return main;
 }
@@ -93,9 +90,6 @@ function createSpanWithId(id){
 }
 
 // Select species list
-function createUpdateSLButoon(id){
-  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Update select list', onclick: 'updateSelectSL(this)'} });
-}
 function createSelectSL(id){
   var span   = crEl({ el:'span', ih: '<b>Species list</b>' });
   var select = createSL(id);
@@ -112,12 +106,43 @@ function createDeleteSL(id){
   return span;
 }
 function deleteSl(obj){
-  var delete_name = obj.id.replace('delete', 'delete_name');
-  var del_list = document.getElementById(delete_name).value;
+  var sel_de = obj.id.replace('delete', 'delete_name');
+  var select = obj.id.replace('delete', 'select');
+  var del_list = document.getElementById(sel_de).value;
   var is_ok = confirm('Sure to DELETE ' + del_list);
-  if(is_ok){ removeSLinLS(del_list); }
+  if(is_ok){
+    removeSLinLS(del_list);
+    updateSelectSLById(select);
+    updateSelectSLById(sel_de);
+  }
   return void 0;
 }
+
+
+function updateSelectSLById(id){
+  var old_select = document.getElementById(id);
+  //   var selected_index = old_select.selectedIndex;
+  var selected_value = old_select.value;
+  var new_select = createSL(id, selected_value);
+  old_select.replaceWith(new_select);
+}
+function createSL(id, value = ''){
+  var species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', '');
+  species_list.unshift('NEW');
+  var select = createSelectOpt(species_list, 0, id);
+  if(value !== ''){ setSelectOption(select, value); }
+  select.setAttribute('onchange', 'changeSL(this)');
+  return select
+}
+
+function setSelectOption(select, value){
+  // editing now
+  var options = getSelectOptionInCell(select);
+  var index = options.indexOf(value);
+  var index = Math.max(0, index);
+  select.options[index].selected = true;
+}
+
 
 function createCompCheckbox(id){
   var span     = crEl({ el:'span', ih: '<b>Include composition</b>' , ats:{class: 'margin_right'} });
@@ -126,30 +151,6 @@ function createCompCheckbox(id){
   return span;
 }
 
-function updateSelectSL(obj){
-  //   var id = this.id;
-  // console.log(id);
-  var id = obj.id.replace('update', 'select');
-  // var id = 'sp_list_select-all';
-  var old_select = document.getElementById(id);
-  var selected_index = old_select.selectedIndex;
-  var new_select = createSL(id, selected_index);
-  old_select.replaceWith(new_select);
-}
-function updateSelectSLById(id){
-  var old_select = document.getElementById(id);
-  var selected_index = old_select.selectedIndex;
-  var new_select = createSL(id, selected_index);
-  old_select.replaceWith(new_select);
-}
-
-function createSL(id, selected_index = 0){
-  var species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', '');
-  species_list.unshift('NEW');
-  var select = createSelectOpt(species_list, selected_index, id);
-  select.setAttribute('onchange', 'changeSL(this)');
-  return select
-}
 function changeSL(obj){
   var ns = obj.id.split('-')[1];
   var id = 'sp_list_sp_list-' + ns;
@@ -192,12 +193,14 @@ function createLoadSLButton(id){
 function createSaveSLButoon(id){
   var ns = id.split('-')[1];
   var span = crEl({ el:'span' });
-  var select = createSelectOpt(['file', 'browser'], 0, 'sp_list_which-' + ns);
-  var input = crEl({ el:'input', ats:{type:'text', id: id, placeholder: 'File name'} });
   var button = crEl({ el:'input', ats:{type:'button', id: id, value: 'Save', onclick: 'saveSL(this)'} });
-  span.appendChild(select);
-  span.appendChild(input);
-  span.appendChild(button);
+  var input  = crEl({ el:'input',  ats:{type:'text', id: id, placeholder: 'File name'} });
+  var to     = crEl({ el:'span',  ih: ' to ' });
+  var select = createSelectOpt(['file', 'browser'], 0, 'sp_list_which-' + ns);
+  span.appendChild( button );
+  span.appendChild( input  );
+  span.appendChild( to     );
+  span.appendChild( select );
   return span;
 }
 function saveSL(obj){
@@ -217,6 +220,7 @@ function saveSL(obj){
   if(which === 'browser'){ 
     addSLinLS(sp_list, f_name);
     updateSelectSLById(id.replace('save', 'select'));
+    updateSelectSLById(id.replace('save', 'delete_name'));
   }
   if(which === 'file'   ){ downloadStrings(strings = sp_list, file_name = f_name + '.txt'); }
   document.getElementById('sp_list_save-' + ns).value = '';  // clear file name
@@ -380,7 +384,6 @@ function unStageSpecies(obj){
 }
 
 function getSelectOptionsAsJSON(ns){
-  // editing now
   // ns = 'all'
   var selector =  "select[id^='sp_list_options_'][id$=" + ns + "]";
   var options  = document.querySelectorAll(selector);
