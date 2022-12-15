@@ -13,7 +13,10 @@ Can use auto saving and select several setting for plots and occurrences.
 初期画面は以下のとおり．
 自動保存や地点・観察の入力項目の設定が可能である．
 
-<img src="img/crop_settings00.png" width="50%">
+<details>
+<img src="img/settings00.png" width="70%">
+</details>
+
 
 ## Change font size
 ## 文字サイズの変更
@@ -24,6 +27,11 @@ The size can be changed by approximately 0.83 (1/1.2) and 1.2 times, respectivel
 
 「small」「LAGE」ボタンで画面全体の文字サイズの変更が可能．
 それぞれ，約0.83(1/1.2)倍・約1.2倍になる．
+
+<details>
+<img src="img/font_large.png" width="70%">
+<img src="img/font_small.png" width="70%">
+</details>
 
 ## Change to full screen
 ## 全画面表示への変更
@@ -92,7 +100,9 @@ After setting interval, all plots and occurrences data will be downloaded.
 自動保存の間隔(分)をプルダウンメニューから選択する．
 保存間隔を設定すると，地点情報と観察情報の全てがダウンロードされる．
 
-<img src="img/crop_settings_autosave01.png" width="50%">
+<details>
+<img src="img/settings_autosave01.png" width="70%">
+</details>
 
 ### Downloading the first data
 ### データのダウンロード開始
@@ -102,7 +112,9 @@ Directory for download depends on your browser settings.
 
 5分間隔に設定した場合は，設定の5分後に1回目のデータがダウンロードされる．ダウンロード先のフォルダは，ブラウザの設定による．
 
-<img src="img/crop_settings_autosave02.png" width="50%">
+<details>
+<img src="img/settings_autosave02.png" width="70%">
+</details>
 
 
 ### Allowing multiple file downloads
@@ -114,7 +126,9 @@ In this case, select "Allow".
 2回目の10分後のダウンロード時に，複数ファイルのダウンロードの許可の警告が出る場合がある．
 この場合は，「許可」を選択する．
 
-<img src="img/settings_autosave03.png" width="15%">
+<details>
+<img src="img/settings_autosave03.png" width="30%">
+</details>
 
 
 ### Auto saving data
@@ -124,7 +138,9 @@ Data is then downloaded according to the interval setting.
 
 その後，設定した間隔に従ってデータがダウンロードされる．
 
-<img src="img/crop_settings_autosave04.png" width="50%">
+<details>
+<img src="img/settings_autosave04.png" width="70%">
+</details>
 
 
 ### Data format
@@ -142,7 +158,6 @@ example
 </summary>
 
 > {"plot":{"PLOT":["biss01","biss02"],"NO":["1","2"],"DATE":["2022_12_08_20_56_33","2022_12_08_20_56_34"],"Investigator":["",""],"Location":["",""],"LOC_LAT":["undefined","undefined"],"LOC_LON":["undefined","undefined"],"LOC_ACC":["undefined","undefined"],"Altitude":["",""],"Aspect":["",""],"Inclination":["",""],"T1_height":["",""],"T2_height":["",""],"S1_height":["",""],"S2_height":["",""],"H_height":["",""],"T1_cover":["",""],"T2_cover":["",""],"S1_cover":["",""],"S2_cover":["",""],"H_cover":["",""],"Photo":["",""],"Memo":["",""]},"occ":{"PLOT":["biss01","biss01","biss01","biss01","biss01","biss01","biss02","biss02","biss02","biss02","biss02"],"Layer":["T1","T2","T1","T1","S1","S1","S1","S1","H","H","T2"],"Species":["sp1","sp3","sp7","sp4","sp4","sp9","sp1","sp9","sp5","sp7","sp7"],"Cover":["18","89","57","76","","99","","11","65","74","99"],"Sampled":["false","false","false","false","false","false","false","false","false","false","false"],"Identified":["false","true","true","true","true","true","false","true","true","true","true"],"Photo":["","","","","","","","","","",""],"Memo":["","","","","","","","","","",""],"SameAs":["","","","","","","","","","",""]}}
-<summary>
 </details>
 
 ### Inport data into R
@@ -191,7 +206,9 @@ at first select the close setting to be used from pull-down menu.
 - no\_layers: 階層なしの植生調査用   
 - flora: 植物相調査用   
 
-<img src="img/crop_settings_main01.png" width="50%">
+<details>
+<img src="img/settings_base01.png" width="70%">
+</details>
 
 For vegetation surveys, it is recommended to use "full" or "\_5\_layers". 
 Delete unnecessary items with "DELETE" button. 
@@ -199,7 +216,9 @@ Delete unnecessary items with "DELETE" button.
 植生調査の場合は，「full」か「\_5\_layers」をもとにすることをおすすめする．
 不要な行を「DELETE」で削除する．
 
-<img src="img/crop_settings_main02.png" width="50%">
+<details>
+<img src="img/settings_base02.png" width="70%">
+</details>
 
 
 If you can not find what you need, add rows by clicking "Add rows" at the bottom. 
@@ -208,7 +227,9 @@ To add multiple rows, change the values on the left and press "Add rows".
 必要な項目がない場合は，一番下の「Add rows」で行を追加する．
 複数行を追加したい場合は，左の数値を変更してから「Add rows」を押す．
 
-<img src="img/crop_settings_main03.png" width="50%">
+<details>
+<img src="img/settings_base03.png" width="70%">
+</details>
 
 
 
@@ -221,9 +242,10 @@ Add items with "date\_GPS" button etc.
 空の設定をもとに，必要な項目を追加する場合は，上記のemptyを選択する．
 "date\_GPS"などのボタンで項目を追加する．
 
-<img src="img/crop_settings_main04.png" width="50%">
-<img src="img/crop_settings_main05.png" width="50%">
-
+<details>
+<img src="img/settings_base04.png" width="70%">
+<img src="img/settings_base05.png" width="70%">
+</details>
 
 
 ### Save/load settings
@@ -237,7 +259,9 @@ The saved file is a text file in JSON format (UTF8) with the extension "json".
 保存するには「Save」の右にあるテキストボックスにファイル名を入力し，「Save」ボタンをクリックする．
 保存したファイルはJSON形式のテキストファイル(UTF8)で，拡張子は「json」．
 
-<img src="img/crop_settings_main06save.png" width="50%">
+<details>
+<img src="img/settings_save01.png" width="70%">
+</details>
 
 <details>
 <summary>
@@ -356,7 +380,9 @@ When the table is hidden, press "Show table" to display it.
 表の左上ににある「Hide table」を押すと，非表示になる．
 非表示のときに，「Show table」を押すと，表示される．
 
-<img src="img/crop_settings_hide_show.png" width="50%">
+<details>
+<img src="img/settings_hide_show.png" width="70%">
+</details>
 
 
 
@@ -590,18 +616,14 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 
 ## 未作成
 
+<!--
 
 <img src="img/tools13en.png" width="80%">
-
-
 <img src="img/crop_example02_01.png" width="80%">
-
-
-
 <img src="img/crop_tools02.png" width="50%">
 <img src="img/crop_tools02en.png" width="50%">
 
-
+-->
 
 # Show all inputs
 # 全入力情報の表示
@@ -654,6 +676,8 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 ## 種名の検索
 
 
+<!--
+
 <img src="img/tools00.png" width="50%">
 <img src="img/tools00en.png" width="50%">
 <img src="img/tools01.png" width="50%">
@@ -670,6 +694,10 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 <img src="img/tools11en.png" width="50%">
 <img src="img/tools12en.png" width="50%">
 
+-->
+
+
+<!--
 
 - Choose "Tools" tab
 ![tools_tab](img/03_00.png)    
@@ -696,6 +724,8 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 - 空欄でSearch Textを選択すると，検索結果がクリアされる  
 ![search_wamei_clear](img/03_09.png)  
 ![search_wamei](img/03_01.png)  
+
+-->
 
 
 # Inport data into R
