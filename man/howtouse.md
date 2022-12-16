@@ -385,7 +385,6 @@ When the table is hidden, press "Show table" to display it.
 </details>
 
 
-
 ### Tips for setting items
 ### 項目設定のコツ
 
@@ -405,14 +404,19 @@ Clicking again switches the ascending/descending order.
 ## Add a new plot
 ## 新しい地点の追加
 
-Before entering plot and occurrence data, click on "+ PLOT".
+Before entering plot and occurrence data, click "+ PLOT".
+
+地点情報と観察情報を入力するには，まず「+ PLOT」をクリックする．
+
+<details>
+<img src="img/add_plot00.png" width="70%">
+</details>
+
 Enter the PLOT name in the pop-up window. 
 Alphanumeric and Japanese characters can be used for the PLOT name. 
 
-地点情報と観察情報を入力するには，まず「+ PLOT」をクリックする．
 ポップアップ画面に地点名を入力する．
 地点名には，英数字・日本語文字が使用可能．
-
 
 > **Warning**   
 > Only spaces and "\_" (underscore) are not allowed.
@@ -422,9 +426,18 @@ Alphanumeric and Japanese characters can be used for the PLOT name.
 > 空白のみや「\_」(アンダーバー)は使用不可．
 > また，地点名の重複はできない．
 
-<!-- 
-ポップアップの画面を追加する
--->
+<details>
+<img src="img/add_plot01.png" width="30%">
+</details>
+
+After inputing PLOT name and click "OK", a new tab will be shown.
+
+地点名を入力して「OK」を選択すると，新しい地点のタブが表示される．
+
+<details>
+<img src="img/add_plot02.png" width="70%">
+</details>
+
 
 In the following sections, you can see how to input plot and occurrence data with example.
 
@@ -437,7 +450,9 @@ Click "Show example" in the upper right corner to display example data.
 
 右上にある「Show example」をクリックすると，サンプルデータが表示される．
 
-<img src="img/crop_example00.png" width="80%">
+<details>
+<img src="img/add_plot00.png" width="70%">
+</details>
 
 表の上部には地点情報，下部には観察情報の表が表示される．
 
@@ -451,7 +466,12 @@ Click "Show example" in the upper right corner to display example data.
 - Plots: BiSS01とBiSS02の2地点   
 - Occurrences: ランダムに階層(T1, T2, S1, S2, H)，種名(sp1, sp2, ...)，被度(0-100)が表示される
 
-<img src="img/crop_example01.png" width="80%">
+
+<details>
+<img src="img/example01.png" width="90%">
+</details>
+
+# editing now
 
 ## Table display changes and operations (common to plot and occurrence)
 ## 表の表示変更・操作(地点・観察共通)
@@ -562,7 +582,6 @@ and click "Add rows" to add a new input row.
 「+ PLOT」で新規の地点を追加すると，観察情報は4行の入力欄が表示される．
 左下のプルダウンの数字で行数を選択して，「Add rows」をクリックすると，新たな入力行が追加できる．
 
-# editing now
 
 
 ## Add species from a list
