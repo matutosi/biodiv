@@ -471,8 +471,6 @@ Click "Show example" in the upper right corner to display example data.
 <img src="img/example01.png" width="90%">
 </details>
 
-# editing now
-
 ## Table display changes and operations (common to plot and occurrence)
 ## 表の表示変更・操作(地点・観察共通)
 
@@ -497,23 +495,47 @@ Can operate the table of plot and occurrence.
 Both the plot and occurrence tables can be displayed or hidden.
 To prevent accidental changes, it is recommended to hide the table.
 Press "Hide table" in the upper left corner of the table to hide the table.
-When the table is hidden, pressing "Show table" will show it.
 
 地点情報と観察情報の両方とも，表示/非表示の切り替えが可能．
 誤操作による変更を防ぐには，非表示にしておくと良い．
 表の左上ににある「Hide table」を押すと，非表示になる．
+
+<details>
+<img src="img/example_hide_table02.png" width="90%">
+</details>
+
+
+When the table is hidden, pressing "Show table" will show it.
+
 非表示のときに，「Show table」を押すと，表示される．
+
+<details>
+<img src="img/example_hide_table01.png" width="90%">
+</details>
+
 
 ### Change table width
 ### 表幅の設定変更
 
 The initial state of the plot table is wrapped to fit the screen width, while the occurrence table is extended to the right without wrapping.
 Clicking on "Extend width" in the upper left corner of the table expands the width of the table without wrapping.
-Clicking on "Fit width" will wrap the table to fit the screen width .
 
 地点情報の初期状態は画面幅に合わせた形で折り返され，観察情報は折り返しなしで右に伸びた状態である．
 表の左上にある「Extend width」をクリックすると，表幅が広がって折り返しなしの状態になる．
+
+<details>
+<img src="img/example_width01.png" width="90%">
+</details>
+
+Clicking on "Fit width" will wrap the table to fit the screen width .
+
 「Fit width」をクリックすると，画面幅で折り返される．
+
+<details>
+<img src="img/example_width02.png" width="90%">
+</details>
+
+
 
 ### Show/hide columns
 ### 列の表示/非表示
@@ -530,18 +552,36 @@ Click "All cols" to display all columns at once.
 それぞれの列名のボタンをクリックすると，再表示が可能．
 「All cols」をクリックすると全列を一斉に表示できる．
 
+<details>
+<img src="img/example_hide_cols01.png" width="90%">
+</details>
+
+
 ### Sort rows
 ### 行の並べ替え
 
 Clicking on a column name in the "no wrap" state allows sorting according to the input contents of the column.
-Clicking the column name again switches the ascending or descending order.
 
 折り返しなしの状態のときに列名をクリックすると，その列の入力内容に従って並べ替えができる．
+
+<details>
+<img src="img/example_sort01.png" width="90%">
+</details>
+
+Clicking the column name again switches the ascending or descending order.
+
 再度列名をクリックすると，昇順・降順が入れ替わる．
+
+<details>
+<img src="img/example_sort02.png" width="90%">
+</details>
 
 Note that sorting is meaningless for the plot data, since there is only one row.
 
 なお，1地点での地点情報では1行しかないため，並べ替えは無意味．
+
+
+# editing now
 
 
 ### Search input text
@@ -549,13 +589,26 @@ Note that sorting is meaningless for the plot data, since there is only one row.
 
 Entering text in the text box in the upper left corner of the table allows you to search for text inputs.
 Only matched rows are displayed, so you can check the species name etc.
-The search targets here are the text boxes and fixed value text in the displayed columns.
-To exclude the name of a plot from the search, you can hide it by clicking "Hide".
 
 表の左上のテキストボックスに入力をすると，表示中の入力情報の検索が可能．
 一致するものだけが表示されるため，種名の確認などができる．
+
+<details>
+<img src="img/example_search01.png" width="90%">
+</details>
+
+The search targets here are the text boxes and fixed value text in the displayed columns.
+To exclude the name of a plot from the search, you can hide it by clicking "Hide".
+
 なお，ここでの検索対象は，表示されている列のテキストボックス・固定値(fixed)のテキストである．
 検索対象から地点名などを除外する場合は，「Hide」により非表示にしておくと良い．
+
+
+<details>
+<img src="img/example_search04.png" width="90%">
+<img src="img/example_search05.png" width="90%">
+</details>
+
 
 ## Input data
 ## データ入力
@@ -682,9 +735,6 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 「Select species list:」の右側にあるプルダウンメニュー内に追加される．
 リストを選択すると，
 
-
-<!-- TODO: 入力済みの種名を含めるかどうか選択することができれば便利かも -->
-<!-- TODO: 種名リストの削除機能が必要 -->
 
 > **Warning**   
 > 種名リストの保存にはブラウザのLocalStorageを利用している．
