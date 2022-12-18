@@ -581,9 +581,6 @@ Note that sorting is meaningless for the plot data, since there is only one row.
 なお，1地点での地点情報では1行しかないため，並べ替えは無意味．
 
 
-# editing now
-
-
 ### Search input text
 ### テキストデータの検索
 
@@ -608,6 +605,8 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 <img src="img/example_search04.png" width="90%">
 <img src="img/example_search05.png" width="90%">
 </details>
+
+# editing now
 
 
 ## Input data
