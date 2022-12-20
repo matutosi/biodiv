@@ -198,7 +198,6 @@ at first select the close setting to be used from pull-down menu.
 - \_3\_layers: For vegetation survey with 3 layers (T, S, H)   
 - no\_layers: For vegetation survey without layers   
 - flora: For flora survey   
-
 - empty: 空の設定    
 - full: 植生調査や植物相調査で必要になりそうな項目を全て含む   
 - \_5\_layers: 5階層(T1, T2, S1, S2, H)の植生調査用   
@@ -709,7 +708,6 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 
 # editing now
 
-
 以下の画像を使う?
 
 all_plots00.png
@@ -723,8 +721,6 @@ tools00.png
   # settings_autosave02.png
   # settings_autosave03.png
   # settings_autosave04.png
-
-
 
 
 
