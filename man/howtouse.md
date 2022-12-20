@@ -332,11 +332,11 @@ Item details
   - number: Numeric value   
 - value: behavior depends on type   
   - checkbox: unchecked if empty, checked if input is present (text such as "checked" is recommended for clarity)  
-<!--  
-  - number: number of width of increase/decrease, 1 if empty   
--->
   - fixed: content of fixed value   
-  - list: pull-down menu item names separated by ":".   
+  - list: pull-down menu item names separated by ":"    
+  - number : the range of increase or decrease step, 1 will be set when empty or non-numeric    
+  - text : width of text box, 20 when empty or non-numeric
+
 - DELETE: button to delete a row (not related to the setting itself)   
 - memo: memo for user (not related to setting itself)    
 
@@ -355,12 +355,10 @@ Item details
   - number: 数値   
 - value: typeによって動作が異なる   
   - checkbox: 空のときはチェックなし，入力があるときはチェックあり(分かりやすくするため，「checked」などのテキストを推奨)  
-<!-- 
-  - number: 増減幅の数値，空のときは1   
-TODO:  code変更の必要あり
--->
   - fixed: 固定値の内容   
   - list: 「:」区切りでのプルダウンメニューの項目名   
+  - number: 入力時の数値の増減幅，空の時や数値以外のときの増減幅は1
+  - text: テキストボックスの幅，空の時や数値以外のときは20
 - DELETE: 行の削除ボタン(設定自体には関係なし)   
 - memo: 使用者用のメモ(設定自体には関係なし)    
 </details>
@@ -607,6 +605,26 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 </details>
 
 # editing now
+
+以下の画像を使う?
+
+all_plots00.png
+example_all_plots.png
+example_calculate01.png
+example_species_list01.png
+example_species_list02.png
+example_species_list03.png
+example_species_list04.png
+tools00.png
+example_addrows01.png
+example_addrows02.png
+settings_addrows01.png
+  # settings_fromempty01.png
+  # settings_full01.png
+  # settings_full02.png
+  # settings_autosave02.png
+  # settings_autosave03.png
+  # settings_autosave04.png
 
 
 ## Input data
