@@ -9,6 +9,7 @@ function createTd(col_name, data_type, select, table_data){
       if(col_name === "SameAs" ) td = crEl({ el: 'td', ih: ''       });
       break;
     case "text":
+      if(Array.isArray(select)){ var select = select.join(""); }
       var td = createTdWithChild( crEl({ el:'input', ats:{type: data_type, value: table_data, size: select} }) );
       break;
     case "number":
