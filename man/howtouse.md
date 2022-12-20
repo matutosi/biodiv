@@ -157,7 +157,7 @@ example
 
 </summary>
 
-> {"plot":{"PLOT":["biss01","biss02"],"NO":["1","2"],"DATE":["2022_12_08_20_56_33","2022_12_08_20_56_34"],"Investigator":["",""],"Location":["",""],"LOC_LAT":["undefined","undefined"],"LOC_LON":["undefined","undefined"],"LOC_ACC":["undefined","undefined"],"Altitude":["",""],"Aspect":["",""],"Inclination":["",""],"T1_height":["",""],"T2_height":["",""],"S1_height":["",""],"S2_height":["",""],"H_height":["",""],"T1_cover":["",""],"T2_cover":["",""],"S1_cover":["",""],"S2_cover":["",""],"H_cover":["",""],"Photo":["",""],"Memo":["",""]},"occ":{"PLOT":["biss01","biss01","biss01","biss01","biss01","biss01","biss02","biss02","biss02","biss02","biss02"],"Layer":["T1","T2","T1","T1","S1","S1","S1","S1","H","H","T2"],"Species":["sp1","sp3","sp7","sp4","sp4","sp9","sp1","sp9","sp5","sp7","sp7"],"Cover":["18","89","57","76","","99","","11","65","74","99"],"Sampled":["false","false","false","false","false","false","false","false","false","false","false"],"Identified":["false","true","true","true","true","true","false","true","true","true","true"],"Photo":["","","","","","","","","","",""],"Memo":["","","","","","","","","","",""],"SameAs":["","","","","","","","","","",""]}}
+> {"plot":{"PLOT":["biss01","biss02"],"NO":["1","2"],"DATE":["2022\_12\_08\_20\_56\_33","2022\_12\_08\_20\_56\_34"],"Investigator":["",""],"Location":["",""],"LOC\_LAT":["undefined","undefined"],"LOC\_LON":["undefined","undefined"],"LOC\_ACC":["undefined","undefined"],"Altitude":["",""],"Aspect":["",""],"Inclination":["",""],"T1\_height":["",""],"T2\_height":["",""],"S1\_height":["",""],"S2\_height":["",""],"H\_height":["",""],"T1\_cover":["",""],"T2\_cover":["",""],"S1\_cover":["",""],"S2\_cover":["",""],"H\_cover":["",""],"Photo":["",""],"Memo":["",""]},"occ":{"PLOT":["biss01","biss01","biss01","biss01","biss01","biss01","biss02","biss02","biss02","biss02","biss02"],"Layer":["T1","T2","T1","T1","S1","S1","S1","S1","H","H","T2"],"Species":["sp1","sp3","sp7","sp4","sp4","sp9","sp1","sp9","sp5","sp7","sp7"],"Cover":["18","89","57","76","","99","","11","65","74","99"],"Sampled":["false","false","false","false","false","false","false","false","false","false","false"],"Identified":["false","true","true","true","true","true","false","true","true","true","true"],"Photo":["","","","","","","","","","",""],"Memo":["","","","","","","","","","",""],"SameAs":["","","","","","","","","","",""]}}
 </details>
 
 ### Inport data into R
@@ -231,8 +231,6 @@ To add multiple rows, change the values on the left and press "Add rows".
 <img src="img/settings_base03.png" width="70%">
 </details>
 
-
-
 ### Start with the empty and add with buttons
 ### 空の設定からボタンを追加
 
@@ -270,7 +268,7 @@ settigs of no_layers
 no_layersの設定
 </summary>
 
-> {"biss_c_names":["item","type","value","DELETE","memo"],"biss_d_types":["text","list","text","button","text"],"biss_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","","","","","","","","","","","",""],null,null,null],"biss_inputs":{"item":["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],"type":["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],"value":["","","","","","","","","","","","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE"],"memo":["","","","","","","","","","","","","",""]}}
+> {"biss\_c\_names":["item","type","value","DELETE","memo"],"biss\_d\_types":["text","list","text","button","text"],"biss\_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","","","","","","","","","","","",""],null,null,null],"biss\_inputs":{"item":["DATE","Investigator","Location","LOC\_LAT","LOC\_LON","LOC\_ACC","UPDATE\_TIME\_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],"type":["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],"value":["","","","","","","","","","","","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE","DELETE"],"memo":["","","","","","","","","","","","","",""]}}
 </details>
 
 <details>
@@ -280,7 +278,7 @@ settigs of flora
 floraの設定
 </summary>
 
-> {"biss_c_names":["item","type","value","DELETE","memo"],"biss_d_types":["text","list","text","button","text"],"biss_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","",""],null,null,null],"biss_inputs":{"item":["DATE","Investigator","Location","Memo"],"type":["auto","fixed","text","text"],"value":["","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE"],"memo":["","","",""]}}
+> {"biss\_c\_names":["item","type","value","DELETE","memo"],"biss\_d\_types":["text","list","text","button","text"],"biss\_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","",""],null,null,null],"biss\_inputs":{"item":["DATE","Investigator","Location","Memo"],"type":["auto","fixed","text","text"],"value":["","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE"],"memo":["","","",""]}}
 </details>
 
 To restore the saved settings, click the "Choose file" button to the right of "Laod" and select the saved file.
@@ -604,43 +602,24 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 <img src="img/example_search05.png" width="90%">
 </details>
 
-# editing now
-
-以下の画像を使う?
-
-all_plots00.png
-example_all_plots.png
-example_calculate01.png
-example_species_list01.png
-example_species_list02.png
-example_species_list03.png
-example_species_list04.png
-tools00.png
-example_addrows01.png
-example_addrows02.png
-settings_addrows01.png
-  # settings_fromempty01.png
-  # settings_full01.png
-  # settings_full02.png
-  # settings_autosave02.png
-  # settings_autosave03.png
-  # settings_autosave04.png
-
-
 ## Input data
 ## データ入力
 
 - Textbox: Enter text, e.g., species name   
-- Checkbox: Check "Identified   
-- Numer: Enter a number. Decimal points can be entered using the keyboard.    
+- Checkbox: Check "Identified ets.     
+- Numer: Enter a number or up and down number by up and down buttons by step. The step are set by setting. Decimal points can be entered using the keyboard.    
 - Auto-fill items: "PLOT", "NO", "DATE", "LOC".    
 - DATE", "LOC\_LAT", "LOC\_LON" and "LOC\_ACC" are updated by pressing "UPDATE\_TIME\_GPS" button.     
-
-- テキストボックス: 種名などをテキストで入力   
-- チェックボックス: 「Identified」(同定済み)をチェック   
-- 数値: 数値を入力．△▽では1単位で増減．キーボードでは小数点以下の入力可能    
+- テキストボックス: 種名などをテキストで入力     
+- チェックボックス: 「Identified」(同定済み)などをチェック    
+- 数値: 数値を入力．上下のボタンでも操作可能．増減間隔は設定で指定したもの．キーボードでは小数点以下の入力可能    
 - 自動入力項目: 「PLOT」「NO」    
 - 「DATE」「LOC\_LAT」「LOC\_LON」「LOC\_ACC」は，「UPDATE\_TIME\_GPS」ボタンを押と更新．GPSデータは，「StartGPS」ボタンを押してGPSデータの使用を許可する必要あり．     
+
+<details>
+<img src="img/example01.png" width="90%">
+</details>
+
 
 ## Add/delete rows in a occurrence table
 ## 観察情報の行の追加・削除
@@ -652,38 +631,100 @@ and click "Add rows" to add a new input row.
 「+ PLOT」で新規の地点を追加すると，観察情報は4行の入力欄が表示される．
 左下のプルダウンの数字で行数を選択して，「Add rows」をクリックすると，新たな入力行が追加できる．
 
-
+<details>
+<img src="img/example_addrows01.png" width="90%">
+<img src="img/example_addrows02.png" width="90%">
+</details>
 
 ## Add species from a list
 ## リストから種名を追加
 
-観察情報の表の種名一覧が表示される．
+The registered list is displayed as the pull-down menu below the occurrence table.
+Select the list to use, and the names of the species in the list will be displayed.
+See "Species Name List" in the Tools menu, to register or delete a species list.
+
+種名リストを登録しておくと，観察情報の表の下に種名一覧のプルダウンメニューにリスト名が表示される．
+使用したいリストを選択すると，そのリストの種名が一覧として表示される．
+なお，種名リストの登録・削除方法は，ツールの種名リストを参照．
+
+<details>
+<img src="img/example_species_list01.png" width="90%">
+</details>
+
+Click on a species name button in the list, the name is moved to the upper part of the list as a temporary registration.
+The temporary registered species name is not clickable in the species list below.
+Clicking on a temporary registered species button cancels the temporary registration.
+
 一覧に表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
 仮登録したものは，種名一覧ではクリックできない状態になる．
-仮登録した種名について地点および階層をプルダウンメニューから選択して，
-「Add Species to PLOT」をクリックすると種名を選択した地点・階層に追加できる．
-なお，一度に複数地点・複数階層には登録できない．
-また，地点の選択は必須で，階層は非必須．
-
-種名ボタンのない種名は，テキストボックスから登録可能．
-テキストボックスで複数種を登録するときには，「,」(半角カンマ)で区切る．
-
 仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
 
+<!--
+仮登録した種名について地点および階層をプルダウンメニューから選択して，「Add Species to PLOT」をクリックすると種名を選択した地点・階層に追加できる．
+プルダウンメニューには，リスト形式の項目が表示される．
+なお，一度に複数地点・複数階層には登録できない．
+また，地点の選択は必須で，階層は非必須．
+-->
+
+Select a layer to add from the pull-down menu.
+Species names that do not have a species name button can be registered with the text box.
+When registering multiple species in the text box, separate them with "," (comma).
+
+仮登録した種名を登録したい階層等をプルダウンメニューから選択する．
+種名ボタンのない種名は，テキストボックスから登録可能．
+テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
+
+<details>
+<img src="img/example_species_list02.png" width="90%">
+</details>
+
+Click "Add Species to" to add the species name to the occurrence table.
+The temporary registered species will be returned to the species list.
+
+「Add Species to」をクリックすると種名が観察情報に追加できる．
+種名リストの仮登録の種は，種名一覧に戻る．
+
+<details>
+<img src="img/example_species_list03.png" width="90%">
+</details>
+
+When "Include composition" is checked, the names of species that have already been entered for all sites are added to the list of species names and displayed.
+Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
+
+「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
+未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
+
+<details>
+<img src="img/example_species_list05.png" width="90%">
+</details>
+
+If you select "sp8\_biss02" and add it to the occurrence table, the existing location name ("biss02" in this example) will automatically be entered in the "SameAs" column.
+
+「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
+
+<details>
+<img src="img/example_species_list06.png" width="90%">
+</details>
 
 
-未同定の種名(「Identified」にチェックされていない種)には，「種名\_地点A」のような形式で地点名が合わせて表示される．
-その種名を選択して，観察情報として追加すると，SameAsの列に既出の地点名(上記の例では「地点A」)が自動的に入力される．
+# editing now
 
 
-また，全地点での入力済の種名も合わせてリストに表示される．
-種名リストの追加・削除は，「Tools」の「○○」を参照．
+以下の画像を使う?
+
+all_plots00.png
+example_all_plots.png
+example_calculate01.png
+tools00.png
+
+  # settings_fromempty01.png
+  # settings_full01.png
+  # settings_full02.png
+  # settings_autosave02.png
+  # settings_autosave03.png
+  # settings_autosave04.png
 
 
-
-
-<img src="img/crop_example02_add.png" width="80%">
-<img src="img/crop_example03_added.png" width="80%">
 
 
 
