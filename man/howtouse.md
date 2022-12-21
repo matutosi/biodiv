@@ -658,13 +658,6 @@ Clicking on a temporary registered species button cancels the temporary registra
 仮登録したものは，種名一覧ではクリックできない状態になる．
 仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
 
-<!--
-仮登録した種名について地点および階層をプルダウンメニューから選択して，「Add Species to PLOT」をクリックすると種名を選択した地点・階層に追加できる．
-プルダウンメニューには，リスト形式の項目が表示される．
-なお，一度に複数地点・複数階層には登録できない．
-また，地点の選択は必須で，階層は非必須．
--->
-
 Select a layer to add from the pull-down menu.
 Species names that do not have a species name button can be registered with the text box.
 When registering multiple species in the text box, separate them with "," (comma).
@@ -772,14 +765,58 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 
 内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
 
-# Tools 
+# Tools
+# 各種ツール
+
+You can search for species names, create and save species name lists.
+Species can be input into a PLOT from searched species or species list.
 
 種名の検索，種名リストの作成・保存などができる．
-また，検索した種名やリストからデータ入力が可能である．
+複数の小規模な種名リストと，大規模な1つの種名リストが利用可能である．
 
-種名リストはテキストファイル(UTF8)から登録可能．
+## Small species lists
+## 小規模な種名リスト
+
+小規模な種名リストは，一覧として常に表示できるぐらいの規模，つまり100-200種程度の利用を想定している．
+高頻度で出現する種を登録しておくと便利である．
+複数を登録できるため，必要に応じて切り替えが可能である．
+選択したリストは，アルファベットあるいは50音順で表示される．
+表示されたものを選択することで，調査データとして入力できる．
+
+### Load and register a species list from a file
+### ファイルから種名リストの登録
+
+Species names can be registered from a text file (UTF8).
+In the text file, enter one species name per line.
+Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
+
+種名はテキストファイル(UTF8)から登録可能．
 テキストファイルは，1つの種名を1行ごとに入力しておく．
 「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
+
+
+> **Note**   
+> The scientific and Japanese names in the following data do not match.
+> 以下の種名の学名と和名は対応していない．
+
+<details>
+Adansonia digitata
+Adansonia grandidieri
+Adansonia gregorii
+Adansonia madagascariensis
+Adansonia perrieri
+Adansonia rubrostipa
+Adansonia suarezensis
+Adansonia za
+アイ
+アイアシ
+アイグロマツ
+アイズイヌナズナ
+アイズシモツケ
+アイズスゲ
+アイダガヤ
+アイダクグ
+</details>
 
 テキストファイル内の種名がボタン形式で表示される．
 表示されている種名を使用している端末のブラウザ内に名前をつけて保存可能．
@@ -789,39 +826,128 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 「Select species list:」の右側にあるプルダウンメニュー内に追加される．
 リストを選択すると，
 
-
 > **Warning**   
 > 種名リストの保存にはブラウザのLocalStorageを利用している．
 > LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
 > そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
 
-## Search species name
-## 種名の検索
+### Delete a species list
+### 種名リストの削除
+
+
+
+### Use a small species list
+### 種名リストの利用
+
+The registered list is displayed as the pull-down menu.
+Select the list to use, and the names of the species in the list will be displayed.
+
+登録した小規模な種名リストは，プルダウンメニューに表示される．
+使用したいリストを選択すると，そのリストの種名が一覧として表示される．
+
+<details>
+<img src="" width="90%">
+</details>
+
+Click on a species name button in the list, the name is moved to the upper part of the list as a temporary registration.
+The temporary registered species name is not clickable in the species list below.
+Clicking on a temporary registered species button cancels the temporary registration.
+
+メニューに表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
+仮登録したものは，種名一覧ではクリックできない状態になる．
+仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
+
+
+Select a PLOT and a layer from the pull-down menu. 
+The pull-down menu displays a list of items such as layer.
+Species cannot be added to more than one PLOT or layer at one time.
+Selecting a PLOT is required, while not layer etc.
+
+仮登録した種名について地点および階層をプルダウンメニューから選択する．
+プルダウンメニューには，階層等のリスト形式の項目が表示される．
+一度に複数地点・複数階層等には登録できない．
+また，地点の選択は必須で，階層等は非必須．
+
+Species names that do not have a species name button can be registered with the text box.
+When registering multiple species in the text box, separate them with "," (comma).
+
+種名ボタンのない種名は，テキストボックスから登録可能．
+テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
+
+<details>
+<img src="" width="90%">
+</details>
+
+Click "Add Species to" to add the species name to the occurrence table.
+The temporary registered species will be returned to the species list.
+
+「Add Species to」をクリックすると種名が観察情報に追加できる．
+種名リストの仮登録の種は，種名一覧に戻る．
+
+<details>
+<img src="" width="90%">
+</details>
+
+When "Include composition" is checked, the names of species that have already been entered for all sites are added to the list of species names and displayed.
+Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
+
+「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
+未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
+
+<details>
+<img src="" width="90%">
+</details>
+
+If you select "sp8\_biss02" and add it to the occurrence table, the existing location name ("biss02" in this example) will automatically be entered in the "SameAs" column.
+
+「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
+
+<details>
+<img src="" width="90%">
+</details>
+
+
+## Large species lists
+## 大規模な種名リスト
+
+大規模な種名リストは，1000種あるいはそれ以上の規模を想定している．
+出現頻度は低いが，出現する可能性のある種名を全て登録しておくと便利である．
+つまり，使用する国や地域の全種の一覧を登録しておくのが良い．
+1つしか登録できず，切り替えにはファイルの再読み込みが必要である．
+登録種の一覧は画面上には表示されない．
+テキストボックスで検索して，合致した種の一覧が表示される．
+表示された種を選択することで，調査データとして入力できる．
+
+### Register a large species list
+### 種名リストの登録
+
+Species names can be registered from a text file (UTF8).
+In the text file, enter one species name per line.
+Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
+
+種名はテキストファイル(UTF8)から登録可能．
+テキストファイルは，1つの種名を1行ごとに入力しておく．
+「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
+
+大規模な種名リストは1つしか登録できないため，新しいものを登録すると古いものは削除される．
+
+
+### Search species from a large list
+### 種名の検索
+
+大規模な種名リストは，文字列の検索が可能である．
+「Input text」と薄く表示された検索用のテキストボックスに検索文字列を入力して「Search」をクリックすると，検索結果に合致する種が種名のボタンとして表示される．
+合致したものが200種を超える場合は，「Over 200 matches, showing 200 matches」という警告がポップアップ画面で表示され，最初の200種のみが表示される．
+
+複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である．
+つまり，「アイ ガヤ」で検索すると，「アイ」かつ「ガヤ」に合致するものだけが表示される．
+検索のテキストボックスを空欄にして「Search」をクリックすると，検索結果がリセットされて種名のボタンが消える．
+
+その後の種の登録方法は，小規模リストと同様である．
+
 
 
 <!--
-
-<img src="img/tools00.png" width="50%">
-<img src="img/tools00en.png" width="50%">
-<img src="img/tools01.png" width="50%">
-<img src="img/tools02.png" width="50%">
-<img src="img/tools02en.png" width="50%">
-<img src="img/tools03en.png" width="50%">
-<img src="img/tools04en.png" width="50%">
-<img src="img/tools05en.png" width="50%">
-<img src="img/tools06en.png" width="50%">
-<img src="img/tools07en.png" width="50%">
-<img src="img/tools08en.png" width="50%">
-<img src="img/tools09en.png" width="50%">
-<img src="img/tools10en.png" width="50%">
-<img src="img/tools11en.png" width="50%">
-<img src="img/tools12en.png" width="50%">
-
--->
-
-
-<!--
-
 - Choose "Tools" tab
 ![tools_tab](img/03_00.png)    
 
@@ -847,7 +973,6 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 - 空欄でSearch Textを選択すると，検索結果がクリアされる  
 ![search_wamei_clear](img/03_09.png)  
 ![search_wamei](img/03_01.png)  
-
 -->
 
 
