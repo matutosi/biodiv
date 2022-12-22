@@ -390,7 +390,7 @@ Clicking again switches the ascending/descending order.
 
 調査データの入力表での横並びの順序(左右)は，設定表の縦並びの順序(上下)に従う．
 順序を並べ替えたい場合は，入力表の項目「memo」に数値を入力してから列名の「memo」をクリックする．
-そうすることで，入力した数値の順序に並べ替え可能．
+そうすると，入力した数値の順序に並べ替え可能．
 さらにクリックすると，昇順・降順が入れ替わる．
 
 # Input plot and occurrence data
@@ -699,14 +699,8 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 </details>
 
 
+
 # editing now
-
-以下の画像を使う?
-
-all_plots00.png
-example_all_plots.png
-example_calculate01.png
-tools00.png
 
   # settings_fromempty01.png
   # settings_full01.png
@@ -729,23 +723,21 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 なお，「Value」には観察情報のうち数値の項目が表示され，「Group」にはプルダウンのリストの項目が表示される．
 そのため，「被度」「階層」以外の集計も可能．
 
+example_calculate01.png
+tools00.png
+
+<details>
 <img src="img/crop_example02_calc.png" width="80%">
+</details>
 
 
 
-## 未作成
-
-<!--
-
-<img src="img/tools13en.png" width="80%">
-<img src="img/crop_example02_01.png" width="80%">
-<img src="img/crop_tools02.png" width="50%">
-<img src="img/crop_tools02en.png" width="50%">
-
--->
-
-# Show all inputs
+# Show all input data
 # 全入力情報の表示
+
+The "All Plots" tab shows all the data: all of the plots, occurrence and composition tables, 
+which allow for comparison among plots.
+Note that the "All Plots" tables can only be viewed, and its contents cannot be changed.
 
 「All Plots」のタブには，入力済みの全データが表示されている．
 具体的には，全ての地点情報と観察情報である．
@@ -753,17 +745,32 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 これらによって，地点情報や地点間での観察情報の比較ができる．
 なお，「All Plots」の表は閲覧のみで，内容の変更は不可．
 
+All tables in "All Plots" allow the following operations, as well as the tables of plots and occurrence data.
+
 「All Plots」の3つの表のいずれも，地点情報や観察情報の表と同様に以下の操作が可能である．
 
+- Show/hide the table   
+- Change table width  
+- Show/hide columns   
+- Sort rows   
+- Search input text   
 - 表の表示/非表示   
 - 表の幅の設定変更  
 - 列の表示/非表示   
 - 行の並べ替え   
 - テキストデータの検索   
 
+Ssee "Table Display Changes and Operations" for details.
+
 詳細は，「地点情報と観察情報の入力」の「表の表示変更・操作」を参照．
 
-内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
+> **Note**   
+> "All Plots" data is used for auto-saving. 
+> 内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
+
+all_plots00.png
+example_all_plots.png
+
 
 # Tools
 # 各種ツール
@@ -781,7 +788,7 @@ Species can be input into a PLOT from searched species or species list.
 高頻度で出現する種を登録しておくと便利である．
 複数を登録できるため，必要に応じて切り替えが可能である．
 選択したリストは，アルファベットあるいは50音順で表示される．
-表示されたものを選択することで，調査データとして入力できる．
+表示されたものを選択すると，調査データとして入力できる．
 
 ### Load and register a species list from a file
 ### ファイルから種名リストの登録
@@ -793,7 +800,6 @@ Select a file name from the "Choose file" menu to the right of "Add species to l
 種名はテキストファイル(UTF8)から登録可能．
 テキストファイルは，1つの種名を1行ごとに入力しておく．
 「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
-
 
 > **Note**   
 > The scientific and Japanese names in the following data do not match.
@@ -818,13 +824,17 @@ Adansonia za
 アイダクグ
 </details>
 
-テキストファイル内の種名がボタン形式で表示される．
-表示されている種名を使用している端末のブラウザ内に名前をつけて保存可能．
-保存先として「browser」を選択して，「File name」にリストの名称を入力し，「Save」ボタンをクリックするとブラウザに保存される．
+テキストファイルの種名がボタン形式で表示される．
+表示中の種名の一覧は，使用している端末のブラウザ内に名前をつけて保存可能．
+保存先に「browser」を選択して，「File name」にリストの名称を入力し，「Save」ボタンをクリックするとブラウザに保存される．
+表示中の種名をファイルに保存したい場合は，保存先に「file」を選択する．
+<!--
+(そもそもこの機能は不要?)ファイルを読み込めば，ファイル名を種名リストの名称とすれば良い?
+-->
 
 種名リストとして登録すると，
-「Select species list:」の右側にあるプルダウンメニュー内に追加される．
-リストを選択すると，
+「Select species list」の右側にあるプルダウンメニュー内に追加される．
+リストを選択すると一覧が表示される．
 
 > **Warning**   
 > 種名リストの保存にはブラウザのLocalStorageを利用している．
@@ -834,7 +844,7 @@ Adansonia za
 ### Delete a species list
 ### 種名リストの削除
 
-
+「DELETE」の右側にあるプルダウンメニューから種名リストを選択して「DELETE」ボタンをクリックすると，該当の種名リストが削除される．
 
 ### Use a small species list
 ### 種名リストの利用
@@ -916,7 +926,7 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 1つしか登録できず，切り替えにはファイルの再読み込みが必要である．
 登録種の一覧は画面上には表示されない．
 テキストボックスで検索して，合致した種の一覧が表示される．
-表示された種を選択することで，調査データとして入力できる．
+表示された種を選択すると，調査データとして入力できる．
 
 ### Register a large species list
 ### 種名リストの登録
@@ -939,41 +949,12 @@ Select a file name from the "Choose file" menu to the right of "Add species to l
 「Input text」と薄く表示された検索用のテキストボックスに検索文字列を入力して「Search」をクリックすると，検索結果に合致する種が種名のボタンとして表示される．
 合致したものが200種を超える場合は，「Over 200 matches, showing 200 matches」という警告がポップアップ画面で表示され，最初の200種のみが表示される．
 
-複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である．
+複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である(3項目以上でも検索可能)．
 つまり，「アイ ガヤ」で検索すると，「アイ」かつ「ガヤ」に合致するものだけが表示される．
 検索のテキストボックスを空欄にして「Search」をクリックすると，検索結果がリセットされて種名のボタンが消える．
 
-その後の種の登録方法は，小規模リストと同様である．
+調査データへの入力方法は，小規模リストと同様である．
 
-
-
-<!--
-- Choose "Tools" tab
-![tools_tab](img/03_00.png)    
-
-- Input wamei and Choose "Search Text"  
-- Show results  
-![search_wamei](img/03_01.png)  
-![search_wamei_res](img/03_02.png)  
-
-- Use space (" ") to search including [A and B]  
-- Results of [A and B]  
-![search_wamei_multi](img/03_03.png)  
-![search_wamei_multi_res](img/03_04.png)  
-
-- Can use [A and B and C]  
-![search_wamei_multi](img/03_05.png)  
-
-- Case of results over 100  
-- Alert will be desplayed and show only 100 results  
-![search_wamei_over100](img/03_06.png)  
-![search_wamei_over100_alert](img/03_07.png)  
-![search_wamei_over100_res](img/03_08.png)  
-
-- 空欄でSearch Textを選択すると，検索結果がクリアされる  
-![search_wamei_clear](img/03_09.png)  
-![search_wamei](img/03_01.png)  
--->
 
 
 # Inport data into R
