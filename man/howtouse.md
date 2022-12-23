@@ -699,18 +699,6 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 </details>
 
 
-
-# editing now
-
-  # settings_fromempty01.png
-  # settings_full01.png
-  # settings_full02.png
-  # settings_autosave02.png
-  # settings_autosave03.png
-  # settings_autosave04.png
-
-
-
 ## Calculate cover in eac layer
 ## 階層ごとの被度の計算
 
@@ -723,14 +711,10 @@ Thus, it is possible to calculate other than "Cover" and "Layer".
 なお，「Value」には観察情報のうち数値の項目が表示され，「Group」にはプルダウンのリストの項目が表示される．
 そのため，「被度」「階層」以外の集計も可能．
 
-example_calculate01.png
-tools00.png
 
 <details>
-<img src="img/crop_example02_calc.png" width="80%">
+<img src="img/example_calculate01.png" width="90%">
 </details>
-
-
 
 # Show all input data
 # 全入力情報の表示
@@ -738,12 +722,18 @@ tools00.png
 The "All Plots" tab shows all the data: all of the plots, occurrence and composition tables, 
 which allow for comparison among plots.
 Note that the "All Plots" tables can only be viewed, and its contents cannot be changed.
+Nothing will be shown before inputting data.
 
 「All Plots」のタブには，入力済みの全データが表示されている．
 具体的には，全ての地点情報と観察情報である．
 また，組成表形式の表も表示される．
 これらによって，地点情報や地点間での観察情報の比較ができる．
 なお，「All Plots」の表は閲覧のみで，内容の変更は不可．
+また，地点が未入力の場合は何も表示されない．
+
+<details>
+<img src="img/example_all_plots.png" width="90%">
+</details>
 
 All tables in "All Plots" allow the following operations, as well as the tables of plots and occurrence data.
 
@@ -766,10 +756,24 @@ Ssee "Table Display Changes and Operations" for details.
 
 > **Note**   
 > "All Plots" data is used for auto-saving. 
+
+> **Note**   
+> "All Plots" data is used for auto-saving. 
 > 内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
 
+
+# editing now
+
+tools00.png
 all_plots00.png
-example_all_plots.png
+
+  # settings_fromempty01.png
+  # settings_full01.png
+  # settings_full02.png
+  # settings_autosave02.png
+  # settings_autosave03.png
+  # settings_autosave04.png
+
 
 
 # Tools
