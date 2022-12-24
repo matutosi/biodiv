@@ -165,7 +165,9 @@ function changeSL(obj){
 //                 Normally use "this". 
 async function loadSL(obj){
   var text = await readFile(obj.files[0]);
+  var name = obj.files[0].name;
   var add_sp = text.replaceAll('\r', '').split(/[,\n]/);
+console.log(name);
   // console.log(text);
   // console.log(add_sp);
   var ns = obj.id.split('-')[1];
