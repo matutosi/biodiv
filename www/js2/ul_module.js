@@ -1,3 +1,31 @@
+// under construction
+function saveSL(name, id){
+  var id      = obj.id;
+  var ns      = id.split('-')[1];
+  var ul      = document.getElementById('sp_list_sp_list-' + ns)      ;
+  var sp_list = getGrandChildrenValues(ul);
+  addSLinLS(name);
+  updateSelectSLById(id.replace('save', 'select'));
+  updateSelectSLById(id.replace('save', 'delete_name'));
+  document.getElementById('sp_list_save-' + ns).value = '';  // clear file name
+}
+async function loadSL(obj){
+  var text = await readFile(obj.files[0]);
+  var name = obj.files[0].name.split(".\")[0];
+console.log(name);
+  var add_sp = text.replaceAll('\r', '').split(/[,\n]/);
+  // console.log(text);
+  // console.log(add_sp);
+  var ns = obj.id.split('-')[1];
+  var id = 'sp_list_sp_list-'+ ns;
+  addSpeciesList(id, add_sp);
+  obj.value = '';  // for select the same file twice or more
+}
+
+
+
+
+
 // Get species list in compotition table
 //    @param  sp  A string to specify a species column.
 //                Usually and in default, use 'Species'.
