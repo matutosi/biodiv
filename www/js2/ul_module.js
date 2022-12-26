@@ -1,28 +1,27 @@
+async function registerSL(obj){
+  var name = obj.files[0].name.split("\.")[0];
+  var text = await readFile(obj.files[0]);
+  var sp_list = text.replaceAll('\r', '').split(/[,\n]/);
+console.log(name);
+console.log(sp_list);
+
+
+  var ns = obj.id.split('-')[1];
+  var id = 'sp_list_sp_list-'+ ns;
+  addSpeciesList(id, sp_list);
+  obj.value = '';  // for select the same file twice or more
+}
 // under construction
 function saveSL(name, id){
   var id      = obj.id;
   var ns      = id.split('-')[1];
-  var ul      = document.getElementById('sp_list_sp_list-' + ns)      ;
+  var ul      = document.getElementById('sp_list_sp_list-' + ns);
   var sp_list = getGrandChildrenValues(ul);
   addSLinLS(name);
   updateSelectSLById(id.replace('save', 'select'));
   updateSelectSLById(id.replace('save', 'delete_name'));
   document.getElementById('sp_list_save-' + ns).value = '';  // clear file name
 }
-async function loadSL(obj){
-  var text = await readFile(obj.files[0]);
-  var name = obj.files[0].name.split(".\")[0];
-console.log(name);
-  var add_sp = text.replaceAll('\r', '').split(/[,\n]/);
-  // console.log(text);
-  // console.log(add_sp);
-  var ns = obj.id.split('-')[1];
-  var id = 'sp_list_sp_list-'+ ns;
-  addSpeciesList(id, add_sp);
-  obj.value = '';  // for select the same file twice or more
-}
-
-
 
 
 
@@ -51,31 +50,33 @@ function createAddCompButton(id){
 }
 
 function createSpecieUlModule({ species, ns,
-                                show_select_button   , show_comp_checkbox, show_delete_list, 
-                                show_select_ncol     , 
-                                show_button_load_sl  , show_button_save_sl  , 
-                                show_text_input      , 
-                                show_button_update_pl, show_select_plot     , show_select_options}){
+                                show_select_button       , show_comp_checkbox, show_delete_list, 
+                                show_select_ncol         , 
+                                show_button_register_sl  , show_button_save_sl  , 
+  //                                 show_button_load_sl  , show_button_save_sl  , 
+                                show_text_input           , 
+                                show_button_update_pl     , show_select_plot     , show_select_options}){
   // var ns = 'all'; var species = sp_list;
   var base_name = 'sp_list_';
-  var main             = createSpanWithId    ( base_name + 'module-'    + ns          );
+  var main               = createSpanWithId      ( base_name + 'module-'    + ns          );
 
-  var select_button    = createSelectSL      ( base_name + 'select-'    + ns          );
-  var select_ncol      = createSelectNumber  ( base_name + 'ncols-'     + ns          );
-  var comp_checkbox    = createCompCheckbox  ( base_name + 'checkbox-'  + ns          );
-  var delete_list      = createDeleteSL      ( base_name + 'delete-'    + ns          );
+  var select_button      = createSelectSL        ( base_name + 'select-'    + ns          );
+  var select_ncol        = createSelectNumber    ( base_name + 'ncols-'     + ns          );
+  var comp_checkbox      = createCompCheckbox    ( base_name + 'checkbox-'  + ns          );
+  var delete_list        = createDeleteSL        ( base_name + 'delete-'    + ns          );
 
-  var button_load_sl   = createLoadSLButton  ( base_name + 'load-'      + ns          );
-  var button_save_sl   = createSaveSLButoon  ( base_name + 'save-'      + ns          );
+  //   var button_load_sl   = createLoadSLButton  ( base_name + 'load-'      + ns          );
+  var button_register_sl = createRegisterSLButton( base_name + 'load-'      + ns          );
+  var button_save_sl     = createSaveSLButoon    ( base_name + 'save-'      + ns          );
 
-  var staged           = createSpanWithId    ( base_name + 'staged-'    + ns          );
-  var text_input       = createSLInput       ( base_name + 'input-'     + ns          );
-  var button_update_pl = createUpdatePLButton( base_name + 'update_pl-' + ns          );
-  var button_add       = createSLAdd         ( base_name + 'add-'       + ns          );
-  var select_plot      = createSelectPlot    ( base_name + 'plot-'      + ns          );
-  var select_options   = createSelectOptions ( base_name + 'options-'    + ns          );
+  var staged             = createSpanWithId      ( base_name + 'staged-'    + ns          );
+  var text_input         = createSLInput         ( base_name + 'input-'     + ns          );
+  var button_update_pl   = createUpdatePLButton  ( base_name + 'update_pl-' + ns          );
+  var button_add         = createSLAdd           ( base_name + 'add-'       + ns          );
+  var select_plot        = createSelectPlot      ( base_name + 'plot-'      + ns          );
+  var select_options     = createSelectOptions   ( base_name + 'options-'    + ns         );
   // console.log(select_options);
-  var sp_list          = createSpecieList    ( base_name + 'sp_list-'   + ns, species );
+  var sp_list            = createSpecieList    ( base_name + 'sp_list-'   + ns, species );
 
   main.appendChild( select_ncol         );
   main.appendChild( select_button       );
@@ -83,7 +84,8 @@ function createSpecieUlModule({ species, ns,
   main.appendChild( delete_list         );
 
   main.appendChild( crEl({ el: 'br' })  );
-  main.appendChild( button_load_sl      );
+  //   main.appendChild( button_load_sl      );
+  main.appendChild( button_register_sl  );
   main.appendChild( button_save_sl      );
   main.appendChild( crEl({ el: 'br' })  );
   main.appendChild( staged              );
@@ -97,17 +99,18 @@ function createSpecieUlModule({ species, ns,
   main.appendChild( sp_list             );
   main.appendChild( crEl({el:'hr'})     );
 
-  if( show_select_ncol      === void 0){ select_ncol        .style.display = "none"; }
-  if( show_select_button    === void 0){ select_button      .style.display = "none"; }
-  if( show_comp_checkbox    === void 0){ comp_checkbox      .style.display = "none"; }
-  if( show_delete_list      === void 0){ delete_list        .style.display = "none"; }
+  if( show_select_ncol          === void 0){ select_ncol        .style.display = "none"; }
+  if( show_select_button        === void 0){ select_button      .style.display = "none"; }
+  if( show_comp_checkbox        === void 0){ comp_checkbox      .style.display = "none"; }
+  if( show_delete_list          === void 0){ delete_list        .style.display = "none"; }
 
-  if( show_button_load_sl   === void 0){ button_load_sl     .style.display = "none"; }
-  if( show_button_save_sl   === void 0){ button_save_sl     .style.display = "none"; }
-  if( show_text_input       === void 0){ text_input         .style.display = "none"; }
-  if( show_button_update_pl === void 0){ button_update_pl   .style.display = "none"; }
-  if( show_select_plot      === void 0){ select_plot        .style.display = "none"; }
-  if( show_select_options   === void 0){ select_options     .style.display = "none"; }
+  //   if( show_button_load_sl       === void 0){ button_load_sl     .style.display = "none"; }
+  if( show_button_register_sl   === void 0){ button_register_sl .style.display = "none"; }
+  if( show_button_save_sl       === void 0){ button_save_sl     .style.display = "none"; }
+  if( show_text_input           === void 0){ text_input         .style.display = "none"; }
+  if( show_button_update_pl     === void 0){ button_update_pl   .style.display = "none"; }
+  if( show_select_plot          === void 0){ select_plot        .style.display = "none"; }
+  if( show_select_options       === void 0){ select_options     .style.display = "none"; }
 
   return main;
 }
@@ -195,7 +198,6 @@ async function loadSL(obj){
   var text = await readFile(obj.files[0]);
   var name = obj.files[0].name;
   var add_sp = text.replaceAll('\r', '').split(/[,\n]/);
-console.log(name);
   // console.log(text);
   // console.log(add_sp);
   var ns = obj.id.split('-')[1];
@@ -215,6 +217,13 @@ function readFile(file){
 function createLoadSLButton(id){
   var span = crEl({el:'span', ih: "<b>Load</b>" });
   var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "loadSL(this)" } });
+  span.appendChild(file_input);
+  return span;
+}
+
+function createRegisterSLButton(id){
+  var span = crEl({el:'span', ih: "<b>Load</b>" });
+  var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "registerSL(this)" } });
   span.appendChild(file_input);
   return span;
 }
