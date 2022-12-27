@@ -6,7 +6,7 @@ function getSpeciesInComposition(sp = 'Species'){
   var comp = document.getElementById('comp_table_tb');
   if(comp === null){ return []; } // return, when no inputs
   var species = getColData(comp, sp);
-  var species = removeEmptyInArray(species);
+  removeEmptyInArray(species);
   return species;
 }
 function addComp(obj, sp = 'Species'){
@@ -86,7 +86,7 @@ function createSpanWithId(id){
 
 // Select species list
 function createSelectSL(id){
-  var span   = crEl({ el:'span', ih: '<b>Species list</b>' });
+  var span   = crEl({ el:'span', ih: 'Species <b>list</b>' });
   var select = createSL(id);
   span.appendChild(select);
   return span;
@@ -95,7 +95,7 @@ function createDeleteSL(id){
   var delete_name = id.replace('delete', 'delete_name');
   var span   = crEl({ el:'span' });
   var delete_button = crEl({ el:'input', ats:{type: 'button', value: 'DELETE', onclick: 'deleteSl(this)', id: id} });
-  var select = createSL( delete_name );
+  var select = createSL(delete_name, value = '', first_option = '');
   span.appendChild( delete_button );
   span.appendChild( select );
   return span;
@@ -116,14 +116,15 @@ function deleteSl(obj){
 
 function updateSelectSLById(id){
   var old_select = document.getElementById(id);
-  //   var selected_index = old_select.selectedIndex;
+  var first_option = (/delete/.test(id)) ? '' : 'NEW'
   var selected_value = old_select.value;
-  var new_select = createSL(id, selected_value);
+  var new_select = createSL(id, selected_value, first_option);
   old_select.replaceWith(new_select);
 }
-function createSL(id, value = ''){
+function createSL(id, value = '', first_option = 'NEW'){
   var species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', '');
-  species_list.unshift('NEW');
+  species_list.sort();
+  species_list.unshift(first_option);
   var select = createSelectOpt(species_list, 0, id);
   if(value !== ''){ setSelectOption(select, value); }
   select.setAttribute('onchange', 'changeSL(this)');
@@ -139,7 +140,7 @@ function setSelectOption(select, value){
 
 
 function createCompCheckbox(id){
-  var span     = crEl({ el:'span', ih: 'Include composition' , ats:{class: 'margin_right'} });
+  var span     = crEl({ el:'span', ih: 'Include <b>composition</b>' , ats:{class: 'margin_right'} });
   var checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} });
   span.appendChild(checkbox);
   return span;
@@ -323,7 +324,7 @@ function addSpeciesList(id, add_sp){
   if(old_sp === void 0) var old_sp = [];
   var new_sp = uniq(old_sp.concat(add_sp)).sort();
   //   if(new_sp.indexOf('') >= 0){ new_sp.splice(new_sp.indexOf(''), 1); }  // remove ''
-  var new_sp = removeEmptyInArray(new_sp);
+  removeEmptyInArray(new_sp);
   var new_sp_list = createSpecieList(id, new_sp);
   old_sp_list.replaceWith(new_sp_list);
 }
