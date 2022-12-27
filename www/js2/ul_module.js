@@ -1,30 +1,3 @@
-async function registerSL(obj){
-  var name = obj.files[0].name.split("\.")[0];
-  var text = await readFile(obj.files[0]);
-  var sp_list = text.replaceAll('\r', '').split(/[,\n]/);
-console.log(name);
-console.log(sp_list);
-
-
-  var ns = obj.id.split('-')[1];
-  var id = 'sp_list_sp_list-'+ ns;
-  addSpeciesList(id, sp_list);
-  obj.value = '';  // for select the same file twice or more
-}
-// under construction
-function saveSL(name, id){
-  var id      = obj.id;
-  var ns      = id.split('-')[1];
-  var ul      = document.getElementById('sp_list_sp_list-' + ns);
-  var sp_list = getGrandChildrenValues(ul);
-  addSLinLS(name);
-  updateSelectSLById(id.replace('save', 'select'));
-  updateSelectSLById(id.replace('save', 'delete_name'));
-  document.getElementById('sp_list_save-' + ns).value = '';  // clear file name
-}
-
-
-
 // Get species list in compotition table
 //    @param  sp  A string to specify a species column.
 //                Usually and in default, use 'Species'.
@@ -50,12 +23,11 @@ function createAddCompButton(id){
 }
 
 function createSpecieUlModule({ species, ns,
-                                show_select_button       , show_comp_checkbox, show_delete_list, 
-                                show_select_ncol         , 
-                                show_button_register_sl  , show_button_save_sl  , 
-  //                                 show_button_load_sl  , show_button_save_sl  , 
-                                show_text_input           , 
-                                show_button_update_pl     , show_select_plot     , show_select_options}){
+                                show_select_button     , show_comp_checkbox, show_delete_list, 
+                                show_select_ncol       , 
+                                show_button_register_sl,
+                                show_text_input        , 
+                                show_button_update_pl  , show_select_plot     , show_select_options}){
   // var ns = 'all'; var species = sp_list;
   var base_name = 'sp_list_';
   var main               = createSpanWithId      ( base_name + 'module-'    + ns          );
@@ -63,11 +35,9 @@ function createSpecieUlModule({ species, ns,
   var select_button      = createSelectSL        ( base_name + 'select-'    + ns          );
   var select_ncol        = createSelectNumber    ( base_name + 'ncols-'     + ns          );
   var comp_checkbox      = createCompCheckbox    ( base_name + 'checkbox-'  + ns          );
-  var delete_list        = createDeleteSL        ( base_name + 'delete-'    + ns          );
 
-  //   var button_load_sl   = createLoadSLButton  ( base_name + 'load-'      + ns          );
-  var button_register_sl = createRegisterSLButton( base_name + 'load-'      + ns          );
-  var button_save_sl     = createSaveSLButoon    ( base_name + 'save-'      + ns          );
+  var button_register_sl = createRegisterSLButton( base_name + 'register-'  + ns          );
+  var delete_list        = createDeleteSL        ( base_name + 'delete-'    + ns          );
 
   var staged             = createSpanWithId      ( base_name + 'staged-'    + ns          );
   var text_input         = createSLInput         ( base_name + 'input-'     + ns          );
@@ -81,12 +51,9 @@ function createSpecieUlModule({ species, ns,
   main.appendChild( select_ncol         );
   main.appendChild( select_button       );
   main.appendChild( comp_checkbox       );
-  main.appendChild( delete_list         );
-
   main.appendChild( crEl({ el: 'br' })  );
-  //   main.appendChild( button_load_sl      );
   main.appendChild( button_register_sl  );
-  main.appendChild( button_save_sl      );
+  main.appendChild( delete_list         );
   main.appendChild( crEl({ el: 'br' })  );
   main.appendChild( staged              );
   main.appendChild( crEl({ el: 'br' })  );
@@ -103,10 +70,7 @@ function createSpecieUlModule({ species, ns,
   if( show_select_button        === void 0){ select_button      .style.display = "none"; }
   if( show_comp_checkbox        === void 0){ comp_checkbox      .style.display = "none"; }
   if( show_delete_list          === void 0){ delete_list        .style.display = "none"; }
-
-  //   if( show_button_load_sl       === void 0){ button_load_sl     .style.display = "none"; }
   if( show_button_register_sl   === void 0){ button_register_sl .style.display = "none"; }
-  if( show_button_save_sl       === void 0){ button_save_sl     .style.display = "none"; }
   if( show_text_input           === void 0){ text_input         .style.display = "none"; }
   if( show_button_update_pl     === void 0){ button_update_pl   .style.display = "none"; }
   if( show_select_plot          === void 0){ select_plot        .style.display = "none"; }
@@ -167,7 +131,6 @@ function createSL(id, value = ''){
 }
 
 function setSelectOption(select, value){
-  // editing now
   var options = getSelectOptionInCell(select);
   var index = options.indexOf(value);
   var index = Math.max(0, index);
@@ -194,16 +157,19 @@ function changeSL(obj){
 // Load 
 //   @param obj  A input element.
 //                 Normally use "this". 
-async function loadSL(obj){
+async function registerSL(obj){
+  var id = obj.id;
+  var name = obj.files[0].name.split("\.")[0];
   var text = await readFile(obj.files[0]);
-  var name = obj.files[0].name;
-  var add_sp = text.replaceAll('\r', '').split(/[,\n]/);
-  // console.log(text);
-  // console.log(add_sp);
-  var ns = obj.id.split('-')[1];
-  var id = 'sp_list_sp_list-'+ ns;
-  addSpeciesList(id, add_sp);
+  var sp_list = text.replaceAll('\r', '').split(/[,\n]/);
+  removeEmptyInArray(sp_list);
+  addSLinLS(sp_list, name);
+  updateSelectSLById(id.replace('register', 'select'));
+  updateSelectSLById(id.replace('register', 'delete_name'));
   obj.value = '';  // for select the same file twice or more
+  var select = document.getElementById(id.replace('register', 'select'));
+  setSelectOption(select, name);
+  changeSL(select);
 }
 // Helper function
 function readFile(file){
@@ -214,55 +180,11 @@ function readFile(file){
     reader.readAsText(file);
   })
 }
-function createLoadSLButton(id){
-  var span = crEl({el:'span', ih: "<b>Load</b>" });
-  var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "loadSL(this)" } });
-  span.appendChild(file_input);
-  return span;
-}
-
 function createRegisterSLButton(id){
-  var span = crEl({el:'span', ih: "<b>Load</b>" });
+  var span = crEl({el:'span', ih: "<b>Register</b>" });
   var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "registerSL(this)" } });
   span.appendChild(file_input);
   return span;
-}
-
-// Save
-function createSaveSLButoon(id){
-  var ns = id.split('-')[1];
-  var span = crEl({ el:'span' });
-  var button = crEl({ el:'input', ats:{type:'button', id: id, value: 'Save', onclick: 'saveSL(this)'} });
-  var input  = crEl({ el:'input',  ats:{type:'text', id: id, placeholder: 'File name'} });
-  var to     = crEl({ el:'span',  ih: ' to ' });
-  var select = createSelectOpt(['file', 'browser'], 0, 'sp_list_which-' + ns);
-  span.appendChild( button );
-  span.appendChild( input  );
-  span.appendChild( to     );
-  span.appendChild( select );
-  return span;
-}
-function saveSL(obj){
-  var id      = obj.id;
-  var ns      = id.split('-')[1];
-  var f_name  = document.getElementById('sp_list_save-'    + ns).value;
-  var which   = document.getElementById('sp_list_which-'   + ns).value;
-  var ul      = document.getElementById('sp_list_sp_list-' + ns)      ;
-  var sp_list = getGrandChildrenValues(ul);
-  if(f_name === ""){ 
-    alert('Input file name!');
-    return void 0;
-  }
-  // console.log(name   );
-  // console.log(which  );
-  // console.log(sp_list);
-  if(which === 'browser'){ 
-    addSLinLS(sp_list, f_name);
-    updateSelectSLById(id.replace('save', 'select'));
-    updateSelectSLById(id.replace('save', 'delete_name'));
-  }
-  if(which === 'file'   ){ downloadStrings(strings = sp_list, file_name = f_name + '.txt'); }
-  document.getElementById('sp_list_save-' + ns).value = '';  // clear file name
 }
 
 // No. of columns

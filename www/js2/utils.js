@@ -327,9 +327,7 @@ function removeEmptyInArray(array){
   while(array.indexOf('') >= 0){
     array.splice(array.indexOf(''), 1);
   }
-  return array;
 }
-
 function multiIndexOf(array, element){
   var indices = [];
   let idx = array.indexOf(element);
