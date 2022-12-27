@@ -25,7 +25,7 @@ function createAddCompButton(id){
 function createSpecieUlModule({ species, ns,
                                 show_select_button     , show_comp_checkbox, show_delete_list, 
                                 show_select_ncol       , 
-                                show_button_register_sl,
+                                show_button_register_sl, 
                                 show_text_input        , 
                                 show_button_update_pl  , show_select_plot     , show_select_options}){
   // var ns = 'all'; var species = sp_list;
@@ -216,11 +216,11 @@ function createSpecieList(id, species){
 }
 // 
 //    @param  sl   A string of a species list.
-//    @param  id   A string of a namespace: plot name, 'all', or 'wamei'.
+//    @param  id   A string of a namespace: plot name, 'all', or 'flora'.
 // 
 function replaceSpeciesList(sl, id, add_comp = true){
   // var sl = 'tabu';
-  var new_sp  = (sl === 'NEW') ? [] : getSLinLS(sl);
+  var new_sp  = (sl === 'NEW' || sl === '') ? [] : getSLinLS(sl);
   var comp_sp = add_comp ? getSpeciesInComposition() : [];
   var new_sp  = new_sp.concat(comp_sp).sort();
   var new_sp_list = createSpecieList(id, new_sp);
@@ -249,7 +249,7 @@ function createUpdatePLButton(id){
 function createSelectPlot(id){
   var span = crEl({ el:'span', ih: 'PLOT' });
   var ns = id.split('-')[1];
-  if(ns === 'all' || ns === 'wamei'){
+  if(ns === 'all' || ns === 'flora'){
     var tables = document.querySelectorAll("table[id^='input_occ']");
     var pl = 'PLOT';
     var plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]);
@@ -271,14 +271,14 @@ function createSelectLayer(id){
   return span;
 }
 function updatePlotLayer({ obj }){
-  var ns = (obj === void 0) ?
-           'all' : obj.id.split('-')[1];
+  var nss = (obj === void 0) ? ['all', 'flora'] : [obj.id.split('-')[1]];
   var base_name = 'sp_list_';
-  var plot_id  = base_name + 'plot-'    + ns;
-  var layer_id = base_name + 'options-' + ns;
-  //   var layer_id = base_name + 'layer-'  + ns;
-  replaceSelectPlot (    plot_id);
-  replaceSelectLayer(    layer_id);
+  for(let ns of nss){
+    var plot_id  = base_name + 'plot-'    + ns;
+    var layer_id = base_name + 'options-' + ns;
+    replaceSelectPlot (plot_id );
+    replaceSelectLayer(layer_id);
+  }
 }
 function replaceSelectPlot(id){
   var old_plot = document.getElementById(id).parentNode;

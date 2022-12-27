@@ -37,11 +37,11 @@ function updateTab(){
 function updateInputsPlotLayerSpecies(){
   updateAllInputsTables();  // All plots
   updatePlotLayer({});      // PLOT and Layer select in Tools
-  updateSpeciesList()       // species list
+  updateSpeciesList();      // species list
 }
 
 function updateSpeciesList(){
-  var selector =  "select[id^='sp_list_select-']:not([id$='-wamei'])";
+  var selector =  "select[id^='sp_list_delete_name-all'],select[id^='sp_list_select-']:not([id$='-flora'])";
   var sp_sl_selects = document.querySelectorAll(selector);
   for(let select of sp_sl_selects){
     updateSelectSLById(select.id);

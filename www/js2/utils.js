@@ -45,7 +45,7 @@ function randSort(array){
 //    @examples
 //    var input = 'イシ ナラ';
 //    var reg_ex = makeLookAheadReg(input);
-//    grepArray(wamei, reg_ex);
+//    grepArray(flora, reg_ex);
 //    @reference
 //      look ahead: https://www-creators.com/archives/5332
 function makeLookAheadReg(input){

@@ -24,12 +24,12 @@ function showExample(obj){
   for(let i = 1; i < 5; i++){ tb_2.rows[2].cells[1].firstChild.click(); }
 
   // update "all inputs tables" and "input species list"
-  var sp_nara   = grepArray(wamei, /ナラ/);
-  var sp_buna   = grepArray(wamei, /ブナ/);
-  var sp_kusu   = grepArray(wamei, /クス/);
-  var sp_tabu   = grepArray(wamei, /タブ/);
-  var sp_kaya   = grepArray(wamei, /カヤ/);
-  var sp_susuki = grepArray(wamei, /ススキ/);
+  var sp_nara   = grepArray(flora, /ナラ/);
+  var sp_buna   = grepArray(flora, /ブナ/);
+  var sp_kusu   = grepArray(flora, /クス/);
+  var sp_tabu   = grepArray(flora, /タブ/);
+  var sp_kaya   = grepArray(flora, /カヤ/);
+  var sp_susuki = grepArray(flora, /ススキ/);
   addSLinLS(sp_nara  , 'nara');
   addSLinLS(sp_buna  , 'buna');
   addSLinLS(sp_kusu  , 'kusu');

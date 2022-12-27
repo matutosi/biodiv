@@ -27096,4 +27096,4 @@ var wamei = `
 ワレモコウモドキ
 ワンドスゲ
 ワンピ`
-var wamei = wamei.split("\n");
+var flora = wamei.split("\n");
