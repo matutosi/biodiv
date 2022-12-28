@@ -1,225 +1,6 @@
 # How to use Investigation Support System (BiSS) 
 # 生物多様性調査支援アプリ(BiSS)の使い方
 
-# Tools to find species
-# 種名ツール
-
-You can search for species names, create and save species name lists.
-Species can be input into a PLOT from searched species or species list.
-You can use multiple small species lists and a larg species list.
-
-種名の検索，種名リストの作成・保存などができる．
-小規模な種名リストを複数および大規模な種名リストを1つ利用可能である．
-
-<details>
-<img src="img/tools_list00.png" width="70%">
-</details>
-
-## Small species lists
-## 小規模な種名リスト
-
-小規模な種名リストは，一覧として常に表示できるぐらいの規模，つまり100-200種程度の利用を想定している．
-高頻度で出現する種を登録しておくと便利である．
-複数を登録できるため，必要に応じて切り替えが可能である．
-選択したリストは，アルファベットあるいは50音順で表示される．
-表示されたものを選択すると，調査データとして入力できる．
-
-<details>
-<img src="img/tools_list02.png" width="70%">
-</details>
-
-### Load and register a species list from a file
-### ファイルから種名リストの登録
-
-Species names can be registered from a text file (UTF8).
-In the text file, enter one species name per line.
-Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
-
-種名はテキストファイル(UTF8)から登録可能．
-テキストファイルは，1つの種名を1行ごとに入力しておく．
-「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
-テキストファイルの種名がボタン形式で表示される．
-
-種名リストとして登録すると，
-「Species list」の右側にあるプルダウンメニュー内に追加される．
-リストを選択すると一覧が表示される．
-
-<details>
-<summary>
-> **Note**   
-> The scientific and Japanese names in the following data do not match.
-> 以下の種名の学名と和名は対応していない．
-
-example(abc.txt)
-
-データ例(xyz.txt)
-
-</summary>
-Adansonia digitata<br>
-Adansonia grandidieri<br>
-Adansonia gregorii<br>
-Adansonia madagascariensis<br>
-Adansonia perrieri
-Adansonia rubrostipa<br>
-Adansonia suarezensis<br>
-Adansonia za<br>
-アイ<br>
-アイアシ<br>
-アイグロマツ<br>
-アイズイヌナズナ<br>
-アイズシモツケ<br>
-アイズスゲ
-アイダガヤ<br>
-アイダクグ<br>
-</details>
-
-> **Warning**   
-> 種名リストの保存にはブラウザのLocalStorageを利用している．
-> LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
-> そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
-
-### Delete a species list
-### 種名リストの削除
-
-「DELETE」の右側にあるプルダウンメニューから種名リストを選択して「DELETE」ボタンをクリックすると，該当の種名リストが削除される．
-
-<details>
-<img src="img/tools_list03.png" width="70%">
-</details>
-
-
-### Use a small species list
-### 種名リストの利用
-
-The registered list is displayed as the pull-down menu.
-Select the list to use, and the names of the species in the list will be displayed.
-
-登録した小規模な種名リストは，プルダウンメニューに表示される．
-使用したいリストを選択すると，そのリストの種名が一覧として表示される．
-
-<details>
-<img src="img/tools_list04.png" width="70%">
-</details>
-
-Click on a species name button in the list, the name is moved to the upper part of the list as a temporary registration.
-The temporary registered species name is not clickable in the species list below.
-Clicking on a temporary registered species button cancels the temporary registration.
-
-メニューに表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
-仮登録したものは，種名一覧ではクリックできない状態になる．
-仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
-
-<details>
-<img src="img/tools_list05.png" width="70%">
-</details>
-
-
-「No. of cols」の右にある数字を変更すると，種名の表示列数を変更できる．
-
-<details>
-<img src="img/tools_list06.png" width="70%">
-</details>
-
-Select a PLOT and a layer from the pull-down menu. 
-The pull-down menu displays a list of items such as layer.
-Species cannot be added to more than one PLOT or layer at one time.
-Selecting a PLOT is required, while not layer etc.
-
-仮登録した種名について地点および階層をプルダウンメニューから選択する．
-プルダウンメニューには，階層等のリスト形式の項目が表示される．
-一度に複数地点・複数階層等には登録できない．
-また，地点の選択は必須で，階層等は非必須．
-
-Species names that do not have a species name button can be registered with the text box.
-When registering multiple species in the text box, separate them with "," (comma).
-
-種名ボタンのない種名は，テキストボックスから登録可能．
-テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
-
-<details>
-<img src="img/tools_list08.png" width="70%">
-</details>
-
-Click "Add Species to" to add the species name to the occurrence table.
-The temporary registered species will be returned to the species list.
-
-「Add Species to」をクリックすると種名が観察情報に追加できる．
-種名リストの仮登録の種は，種名一覧に戻る．
-
-When "Include composition" is checked, the names of species that have already been entered for all sites are added to the list of species names and displayed.
-Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
-
-「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
-未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
-
-<details>
-<img src="img/tools_list07.png" width="70%">
-</details>
-
-
-
-If you select "sp8\_biss02" and add it to the occurrence table, the existing location name ("biss02" in this example) will automatically be entered in the "SameAs" column.
-
-「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
-
-<details>
-
-</details>
-
-
-## Large species lists
-## 大規模な種名リスト
-
-大規模な種名リストは，1000種あるいはそれ以上の規模を想定している．
-出現頻度は低いが，出現する可能性のある種名を全て登録しておくと便利である．
-つまり，使用する国や地域の全種の一覧を登録しておくのが良い．
-1つしか登録できず，切り替えにはファイルの再読み込みが必要である．
-登録種の一覧は画面上には表示されない．
-テキストボックスで検索して，合致した種の一覧が表示される．
-表示された種を選択すると，調査データとして入力できる．
-
-
-### Register a large species list
-### 種名リストの登録
-
-Species names can be registered from a text file (UTF8).
-In the text file, enter one species name per line.
-Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
-
-種名はテキストファイル(UTF8)から登録可能．
-テキストファイルは，1つの種名を1行ごとに入力しておく．
-「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
-
-<details>
-<img src="img/tools_list10.png" width="70%">
-</details>
-
-大規模な種名リストは1つしか登録できないため，新しいものを登録すると古いものは削除される．
-
-### Search species from a large list
-### 種名の検索
-
-大規模な種名リストは，文字列の検索が可能である．
-「Input text」と薄く表示された検索用のテキストボックスに検索文字列を入力して「Search」をクリックすると，検索結果に合致する種が種名のボタンとして表示される．
-合致したものが200種を超える場合は，「Over 200 matches, showing 200 matches」という警告がポップアップ画面で表示され，最初の200種のみが表示される．
-
-<details>
-<img src="img/tools_list12.png" width="70%">
-</details>
-
-
-複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である(3項目以上でも検索可能)．
-つまり，「アイ ガヤ」で検索すると，「アイ」かつ「ガヤ」に合致するものだけが表示される．
-検索のテキストボックスを空欄にして「Search」をクリックすると，検索結果がリセットされて種名のボタンが消える．
-
-<details>
-<img src="img/tools_list09.png" width="70%">
-</details>
-
-
-調査データへの入力方法は，小規模リストと同様である．
-
-
 # Settings
 # 設定
 
@@ -508,15 +289,6 @@ To restore the saved settings, click the "Choose file" button to the right of "L
 ### 全項目を手動で設定(非推奨)
 
 
-<!--
-設定方法やシステムの仕様の説明は未作成．
--->
-<!-- 
-TODO: 
-Layerを使っているのは，ulModuleのaddRowsWithValuesのところ．
-selectの項目を全て出すようにcodeを変更すれば，Layerを変更不可にしなくても大丈夫かも．
--->
-
 > **Note**   
 > All items can also be set manually.
 > However, this is not recommended because it requires understandings of the system specifications.
@@ -667,6 +439,8 @@ Click "Show example" in the upper right corner to display example data.
 <details>
 <img src="img/add_plot00.png" width="70%">
 </details>
+
+The upper part of the table displays plot data and the lower part displays occurrence data.
 
 表の上部には地点情報，下部には観察情報の表が表示される．
 
@@ -981,6 +755,263 @@ Ssee "Table Display Changes and Operations" for details.
 > 内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
 
 
+# Tools to find species
+# 種名ツール
+
+You can search for species names, create and save species name lists.
+Species can be input into a PLOT from searched species or species list.
+You can use multiple small species lists and a larg species list.
+
+種名の検索，種名リストの作成・保存などができる．
+小規模な種名リストを複数および大規模な種名リストを1つ利用可能である．
+
+<details>
+<img src="img/tools_list00.png" width="70%">
+</details>
+
+## Small species lists
+## 小規模な種名リスト
+
+A small list of species names is intended to be displayed all in a screen, about 100 to 200 species.
+It is useful to register frequent species.
+Multiple species lists can be registered, so you can switch them.
+The selected list is displayed in alphabetical order.
+Selecting a species displayed in the list allows you to enter it as occurrence data.
+
+小規模な種名リストは，一覧として常に表示できるぐらいの規模，つまり100-200種程度の利用を想定している．
+高頻度で出現する種を登録しておくと便利である．
+複数を登録できるため，必要に応じて切り替えが可能である．
+選択したリストは，アルファベットあるいは50音順で表示される．
+表示されたものを選択すると，調査データとして入力できる．
+
+<details>
+<img src="img/tools_list02.png" width="70%">
+</details>
+
+### Load and register a species list from a file
+### ファイルから種名リストの登録
+
+Species names can be registered from a text file (UTF8).
+In the text file, enter one species name per line.
+Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
+
+種名はテキストファイル(UTF8)から登録可能．
+テキストファイルは，1つの種名を1行ごとに入力しておく．
+「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
+テキストファイルの種名がボタン形式で表示される．
+
+When registered as a species list, it will be added in the pull-down menu on the right side of the "Species list".
+The list is displayed when selected.
+
+種名リストとして登録すると，「Species list」の右側にあるプルダウンメニュー内に追加される．
+リストを選択すると一覧が表示される．
+
+<details>
+<summary>
+
+> **Note**   
+> The scientific and Japanese names in the following data do not match.
+
+> **Note**   
+> 以下の種名の学名と和名は対応していない．
+
+example(abc.txt)
+
+データ例(xyz.txt)
+
+</summary>
+Adansonia digitata<br>
+Adansonia grandidieri<br>
+Adansonia gregorii<br>
+Adansonia madagascariensis<br>
+Adansonia perrieri
+Adansonia rubrostipa<br>
+Adansonia suarezensis<br>
+Adansonia za<br>
+アイ<br>
+アイアシ<br>
+アイグロマツ<br>
+アイズイヌナズナ<br>
+アイズシモツケ<br>
+アイズスゲ
+アイダガヤ<br>
+アイダクグ<br>
+</details>
+
+> **Warning**   
+> LocalStorage of the browser is used to store the species list.
+> The information in LocalStorage can be "easily" leaked to others when browsing the site.
+> Therefore, personal information should not be stored in the species list (LocalStorage).
+
+> **Warning**   
+> 種名リストの保存にはブラウザのLocalStorageを利用している．
+> LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
+> そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
+
+### Delete a species list
+### 種名リストの削除
+
+Select a species name list from the pull-down menu to the right of "DELETE" and click the "DELETE" button.
+
+「DELETE」の右側にあるプルダウンメニューから種名リストを選択して「DELETE」ボタンをクリックすると，該当の種名リストが削除される．
+
+<details>
+<img src="img/tools_list03.png" width="70%">
+</details>
+
+
+### Use a small species list
+### 種名リストの利用
+
+The registered list is displayed as the pull-down menu.
+Select the list to use, and the names of the species in the list will be displayed.
+
+登録した小規模な種名リストは，プルダウンメニューに表示される．
+使用したいリストを選択すると，そのリストの種名が一覧として表示される．
+
+<details>
+<img src="img/tools_list04.png" width="70%">
+</details>
+
+Click on a species name button in the list, the name is moved to the upper part of the list as a temporary registration.
+The temporary registered species name is not clickable in the species list below.
+Clicking on a temporary registered species button cancels the temporary registration.
+
+メニューに表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
+仮登録したものは，種名一覧ではクリックできない状態になる．
+仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
+
+<details>
+<img src="img/tools_list05.png" width="70%">
+</details>
+
+Change the number to the right of "No. of cols" to change the number of columns displaying the species name.
+
+「No. of cols」の右にある数字を変更すると，種名の表示列数を変更できる．
+
+<details>
+<img src="img/tools_list06.png" width="70%">
+</details>
+
+Select a PLOT and a layer from the pull-down menu. 
+The pull-down menu displays a list of items such as layer.
+Species cannot be added to more than one PLOT or layer at one time.
+Selecting a PLOT is required, while not layer etc.
+
+仮登録した種名について地点および階層をプルダウンメニューから選択する．
+プルダウンメニューには，階層等のリスト形式の項目が表示される．
+一度に複数地点・複数階層等には登録できない．
+また，地点の選択は必須で，階層等は非必須．
+
+Species names that do not have a species name button can be registered with the text box.
+When registering multiple species in the text box, separate them with "," (comma).
+
+種名ボタンのない種名は，テキストボックスから登録可能．
+テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
+
+<details>
+<img src="img/tools_list08.png" width="70%">
+</details>
+
+Click "Add Species to" to add the species name to the occurrence table.
+The temporary registered species will be returned to the species list.
+
+「Add Species to」をクリックすると種名が観察情報に追加できる．
+種名リストの仮登録の種は，種名一覧に戻る．
+
+When "Include composition" is checked, the names of species that have already been entered for all sites are added to the list of species names and displayed.
+Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
+
+「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
+未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
+
+<details>
+<img src="img/tools_list07.png" width="70%">
+</details>
+
+
+If you select "sp8\_biss02" and add it to the occurrence table, the existing location name ("biss02" in this example) will automatically be entered in the "SameAs" column.
+
+「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
+
+<details>
+
+</details>
+
+
+## Large species lists
+## 大規模な種名リスト
+
+A large species list is assumed to be 1000 species or more in size.
+It is useful to register all species that are likely to occur, although they occur infrequently.
+In other words, it is better to register a list of all species in the country or region where you investigate.
+Only one species list can be registered, and the file must be reloaded to switch between species.
+The list of registered species is not displayed on the screen when it is only loaded.
+A list of species that match the search in the text box will be displayed.
+Selecting a species displayed allows you to enter it as occurrence data.
+
+大規模な種名リストは，1000種あるいはそれ以上の規模を想定している．
+出現頻度は低いが，出現する可能性のある種名を全て登録しておくと便利である．
+つまり，使用する国や地域の全種の一覧を登録しておくのが良い．
+1つしか登録できず，切り替えにはファイルの再読み込みが必要である．
+登録種の一覧は画面上には表示されない．
+テキストボックスで検索して，合致した種の一覧が表示される．
+表示された種を選択すると，調査データとして入力できる．
+
+
+### Register a large species list
+### 種名リストの登録
+
+Species names can be registered from a text file (UTF8).
+In the text file, enter one species name per line.
+Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
+
+種名はテキストファイル(UTF8)から登録可能．
+テキストファイルは，1つの種名を1行ごとに入力しておく．
+「Add species to list」の右にある「Choose file」でファイル名を選択し，「開く」をクリックする．
+
+<details>
+<img src="img/tools_list10.png" width="70%">
+</details>
+
+Only one large list of species names can be registered, so when a new one is registered, the old one is deleted.
+
+大規模な種名リストは1つしか登録できないため，新しいものを登録すると古いものは削除される．
+
+### Search species from a large list
+### 種名の検索
+
+A large species list can be searched by text string.
+Enter a search string in the text box labeled "Input text" and click "Search" to display a button with the name of the species that matches the search results.
+If there are more than 200 matches, a pop-up window will appear with the warning "Over 200 matches, showing 200 matches" and only the first 200 matches will be displayed.
+
+大規模な種名リストは，文字列の検索が可能である．
+「Input text」と薄く表示された検索用のテキストボックスに検索文字列を入力して「Search」をクリックすると，検索結果に合致する種が種名のボタンとして表示される．
+合致したものが200種を超える場合は，「Over 200 matches, showing 200 matches」という警告がポップアップ画面で表示され，最初の200種のみが表示される．
+
+<details>
+<img src="img/tools_list12.png" width="70%">
+</details>
+
+
+Multiple character strings separated by spaces can be entered to narrow down the search (more than three items can be searched).
+In other words, a search for "aaa bbb" will display only those matching the words "aaa" and "bbb".
+If the search text box is left blank and "Search" is clicked, the search results will be reset and the species name button will disappear.
+
+複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である(3項目以上でも検索可能)．
+つまり，「アイ ガヤ」で検索すると，「アイ」かつ「ガヤ」に合致するものだけが表示される．
+検索のテキストボックスを空欄にして「Search」をクリックすると，検索結果がリセットされて種名のボタンが消える．
+
+<details>
+<img src="img/tools_list09.png" width="70%">
+</details>
+
+
+The input method for the occurrence data is the same as for the small species list.
+
+調査データへの入力方法は，小規模リストと同様である．
+
+
 # Inport data into R
 # Rでのデータの取り込み
 
@@ -1004,29 +1035,3 @@ read_biss(json)
 read_biss(json, join = FALSE)
 
 ```
-
-
-<!--
-- Toolsタブを選択  
-- wameiに検索したい和名を入力して，Search Textを選択すると，検索結果が表示される  
-- 「A かつ Bを含む」で検索したいときは，スペースで区切る  
-- 「ヤハズ かつ エンドウを含む」の結果  
-- 「A かつ B かつ C」も可能  
-- 検索結果が100を超える場合(例：「カシ」)  
-- 100を超えることの警告が表示され，結果は100個だけ表示  
-- 空欄でSearch Textを選択すると，検索結果がクリアされる  
-
-Basic use in a table
-* Hide button: hide a col
-* DELETE: delete a row
-* Click col names: sort
-* add row: copy last rows
-* Search text: filter by text
-* Hide/Show table
-* Fit/Extend width to page
-* Calculate cover
-   in each layer
-* Can add species from list
-   by Add species to PLOT
--->
-<!--  -->
