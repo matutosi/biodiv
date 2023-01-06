@@ -8,7 +8,7 @@
 ## 初期画面
 
 Initial settings is as below. 
-Can use auto saving and select several setting for plots and occurrences. 
+Can use auto saving and select several setting for plots and occurrences data. 
 
 初期画面は以下のとおり．
 自動保存や地点・観察の入力項目の設定が可能である．
@@ -36,8 +36,8 @@ The size can be changed by approximately 0.83 (1/1.2) and 1.2 times, respectivel
 ## Change to full screen
 ## 全画面表示への変更
 
-The browser is displayed in a normal window at startup. 
-To prevent accidental termination of the application, full screen is recommended.
+The browser is displayed in a normal window size at startup. 
+To prevent accidental termination, full screen is recommended.
 Click "FULL SC <=> windowed" to switch between full-screen and windowed mode.
 
 起動時のブラウザは，通常のウィンドウ表示である．
@@ -60,10 +60,10 @@ GPSの使用を終了するには，「Stop GPS」をクリック．
 ## 電子メールアプリの起動
 
 Enter an e-mail address and click "Launch mailer" to start the default e-mail application.
-The default e-mail application can be set by your tablet or computer.
+The e-mail application can be set by your tablet or computer.
 
 電子メールアドレスを入力し，「Launch mailer」をクリックすると既定の電子メールアプリを起動できる．
-既定の電子メールアプリについては，端末で設定する．
+既定の電子メールアプリは，端末で設定する．
 
 - Subject: biss\_yyyy\_mm\_dd\_hh\_mm\_ss    
 - Body: Survey data in JSON format    
@@ -71,17 +71,17 @@ The default e-mail application can be set by your tablet or computer.
 - 本文: JSON形式の調査データ    
 
 To use the data in R, save the body of the email as text data.
-For the subsequent operations, see "Inport data into R".
-
-調査データをRで利用するには，メールの本文をテキストデータとして保存する．
-その後の操作は，「Rでのデータの取り込み」を参照．
+For the subsequent operations, see ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1).
+調
+査データをRで利用するには，メールの本文をテキストデータとして保存する．
+その後の操作は，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1)を参照．
 
 ## Auto save
 ## 自動保存
 
 Data can be saved at a interval (1, 3, 5, 10, 15, 30, 60 minutes). 
-To enable automatic saving, the following settings should be set. 
-This function continues to save a new file periodically. 
+To enable automatic saving, the following settings should be needed. 
+This continues to save a new file periodically. 
 Therefore, a large number of files are saved at short intervals. 
 Generally, it is recommended to save at intervals of 10 or 15 minutes. 
 
@@ -120,7 +120,7 @@ Directory for download depends on your browser settings.
 ### Allowing multiple file downloads
 ### 複数ファイルダウンロードの許可
 
-During the second download of 10 minutes, a warning message may appear about allowing multiple files to be downloaded.
+During the second download after 10 minutes, a warning message may appear about allowing multiple files download.
 In this case, select "Allow".
 
 2回目の10分後のダウンロード時に，複数ファイルのダウンロードの許可の警告が出る場合がある．
@@ -146,8 +146,10 @@ Data is then downloaded according to the interval setting.
 ### Data format
 ### データの形式
 
-- file name ファイル名 :biss\_yyyy\_mm\_dd\_hh\_mm\_ss.json   
-- format 形式: text file with UTF8 encoding  
+- file name: biss\_yyyy\_mm\_dd\_hh\_mm\_ss.json   
+- format: text file with UTF8 encoding   
+- ファイル名 :biss\_yyyy\_mm\_dd\_hh\_mm\_ss.json   
+- 形式: text file with UTF8 encoding   
 
 <details>
 <summary>
@@ -163,9 +165,9 @@ example
 ### Inport data into R
 ### Rへのデータの取り込み
 
-See "Inport data into R" to use data in R.
+See ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1) to use data in R.
 
-Rでデータを使うには，「Rでのデータの取り込み」を参照．
+Rでデータを使うには，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1)を参照．
 
 
 ## Setting of input items
@@ -187,23 +189,22 @@ The following three methods are available.
 ### Select a basic combination
 ### 基本的な組み合わせの選択
 
-To select a basic combination and add/delete items, 
-at first select the close setting to be used from pull-down menu.
+To select a basic combination and add/delete items, select the setting close to be used from pull-down menu.
 
 基本的な組み合わせを選んで追加・削除する場合，まず使用するものに近い設定を選ぶ．
 
-- empty: Empty settings
 - full: Contains all items that might be needed in a vegetation survey or flora survey   
 - \_5\_layers: For vegetation survey with 5 layers (T1, T2, S1, S2, H)   
 - \_3\_layers: For vegetation survey with 3 layers (T, S, H)   
 - no\_layers: For vegetation survey without layers   
 - flora: For flora survey   
-- empty: 空の設定    
+- empty: Empty settings
 - full: 植生調査や植物相調査で必要になりそうな項目を全て含む   
 - \_5\_layers: 5階層(T1, T2, S1, S2, H)の植生調査用   
 - \_3\_layers: 3階層(T, S, H)の植生調査用   
 - no\_layers: 階層なしの植生調査用   
 - flora: 植物相調査用   
+- empty: 空の設定    
 
 <details>
 <img src="img/settings_base01.png" width="70%">
@@ -292,7 +293,6 @@ To restore the saved settings, click the "Choose file" button to the right of "L
 > **Note**   
 > All items can also be set manually.
 > However, this is not recommended because it requires understandings of the system specifications.
-> Explanation of the setting method and system specifications has not yet been prepared.
 
 > **Note**   
 > 全項目を手動で設定することも可能．
@@ -324,10 +324,8 @@ Item details
   - list: pull-down menu item names separated by ":"    
   - number : the range of increase or decrease step, 1 will be set when empty or non-numeric    
   - text : width of text box, 20 when empty or non-numeric
-
 - DELETE: button to delete a row (not related to the setting itself)   
 - memo: memo for user (not related to setting itself)    
-
 - item: 項目名   
   - 変更不可の項目名: 「DATE」「LOC\_LAT」「LOC\_LON」「LOC\_ACC」「UPDATE\_TIME\_GPS」「DELETE」「DATE」「Layer」「Species」「Identified」「SameAs」   
   - 使用不可の文字列: 先頭での数字   
@@ -358,13 +356,13 @@ The setting tables can be set shown or hidden.
 To avoid accidental change of the settings, it is recommended to hide them.
 
 Press "Hide table" in the upper left corner to hide it.
-When the table is hidden, press "Show table" to display it.
+When the table is hidden, press "Show table" to show it.
 
 地点項目と観察項目の表は，表示/非表示の切り替えが可能．
 それぞれを設定後に，間違えて設定を変更しないようにするには，非表示にしておくと良い．
 
 表の左上ににある「Hide table」を押すと，非表示になる．
-非表示のときに，「Show table」を押すと，表示される．
+非表示のときに「Show table」を押すと，表示される．
 
 <details>
 <img src="img/settings_hide_show.png" width="70%">
@@ -375,7 +373,7 @@ When the table is hidden, press "Show table" to display it.
 ### 項目設定のコツ
 
 The horizontal order (left/right) of items in input tables depend on the vertical order (up/down) in setting tables. 
-To change the order, enter a numbr in the "memo" field and click on the column name "memo". 
+To change the order, enter a numbr in the "memo" field and click on the column "memo". 
 This will allow you to reorder the columns according to the number. 
 Clicking again switches the ascending/descending order.
 
@@ -390,7 +388,7 @@ Clicking again switches the ascending/descending order.
 ## Add a new plot
 ## 新しい地点の追加
 
-Before entering plot and occurrence data, click "+ PLOT".
+Before inputing plot and occurrence data, click "+ PLOT".
 
 地点情報と観察情報を入力するには，まず「+ PLOT」をクリックする．
 
@@ -459,7 +457,7 @@ The upper part of the table displays plot data and the lower part displays occur
 <img src="img/example01.png" width="90%">
 </details>
 
-## Table display changes and operations (common to plot and occurrence)
+## Change and operate tables (common to plot and occurrence)
 ## 表の表示変更・操作(地点・観察共通)
 
 Can operate the table of plot and occurrence. 
@@ -495,7 +493,7 @@ Press "Hide table" in the upper left corner of the table to hide the table.
 
 When the table is hidden, pressing "Show table" will show it.
 
-非表示のときに，「Show table」を押すと，表示される．
+非表示のときに「Show table」を押すと，表示される．
 
 <details>
 <img src="img/example_hide_table01.png" width="90%">
@@ -530,13 +528,13 @@ Clicking on "Fit width" will wrap the table to fit the screen width .
 
 In a no-wrap table, the "Hide" button appears in the second row.
 Clicking the "Hide" button hides the column.
-The hidden column names are displayed at the top of the table following "Show".
+The hidden column names are displayed at the top of the table following "Show:".
 Clicking the button for each column name allows the column to be displayed again.
 Click "All cols" to display all columns at once.
 
 折り返しなしの状態のとき，表の2行目に「Hide」ボタンが表示される．
 「Hide」ボタンをクリックすると，その列が非表示になる．
-非表示になった列は，表の上部に「Show」に続いて列名がボタンとして表示される．
+非表示になった列は，表の上部に「Show:」に続いて列名がボタンとして表示される．
 それぞれの列名のボタンをクリックすると，再表示が可能．
 「All cols」をクリックすると全列を一斉に表示できる．
 
@@ -548,9 +546,11 @@ Click "All cols" to display all columns at once.
 ### Sort rows
 ### 行の並べ替え
 
-Clicking on a column name in the "no wrap" state allows sorting according to the input contents of the column.
+Clicking on a column name in the "no wrap" table allows sorting according to the input contents of the column.
+Lists such as layer are sorted to the order of settings.
 
 折り返しなしの状態のときに列名をクリックすると，その列の入力内容に従って並べ替えができる．
+階層などのリストは設定時の入力順で並べ替えされる．
 
 <details>
 <img src="img/example_sort01.png" width="90%">
@@ -585,7 +585,7 @@ Only matched rows are displayed, so you can check the species name etc.
 The search targets here are the text boxes and fixed value text in the displayed columns.
 To exclude the name of a plot from the search, you can hide it by clicking "Hide".
 
-なお，ここでの検索対象は，表示されている列のテキストボックス・固定値(fixed)のテキストである．
+なお，ここでの検索対象は，表示中の列のテキストボックス・固定値(fixed)のテキストである．
 検索対象から地点名などを除外する場合は，「Hide」により非表示にしておくと良い．
 
 
@@ -616,7 +616,7 @@ To exclude the name of a plot from the search, you can hide it by clicking "Hide
 ## Add/delete rows in a occurrence table
 ## 観察情報の行の追加・削除
 
-When a new location is added with "+ PLOT", four lines of occurrence rows are displayed.
+When a new location is added with "+ PLOT", 4 lines of occurrence rows are displayed.
 Select the number of rows from the pull-down number in the lower left corner, 
 and click "Add rows" to add a new input row.
 
@@ -633,30 +633,30 @@ and click "Add rows" to add a new input row.
 
 The registered list is displayed as the pull-down menu below the occurrence table.
 Select the list to use, and the names of the species in the list will be displayed.
-See "Species Name List" in the Tools menu, to register or delete a species list.
+See [Small species lists](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#small-species-lists) in the Tools menu, to register or delete a species list.
 
 種名リストを登録しておくと，観察情報の表の下に種名一覧のプルダウンメニューにリスト名が表示される．
 使用したいリストを選択すると，そのリストの種名が一覧として表示される．
-なお，種名リストの登録・削除方法は，ツールの種名リストを参照．
+なお，種名リストの登録・削除方法は，[小規模な種名リスト](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#small-species-lists)を参照．
 
 <details>
 <img src="img/example_species_list01.png" width="90%">
 </details>
 
 Click on a species name button in the list, the name is moved to the upper part of the list as a temporary registration.
-The temporary registered species name is not clickable in the species list below.
+The temporary registered species is not clickable in the list below.
 Clicking on a temporary registered species button cancels the temporary registration.
 
 一覧に表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
-仮登録したものは，種名一覧ではクリックできない状態になる．
+仮登録したものは，種名一覧ではクリックできなくなる．
 仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
 
-Select a layer to add from the pull-down menu.
-Species names that do not have a species name button can be registered with the text box.
+Select a layer (if you need) to add from the pull-down menu.
+Species names that do not exist as a button can be registered with the text box.
 When registering multiple species in the text box, separate them with "," (comma).
 
-仮登録した種名を登録したい階層等をプルダウンメニューから選択する．
-種名ボタンのない種名は，テキストボックスから登録可能．
+仮登録した種名を登録したい階層等(階層は非必須)をプルダウンメニューから選択する．
+種名ボタンのない種は，テキストボックスから登録可能．
 テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
 
 <details>
@@ -673,10 +673,10 @@ The temporary registered species will be returned to the species list.
 <img src="img/example_species_list03.png" width="90%">
 </details>
 
-When "Include composition" is checked, the names of species that have already been entered for all sites are added to the list of species names and displayed.
+If "Include composition" is checked, the names of species that have already been entered for all sites are added to the list.
 Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
 
-「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
+「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加される．
 未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
 
 <details>
@@ -692,18 +692,17 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 </details>
 
 
-## Calculate cover in eac layer
+## Calculate cover in each layer
 ## 階層ごとの被度の計算
 
 Select "Cover" for "Value" and "Layer" for "Group" in the lower left of the occurrence table, 
 and click "Calculate" to display the result of calculating sum of cover for each layer.
-Note that "Value" displays number items in the occurrence data, and "Group" pull-down list. 
+Note that "Value" displays number items and "Group" displays pull-down list in the occurrence data. 
 Thus, it is possible to calculate other than "Cover" and "Layer".
 
 観察情報の左下にある「Value」に「Cover」，「Group」に「Layer」を選択して，「Calculate」をクリックすると，階層ごとの被度を計算した結果が表示される．
 なお，「Value」には観察情報のうち数値の項目が表示され，「Group」にはプルダウンのリストの項目が表示される．
 そのため，「被度」「階層」以外の集計も可能．
-
 
 <details>
 <img src="img/example_calculate01.png" width="90%">
@@ -722,7 +721,7 @@ Nothing will be shown before inputting data.
 また，組成表形式の表も表示される．
 これらによって，地点情報や地点間での観察情報の比較ができる．
 なお，「All Plots」の表は閲覧のみで，内容の変更は不可．
-また，地点が未入力の場合は何も表示されない．
+また，未入力の場合は何も表示されない．
 
 <details>
 <img src="img/example_all_plots.png" width="90%">
@@ -743,26 +742,25 @@ All tables in "All Plots" allow the following operations, as well as the tables 
 - 行の並べ替え   
 - テキストデータの検索   
 
-Ssee "Table Display Changes and Operations" for details.
+See "" for details.
+["Change and operate tables"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#change-and-operate-tables-common-to-plot-and-occurrence)
 
-詳細は，「地点情報と観察情報の入力」の「表の表示変更・操作」を参照．
-
-> **Note**   
-> "All Plots" data is used for auto-saving. 
+詳細は，[「表の表示変更・操作」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#change-and-operate-tables-common-to-plot-and-occurrence)を参照．
 
 > **Note**   
 > "All Plots" data is used for auto-saving. 
+
+> **Note**   
 > 内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
 
 
 # Tools to find species
 # 種名ツール
 
-You can search for species names, create and save species name lists.
-Species can be input into a PLOT from searched species or species list.
-You can use multiple small species lists and a larg species list.
+You can search for species names and input species with searched species or species list.
+You can use multiple small species lists and one larg species list.
 
-種名の検索，種名リストの作成・保存などができる．
+種名の検索，種名リストからの登録などができる．
 小規模な種名リストを複数および大規模な種名リストを1つ利用可能である．
 
 <details>
@@ -772,13 +770,13 @@ You can use multiple small species lists and a larg species list.
 ## Small species lists
 ## 小規模な種名リスト
 
-A small list of species names is intended to be displayed all in a screen, about 100 to 200 species.
+A small list of species is intended to be displayed all in a screen, about 100 to 200 species, which can be visually confirmed.
 It is useful to register frequent species.
 Multiple species lists can be registered, so you can switch them.
 The selected list is displayed in alphabetical order.
 Selecting a species displayed in the list allows you to enter it as occurrence data.
 
-小規模な種名リストは，一覧として常に表示できるぐらいの規模，つまり100-200種程度の利用を想定している．
+小規模な種名リストは，一覧として常に表示できるぐらいの規模，つまり目視で確認可能な100-200種程度の利用を想定している．
 高頻度で出現する種を登録しておくと便利である．
 複数を登録できるため，必要に応じて切り替えが可能である．
 選択したリストは，アルファベットあるいは50音順で表示される．
@@ -791,6 +789,16 @@ Selecting a species displayed in the list allows you to enter it as occurrence d
 ### Load and register a species list from a file
 ### ファイルから種名リストの登録
 
+> **Warning**   
+> LocalStorage of the browser is used to store the species list.
+> The information in LocalStorage can be "easily" leaked to others when browsing the site.
+> Therefore, personal information should not be stored in the species list (LocalStorage).
+
+> **Warning**   
+> 種名リストの保存にはブラウザのLocalStorageを利用している．
+> LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
+> そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
+
 Species names can be registered from a text file (UTF8).
 In the text file, enter one species name per line.
 Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
@@ -801,13 +809,17 @@ Select a file name from the "Choose file" menu to the right of "Add species to l
 テキストファイルの種名がボタン形式で表示される．
 
 When registered as a species list, it will be added in the pull-down menu on the right side of the "Species list".
-The list is displayed when selected.
 
 種名リストとして登録すると，「Species list」の右側にあるプルダウンメニュー内に追加される．
-リストを選択すると一覧が表示される．
 
 <details>
 <summary>
+
+example(abc.txt)
+
+データ例(xyz.txt)
+
+</summary>
 
 > **Note**   
 > The scientific and Japanese names in the following data do not match.
@@ -815,11 +827,6 @@ The list is displayed when selected.
 > **Note**   
 > 以下の種名の学名と和名は対応していない．
 
-example(abc.txt)
-
-データ例(xyz.txt)
-
-</summary>
 Adansonia digitata<br>
 Adansonia grandidieri<br>
 Adansonia gregorii<br>
@@ -837,16 +844,6 @@ Adansonia za<br>
 アイダガヤ<br>
 アイダクグ<br>
 </details>
-
-> **Warning**   
-> LocalStorage of the browser is used to store the species list.
-> The information in LocalStorage can be "easily" leaked to others when browsing the site.
-> Therefore, personal information should not be stored in the species list (LocalStorage).
-
-> **Warning**   
-> 種名リストの保存にはブラウザのLocalStorageを利用している．
-> LocalStorage内の情報は，ブラウザでのサイト閲覧時「容易に」他者に漏洩する可能性がある．
-> そのため，通常保存することはないはずだが，個人情報等は種名リスト(LocalStorage)には保存するべきではない．
 
 ### Delete a species list
 ### 種名リストの削除
@@ -874,11 +871,11 @@ Select the list to use, and the names of the species in the list will be display
 </details>
 
 Click on a species name button in the list, the name is moved to the upper part of the list as a temporary registration.
-The temporary registered species name is not clickable in the species list below.
+The temporary registered species is not clickable in the list below.
 Clicking on a temporary registered species button cancels the temporary registration.
 
-メニューに表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
-仮登録したものは，種名一覧ではクリックできない状態になる．
+一覧に表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
+仮登録したものは，種名一覧ではクリックできなくなる．
 仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
 
 <details>
@@ -896,14 +893,14 @@ Change the number to the right of "No. of cols" to change the number of columns 
 Select a PLOT and a layer from the pull-down menu. 
 The pull-down menu displays a list of items such as layer.
 Species cannot be added to more than one PLOT or layer at one time.
-Selecting a PLOT is required, while not layer etc.
+Selecting a PLOT is required, while not layer etc are not required.
 
 仮登録した種名について地点および階層をプルダウンメニューから選択する．
 プルダウンメニューには，階層等のリスト形式の項目が表示される．
 一度に複数地点・複数階層等には登録できない．
 また，地点の選択は必須で，階層等は非必須．
 
-Species names that do not have a species name button can be registered with the text box.
+Species names that do not exist as a button can be registered with the text box.
 When registering multiple species in the text box, separate them with "," (comma).
 
 種名ボタンのない種名は，テキストボックスから登録可能．
@@ -919,7 +916,7 @@ The temporary registered species will be returned to the species list.
 「Add Species to」をクリックすると種名が観察情報に追加できる．
 種名リストの仮登録の種は，種名一覧に戻る．
 
-When "Include composition" is checked, the names of species that have already been entered for all sites are added to the list of species names and displayed.
+When "Include composition" is checked, the names of species that have already been entered for all sites are added to the species list.
 Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
 
 「Include composition」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
@@ -934,10 +931,6 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 
 「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
 
-<details>
-
-</details>
-
 
 ## Large species lists
 ## 大規模な種名リスト
@@ -945,7 +938,7 @@ If you select "sp8\_biss02" and add it to the occurrence table, the existing loc
 A large species list is assumed to be 1000 species or more in size.
 It is useful to register all species that are likely to occur, although they occur infrequently.
 In other words, it is better to register a list of all species in the country or region where you investigate.
-Only one species list can be registered, and the file must be reloaded to switch between species.
+Only one species list can be registered, and the file must be reloaded to switch.
 The list of registered species is not displayed on the screen when it is only loaded.
 A list of species that match the search in the text box will be displayed.
 Selecting a species displayed allows you to enter it as occurrence data.
@@ -982,7 +975,7 @@ Only one large list of species names can be registered, so when a new one is reg
 ### 種名の検索
 
 A large species list can be searched by text string.
-Enter a search string in the text box labeled "Input text" and click "Search" to display a button with the name of the species that matches the search results.
+Enter a search string in the text box labeled "Input text" and click "Search" to display a button with the species name that matches the search results.
 If there are more than 200 matches, a pop-up window will appear with the warning "Over 200 matches, showing 200 matches" and only the first 200 matches will be displayed.
 
 大規模な種名リストは，文字列の検索が可能である．
@@ -995,7 +988,7 @@ If there are more than 200 matches, a pop-up window will appear with the warning
 
 
 Multiple character strings separated by spaces can be entered to narrow down the search (more than three items can be searched).
-In other words, a search for "aaa bbb" will display only those matching the words "aaa" and "bbb".
+A search for "aaa bbb" will display only those matching the words "aaa" and "bbb".
 If the search text box is left blank and "Search" is clicked, the search results will be reset and the species name button will disappear.
 
 複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である(3項目以上でも検索可能)．
@@ -1014,6 +1007,14 @@ The input method for the occurrence data is the same as for the small species li
 
 # Inport data into R
 # Rでのデータの取り込み
+
+[Data format](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#data-format) in BiSS is a text file (UTF8) in JSON format.
+To use the data in R, it is convenient to use read_biss().
+
+BiSSの[データ形式](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#data-format)は，JSON形式のテキストファイル(UTF8)である．
+Rでデータを利用するには，read_biss()を利用するのと便利である．
+
+<details>
 
 ```{r}
 read_biss <- function(json, join = TRUE){
@@ -1035,3 +1036,5 @@ read_biss(json)
 read_biss(json, join = FALSE)
 
 ```
+
+</details>
