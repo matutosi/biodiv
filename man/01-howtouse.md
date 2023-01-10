@@ -1,4 +1,4 @@
-# How to use Investigation Support System (BiSS) 
+# How to use Biodiversity Investigation Support System (BiSS) 
 # 生物多様性調査支援アプリ(BiSS)の使い方
 
 # Settings
@@ -1016,7 +1016,7 @@ Rでデータを利用するには，read_biss()を利用するのと便利で�
 
 <details>
 
-```{r}
+```{r, eval=FALSE}
 read_biss <- function(json, join = TRUE){
   biss <- jsonlite::fromJSON(json)
   plot <- data.frame(biss$plot)
