@@ -72,8 +72,7 @@ The e-mail application can be set by your tablet or computer.
 
 To use the data in R, save the body of the email as text data.
 For the subsequent operations, see ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1).
-調
-査データをRで利用するには，メールの本文をテキストデータとして保存する．
+調査データをRで利用するには，メールの本文をテキストデータとして保存する．
 その後の操作は，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1)を参照．
 
 ## Auto save
