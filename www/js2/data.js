@@ -15,9 +15,9 @@ const data_settings = {
       biss_inputs :{
         item:   ["",],
         type:   ["",],
-        value:  [""    ,],
-        DELETE: [""    ,],
-        memo  : [""    ,]
+        value:  ["",],
+        DELETE: ["",],
+        memo  : ["",]
       }
     },
     occ: {
@@ -27,9 +27,9 @@ const data_settings = {
       biss_inputs :{
         item:   ["",],
         type:   ["",],
-        value:  [""    ,],
-        DELETE: [""    ,],
-        memo  : [""    ,]
+        value:  ["",],
+        DELETE: ["",],
+        memo  : ["",]
       }
     },
   },
