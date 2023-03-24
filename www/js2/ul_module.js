@@ -238,7 +238,7 @@ function createSpeciesButton({ sp, to_stage, ns }){
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
 }
 function createSLInput(id){
-  var placeholder = "Input species (separate with ',')";
+  var placeholder = "Input species (separate with ',' , '，' or '、')";
   return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: placeholder, size:'100'} });
 }
 
@@ -370,7 +370,10 @@ function addSpecies(obj){
   var plot    = document.getElementById(base_name + 'plot-'   + ns).value;
   var options = getSelectOptionsAsJSON(ns);
   var species = getChildrenValues(staged);
-  if(input.value !== ''){ var species = species.concat(input.value.split(',')); }
+  if(input.value !== ''){
+    var input_val = input.value.replaceAll('，', ',').replaceAll('、', ',') // FULL size JP -> half size
+    var species = species.concat(input_val.split(','));
+  }
   // add species
   var table = document.getElementById('input_occ_' + plot + '_tb');
   for(let spec of species){
