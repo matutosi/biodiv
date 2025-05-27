@@ -1,0 +1,158 @@
+\documentclass[11pt]{jsarticle}
+
+  % https://joker.hatenablog.com/entry/2012/07/09/153537
+\usepackage[top=20truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry}
+  % A4タテで，上2cm，下3cm，左右各2.5cmの余白をとる．
+  % 用紙の左上4cm×4cmには講演番号が入るため，ここに文字がかぶらないようにする．
+
+	% 図
+\usepackage{graphicx}	% 画像読み込み
+\usepackage{mediabb}	% 画像読み込み
+\usepackage{wrapfig}	% 回りこみの画像
+
+	% UDフォント
+\usepackage{pxchfon}
+\setminchofont{UDDIGIKYOKASHON-R.TTC} 
+\setgothicfont{UDDIGIKYOKASHON-B.TTC} 
+
+\pagestyle{empty}
+
+\begin{document}
+\Large
+
+  % \begin{center}
+  % \end{center}
+\centerline{植生調査を支援するアプリの開発(改訂版)}
+
+　\\[-12mm]
+
+\normalsize
+\rightline{松村俊和(甲南女子大学・人間科学部・生活環境学科)}
+
+　\\[-8mm]
+
+\begin{wrapfigure}{r}{0.35\textwidth}
+\includegraphics[width=0.37\textwidth]{02_add_plot.pdf}
+\vspace{-1.5\baselineskip}
+\caption{設定・地点追加}
+% 
+\includegraphics[width=0.37\textwidth]{03_species_list.pdf}
+\vspace{-1.5\baselineskip}
+\caption{種名一覧}
+% 
+\includegraphics[width=0.37\textwidth]{04_all_plots_2.pdf}
+\vspace{-1.5\baselineskip}
+\caption{全地点の閲覧}
+\includegraphics[width=0.37\textwidth]{QR.pdf} % biss2, 取説
+\end{wrapfigure}
+
+\noindent
+\textbf{[背景・目的]}
+植生調査などの生物調査では，紙媒体への記入が通例であり，簡便，汎用性の高さ，文字情報以外も容易に記入可能といった多くの利点がある．
+一方で，種名ゆれや種名間違い，手作業での計算，目視確認，PCへの入力の手間などの欠点がある．
+  % 
+  % \noindent
+  % \textbf{[目的]}
+これらの欠点を補えれば，調査の時間短縮や効率化に寄与できる可能性がある．
+そこで，2022年に植生調査を支援するアプリの開発に着手した．
+しかし，使い勝手の問題があったため改訂版を作成した．
+主な改善点は以下のとおりである．
+
+\vspace{-0.5\baselineskip}
+\begin{itemize}
+\item[\textbf{・}] 設定画面に使用頻度の高い組み合わせを追加した
+\item[\textbf{・}] 新規地点の追加をブラウザのタブ追加と同様にした
+\item[\textbf{・}] 種名一覧から種名を入力できるようにした
+\item[\textbf{・}] 全地点の組成を閲覧できるようにした
+\item[\textbf{・}] 詳細なマニュアルを整備した
+\end{itemize}
+\vspace{-0.5\baselineskip}
+  % \noindent
+  % 　\textbullet \hspace{1mm} 設定画面に使用頻度の高い組み合わせを追加した\\
+  % 　\textbullet \hspace{1mm} 新規地点の追加をブラウザのタブ追加と同様にした\\
+  % 　\textbullet \hspace{1mm} 種名一覧から種名を入力できるようにした\\
+  % 　\textbullet \hspace{1mm} 全地点の組成を閲覧できるようにした\\
+  % 　\textbullet \hspace{1mm} 詳細なマニュアルを整備した\\
+  % \vspace{-1\baselineskip}
+
+\noindent
+\textbf{[改定内容]}
+設定画面では，使用頻度の高いと考えられる設定の組み合わせを簡単に入力できるようにした(図1)．
+具体的には，5層あるいは3層での地点・組成の入力項目をそれぞれ1クリックで入力できるようにした．
+新規地点の追加では，ブラウザのタブ追加と同様に「+」をクリックすることで調査シートを追加できるようにした．
+
+種名の入力では，種名の一覧から種名をクリックして入力できるようにした(図2)．
+種名の一覧は，事前に作成したテキストファイルを読み込み，
+調査前に出現する可能性の高い種名をテキストファイルにまとめておけば，種名の入力間違いを減少させることができる．
+種名の一覧を複数準備しておけば，対象に合わせて変更可能である(「Species list」で選択)．
+さらに，入力済みの種名を一覧に含めることができ，「地点Aのスゲsp」のような入力も可能である．
+種名の一覧は，各地点の入力画面にも表示されるため，既出現種の確認にも使うことができる．
+
+全地点の組成の閲覧では，「All plots」というタブを新設した(図3)，
+ここでは地点情報と組成情報を閲覧できる．
+また，素表を閲覧できるため，地点ごとの組成をざっと比較可能である．
+なお，表内の情報はすべて各列の情報で並べ替え可能である．
+
+  % https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md
+  % http://shokusei.jp/_userdata/abs/abs2022.pdf#page=38
+
+  %   https://matutosi.github.io/biodiv/biss2.html
+  %   https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md
+
+マニュアルでは，上記内容に加えて使用方法全般について画像を加えて解説している．
+  % 以下のURLを参照して頂きたい．
+
+\noindent
+\verb|https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md|
+
+  % \vspace{-0.5\baselineskip}
+  % \begin{center}
+  % \includegraphics[width=50mm]{QR.pdf} % biss2, 取説
+  % \end{center}
+  % \vspace{-0.5\baselineskip}
+
+  % https://github.com/matutosi/ecan
+
+\end{document}
+
+\if0
+
+wd <- "D:/matu/work/ToDo/biodiv/2310veg"
+setwd(wd)
+pngs <- 
+  c("01_settings.png", "02_add_plot.png", "03_species_list.png", "04_all_plots.png") %>%
+  magick::image_read()
+pdfs <- 
+  c("01_settings.pdf", "02_add_plot.pdf", "03_species_list.pdf", "04_all_plots.pdf")
+automater::magick_crop(pngs, c(0, 140), c(920, 920)) %>%
+  as.list() %>%
+  purrr::map2(., pdfs, magick::image_write, format = "pdf") 
+
+pngs_2 <- 
+  c("04_all_plots.png") %>%
+  magick::image_read()
+pdfs_2 <- 
+  c("04_all_plots_2.pdf")
+automater::magick_crop(pngs_2, c(0, 140), c(920, 1000)) %>%
+  as.list() %>%
+  purrr::map2(., pdfs_2, magick::image_write, format = "pdf") 
+
+
+c("QR.png") %>%
+  magick::image_read() %>%
+  magick::image_write("QR.pdf", format = "pdf")
+
+
+\fi
+
+  % ダミーのテキスト1
+  % ダミーのテキスト2
+  % ダミーのテキスト3
+  % ダミーのテキスト4
+  % ダミーのテキスト5
+  % ダミーのテキスト6
+  % ダミーのテキスト7
+  % ダミーのテキスト8
+  % ダミーのテキスト9
+  % ダミーのテキスト10
+  % ダミーのテキスト11
