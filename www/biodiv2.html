@@ -122,11 +122,6 @@
 
 <div>  <!-- need to located at the end of tab HTML -->
   <script>
-    // let, not const: sortable.js reassigns these three while sorting.
-    let column_no = 0;       // now clicked
-    let column_no_prev = 0;  // previous clicked
-    let dir = "asc";
-
     // Live HTMLCollections, so a new plot tab shows up without reassigning.
     const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
     const pages = document.getElementById('tabbody').getElementsByTagName('div');

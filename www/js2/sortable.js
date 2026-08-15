@@ -8,23 +8,19 @@
 //    If executed before creation, a table will not be sortable.
 //    
 function setSortable(id_table){
-  // console.log(id_table);
-  // console.log( document.querySelectorAll('#' + id_table + ' th') );
-  // var id_table = "occ_input_table_example_01";
-  // var id_table = "comp_table";
+  // Which column was clicked last, and which way it went, belong to this
+  // table alone. They used to live in three globals shared by every table,
+  // so sorting one table ascending and then clicking the same column number
+  // in another started it descending.
+  var column_no_prev = -1;  // -1: nothing clicked yet in this table
+  var dir = "asc";
   document.querySelectorAll('#' + id_table + ' th').forEach(elm => {
     elm.onclick = function (){
       // settings
       var table = document.getElementById(id_table);
-      column_no = this.cellIndex; // now clicked
-      // sort direction: clicked: sort reverse
-      if(column_no_prev !== column_no) {
-        dir = "asc"; 
-      } else if(column_no_prev === column_no && dir === "desc") {
-        dir = "asc"; 
-      } else if(column_no_prev === column_no && dir === "asc"){
-        dir = "desc"; 
-      } 
+      var column_no = this.cellIndex; // now clicked
+      // sort direction: the same column again reverses, anything else starts ascending
+      dir = (column_no_prev === column_no && dir === "asc") ? "desc" : "asc";
       column_no_prev = column_no;
       var col_name = getColNames(table)[column_no];
       var elements = getColData(table, col_name, list_with_index = true);
