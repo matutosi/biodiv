@@ -36,7 +36,7 @@ The e-mail application can be set by your tablet or computer.
 - Body: Survey data in JSON format    
 
 To use the data in R, save the body of the email as text data.
-For the subsequent operations, see ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1).
+For the subsequent operations, see ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#inport-data-into-r-1).
 
 ## Auto save
 
@@ -84,7 +84,7 @@ example
 
 ### Inport data into R
 
-See ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1) to use data in R.
+See ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#inport-data-into-r-1) to use data in R.
 
 ## Setting of input items
 
@@ -321,7 +321,7 @@ and click "Add rows" to add a new input row.
 
 The registered list is displayed as the pull-down menu below the occurrence table.
 Select the list to use, and the names of the species in the list will be displayed.
-See [Small species lists](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#small-species-lists) in the Tools menu, to register or delete a species list.
+See [Small species lists](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#small-species-lists) in the Tools menu, to register or delete a species list.
 
 <img src="img/example_species_list01.png" width="90%">
 
@@ -376,7 +376,7 @@ All tables in "All Plots" allow the following operations, as well as the tables 
 - Search input text   
 
 See "" for details.
-["Change and operate tables"](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#change-and-operate-tables-common-to-plot-and-occurrence)
+["Change and operate tables"](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#change-and-operate-tables-common-to-plot-and-occurrence)
 
 > **Note**   
 > "All Plots" data is used for auto-saving. 
@@ -506,7 +506,7 @@ The input method for the occurrence data is the same as for the small species li
 
 # Inport data into R
 
-[Data format](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#data-format) in BiSS is a text file (UTF8) in JSON format.
+[Data format](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#data-format) in BiSS is a text file (UTF8) in JSON format.
 To use the data in R, it is convenient to use read_biss().
 
 ```{r, eval=FALSE}

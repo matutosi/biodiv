@@ -36,7 +36,7 @@ GPSの使用を終了するには，「Stop GPS」をクリック．
 - 本文: JSON形式の調査データ    
 
 調査データをRで利用するには，メールの本文をテキストデータとして保存する．
-その後の操作は，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1)を参照．
+その後の操作は，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md#rでのデータの取り込み)を参照．
 
 ## 自動保存
 
@@ -83,7 +83,7 @@ GPSの使用を終了するには，「Stop GPS」をクリック．
 
 ### Rへのデータの取り込み
 
-Rでデータを使うには，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#inport-data-into-r-1)を参照．
+Rでデータを使うには，[「Rでのデータの取り込み」](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md#rでのデータの取り込み)を参照．
 
 ## 入力項目の設定
 
@@ -325,7 +325,7 @@ floraの設定
 
 種名リストを登録しておくと，観察情報の表の下に種名一覧のプルダウンメニューにリスト名が表示される．
 使用したいリストを選択すると，そのリストの種名が一覧として表示される．
-なお，種名リストの登録・削除方法は，[小規模な種名リスト](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#small-species-lists)を参照．
+なお，種名リストの登録・削除方法は，[小規模な種名リスト](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md#小規模な種名リスト)を参照．
 
 <img src="img/example_species_list01.png" width="90%">
 
@@ -385,7 +385,7 @@ floraの設定
 - 行の並べ替え   
 - テキストデータの検索   
 
-詳細は，[「表の表示変更・操作」](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#change-and-operate-tables-common-to-plot-and-occurrence)を参照．
+詳細は，[「表の表示変更・操作」](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md#表の表示変更操作地点観察共通)を参照．
 
 > **Note**   
 > 内部的なことではあるが，自動保存機能で保存しているのは「All Plots」のデータである．
@@ -521,7 +521,7 @@ TODO:
 SameAsの種を同じ種として扱うようにする
 -->
 
-BiSSの[データ形式](https://github.com/matutosi/biodiv/blob/main/man/howtouse.md#data-format)は，JSON形式のテキストファイル(UTF8)である．
+BiSSの[データ形式](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md#データの形式)は，JSON形式のテキストファイル(UTF8)である．
 Rでデータを利用するには，read_biss()を利用するのと便利である．
 
 ```{r, eval=FALSE}

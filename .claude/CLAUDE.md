@@ -78,7 +78,8 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 もともとは `www/cp_biodiv.bat` で別リポジトリ (`matutosi.github.io` の `docs/biodiv/`) へ
 手作業でコピーしていたが，パスが古くなって動かず配信物が古いまま止まっていた．
-この仕組みに移したので **`cp_biodiv.bat` はもう使わない**．
+この仕組みに移したので `www/cp_biodiv.bat` と，コピー先へのショートカット `www/docs.lnk` は
+削除した (どちらも `.gitignore` 対象でリポジトリには入っていない)．
 `matutosi.github.io` 側の `docs/biodiv/` は，混乱を避けるため整理するか，
 このリポジトリの Pages へ誘導するのが望ましい．
 
@@ -129,6 +130,15 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 - 配布ファイル `www/biss2.html` を再ビルドした (768,127 バイト)．
   外部参照が残っていないこと，日本語文字列と言語セレクタが入っていることは確認済み．
 - 多言語化・CSS の分離・README の更新を `main` へマージして公開した．
+- **GitHub Pages での配信をこのリポジトリに移した** (「配信」の節を参照)．
+- 不要になったファイルを削除した．
+  `man/01-howtouse.md` (旧統合版．`showManual()` の修正で未参照になった．
+  旧版 `biss.html` には使い方ボタン自体が無いので影響なし)，
+  `www/cp_biodiv.bat`・`www/docs.lnk` (旧デプロイ経路)．
+- `_jp.md` / `_en.md` に残っていた壊れたリンク (各5件) を直した．
+  リネーム前の `man/howtouse.md` を指したままだったので，それぞれ自分自身を指すようにした．
+  日本語見出しのアンカーは，GitHub が実際に生成する id を確認して合わせている
+  (`(` `)` や `・` は取り除かれる: `#表の表示変更操作地点観察共通`)．
 - **CSS を旧版・現行版で分離した**．`www/css2/` を作り，`biodiv2.html` の参照先を移した．
   これで現行版の CSS を触っても凍結した旧版の見た目は変わらない．
 - **README に旧版・現行版のダウンロード URL を明記した** (`README.md`・`READMEjp.md`)．
@@ -165,8 +175,6 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 #### C. 整理・確認 (優先度 低)
 
-- **`man/01-howtouse.md` の扱い**: 旧統合版 (1046行) が `_jp.md` (546行)・`_en.md` (531行) と併存している．
-  `showManual()` は分割版を開くようになったので，**もう参照されていない**．削除してよい．
 - **マニュアルと現行機能の突き合わせ**: `_jp.md` / `_en.md` の内容が現行版の挙動と合っているか確認する．
   最終更新は 2023年で，その後の変更 (入力データの保存，区切り文字の追加，多言語化) が
   反映されていない．とくに言語セレクタの説明は両方に追記が要る．
