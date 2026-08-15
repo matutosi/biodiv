@@ -29,7 +29,25 @@ function createWideTable(){
   return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)" });
 }
 function createFileButton(){
-  return createInput({ type: "file", accept: ".json", onchange: "replaceTable(this)" });
+  return createFileInput({ accept: ".json", onchange: "replaceTable(this)" });
+}
+// A file input shows labels drawn by the browser ("Choose file",
+//   "No file chosen"), which follow the browser language and are NOT
+//   switched by the language select. Hide it and open it from a normal
+//   button so that the visible label goes through msg().
+function createFileInput({ id = '', accept = '', onchange = '' } = {}){
+  var span = crEl({ el:'span' });
+  var ats  = { type: "file", onchange: onchange, style: "display:none" };
+  if(id     !== ''){ ats.id     = id;     }
+  if(accept !== ''){ ats.accept = accept; }
+  span.appendChild( createInput({ type: "button", value: msg('choose_file'),
+                                  'data-msg': 'choose_file', onclick: "clickFileInput(this)" }) );
+  span.appendChild( crEl({ el:'input', ats: ats }) );
+  return span;
+}
+// Open the hidden file input next to the clicked button.
+function clickFileInput(obj){
+  obj.nextElementSibling.click();
 }
 function createSaveButton(){
   return createInput({ type: "button", value: msg('save'), 'data-msg': 'save', onclick: "saveSettings(this)" });

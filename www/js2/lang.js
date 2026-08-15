@@ -90,6 +90,7 @@ var msgs = {
 
   // Table module
   load            :{ en: "<b>Load: </b>"                              , ja: "<b>読込: </b>"                    },
+  choose_file     :{ en: "Choose file"                                , ja: "ファイルを選ぶ"                   },
   save            :{ en: "Save"                                       , ja: "保存"                             },
   file_name       :{ en: "File name"                                  , ja: "ファイル名"                       },
   add_rows        :{ en: "Add row(s)"                                 , ja: "行を追加"                         },

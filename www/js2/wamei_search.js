@@ -47,7 +47,7 @@ function searchFlora(obj){
 function createReplaceFloraButton(){
   var id = '';
   var span = crEl({el:'span' });
-  var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "replaceFlora(this)" } });
+  var file_input = createFileInput({ id: id, onchange: "replaceFlora(this)" });
   span.appendChild( msgSpan('replace_flora') );
   span.appendChild(file_input);
   return span;
