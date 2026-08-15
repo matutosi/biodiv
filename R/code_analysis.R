@@ -25,8 +25,8 @@ main_funs <-
   dplyr::filter(! stringr::str_detect(main, "document\\.getElementById")) %>%
   dplyr::mutate(main = stringr::str_extract(main, '[^= ]+\\([^ ]*\\)')) %>%
   na.omit() %>%
-  dplyr::mutate(main = stringr::str_replace_all(main, '\\"', '')) %>%
-  dplyr::mutate(main = stringr::str_replace_all(main, '\\(.*\\)', '')) %>%
+  dplyr::mutate(main = stringr::str_remove_all(main, '\\"')) %>%
+  dplyr::mutate(main = stringr::str_remove_all(main, '\\(.*\\)')) %>%
   dplyr::distinct() %>%
   magrittr::set_colnames("fun")
 
@@ -34,7 +34,7 @@ main_funs <-
 all_funs <- 
   codes_funs %>%
   #   dplyr::filter(! stringr::str_detect(fun, ' *//')) %>%
-  dplyr::mutate(fun = stringr::str_replace_all(fun, "//.*", "")) %>%
+  dplyr::mutate(fun = stringr::str_remove_all(fun, "//.*")) %>%
   #   dplyr::filter(stringr::str_detect(fun, fun_name))
     # function
     # ( fun ) "fun" { fun }
@@ -48,7 +48,7 @@ all_funs <-
   magrittr::set_colnames("code") %>%
   dplyr::filter(code != "") %>%
   dplyr::filter(! stringr::str_detect(code, "^\\(")) %>%
-  dplyr::mutate(code = stringr::str_replace(code, "^ ", "")) %>%
+  dplyr::mutate(code = stringr::str_remove(code, "^ ")) %>%
   tidyr::separate(code, into=c("fun", NA), sep="\\(")
 
 split_code <- function(x){
@@ -63,8 +63,8 @@ split_code <- function(x){
 
 codes <- 
   codes_funs %>%
-  dplyr::mutate(fun = stringr::str_replace_all(fun, "//.*", "")) %>%
-  dplyr::mutate(fun = stringr::str_replace_all(fun, "[A-z]*\\.[A-z]*", "")) %>% # "document.getElementById"  -> ""
+  dplyr::mutate(fun = stringr::str_remove_all(fun, "//.*")) %>%
+  dplyr::mutate(fun = stringr::str_remove_all(fun, "[A-z]*\\.[A-z]*")) %>% # "document.getElementById"  -> ""
   `$`("fun") %>%
   purrr::reduce(stringr::str_c) %>%
   stringr::str_split("function") %>%
@@ -73,7 +73,7 @@ codes <-
   magrittr::set_colnames("code") %>%
   dplyr::filter(code != "") %>%
   dplyr::filter(! stringr::str_detect(code, "^\\(")) %>%
-  dplyr::mutate(code = stringr::str_replace(code, "^ ", "")) %>%
+  dplyr::mutate(code = stringr::str_remove(code, "^ ")) %>%
   unlist() %>%
   map(split_code) %>%
   bind_rows() %>%
@@ -161,8 +161,8 @@ codes_funs <-
        stringr::str_detect(code, "^function") ~ code,
        TRUE ~ ""
   )) %>%
-  dplyr::mutate(f = stringr::str_replace(f, "^function ", "")) %>%
-  dplyr::mutate(f = stringr::str_replace(f, "\\(.+", "")) %>%
+  dplyr::mutate(f = stringr::str_remove(f, "^function ")) %>%
+  dplyr::mutate(f = stringr::str_remove(f, "\\(.+")) %>%
   dplyr::mutate(f = detect_fun(.$f)) %>%
   dplyr::filter(!stringr::str_detect(code, "^//")) %>%
   dplyr::filter(stringr::str_length(code) > 10)

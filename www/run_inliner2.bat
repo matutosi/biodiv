@@ -1,4 +1,3 @@
-d:
-cd D:\matu\work\ToDo\biodiv\www
+cd /d "%~dp0"
 inliner --inlinemin biodiv2.html > biss2.html
 pause

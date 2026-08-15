@@ -30,8 +30,8 @@ Use `ecan::read_biss()` in ecan.
 https://github.com/matutosi/ecan
 
 ``` r
-  # install.packages("devtools")
-devtools::install_github("matutosi/ecan")
+  # install.packages("remotes")
+remotes::install_github("matutosi/ecan")
 ```
 
 
