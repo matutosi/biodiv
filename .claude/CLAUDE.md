@@ -21,8 +21,8 @@
 | `www/biss2.html`   | 現行版の配布用 (inliner でまとめた単一ファイル)                     |
 | `www/js/`       | 旧版の JavaScript                                                      |
 | `www/js2/`      | 現行版の JavaScript (こちらを編集する)                                 |
-| `www/css/`      | スタイルシート (旧版・現行版で共用)                                    |
-| `www/lang.html` | 多言語 (日本語・英語) の文字列定義                                     |
+| `www/css/`      | 旧版のスタイルシート                                                   |
+| `www/css2/`     | 現行版のスタイルシート (こちらを編集する)                              |
 | `www/tools/`    | 試作・検証用の断片 (配布物には含めない)                                |
 | `man/`          | 使い方マニュアル (`01-howtouse_jp.md` / `_en.md`) と画像・サンプルデータ |
 | `R/`            | `code_analysis.R` (コードの静的な確認用)                               |
@@ -78,10 +78,13 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 ## 旧版と現行版
 
-- **旧版 (`www/biodiv.html`・`www/js/`・`www/biss.html`) は凍結する**．
+- **旧版 (`www/biodiv.html`・`www/js/`・`www/css/`・`www/biss.html`) は凍結する**．
   そのまま保存し，機能追加も修正もしない．
-- **改修は現行版 (`www/biodiv2.html`・`www/js2/`・`www/biss2.html`) に対してのみ行う**．
-- `www/css/` は旧版・現行版で共用しているので，触るときは旧版への影響に注意する．
+- **改修は現行版 (`www/biodiv2.html`・`www/js2/`・`www/css2/`・`www/biss2.html`) に対してのみ行う**．
+- CSS はもともと `www/css/` を両版で共用していたが，現行版の変更が旧版に及ばないよう
+  `www/css2/` に分離した．現行版が使うのは tab・table・full_screen・ul の4つ，
+  旧版が使うのは tab・table・full_screen・canvas の4つ．
+  分離した時点では中身は同一なので，差分は今後の改修で生じる．
 
 ## ブランチ運用
 
@@ -112,6 +115,11 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 - 配布ファイル `www/biss2.html` を再ビルドした (768,127 バイト)．
   外部参照が残っていないこと，日本語文字列と言語セレクタが入っていることは確認済み．
 - 多言語化を `main` へマージして公開した．
+- **CSS を旧版・現行版で分離した**．`www/css2/` を作り，`biodiv2.html` の参照先を移した．
+  これで現行版の CSS を触っても凍結した旧版の見た目は変わらない．
+- **README に旧版・現行版のダウンロード URL を明記した** (`README.md`・`READMEjp.md`)．
+  現行版 `biss2.html` をすすめ，旧版 `biss.html` は更新を終了した旨を書いた．
+  多言語対応の案内と，ビルド例 (`biodiv2.html` → `biss2.html`) も現行版に合わせた．
   **ブラウザでの動作確認をしないまま公開している**ので，実機で確認すること
   (見る点は「課題一覧 > A」に書いた)．問題があれば `main` を戻す．
 
