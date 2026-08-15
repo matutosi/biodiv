@@ -44,16 +44,25 @@ function updateInputsPlotLayerSpecies(){
 }
 
 // Redraw every species list from the list selected in it.
+//   A module can hold two pull downs of species lists: the one that says
+//   which list is shown, and the one that says which list to delete. Both
+//   need their options refreshed, because a list may have been registered
+//   or deleted since they were built. Only the first one decides what is
+//   shown: rebuilding from the delete pull down as well would take its own
+//   empty value and wipe the species the first one just put there.
+const SL_SELECT_SELECTOR = "select[id^='sp_list_select-']:not([id$='-flora'])";
+const SL_DELETE_SELECTOR = "select[id^='sp_list_delete_name-']";
+
 function updateSpeciesList(){
-  var selector =  "select[id^='sp_list_delete_name-all'],select[id^='sp_list_select-']:not([id$='-flora'])";
-  var sp_sl_selects = document.querySelectorAll(selector);
-  for(let select of sp_sl_selects){
+  for(let select of document.querySelectorAll(SL_SELECT_SELECTOR + ',' + SL_DELETE_SELECTOR)){
     updateSelectSLById(select.id);
+  }
+  // Query again: updateSelectSLById() puts a new element in place of each one.
+  for(let select of document.querySelectorAll(SL_SELECT_SELECTOR)){
     var ns = select.id.split('-')[1];
     var id = 'sp_list_sp_list-' + ns;
-    var sl = select.value;
     var is_checked = document.getElementById('sp_list_checkbox-' + ns).checked;
-    replaceSpeciesList(sl, id, is_checked);
+    replaceSpeciesList(select.value, id, is_checked);
   }
 }
 

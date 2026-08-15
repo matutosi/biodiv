@@ -244,6 +244,56 @@ test('a plot tab made after the switch is labelled in the new language', async (
   biss.close();
 });
 
+test('the species list picked in Tools survives a move to another tab', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.changeSettingsByName('_5_layers');
+
+  // Register a list and pick it, the way the Tools tab does.
+  w.addSLinLS(['Fagus crenata', 'Quercus serrata'], 'testlist');
+  w.updateSelectSLById('sp_list_select-all');
+  const select = () => w.document.getElementById('sp_list_select-all');
+  w.setSelectOption(select(), 'testlist');
+  w.changeSL(select());
+
+  const shown = () => w.document.getElementById('sp_list_sp_list-all').children.length;
+  assert.equal(shown(), 2, 'the two species are listed');
+
+  // Leaving the tab and coming back runs this. The list has to stay.
+  w.updateInputsPlotLayerSpecies();
+
+  assert.equal(select().value, 'testlist', 'the pull down still shows the list');
+  assert.equal(shown(), 2, 'and the species are still listed');
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('deleting one species list leaves the one on screen alone', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.changeSettingsByName('_5_layers');
+  w.addSLinLS(['Fagus crenata', 'Quercus serrata'], 'keepme');
+  w.addSLinLS(['Zelkova serrata'], 'dropme');
+  w.updateSpeciesList();
+
+  const select = () => w.document.getElementById('sp_list_select-all');
+  const del_name = () => w.document.getElementById('sp_list_delete_name-all');
+  w.setSelectOption(select(), 'keepme');
+  w.changeSL(select());
+  w.setSelectOption(del_name(), 'dropme');
+
+  w.deleteSl(w.document.getElementById('sp_list_delete-all'));
+
+  const options = s => [...s.options].map(o => o.value);
+  assert.ok(!options(select()).includes('dropme'), 'the deleted list is gone from the pull down');
+  assert.ok(options(select()).includes('keepme'), 'the other list is still offered');
+  assert.equal(select().value, 'keepme', 'and is still the one picked');
+  assert.equal(w.document.getElementById('sp_list_sp_list-all').children.length, 2,
+               'its species are still on screen');
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
 // A6. addInputTab() refuses '_' and tells the user to use '-' instead, but the
 //   species list module takes the name apart with id.split('-')[1], so a name
 //   that holds a '-' is cut short and the module of that plot is not found.
