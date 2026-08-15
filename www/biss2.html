@@ -56,7 +56,7 @@ var msgs = {
   // Species list module 
   n_cols          :{ en: "<b>No.</b> of cols"                         , ja: "<b>表示</b>列数"                  }, 
   s_list          :{ en: "Species <b>list</b>"                        , ja: "種<b>一覧</b>"                    }, 
-  include_comp    :{ en: "Include <b>composition</b>"                 , ja: "<b>組成</b>を含める"              }, 
+  include_comp    :{ en: "<b>Observed species</b>"                    , ja: "<b>出現種</b>を含める"            }, 
   register        :{ en: "<b>Register</b>"                            , ja: "<b>登録</b>"                      }, 
   delete_list     :{ en: "DELETE"                                     , ja: "削除"                             }, 
   del_row         :{ en: "DELETE"                                     , ja: "削除"                             }, 
@@ -282,7 +282,7 @@ function randInt(n, max){
   } 
   return sample 
 } 
-// Take n random elements from an array (only_once: never take the same one twice).
+// Take n random elements from an array (only_once: never take the same one twice). 
 function randSample(n, array, only_once = false){ 
   var sample = []; 
   if(only_once){ 
@@ -300,7 +300,7 @@ function randSample(n, array, only_once = false){
   } 
   return sample; 
 } 
-// Shuffle an array.
+// Shuffle an array. 
 function randSort(array){ 
   return randSample(array.length, array, true); 
 } 
@@ -357,7 +357,7 @@ function hash2table(hash_array){
 function isTable(obj){ 
   return obj.tagName === 'TABLE'; 
 } 
-// true when an element holds at least one table.
+// true when an element holds at least one table. 
 function hasTable(obj){ 
   return obj.getElementsByTagName('table').length > 0; 
 } 
@@ -591,13 +591,13 @@ function uniq(array){
   return Array.from(new Set(array)); 
 } 
  
-// Remove every empty string from an array, in place.
+// Remove every empty string from an array, in place. 
 function removeEmptyInArray(array){ 
   while(array.indexOf('') >= 0){ 
     array.splice(array.indexOf(''), 1); 
   } 
 } 
-// Every index at which an element appears in an array.
+// Every index at which an element appears in an array. 
 function multiIndexOf(array, element){ 
   var indices = []; 
   let idx = array.indexOf(element); 
@@ -759,7 +759,7 @@ function addSLinLS(sp_list, ns='base'){
   var new_list = uniq(new_list.sort()); 
   localStorage.setItem('biss_sl-' + ns, new_list); 
 } 
-// The species list stored for a name space, or '' when there is none.
+// The species list stored for a name space, or '' when there is none. 
 function getSLinLS(ns='base'){ 
   if(localStorage['biss_sl-' + ns] === void 0){ 
     return ''; 
@@ -767,9 +767,9 @@ function getSLinLS(ns='base'){
     return localStorage['biss_sl-' + ns].split(','); 
   } 
 } 
-// Remove every stored species list.
+// Remove every stored species list. 
 function removeSLinLSAll(){ removeSLinLS('all_remove'); } 
-// Remove the species list of a name space ('all_remove' for all of them).
+// Remove the species list of a name space ('all_remove' for all of them). 
 function removeSLinLS(ns='base'){ 
   if(ns === 'all_remove'){ 
     var keys = getKeysOfSLinLS(); 
@@ -778,17 +778,17 @@ function removeSLinLS(ns='base'){
     localStorage.removeItem('biss_sl-' + ns); 
   } 
 } 
-// Every key in localStorage.
+// Every key in localStorage. 
 function getLSKeys(){ 
   return Object.keys(localStorage); 
 } 
-// The localStorage keys that hold a species list.
+// The localStorage keys that hold a species list. 
 function getKeysOfSLinLS(){ 
   var keys = getLSKeys(); 
   // var keys = ['biss_sl-2', 'biss_sl-1', 'bis_sl-1', 'abiss_sl-1']; 
   return grepArray(keys, /^biss_sl-/); 
 } 
-// The elements of an array that match a regular expression.
+// The elements of an array that match a regular expression. 
 function grepArray(array, regex){ 
   var matched = []; 
   for(let a of array){ 
@@ -798,14 +798,14 @@ function grepArray(array, regex){
   } 
   return matched; 
 } 
-// Replace a string in every element of an array.
+// Replace a string in every element of an array. 
 function replaceArrayAll(array, search, replace){ 
   var replaced = []; 
   for(let a of array){ 
     replaced.push(a.replaceAll(search, replace)); 
   } 
   return replaced; 
-}</script> <script>function createMailerSpan(){var e=crEl({el:"span",ats:{id:"mailer"}});return e.appendChild(createLaunchMailerButton()),e.appendChild(createEmailInput()),e}function launchMailer(){var e=document.getElementById("email_adress").value;if(!/.+@.+\..+/.test(e))return void alert(msg("alert_email"));var a=getAllPlotOccDataAsJSON(),t="mailto: "+e+"?subject=biss_"+getNow()+"&body="+a;location.href=t}function createEmailInput(){return span=crEl({el:"input",ats:{id:"email_adress",type:"email",placeholder:"biss@send.mail.com"}})}function createLaunchMailerButton(){return createInput({type:"button",value:msg("launch_mailer"),"data-msg":"launch_mailer",onclick:"launchMailer()"})}</script> <script>// Save a string as a file (UTF-8 with BOM) through a click on a hidden link.
+}</script> <script>function createMailerSpan(){var e=crEl({el:"span",ats:{id:"mailer"}});return e.appendChild(createLaunchMailerButton()),e.appendChild(createEmailInput()),e}function launchMailer(){var e=document.getElementById("email_adress").value;if(!/.+@.+\..+/.test(e))return void alert(msg("alert_email"));var a=getAllPlotOccDataAsJSON(),t="mailto: "+e+"?subject=biss_"+getNow()+"&body="+a;location.href=t}function createEmailInput(){return span=crEl({el:"input",ats:{id:"email_adress",type:"email",placeholder:"biss@send.mail.com"}})}function createLaunchMailerButton(){return createInput({type:"button",value:msg("launch_mailer"),"data-msg":"launch_mailer",onclick:"launchMailer()"})}</script> <script>// Save a string as a file (UTF-8 with BOM) through a click on a hidden link. 
 function downloadStrings(strings, file_name){ 
   var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM 
   var blob = new Blob([bom, strings], { "type" : "text/tsv" }); 
@@ -980,7 +980,7 @@ function addSettingPart(category, obj){
   } 
 } 
  
-// Create one button per setting part (date_GPS etc.) of a category, plot or occ.
+// Create one button per setting part (date_GPS etc.) of a category, plot or occ. 
 function addSettingPartButton(category){ 
   var keys = Object.keys(data_settings_part[category]); 
   var main = crEl({ el:'span'}); 
@@ -994,7 +994,7 @@ function addSettingPartButton(category){
   return main; 
 } 
  
-// Create the pull down that picks the auto save interval in minutes.
+// Create the pull down that picks the auto save interval in minutes. 
 function createAutoSaveIntervalSelect(){ 
   var main = crEl({ el:'span' }); 
   main.appendChild( msgSpan('interval') ); 
@@ -1007,7 +1007,7 @@ function createAutoSaveIntervalSelect(){
 } 
  
  
-// Create the pull down that picks the base setting (full, _5_layers, ...).
+// Create the pull down that picks the base setting (full, _5_layers, ...). 
 function createSettingSelect(){ 
   var main = crEl({ el:'span' }); 
   main.appendChild( msgSpan('base_setting') ); 
@@ -1020,13 +1020,13 @@ function createSettingSelect(){
   return main; 
 } 
  
-// Switch to the base setting of that name, as if it were picked in the pull down.
+// Switch to the base setting of that name, as if it were picked in the pull down. 
 function changeSettingsByName(ns){ 
   var select = document.getElementById('select_settings'); 
   select.selectedIndex = getSelectOptionInCell(select).indexOf(ns) 
   changeSettings(select); 
 } 
-// Rebuild the plot and occ setting tables from the base setting just picked.
+// Rebuild the plot and occ setting tables from the base setting just picked. 
 function changeSettings(obj){ 
   var setting = obj.value; 
   var new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot', 
@@ -1376,7 +1376,7 @@ function shortTable(obj){
   addThLabel(table); 
   obj.replaceWith( createWideTable() ); 
 } 
-// Put a table back to its normal shape (th shown, no label in td).
+// Put a table back to its normal shape (th shown, no label in td). 
 function wideTable(obj){ 
   var table = obj.parentNode.nextElementSibling; 
   var rows = table.rows; 
@@ -1388,7 +1388,7 @@ function wideTable(obj){
   removeThLabel(table); 
   obj.replaceWith( createFitTable() ); 
 } 
-// Copy the column name into every td, as the 'th-lab' attribute the short table shows.
+// Copy the column name into every td, as the 'th-lab' attribute the short table shows. 
 function addThLabel(table){ 
   var c_names = getColNames(table); 
   var rows = table.rows; 
@@ -1400,7 +1400,7 @@ function addThLabel(table){
     } 
   } 
 } 
-// Remove the 'th-lab' attribute added by addThLabel().
+// Remove the 'th-lab' attribute added by addThLabel(). 
 function removeThLabel(table){ 
   var rows = table.rows; 
   for(let Ri = 1; Ri < rows.length; Ri++){ 
@@ -1426,7 +1426,7 @@ function showAllCols(obj){
   } 
   obj.parentNode.textContent = ""; 
 } 
-// Hide the column of the clicked button, and add a button that brings it back.
+// Hide the column of the clicked button, and add a button that brings it back. 
 function hideTableCol(obj){ 
   // console.log(obj.parentNode.parentNode.parentNode); 
   var table = searchParentTable(obj); 
@@ -1446,7 +1446,7 @@ function hideTableCol(obj){
   } 
   span.appendChild( createShowColButton(c_name) ); 
 } 
-// Show the column named on the clicked button, then drop that button.
+// Show the column named on the clicked button, then drop that button. 
 function showCol(obj){ 
   // show col 
   var c_name = obj.value; 
@@ -1459,7 +1459,7 @@ function showCol(obj){
   if(obj.parentNode.children.length === 3){ obj.parentNode.textContent = ""; } // 3: "Show: " + All cols + this col 
   obj.remove(); 
 } 
-// Hide or show the table that follows the clicked button.
+// Hide or show the table that follows the clicked button. 
 function hideShowNext(obj){ 
   // console.log(obj); 
   // console.log(obj.parentNode.nextElementSibling); 
@@ -1522,7 +1522,7 @@ function isShownCol(table){
     display_style_none.push(!!!ths[i].getAttribute('style')); 
   } 
   return display_style_none; 
-}</script> <script>// Show the page of the clicked tab and hide the others (used as the onclick of a tab).
+}</script> <script>// Show the page of the clicked tab and hide the others (used as the onclick of a tab). 
 function changeTab(){ 
   var ref = decodeURI(this.href);  // For multibyte character 
   var targetid = ref.substring(ref.indexOf('#')+1, ref.length); 
@@ -1549,7 +1549,7 @@ function changeTab(){
 } 
  
  
-// Give every tab, new ones included, changeTab() as its onclick.
+// Give every tab, new ones included, changeTab() as its onclick. 
 function updateTab(){ 
   // get elements 
   var tabs = document.getElementById('tabcontrol').getElementsByTagName('a'); 
@@ -1560,28 +1560,37 @@ function updateTab(){
   } 
 } 
  
-// Redraw everything that follows the input: the all plots tables, the PLOT and Layer selects, and the species lists.
+// Redraw everything that follows the input: the all plots tables, the PLOT and Layer selects, and the species lists. 
 function updateInputsPlotLayerSpecies(){ 
   updateAllInputsTables();  // All plots 
   updatePlotLayer({});      // PLOT and Layer select in Tools 
   updateSpeciesList();      // species list 
 } 
  
-// Redraw every species list from the list selected in it.
+// Redraw every species list from the list selected in it. 
+//   A module can hold two pull downs of species lists: the one that says 
+//   which list is shown, and the one that says which list to delete. Both 
+//   need their options refreshed, because a list may have been registered 
+//   or deleted since they were built. Only the first one decides what is 
+//   shown: rebuilding from the delete pull down as well would take its own 
+//   empty value and wipe the species the first one just put there. 
+const SL_SELECT_SELECTOR = "select[id^='sp_list_select-']:not([id$='-flora'])"; 
+const SL_DELETE_SELECTOR = "select[id^='sp_list_delete_name-']"; 
+ 
 function updateSpeciesList(){ 
-  var selector =  "select[id^='sp_list_delete_name-all'],select[id^='sp_list_select-']:not([id$='-flora'])"; 
-  var sp_sl_selects = document.querySelectorAll(selector); 
-  for(let select of sp_sl_selects){ 
+  for(let select of document.querySelectorAll(SL_SELECT_SELECTOR + ',' + SL_DELETE_SELECTOR)){ 
     updateSelectSLById(select.id); 
+  } 
+  // Query again: updateSelectSLById() puts a new element in place of each one. 
+  for(let select of document.querySelectorAll(SL_SELECT_SELECTOR)){ 
     var ns = select.id.split('-')[1]; 
     var id = 'sp_list_sp_list-' + ns; 
-    var sl = select.value; 
     var is_checked = document.getElementById('sp_list_checkbox-' + ns).checked; 
-    replaceSpeciesList(sl, id, is_checked); 
+    replaceSpeciesList(select.value, id, is_checked); 
   } 
 } 
  
-// Add the PLOT column, holding the plot name, in front of a table definition.
+// Add the PLOT column, holding the plot name, in front of a table definition. 
 function addPlotId(plot_data, id){ 
   // var plot_data = temp1; 
   plot_data['biss_c_names'].unshift('PLOT'); 
@@ -1591,7 +1600,7 @@ function addPlotId(plot_data, id){
   return plot_data; 
 } 
  
-// Add the NO column, holding the plot number, in front of a table definition.
+// Add the NO column, holding the plot number, in front of a table definition. 
 function addPlotNo(plot_data, no){ 
   // var plot_data = temp1; 
   plot_data['biss_c_names'].unshift('NO'); 
@@ -1601,7 +1610,7 @@ function addPlotNo(plot_data, no){
   return plot_data; 
 } 
  
-// The largest plot number in use, or 0 when there is no plot yet.
+// The largest plot number in use, or 0 when there is no plot yet. 
 function getPlotMaxNo(){ 
   var tables = document.querySelectorAll("table[id^='input_plot']"); 
   var max_no = [0]; 
@@ -1683,7 +1692,7 @@ function addInputTab({ obj, id }){
   updateInputsPlotLayerSpecies() 
 } 
  
-// Rebuild the plot, occurrence and composition tables of the All plots tab.
+// Rebuild the plot, occurrence and composition tables of the All plots tab. 
 function updateAllInputsTables(){ 
   var pl_table = createAllInputsTable('input_plot') 
   var oc_table = createAllInputsTable('input_occ' ) 
@@ -1699,7 +1708,7 @@ function updateAllInputsTables(){
   setSortable( searchParentTable(comp_table).id ); 
 } 
  
-// Stack every input table of one kind into one table, without the button columns (DELETE, UPDATE_TIME_GPS).
+// Stack every input table of one kind into one table, without the button columns (DELETE, UPDATE_TIME_GPS). 
 function createAllInputsTable(table_name){ 
   // var table_name = "input_occ"; var table_name = "input_plot"; 
   var tables = document.querySelectorAll("table[id^='" + table_name + "']"); 
@@ -1727,7 +1736,7 @@ function createAllInputsTable(table_name){
                               fit_button: true, hide_button: true}); 
   return all_table; 
 } 
-// The column names of several tables, each of them once.
+// The column names of several tables, each of them once. 
 function getUniqeColNames(tables){ 
   var c_names = []; 
   for(let i = 0; i < tables.length; i++) { 
@@ -1735,7 +1744,7 @@ function getUniqeColNames(tables){
   } 
   return uniq(c_names); 
 } 
-// The data of the given columns, read from several tables and joined per column.
+// The data of the given columns, read from several tables and joined per column. 
 function getMultiTableInputs(tables, c_names){ 
   var inputs = []; 
   for(let c_name of c_names){ 
@@ -1749,7 +1758,7 @@ function getMultiTableInputs(tables, c_names){
   return inputs; 
 } 
  
-// The names of the columns that hold a pull down in any of the tables.
+// The names of the columns that hold a pull down in any of the tables. 
 function getMultiTableSelects(tables){ 
   var selects = []; 
   for(let table of tables){ 
@@ -1763,7 +1772,7 @@ function getMultiTableSelects(tables){
   return uniq(selects); 
 } 
  
-// The options of the given columns, collected over several tables.
+// The options of the given columns, collected over several tables. 
 function getMultiTableOptions(tables, c_names){ 
   var options = []; 
   for(let c_name of c_names){ 
@@ -1775,7 +1784,7 @@ function getMultiTableOptions(tables, c_names){
   return options; 
 } 
  
-// Make an unidentified species name unique per plot (or per the plot named in SameAs), so that two of them are not counted as one.
+// Make an unidentified species name unique per plot (or per the plot named in SameAs), so that two of them are not counted as one. 
 function checkSameAs(inputs, pl, sp, id, sa){ 
   // var inputs = temp1; var pl = 'PLOT'; var sp = 'Species'; var id = 'Identified'; var sa = 'SameAs'; 
   for(let i=0; i < inputs[pl].length; i++){ 
@@ -1788,7 +1797,7 @@ function checkSameAs(inputs, pl, sp, id, sa){
   } 
   return inputs; 
 } 
-// Build the composition table: species by plot, holding the cover ('--' when present without a cover).
+// Build the composition table: species by plot, holding the cover ('--' when present without a cover). 
 function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id = "Identified", sa = "SameAs"){ 
   // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']"); 
   var inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]); 
@@ -1846,7 +1855,7 @@ function getSpeciesInComposition(sp = 'Species'){
   removeEmptyInArray(species); 
   return species; 
 } 
-// Add every species of the composition table to the species list of the clicked module.
+// Add every species of the composition table to the species list of the clicked module. 
 function addComp(obj, sp = 'Species'){ 
   // var sp = 'Species'; 
   var ns = obj.id.split('-')[1]; 
@@ -1856,12 +1865,12 @@ function addComp(obj, sp = 'Species'){
   addSpeciesList(id, species); 
 } 
  
-// Create the button that calls addComp().
+// Create the button that calls addComp(). 
 function createAddCompButton(id){ 
   return crEl({ el:'input', ats:{type:'button', id: id, value: msg('add_from_comp'), 'data-msg': 'add_from_comp', onclick: 'addComp(this)'} }); 
 } 
  
-// Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out.
+// Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out. 
 function createSpecieUlModule({ species, ns, 
                                 show_select_button     , show_comp_checkbox, show_delete_list,  
                                 show_select_ncol       ,  
@@ -1932,7 +1941,7 @@ function createSelectSL(id){
   span.appendChild(select); 
   return span; 
 } 
-// Create the delete button and the pull down of the list it deletes.
+// Create the delete button and the pull down of the list it deletes. 
 function createDeleteSL(id){ 
   var delete_name = id.replace('delete', 'delete_name'); 
   var span   = crEl({ el:'span' }); 
@@ -1942,7 +1951,7 @@ function createDeleteSL(id){
   span.appendChild( select ); 
   return span; 
 } 
-// Delete the selected species list after a confirmation, then redraw the pull downs.
+// Delete the selected species list after a confirmation, then redraw the pull downs. 
 function deleteSl(obj){ 
   var sel_de = obj.id.replace('delete', 'delete_name'); 
   var select = obj.id.replace('delete', 'select'); 
@@ -1957,7 +1966,7 @@ function deleteSl(obj){
 } 
  
  
-// Redraw a species list pull down, keeping what was selected.
+// Redraw a species list pull down, keeping what was selected. 
 function updateSelectSLById(id){ 
   var old_select = document.getElementById(id); 
   var first_option = (/delete/.test(id)) ? '' : 'NEW' 
@@ -1965,7 +1974,7 @@ function updateSelectSLById(id){
   var new_select = createSL(id, selected_value, first_option); 
   old_select.replaceWith(new_select); 
 } 
-// Create the pull down of the stored species lists ('NEW' first, unless it is the delete one).
+// Create the pull down of the stored species lists ('NEW' first, unless it is the delete one). 
 function createSL(id, value = '', first_option = 'NEW'){ 
   var species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', ''); 
   species_list.sort(); 
@@ -1976,7 +1985,7 @@ function createSL(id, value = '', first_option = 'NEW'){
   return select 
 } 
  
-// Select the option of that value, or the first one when it is not there.
+// Select the option of that value, or the first one when it is not there. 
 function setSelectOption(select, value){ 
   var options = getSelectOptionInCell(select); 
   var index = options.indexOf(value); 
@@ -1985,7 +1994,7 @@ function setSelectOption(select, value){
 } 
  
  
-// Create the checkbox that adds the composition species to the list.
+// Create the checkbox that adds the composition species to the list. 
 function createCompCheckbox(id){ 
   var span     = crEl({ el:'span', ats:{class: 'margin_right'} }); 
   var checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} }); 
@@ -1994,7 +2003,7 @@ function createCompCheckbox(id){
   return span; 
 } 
  
-// Redraw the species buttons for the list just selected.
+// Redraw the species buttons for the list just selected. 
 function changeSL(obj){ 
   var ns = obj.id.split('-')[1]; 
   var id = 'sp_list_sp_list-' + ns; 
@@ -2030,7 +2039,7 @@ function readFile(file){
     reader.readAsText(file); 
   }) 
 } 
-// Create the file input that registers a species list from a text file.
+// Create the file input that registers a species list from a text file. 
 function createRegisterSLButton(id){ 
   var span = crEl({el:'span' }); 
   var file_input = createFileInput({ id: id, onchange: "registerSL(this)" }); 
@@ -2048,7 +2057,7 @@ function createSelectNumber(id){
   span.appendChild(select); 
   return span; 
 } 
-// Set how many columns the species lists are shown in ('--cc' in the CSS).
+// Set how many columns the species lists are shown in ('--cc' in the CSS). 
 function changeUlColumns(obj){ 
   var ncols = obj.value; 
   document.documentElement.style.setProperty('--cc', ncols); 
@@ -2080,7 +2089,7 @@ function replaceSpeciesList(sl, id, add_comp = true){
   var old_sp_list = document.getElementById(id); 
   old_sp_list.replaceWith(new_sp_list); 
 } 
-// Create the button of one species (to_stage: click stages it, otherwise click takes it back).
+// Create the button of one species (to_stage: click stages it, otherwise click takes it back). 
 function createSpeciesButton({ sp, to_stage, ns }){ 
   if(to_stage){ 
     var id = ns + '_sp_' + sp 
@@ -2091,7 +2100,7 @@ function createSpeciesButton({ sp, to_stage, ns }){
   } 
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } }); 
 } 
-// Create the box for typing species names that have no button.
+// Create the box for typing species names that have no button. 
 function createSLInput(id){ 
   return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: msg('input_species'), 'data-msg-ph': 'input_species', size:'100'} }); 
 } 
@@ -2100,7 +2109,7 @@ function createSLInput(id){
 function createUpdatePLButton(id){ 
   return crEl({ el:'input', ats:{type:'button', id: id, value: msg('update_pl'), 'data-msg': 'update_pl', onclick: 'updatePlotLayer({ obj:this })'} }); 
 } 
-// Create the PLOT pull down: every plot for 'all' and 'flora', the own plot otherwise.
+// Create the PLOT pull down: every plot for 'all' and 'flora', the own plot otherwise. 
 function createSelectPlot(id){ 
   var span = crEl({ el:'span' }); 
   span.appendChild( msgSpan('plot_label') ); 
@@ -2116,7 +2125,7 @@ function createSelectPlot(id){
   span.appendChild(plot_select) 
   return span; 
 } 
-// Create the Layer pull down, from the layers the occurrence tables offer.
+// Create the Layer pull down, from the layers the occurrence tables offer. 
 function createSelectLayer(id){ 
   var span = crEl({ el:'span' }); 
   span.appendChild( msgSpan('layer_label') ); 
@@ -2128,7 +2137,7 @@ function createSelectLayer(id){
   span.appendChild(layer_select) 
   return span; 
 } 
-// Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given.
+// Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given. 
 function updatePlotLayer({ obj }){ 
   var nss = (obj === void 0) ? ['all', 'flora'] : [obj.id.split('-')[1]]; 
   var base_name = 'sp_list_'; 
@@ -2139,13 +2148,13 @@ function updatePlotLayer({ obj }){
     replaceSelectLayer(layer_id); 
   } 
 } 
-// Replace a PLOT select with a freshly built one.
+// Replace a PLOT select with a freshly built one. 
 function replaceSelectPlot(id){ 
   var old_plot = document.getElementById(id).parentNode; 
   var new_plot = createSelectPlot(id); 
   old_plot.replaceWith(new_plot); 
 } 
-// Replace a Layer select with a freshly built one.
+// Replace a Layer select with a freshly built one. 
 function replaceSelectLayer(id){ 
   // console.log(id); 
   var old_layer = document.getElementById(id); 
@@ -2154,7 +2163,7 @@ function replaceSelectLayer(id){
   old_layer.replaceWith(new_layer); 
 } 
  
-// Create one pull down per 'list' column of the occurrence tables (Layer and the like).
+// Create one pull down per 'list' column of the occurrence tables (Layer and the like). 
 function createSelectOptions(id){ 
   var ns = id.split('-')[1]; 
   // console.log(ns); 
@@ -2179,7 +2188,7 @@ function createSelectOptions(id){
 function createSLAdd(id){ 
   return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } }); 
 } 
-// Add species to a list, keeping it unique and sorted.
+// Add species to a list, keeping it unique and sorted. 
 function addSpeciesList(id, add_sp){ 
   var old_sp_list = document.getElementById(id); 
   // console.log(id); 
@@ -2191,7 +2200,7 @@ function addSpeciesList(id, add_sp){
   var new_sp_list = createSpecieList(id, new_sp); 
   old_sp_list.replaceWith(new_sp_list); 
 } 
-// Move a species to the staged row and grey out its button.
+// Move a species to the staged row and grey out its button. 
 function stageSpecies(obj){ 
   var ns = obj.parentNode.parentNode.id.split('-')[1]; 
   var sp_staged = document.getElementById('sp_list_staged-' + ns); 
@@ -2200,7 +2209,7 @@ function stageSpecies(obj){
   var button = createSpeciesButton({ sp: sp, to_stage: false, ns: ns }); 
   sp_staged.appendChild( button ); 
 } 
-// Take a species off the staged row and enable its button again.
+// Take a species off the staged row and enable its button again. 
 function unStageSpecies(obj){ 
   // console.log(obj) 
   var ns = obj.parentNode.parentNode.id.split('-')[1]; 
@@ -2210,7 +2219,7 @@ function unStageSpecies(obj){
   obj.remove(); 
 } 
  
-// The values of the pull downs of a module, as a JSON string keyed by column name.
+// The values of the pull downs of a module, as a JSON string keyed by column name. 
 function getSelectOptionsAsJSON(ns){ 
   // ns = 'all' 
   var selector =  "select[id^='sp_list_options_'][id$=" + ns + "]"; 
@@ -2226,7 +2235,7 @@ function getSelectOptionsAsJSON(ns){
   return opt_value; 
 } 
  
-// Add the staged and typed species to the occurrence table of the selected plot, one row each. A name with '_' is read as species_SameAs and counted as unidentified.
+// Add the staged and typed species to the occurrence table of the selected plot, one row each. A name with '_' is read as species_SameAs and counted as unidentified. 
 function addSpecies(obj){ 
   // console.log(obj); 
   // console.log(obj.id); 
@@ -2268,7 +2277,7 @@ function addSpecies(obj){
     staged.children[i-1].click(); 
   } 
 } 
-// The values of the children of an element.
+// The values of the children of an element. 
 function getChildrenValues(element){ 
   var values = []; 
   for(let child of element.children){ 
@@ -2277,7 +2286,7 @@ function getChildrenValues(element){
   return values; 
 } 
  
-// The values of the grandchildren of an element (the buttons in the li of a ul).
+// The values of the grandchildren of an element (the buttons in the li of a ul). 
 function getGrandChildrenValues(element){ 
   var values = []; 
   for(let child of element.children){ 
@@ -29409,7 +29418,7 @@ function createSearchFloraButton(name){
                                   onclick: "searchFlora(this)" } }); 
 } 
  
-// Search the flora for the input text and show the hits as species buttons.
+// Search the flora for the input text and show the hits as species buttons. 
 function searchFlora(obj){ 
   var parent    = obj.parentNode; 
   var input     = document.getElementById('flora_input').value; 
@@ -29431,7 +29440,7 @@ function searchFlora(obj){
   var old_flora = document.getElementById('sp_list_module-flora'); 
   old_flora.replaceWith(new_flora); 
 } 
-// Create the file input that replaces the flora with a text file.
+// Create the file input that replaces the flora with a text file. 
 function createReplaceFloraButton(){ 
   var id = ''; 
   var span = crEl({el:'span' }); 
@@ -29440,7 +29449,7 @@ function createReplaceFloraButton(){
   span.appendChild(file_input); 
   return span; 
 } 
-// Replace the flora with the species read from the chosen file.
+// Replace the flora with the species read from the chosen file. 
 async function replaceFlora(obj){ 
   var name = obj.files[0].name.split("\.")[0]; 
   var text = await readFile(obj.files[0]); 
@@ -29454,7 +29463,7 @@ async function replaceFlora(obj){
    
   var note_wamei = document.getElementById('note_wamei'); 
   note_wamei.style.display = "none"; 
-}</script> <script>// Create a td for a column, with the input that its data type asks for.
+}</script> <script>// Create a td for a column, with the input that its data type asks for. 
 function createTd(col_name, data_type, select, table_data){ 
   switch(data_type){ 
     case "auto": // date, no, GPS 
@@ -29496,7 +29505,7 @@ function createTd(col_name, data_type, select, table_data){
   return td; 
 } 
  
-// Add the header row (th) built from the column names.
+// Add the header row (th) built from the column names. 
 function addThTr(table, col_names){ 
   var tr = document.createElement('tr'); 
   for(let Ni = 0; Ni < col_names.length; Ni++){ 
@@ -29509,16 +29518,16 @@ function addThTr(table, col_names){
   return table; 
 } 
  
-// Number of rows in a table.
+// Number of rows in a table. 
 function nRow(table){ 
   return table.rows.length; 
 } 
-// Number of cells in the first row of a table.
+// Number of cells in the first row of a table. 
 function nCol(table){ 
   return table.rows[0].cells.length; 
 } 
  
-// Add the second row, which holds a hide button for every column.
+// Add the second row, which holds a hide button for every column. 
 function addHideRowTr(table){ 
   var tr = crEl({ el: 'tr', ats: {class: 'hide_button'} }); 
   for(let i = 0; i < nCol(table); i++){ 
@@ -29529,7 +29538,7 @@ function addHideRowTr(table){
   table.appendChild(tr) 
   return table; 
 } 
-// Create the button that hides the column it sits in.
+// Create the button that hides the column it sits in. 
 function createHideTableColButton(){ 
   return createInput({ type:"button", value: msg('hide'), 'data-msg': 'hide', onclick: "hideTableCol(this)" }); 
 } 
@@ -29600,7 +29609,7 @@ function makeTableJO(table_data, table_name){
   return table; 
 } 
  
-// Add one tr per record, filling each td through createTd().
+// Add one tr per record, filling each td through createTd(). 
 function addTableData(table, col_names, dat_types, selects, inputs){ 
   for(let Ri = 0; Ri < inputs[col_names[0]].length; Ri++){ 
     var tr = document.createElement('tr'); 
@@ -29614,7 +29623,7 @@ function addTableData(table, col_names, dat_types, selects, inputs){
   return table; 
 } 
  
-// Turn a settings table (item, type, value per row) into a table definition, where the items become the column names.
+// Turn a settings table (item, type, value per row) into a table definition, where the items become the column names. 
 function convertTableData(table_data){ 
   // var table_data = temp1; 
   var c_names = table_data['biss_inputs']['item']; 
@@ -29655,7 +29664,7 @@ function showManual(){
   window.open(base + suffix); 
 } 
  
-// Fill the app with a sample survey (two plots, five layers, random cover).
+// Fill the app with a sample survey (two plots, five layers, random cover). 
 function showExample(obj){ 
  
   // select settings: '_5_layers' 
@@ -29709,7 +29718,7 @@ function showExample(obj){
   obj.remove(); 
 } 
  
-// Add n random occurrence rows to a plot table.
+// Add n random occurrence rows to a plot table. 
 function addSampleOcc(plot, n ,layers, species, identified){ 
   var ly = randSample(n, layers,  false); 
   var sp = randSample(n, species, false); 
@@ -29719,7 +29728,7 @@ function addSampleOcc(plot, n ,layers, species, identified){
   for(let i = 0; i<n; i++){ 
     addRowWithValues({ table: plot, values:{ Layer: ly[i], Species:sp[i], Cover:cv[i], Identified: id[i] } });  
   } 
-}</script> <script>// Rows of a table as an array, without the second row (the hide buttons).
+}</script> <script>// Rows of a table as an array, without the second row (the hide buttons). 
 function getTableDataAsArray(id_table){ 
   var data = table2array(id_table, false); 
   var data_array =[]; 
@@ -29731,7 +29740,7 @@ function getTableDataAsArray(id_table){
   return data_array; 
 } 
  
-// Save the plot data and the occurrence data as two TSV files.
+// Save the plot data and the occurrence data as two TSV files. 
 function saveAllTableDataAsCSV(){ 
   var occ  = getTableDataAsArray('occ_all_tb'); 
   var plot = getTableDataAsArray('plot_all_tb'); 
@@ -29739,7 +29748,7 @@ function saveAllTableDataAsCSV(){
   saveArrayToTsv(plot, "biss_" + getNow() + "_plot.tsv"); 
 } 
  
-// The plot data and the occurrence data as one JSON string.
+// The plot data and the occurrence data as one JSON string. 
 function getAllPlotOccDataAsJSON(){ 
   var plot = getTableData( document.getElementById('plot_all_tb') ); 
   var occ  = getTableData( document.getElementById('occ_all_tb' ) ); 
@@ -29766,7 +29775,7 @@ function autoSave(){
   delete json; 
 } 
  
-// Restart the auto save timer with the interval just selected.
+// Restart the auto save timer with the interval just selected. 
 function changeAutoSaveSttting(obj){ 
   var n = obj.value; 
   if(typeof timerId === 'undefined'){ 
@@ -29781,7 +29790,7 @@ function changeAutoSaveSttting(obj){
   } 
 } 
  
-// Save every n minutes from now on.
+// Save every n minutes from now on. 
 function setAutoSave(n){ 
   var min = 1000 * 60; // 1 min: 1000ms * 60sec 
   // timerId: set as global object 
