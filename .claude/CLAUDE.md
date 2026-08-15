@@ -185,5 +185,5 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 ### 補足: 配布物とソースの同期状況
 
-`js2/`・`css/`・`biodiv2.html` を改修したら `www/biss2.html` を再ビルドすること．
+`js2/`・`css2/`・`biodiv2.html` を改修したら `www/biss2.html` を再ビルドすること．
 再ビルドを忘れると，配布物だけが古いまま公開される．
