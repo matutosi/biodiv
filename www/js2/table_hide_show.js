@@ -27,8 +27,9 @@ function hideTableCol(obj){
   // console.log(span);
   // tc: "Show "
   if(span.children.length === 0){
-    span.textContent = "Show: ";
-    span.appendChild( createInput({ type:"button", value:"All cols", onclick:"showAllCols(this)"}) );
+    span.textContent = "";
+    span.appendChild( msgSpan('show_label') );
+    span.appendChild( createInput({ type:"button", value: msg('all_cols'), 'data-msg': 'all_cols', onclick:"showAllCols(this)"}) );
   }
   span.appendChild( createShowColButton(c_name) );
 }
@@ -41,7 +42,7 @@ function showCol(obj){
       table.rows[Rj].cells[c_no].style.display = '';
   }
   // remove
-  if(obj.parentNode.children.length === 2){ obj.parentNode.textContent = ""; } // 2: All cols + this col
+  if(obj.parentNode.children.length === 3){ obj.parentNode.textContent = ""; } // 3: "Show: " + All cols + this col
   obj.remove();
 }
 function hideShowNext(obj){
@@ -54,11 +55,11 @@ function hideShowNext(obj){
     span.style.display = '';
     next.style.display = '';
     next_2.style.display = '';
-    obj.value = "Hide table";
+    setMsg(obj, 'hide_table');
   } else {
     span.style.display = 'none';
     next.style.display = 'none';
     next_2.style.display = 'none';
-    obj.value = "Show table";
+    setMsg(obj, 'show_table');
   }
 }

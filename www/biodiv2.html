@@ -3,6 +3,7 @@
 <script>
 </script>
 
+    <script src="js2/lang.js"          charset="utf-8"></script>
     <script src="js2/font_size.js">                   </script>
     <script src="js2/data.js">                        </script>
     <script src="js2/utils.js">                       </script>
@@ -56,26 +57,30 @@
 
 
 <p>
-<input type="button" value="Save input data" onclick="saveAllTableDataAsCSV()" />
-<input type="button" value="small" onclick="smaller()" />
-<input type="button" value="LARGE"  onclick="larger()"  />
-<span>Biodiversity Investigation Support System (BiSS)</span>
+<select id="select_language" onchange="changeLanguage(this)">
+  <option value="en">English</option>
+  <option value="ja">日本語</option>
+</select>
+<input type="button" value="Save input data" data-msg="save_input" onclick="saveAllTableDataAsCSV()" />
+<input type="button" value="small" data-msg="small" onclick="smaller()" />
+<input type="button" value="LARGE" data-msg="large" onclick="larger()"  />
+<span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span>
 <!--            Switch full screen           -->
-<input id="switch_screen_show" type="button" value="FULL SC <=> windowed"  onclick="switchScreenShow(this.id)" />
-<!--      
+<input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)" />
+<!--
 <input type="button" value="saveHTML"  onclick="saveHTML()" />
 -->
-<input type='button' value="Show example"  onclick="showExample(this)" />
-<input type='button' value="Show manual"   onclick="showManual()" />
+<input type='button' value="Show example" data-msg="show_example" onclick="showExample(this)" />
+<input type='button' value="Show manual"  data-msg="show_manual"  onclick="showManual()" />
 </p>
 
 
 <div class="Biodiversity Investigation System (BIS)">
   <p id="tabcontrol">
-    <a href="#tab_tools"  >Tools     </a>
-    <a href="#tab_settings">Settings </a>
-    <a href="#tab_all"     >All plots</a>
-    <input id = "add_tab" type = "button" value = "+ PLOT" onclick = "addInputTab({ obj:this })" />
+    <a href="#tab_tools"   data-msg="tab_tools"   >Tools    </a>
+    <a href="#tab_settings" data-msg="tab_settings">Settings </a>
+    <a href="#tab_all"      data-msg="tab_all"     >All plots</a>
+    <input id = "add_tab" type = "button" value = "+ PLOT" data-msg="plus_plot" onclick = "addInputTab({ obj:this })" />
   </p>
 
   <div id="tabbody">
@@ -131,7 +136,8 @@
     var tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
     var pages = document.getElementById('tabbody').getElementsByTagName('div');
     updateTab()
-    tabs[1].onclick();  // tab at first 
+    tabs[1].onclick();  // tab at first
+    initLanguage();     // label the page, after it is built
   </script>
 <div>
 

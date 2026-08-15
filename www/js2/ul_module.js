@@ -19,7 +19,7 @@ function addComp(obj, sp = 'Species'){
 }
 
 function createAddCompButton(id){
-  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Add from Composition', onclick: 'addComp(this)'} });
+  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('add_from_comp'), 'data-msg': 'add_from_comp', onclick: 'addComp(this)'} });
 }
 
 function createSpecieUlModule({ species, ns,
@@ -86,15 +86,16 @@ function createSpanWithId(id){
 
 // Select species list
 function createSelectSL(id){
-  var span   = crEl({ el:'span', ih: 'Species <b>list</b>' });
+  var span   = crEl({ el:'span' });
   var select = createSL(id);
+  span.appendChild( msgSpan('s_list') );
   span.appendChild(select);
   return span;
 }
 function createDeleteSL(id){
   var delete_name = id.replace('delete', 'delete_name');
   var span   = crEl({ el:'span' });
-  var delete_button = crEl({ el:'input', ats:{type: 'button', value: 'DELETE', onclick: 'deleteSl(this)', id: id} });
+  var delete_button = crEl({ el:'input', ats:{type: 'button', value: msg('delete_list'), 'data-msg': 'delete_list', onclick: 'deleteSl(this)', id: id} });
   var select = createSL(delete_name, value = '', first_option = '');
   span.appendChild( delete_button );
   span.appendChild( select );
@@ -104,7 +105,7 @@ function deleteSl(obj){
   var sel_de = obj.id.replace('delete', 'delete_name');
   var select = obj.id.replace('delete', 'select');
   var del_list = document.getElementById(sel_de).value;
-  var is_ok = confirm('Sure to DELETE ' + del_list);
+  var is_ok = confirm( msgF('confirm_del_sl', del_list) );
   if(is_ok){
     removeSLinLS(del_list);
     updateSelectSLById(select);
@@ -140,8 +141,9 @@ function setSelectOption(select, value){
 
 
 function createCompCheckbox(id){
-  var span     = crEl({ el:'span', ih: 'Include <b>composition</b>' , ats:{class: 'margin_right'} });
+  var span     = crEl({ el:'span', ats:{class: 'margin_right'} });
   var checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} });
+  span.appendChild( msgSpan('include_comp') );
   span.appendChild(checkbox);
   return span;
 }
@@ -182,17 +184,19 @@ function readFile(file){
   })
 }
 function createRegisterSLButton(id){
-  var span = crEl({el:'span', ih: "<b>Register</b>" });
+  var span = crEl({el:'span' });
   var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "registerSL(this)" } });
+  span.appendChild( msgSpan('register') );
   span.appendChild(file_input);
   return span;
 }
 
 // No. of columns
 function createSelectNumber(id){
-  var span = crEl({el:'span', ih: "<b>No.</b> of cols" });
+  var span = crEl({el:'span' });
   var select = createSelectOpt([1,2,3,4,5,6,7,8,9], 5, id);
   select.setAttribute('onchange', 'changeUlColumns(this)');
+  span.appendChild( msgSpan('n_cols') );
   span.appendChild(select);
   return span;
 }
@@ -238,16 +242,16 @@ function createSpeciesButton({ sp, to_stage, ns }){
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
 }
 function createSLInput(id){
-  var placeholder = "Input species (separate with ',' , '，' or '、')";
-  return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: placeholder, size:'100'} });
+  return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: msg('input_species'), 'data-msg-ph': 'input_species', size:'100'} });
 }
 
 // Plot and Layer
 function createUpdatePLButton(id){
-  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Update plot and layer', onclick: 'updatePlotLayer({ obj:this })'} });
+  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('update_pl'), 'data-msg': 'update_pl', onclick: 'updatePlotLayer({ obj:this })'} });
 }
 function createSelectPlot(id){
-  var span = crEl({ el:'span', ih: 'PLOT' });
+  var span = crEl({ el:'span' });
+  span.appendChild( msgSpan('plot_label') );
   var ns = id.split('-')[1];
   if(ns === 'all' || ns === 'flora'){
     var tables = document.querySelectorAll("table[id^='input_occ']");
@@ -261,7 +265,8 @@ function createSelectPlot(id){
   return span;
 }
 function createSelectLayer(id){
-  var span = crEl({ el:'span', ih: 'Layer:' });
+  var span = crEl({ el:'span' });
+  span.appendChild( msgSpan('layer_label') );
   var tables = document.querySelectorAll("table[id^='input_occ']");
   var ly = 'Layer';
   // console.log(getMultiTableOptions(tables, [ly]));
@@ -315,7 +320,7 @@ function createSelectOptions(id){
 
 // Add species
 function createSLAdd(id){
-  return crEl({ el:'input', ats:{type: 'button', id: id, value: 'Add species to', onclick: 'addSpecies(this)' } });
+  return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } });
 }
 function addSpeciesList(id, add_sp){
   var old_sp_list = document.getElementById(id);

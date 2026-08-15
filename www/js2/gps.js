@@ -51,9 +51,9 @@ function startGPS(obj) {
 
 function createStartGPSButton(){
   //   return createInput({ type: "button", value: "Use GPS", onclick: "startGPS(this)" });
-  return crEl({ el:'input', ats:{type: 'button', value: 'Use GPS', onclick: 'startGPS(this)', class: 'margin_right'} });
+  return crEl({ el:'input', ats:{type: 'button', value: msg('use_gps'), 'data-msg': 'use_gps', onclick: 'startGPS(this)', class: 'margin_right'} });
 
 }
 function createStopGPSButton(){
-  return createInput({ type: "button", value: "Stop GPS", onclick: "stopGPS(this)" });
+  return createInput({ type: "button", value: msg('stop_gps'), 'data-msg': 'stop_gps', onclick: "stopGPS(this)" });
 }

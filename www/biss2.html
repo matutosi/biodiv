@@ -1,4 +1,203 @@
-<html> <head> <script></script> <script>function larger(){""===document.documentElement.style.getPropertyValue("--font-size")&&document.documentElement.style.setProperty("--font-size","16px");var e=document.documentElement.style.getPropertyValue("--font-size"),t=1.2*Number(e.replace("px",""));document.documentElement.style.setProperty("--font-size",t+"px")}function smaller(){""===document.documentElement.style.getPropertyValue("--font-size")&&document.documentElement.style.setProperty("--font-size","16px");var e=document.documentElement.style.getPropertyValue("--font-size"),t=Number(e.replace("px",""))/1.2;document.documentElement.style.setProperty("--font-size",t+"px")}</script> <script>const data_settings={empty:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}}},full:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","auto","auto","auto","auto","button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","","","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","",""]}}},_5_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},_3_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T_height","S_height","H_height","T_cover","S_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T:S:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},no_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],value:["","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}},flora:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","Memo"],type:["auto","fixed","text","text"],value:["","","",""],DELETE:["","","",""],memo:["","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Sampled","Identified","Photo","Memo"],type:["button","text","auto","auto","auto","button","checkbox","checkbox","text","text"],value:["","","","","","","","checked","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}}},data_settings_part={plot:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},altitude_etc:{item:["Altitude","Aspect","Inclination"],type:["number","text","number"]},_5_layers:{item:["T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover"],type:["number","number","number","number","number","number","number","number","number","number"]},_3_layers:{item:["T_height","S_height","H_height","T_cover","S_cover","H_cover"],type:["number","number","number","number","number","number"]},memo:{item:["Photo","Memo"],type:["text","text"]}},occ:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},delete_button:{item:["DELETE"],type:["button"]},_5_layers:{item:["Layer"],type:["list"],value:["T1:T2:S1:S2:H"]},_3_layers:{item:["Layer"],type:["list"],value:["T:S:H"]},species:{item:["Species"],type:["text"],value:[""]},cover_rank:{item:["Cover","Rank"],type:["number","list"],value:["","5:4:3:2:1:+:r"]},sampled_identified:{item:["Sampled","Identified"],type:["checkbox","checkbox"],value:["","checked"]},memo:{item:["Photo","Memo","SameAs"],type:["text","text","auto"]}}};</script> <script>// convert table into array 
+<html> <head> <script></script> <script charset="utf-8">// Language (i18n) support for BISS
+//
+//   All UI labels go through msg() / msgF(), which look up `msgs` with the
+//   current language. An element keeps its message key in a "data-msg"
+//   attribute ("data-msg-ph" for a placeholder, "data-msg-args" for the
+//   arguments of a "%s" message), so applyLanguage() can re-label the whole
+//   page when the language is switched, without rebuilding the DOM and
+//   without losing the data already input.
+//
+//   NOT translated on purpose, because they are DATA and not labels:
+//     - column names and item names ("Species", "Cover", "DATE", ...)
+//     - setting names ("empty", "full", "_5_layers", ...)
+//     - species names, plot names, layer names
+//     - option values that drive logic ('no save' in the auto save select)
+//     - buttons inside a data table (DELETE, UPDATE_TIME_GPS), because
+//       getCellData() exports the value of the button as the cell data;
+//       translating them would change the saved TSV/JSON and break
+//       ecan::read_biss().
+
+var LANGUAGES    = ['en', 'ja'];
+var LANGUAGE_KEY = 'biss_language';
+var currentLanguage = initialLanguage();
+
+// Language to start with: the one chosen last time, else the browser's.
+//    @return  A string, 'en' or 'ja'.
+function initialLanguage(){
+  var saved = null;
+  try { saved = localStorage.getItem(LANGUAGE_KEY); } catch(e) { saved = null; }
+  if(LANGUAGES.indexOf(saved) >= 0){ return saved; }
+  var nav = String(window.navigator.language || 'en').split('-')[0];
+  return (LANGUAGES.indexOf(nav) >= 0) ? nav : 'en';
+}
+
+// Messages in each language.
+//   A message may contain HTML tags and "%s", which msgF() replaces.
+var msgs = {
+  // Header
+  save_input      :{ en: "Save input data"                            , ja: "入力データを保存"                 },
+  small           :{ en: "small"                                      , ja: "文字：小"                         },
+  large           :{ en: "LARGE"                                      , ja: "文字：大"                         },
+  biss            :{ en: "Biodiversity Investigation Support System (BiSS)", ja: "生物多様性調査支援システム (BiSS)" },
+  screen          :{ en: "FULL SC <=> windowed"                       , ja: "フルスクリーン <=> 通常表示"      },
+  show_example    :{ en: "Show example"                               , ja: "例を表示"                         },
+  show_manual     :{ en: "Show manual"                                , ja: "使い方"                           },
+
+  // Tabs
+  tab_tools       :{ en: "Tools"                                      , ja: "ツール"                           },
+  tab_settings    :{ en: "Settings"                                   , ja: "設定"                             },
+  tab_all         :{ en: "All plots"                                  , ja: "全地点"                           },
+  plus_plot       :{ en: "+ PLOT"                                     , ja: "＋ 新規地点"                      },
+
+  // Species list module
+  n_cols          :{ en: "<b>No.</b> of cols"                         , ja: "<b>表示</b>列数"                  },
+  s_list          :{ en: "Species <b>list</b>"                        , ja: "種<b>一覧</b>"                    },
+  include_comp    :{ en: "Include <b>composition</b>"                 , ja: "<b>組成</b>を含める"              },
+  register        :{ en: "<b>Register</b>"                            , ja: "<b>登録</b>"                      },
+  delete_list     :{ en: "DELETE"                                     , ja: "削除"                             },
+  input_species   :{ en: "Input species (separate with ',' , '，' or '、')", ja: "種名を入力 (「,」「，」「、」区切り)" },
+  update_pl       :{ en: "Update plot and layer"                      , ja: "地点・階層を更新"                 },
+  add_species_to  :{ en: "Add species to"                             , ja: "種を追加"                         },
+  add_from_comp   :{ en: "Add from Composition"                       , ja: "組成から追加"                     },
+  plot_label      :{ en: "PLOT"                                       , ja: "地点"                             },
+  layer_label     :{ en: "Layer:"                                     , ja: "階層:"                            },
+  confirm_del_sl  :{ en: "Sure to DELETE %s"                          , ja: "%s を削除します．よろしいですか？"},
+
+  // Flora search
+  replace_flora   :{ en: "Replace <b>flora</b>"                       , ja: "<b>植物相</b>の入替"              },
+  search_name     :{ en: "Search %s"                                  , ja: "%s を検索"                        },
+  input_text      :{ en: "Input text"                                 , ja: "種名を入力"                       },
+  note_search     :{ en: ' "aaa bbb" matches texts including both "aaa" and "bbb".',
+                     ja: "「aaa bbb」は，「aaa」と「bbb」の両方を含む文字列に一致します．" },
+  note_wamei      :{ en: `Wamei (Japanese plant names) is obtained from <br>
+                     Yamanouchi, T., Shutoh, K., Osawa, T., Yonekura, K., Kato, S., Shiga, T. 2019. <br>
+                     A checklist of Japanese plant names. <br>
+                     https://www.gbif.jp/v2/activities/wamei_checklist.html`,
+                     ja: `和名は次の資料によります．<br>
+                     山ノ内崇志・首藤光太郎・大澤剛士・米倉浩司・加藤将・志賀隆 2019. <br>
+                     日本産維管束植物和名チェックリスト. <br>
+                     https://www.gbif.jp/v2/activities/wamei_checklist.html` },
+  alert_over_hits :{ en: "Over %s matches, showing %s matches"        , ja: "一致が %s 件を超えました．%s 件のみ表示します．" },
+
+  // Settings tab
+  interval        :{ en: "Auto save interval (min)"                   , ja: "自動保存間隔 (分)"                },
+  base_setting    :{ en: "<b>Base</b> setting: "                      , ja: "<b>基本</b>設定: "                },
+  add_to          :{ en: "Add to <b>%s</b>: "                         , ja: "<b>%s</b> に追加: "               },
+  use_gps         :{ en: "Use GPS"                                    , ja: "GPS起動"                          },
+  stop_gps        :{ en: "Stop GPS"                                   , ja: "GPS停止"                          },
+  launch_mailer   :{ en: "Launch mailer"                              , ja: "メールソフト起動"                 },
+  alert_email     :{ en: "Input e-mail adress!"                       , ja: "メールアドレスを入力してください．" },
+
+  // Table module
+  load            :{ en: "<b>Load: </b>"                              , ja: "<b>読込: </b>"                    },
+  save            :{ en: "Save"                                       , ja: "保存"                             },
+  file_name       :{ en: "File name"                                  , ja: "ファイル名"                       },
+  add_rows        :{ en: "Add row(s)"                                 , ja: "行を追加"                         },
+  hide_table      :{ en: "Hide table"                                 , ja: "表を非表示"                       },
+  show_table      :{ en: "Show table"                                 , ja: "表を表示"                         },
+  new_occ_table   :{ en: "New occ table"                              , ja: "occ 表を新規作成"                 },
+  fit_width       :{ en: "Fit width"                                  , ja: "幅を狭く"                         },
+  extend_width    :{ en: "Extend width"                               , ja: "横長に"                           },
+  search_text     :{ en: "Search text"                                , ja: "文字列検索"                       },
+  hide            :{ en: "Hide"                                       , ja: "非表示"                           },
+  show_label      :{ en: "Show: "                                     , ja: "表示: "                           },
+  all_cols        :{ en: "All cols"                                   , ja: "全列"                             },
+  calculate       :{ en: "Calculate"                                  , ja: "集計"                             },
+  value_label     :{ en: "<b>Value</b>"                               , ja: "<b>値</b>"                        },
+  group_label     :{ en: "<b>Group</b>"                               , ja: "<b>グループ</b>"                  },
+
+  // Add a plot
+  prompt_plot     :{ en: "Input PLOT name"                            , ja: "地点名を入力"                     },
+  alert_plot_ub   :{ en: "PLOT should NOT include '_' !\n Please use '-' instead.",
+                     ja: "地点名に「_」は使えません．\n「-」を使ってください．" },
+  alert_plot_empty:{ en: "PLOT should NOT be empty!"                  , ja: "地点名を入力してください．"       },
+  alert_plot_dup  :{ en: "%s is already exist. PLOT should NOT be DUPLICATED!",
+                     ja: "%s はすでにあります．地点名は重複できません．" },
+};
+
+// Get a message in the current language.
+//    Falls back to English when the message is missing or empty,
+//    and to the key itself when the key is unknown.
+//    @param key  A string, a key of msgs.
+//    @return     A string.
+function msg(key){
+  var m = msgs[key];
+  if(m === void 0){ return key; }
+  var text = m[currentLanguage];
+  if(text === void 0 || text === ''){ text = m.en; }
+  return text;
+}
+
+// Get a message and replace "%s" with the given values in order.
+//    @param key   A string, a key of msgs.
+//    @param args  Values to embed.
+//    @return      A string.
+//    @examples
+//    msgF('search_name', 'wamei');
+function msgF(key, ...args){
+  var text = msg(key);
+  for(let arg of args){ text = text.replace('%s', arg); }
+  return text;
+}
+
+// Create a span holding a message, which follows the language switch.
+//    @param key   A string, a key of msgs.
+//    @param args  Values to embed into "%s".
+//    @return      A span element.
+function msgSpan(key, ...args){
+  var ats = { 'data-msg': key };
+  if(args.length > 0){ ats['data-msg-args'] = JSON.stringify(args); }
+  return crEl({ el: 'span', ih: msgF(key, ...args), ats: ats });
+}
+
+// Set a message to an element, so that it follows the language switch.
+//    Use for an element whose label changes while the app is running.
+//    @param el    An element.
+//    @param key   A string, a key of msgs.
+//    @param args  Values to embed into "%s".
+function setMsg(el, key, ...args){
+  el.setAttribute('data-msg', key);
+  if(args.length > 0){ el.setAttribute('data-msg-args', JSON.stringify(args)); }
+  applyMsgToElement(el);
+}
+
+// Helper for applyLanguage() and setMsg().
+function applyMsgToElement(el){
+  var args = el.getAttribute('data-msg-args');
+  var args = (args === null) ? [] : JSON.parse(args);
+  var text = msgF(el.getAttribute('data-msg'), ...args);
+  if(el.tagName === 'INPUT'){ el.value = text; } else { el.innerHTML = text; }
+}
+
+// Re-label every element that has a message key.
+function applyLanguage(){
+  for(let el of document.querySelectorAll('[data-msg]')){
+    applyMsgToElement(el);
+  }
+  for(let el of document.querySelectorAll('[data-msg-ph]')){
+    el.setAttribute('placeholder', msg(el.getAttribute('data-msg-ph')));
+  }
+  document.documentElement.setAttribute('lang', currentLanguage);
+}
+
+// Switch the language and remember it.
+//   @param obj  A select element.
+//                 Normally use "this".
+function changeLanguage(obj){
+  var lang = obj.value;
+  if(LANGUAGES.indexOf(lang) < 0){ return void 0; }
+  currentLanguage = lang;
+  try { localStorage.setItem(LANGUAGE_KEY, lang); } catch(e) { }
+  applyLanguage();
+}
+
+// Set the language select and label the page.
+//   Call once, after the page is built.
+function initLanguage(){
+  var select = document.getElementById('select_language');
+  if(select !== null){ setSelectOption(select, currentLanguage); }
+  applyLanguage();
+}</script> <script>function larger(){""===document.documentElement.style.getPropertyValue("--font-size")&&document.documentElement.style.setProperty("--font-size","16px");var e=document.documentElement.style.getPropertyValue("--font-size"),t=1.2*Number(e.replace("px",""));document.documentElement.style.setProperty("--font-size",t+"px")}function smaller(){""===document.documentElement.style.getPropertyValue("--font-size")&&document.documentElement.style.setProperty("--font-size","16px");var e=document.documentElement.style.getPropertyValue("--font-size"),t=Number(e.replace("px",""))/1.2;document.documentElement.style.setProperty("--font-size",t+"px")}</script> <script>const data_settings={empty:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}}},full:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","auto","auto","auto","auto","button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","","","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","",""]}}},_5_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},_3_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T_height","S_height","H_height","T_cover","S_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T:S:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},no_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],value:["","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}},flora:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","Memo"],type:["auto","fixed","text","text"],value:["","","",""],DELETE:["","","",""],memo:["","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Sampled","Identified","Photo","Memo"],type:["button","text","auto","auto","auto","button","checkbox","checkbox","text","text"],value:["","","","","","","","checked","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}}},data_settings_part={plot:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},altitude_etc:{item:["Altitude","Aspect","Inclination"],type:["number","text","number"]},_5_layers:{item:["T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover"],type:["number","number","number","number","number","number","number","number","number","number"]},_3_layers:{item:["T_height","S_height","H_height","T_cover","S_cover","H_cover"],type:["number","number","number","number","number","number"]},memo:{item:["Photo","Memo"],type:["text","text"]}},occ:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},delete_button:{item:["DELETE"],type:["button"]},_5_layers:{item:["Layer"],type:["list"],value:["T1:T2:S1:S2:H"]},_3_layers:{item:["Layer"],type:["list"],value:["T:S:H"]},species:{item:["Species"],type:["text"],value:[""]},cover_rank:{item:["Cover","Rank"],type:["number","list"],value:["","5:4:3:2:1:+:r"]},sampled_identified:{item:["Sampled","Identified"],type:["checkbox","checkbox"],value:["","checked"]},memo:{item:["Photo","Memo","SameAs"],type:["text","text","auto"]}}};</script> <script>// convert table into array 
 //    @param   id_table  A string. A table id. 
 //    @param   header    A logical. true: add header. 
 //    @return  An array. 
@@ -527,7 +726,7 @@ function sortByOrder(array, rank_array){
     sorted_array[rank_array[Ni]] = array[Ni]; 
   } 
   return sorted_array; 
-}</script> <script>function getLat(){return String(locations.lat[locations.lat.length-1])}function getLon(){return String(locations.lon[locations.lon.length-1])}function getAcc(){return String(locations.acc[locations.acc.length-1])}function successCallback(t){locations.lat.push(t.coords.latitude),locations.lon.push(t.coords.longitude),locations.acc.push(t.coords.accuracy)}function errorCallback(t){document.getElementById("poslog").innerHTML+=t.code+", "+t.message+"<br>"}function stopGPS(t){navigator.geolocation.clearWatch(watchId),t.replaceWith(createStartGPSButton())}function startGPS(t){watchId=navigator.geolocation.watchPosition(successCallback,errorCallback,positionOptions),t.replaceWith(createStopGPSButton())}function createStartGPSButton(){return crEl({el:"input",ats:{type:"button",value:"Use GPS",onclick:"startGPS(this)",class:"margin_right"}})}function createStopGPSButton(){return createInput({type:"button",value:"Stop GPS",onclick:"stopGPS(this)"})}var watchId=0,positionOptions={enableHighAccuracy:!0,timeout:6e4,maximumAge:0},locations={lat:[],lon:[],acc:[]};</script> <script>function switchScreenShow(e){document.getElementById(e);checkFullScreen()?document.exitFullscreen():document.body.requestFullscreen()}function checkFullScreen(){var e=!1;return document.fullscreenElement&&(e=!0),e}</script> <script>//  
+}</script> <script>function getLat(){return String(locations.lat[locations.lat.length-1])}function getLon(){return String(locations.lon[locations.lon.length-1])}function getAcc(){return String(locations.acc[locations.acc.length-1])}function successCallback(t){locations.lat.push(t.coords.latitude),locations.lon.push(t.coords.longitude),locations.acc.push(t.coords.accuracy)}function errorCallback(t){document.getElementById("poslog").innerHTML+=t.code+", "+t.message+"<br>"}function stopGPS(t){navigator.geolocation.clearWatch(watchId),t.replaceWith(createStartGPSButton())}function startGPS(t){watchId=navigator.geolocation.watchPosition(successCallback,errorCallback,positionOptions),t.replaceWith(createStopGPSButton())}function createStartGPSButton(){return crEl({el:"input",ats:{type:"button",value:msg("use_gps"),"data-msg":"use_gps",onclick:"startGPS(this)",class:"margin_right"}})}function createStopGPSButton(){return createInput({type:"button",value:msg("stop_gps"),"data-msg":"stop_gps",onclick:"stopGPS(this)"})}var watchId=0,positionOptions={enableHighAccuracy:!0,timeout:6e4,maximumAge:0},locations={lat:[],lon:[],acc:[]};</script> <script>function switchScreenShow(e){document.getElementById(e);checkFullScreen()?document.exitFullscreen():document.body.requestFullscreen()}function checkFullScreen(){var e=!1;return document.fullscreenElement&&(e=!0),e}</script> <script>//  
 //  
 //    @param sp_list An array. 
 //    @examples 
@@ -587,7 +786,7 @@ function replaceArrayAll(array, search, replace){
     replaced.push(a.replaceAll(search, replace)); 
   } 
   return replaced; 
-}</script> <script>function createMailerSpan(){var e=crEl({el:"span",ats:{id:"mailer"}});return e.appendChild(createLaunchMailerButton()),e.appendChild(createEmailInput()),e}function launchMailer(){var e=document.getElementById("email_adress").value;if(!/.+@.+\..+/.test(e))return void alert("Input e-mail adress!");var a=getAllPlotOccDataAsJSON(),t="mailto: "+e+"?subject=biss_"+getNow()+"&body="+a;location.href=t}function createEmailInput(){return span=crEl({el:"input",ats:{id:"email_adress",type:"email",placeholder:"biss@send.mail.com"}})}function createLaunchMailerButton(){return createInput({type:"button",value:"Launch mailer",onclick:"launchMailer()"})}</script> <script>function downloadStrings(strings, file_name){ 
+}</script> <script>function createMailerSpan(){var e=crEl({el:"span",ats:{id:"mailer"}});return e.appendChild(createLaunchMailerButton()),e.appendChild(createEmailInput()),e}function launchMailer(){var e=document.getElementById("email_adress").value;if(!/.+@.+\..+/.test(e))return void alert(msg("alert_email"));var a=getAllPlotOccDataAsJSON(),t="mailto: "+e+"?subject=biss_"+getNow()+"&body="+a;location.href=t}function createEmailInput(){return span=crEl({el:"input",ats:{id:"email_adress",type:"email",placeholder:"biss@send.mail.com"}})}function createLaunchMailerButton(){return createInput({type:"button",value:msg("launch_mailer"),"data-msg":"launch_mailer",onclick:"launchMailer()"})}</script> <script>function downloadStrings(strings, file_name){ 
   var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM 
   var blob = new Blob([bom, strings], { "type" : "text/tsv" }); 
   const url = URL.createObjectURL(blob); 
@@ -642,62 +841,66 @@ function getSelectOne(table, col_name){
     sel_opt.push(option.innerText); 
   } 
   return sel_opt; 
-}</script> <script>// Helper to create input tag with attributes such as class, id, type, value, and placeholder. 
-//    @param ...args Some arguments. 
-//    @return  An input element. 
-//    @examples 
-//    createInput({ type: "text", value: "Val"}); 
-//    createInput({ type: "button", value: "Push here"}); 
-function createInput( ...args ){ 
-  var input = document.createElement('input'); 
-  var keys  = Object.keys(args[0]); 
-  for(let key of keys){ 
-    input.setAttribute(key, args[0][key]); 
-  } 
-  return input; 
-} 
- 
-function createDelButton(){ 
-  return createInput({ type: "button", value: "DELETE", onclick: "delRow(this)" }); 
-} 
-function createUpdateButton(){ 
-  return createInput({ type: "button", value: "UPDATE_TIME_GPS", onclick: "updateTimeGPS(this)" }); 
-} 
-function createFitTable(id){ 
-  return createInput({ type:"button", value: "Fit width", onclick: "shortTable(this)", id: id}); 
-} 
-function createWideTable(){ 
-  return createInput({ type:"button", value: "Extend width", onclick: "wideTable(this)" }); 
-} 
-function createFileButton(){ 
-  return createInput({ type: "file", accept: ".json", onchange: "replaceTable(this)" }); 
-} 
-function createSaveButton(){ 
-  return createInput({ type: "button", value: "Save", onclick: "saveSettings(this)" }); 
-} 
-function createShowColButton(c_name){ 
-  return createInput({ type: "Button", value: c_name, onclick: "showCol(this)" }); 
-} 
-function createSumButton(){ 
-  return createInput({ type: "Button", value: "Calculate", onclick: "sumWithGroup(this)" }); 
-} 
-function createSearchInput(){ 
-  return createInput({ type:"text", onkeyup: "searchTableText(this)", placeholder: "Search text" }); 
-} 
-function createSearchShowInput(id=''){ 
-  return crEl({ el:'input', ats:{type:'text', id: id, placeholder: "Input text"} }); 
-} 
-function createNrowInput(id){ 
-  return createInput({ type: "number", value: "1", step: "1", min: "1", max:"20", id: id }); 
-} 
-function createAddRowButton(id){ 
-  return createInput({ type: "button", value: "Add row(s)", onclick: "addRows(this)", id: id }); 
-} 
-function createHideButton(){ 
-  return createInput({ type: "button", value: "Hide table", onclick: "hideShowNext(this)" }); 
-} 
-function createNewOccButton(){ 
-  return createInput({ type: "button", value: "New occ table", onclick: "makeNewOccTableModule(this)" }); 
+}</script> <script>// Helper to create input tag with attributes such as class, id, type, value, and placeholder.
+//    @param ...args Some arguments.
+//    @return  An input element.
+//    @examples
+//    createInput({ type: "text", value: "Val"});
+//    createInput({ type: "button", value: "Push here"});
+function createInput( ...args ){
+  var input = document.createElement('input');
+  var keys  = Object.keys(args[0]);
+  for(let key of keys){
+    input.setAttribute(key, args[0][key]);
+  }
+  return input;
+}
+
+// NOT translated: the buttons below live in a data table and getCellData()
+//   exports their value as the cell data. See js2/lang.js.
+function createDelButton(){
+  return createInput({ type: "button", value: "DELETE", onclick: "delRow(this)" });
+}
+function createUpdateButton(){
+  return createInput({ type: "button", value: "UPDATE_TIME_GPS", onclick: "updateTimeGPS(this)" });
+}
+
+function createFitTable(id){
+  return createInput({ type:"button", value: msg('fit_width'), 'data-msg': 'fit_width', onclick: "shortTable(this)", id: id});
+}
+function createWideTable(){
+  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)" });
+}
+function createFileButton(){
+  return createInput({ type: "file", accept: ".json", onchange: "replaceTable(this)" });
+}
+function createSaveButton(){
+  return createInput({ type: "button", value: msg('save'), 'data-msg': 'save', onclick: "saveSettings(this)" });
+}
+// NOT translated: c_name is a column name, that is data.
+function createShowColButton(c_name){
+  return createInput({ type: "Button", value: c_name, onclick: "showCol(this)" });
+}
+function createSumButton(){
+  return createInput({ type: "Button", value: msg('calculate'), 'data-msg': 'calculate', onclick: "sumWithGroup(this)" });
+}
+function createSearchInput(){
+  return createInput({ type:"text", onkeyup: "searchTableText(this)", placeholder: msg('search_text'), 'data-msg-ph': 'search_text' });
+}
+function createSearchShowInput(id=''){
+  return crEl({ el:'input', ats:{type:'text', id: id, placeholder: msg('input_text'), 'data-msg-ph': 'input_text'} });
+}
+function createNrowInput(id){
+  return createInput({ type: "number", value: "1", step: "1", min: "1", max:"20", id: id });
+}
+function createAddRowButton(id){
+  return createInput({ type: "button", value: msg('add_rows'), 'data-msg': 'add_rows', onclick: "addRows(this)", id: id });
+}
+function createHideButton(){
+  return createInput({ type: "button", value: msg('hide_table'), 'data-msg': 'hide_table', onclick: "hideShowNext(this)" });
+}
+function createNewOccButton(){
+  return createInput({ type: "button", value: msg('new_occ_table'), 'data-msg': 'new_occ_table', onclick: "makeNewOccTableModule(this)" });
 }</script> <script>//  
 //  
 //  
@@ -728,8 +931,9 @@ function addSettingPart(category, obj){
 function addSettingPartButton(category){ 
   var keys = Object.keys(data_settings_part[category]); 
   var main = crEl({ el:'span'}); 
-  main.appendChild( crEl({ el: 'span', ih: 'Add to <b>' + category + '</b>: ' }) ); 
+  main.appendChild( msgSpan('add_to', category) ); 
   for(let key of keys){ 
+    // NOT translated: key is a name of a setting part, that is data. 
     var input = crEl({ el:'input', ats:{ type:'button', value: key, onclick: 'addSettingPart("' + category + '", this)'} }); 
     main.appendChild(input); 
   } 
@@ -739,7 +943,8 @@ function addSettingPartButton(category){
  
 function createAutoSaveIntervalSelect(){ 
   var main = crEl({ el:'span' }); 
-  main.appendChild( crEl({ el: 'span', ih: 'Auto save interval (min)' }) ); 
+  main.appendChild( msgSpan('interval') ); 
+  // NOT translated: 'no save' is compared in changeAutoSaveSttting(). 
   var settings = ['no save', '1', '3', '5', '10', '15', '30', '60']; 
   var selects = createSelectOpt(settings, selected_no = 0, id = 'select_auto_save_interval'); 
   selects.setAttribute('onChange', 'changeAutoSaveSttting(this)'); 
@@ -750,7 +955,8 @@ function createAutoSaveIntervalSelect(){
  
 function createSettingSelect(){ 
   var main = crEl({ el:'span' }); 
-  main.appendChild( crEl({ el: 'span', ih: '<b>Base</b> setting: ' }) ); 
+  main.appendChild( msgSpan('base_setting') ); 
+  // NOT translated: the keys are names of settings, that are data. 
   var settings = Object.keys(data_settings); 
   var selects = createSelectOpt(settings, selected_no = 0, id = 'select_settings'); 
   selects.setAttribute('onChange', 'changeSettings(this)'); 
@@ -797,12 +1003,12 @@ function tableModule({ table_data, ns,
   if(id_text      != void 0){   up.appendChild( crEl({ el: 'B', tc: ns}) );  
                                 up.appendChild( crEl({ el: 'br' }) ); 
   } 
-  if(load_button  != void 0){   up.appendChild( crEl({ el: 'span', ih: "<b>Load: </b>" }) ); 
+  if(load_button  != void 0){   up.appendChild( msgSpan('load') ); 
                                 up.appendChild( createFileButton() ); 
   } 
                               //     up.appendChild( crEl({ el: 'br' }) ); 
   if(save_button  != void 0){   up.appendChild( createSaveButton() ); 
-                                up.appendChild( createInput({ type: "text", placeholder: "File name" }) ); 
+                                up.appendChild( createInput({ type: "text", placeholder: msg('file_name'), 'data-msg-ph': 'file_name' }) ); 
                                 up.appendChild( crEl({ el: 'br' }) ); 
   } 
   if(search_input != void 0)    up.appendChild( createSearchInput() ); 
@@ -821,9 +1027,9 @@ function tableModule({ table_data, ns,
                                 dn.appendChild( createAddRowButton( ns + '_add_rows') ); 
   } 
   if(calc_button != void 0){    dn.appendChild( crEl({ el: 'hr' }) ); 
-                                dn.appendChild( crEl({ el: 'span', ih: "<b>Value</b>" }) ); 
+                                dn.appendChild( msgSpan('value_label') ); 
                                 dn.appendChild( createSelectOpt( colByType(table, "number") ) ); 
-                                dn.appendChild( crEl({ el: 'span', ih: "<b>Group</b>" }) ); 
+                                dn.appendChild( msgSpan('group_label') ); 
                                 dn.appendChild( createSelectOpt( colByType(table, "list") ) ); 
                                 dn.appendChild( createSumButton() ); 
   } 
@@ -1173,8 +1379,9 @@ function hideTableCol(obj){
   // console.log(span); 
   // tc: "Show " 
   if(span.children.length === 0){ 
-    span.textContent = "Show: "; 
-    span.appendChild( createInput({ type:"button", value:"All cols", onclick:"showAllCols(this)"}) ); 
+    span.textContent = ""; 
+    span.appendChild( msgSpan('show_label') ); 
+    span.appendChild( createInput({ type:"button", value: msg('all_cols'), 'data-msg': 'all_cols', onclick:"showAllCols(this)"}) ); 
   } 
   span.appendChild( createShowColButton(c_name) ); 
 } 
@@ -1187,7 +1394,7 @@ function showCol(obj){
       table.rows[Rj].cells[c_no].style.display = ''; 
   } 
   // remove 
-  if(obj.parentNode.children.length === 2){ obj.parentNode.textContent = ""; } // 2: All cols + this col 
+  if(obj.parentNode.children.length === 3){ obj.parentNode.textContent = ""; } // 3: "Show: " + All cols + this col 
   obj.remove(); 
 } 
 function hideShowNext(obj){ 
@@ -1200,12 +1407,12 @@ function hideShowNext(obj){
     span.style.display = ''; 
     next.style.display = ''; 
     next_2.style.display = ''; 
-    obj.value = "Hide table"; 
+    setMsg(obj, 'hide_table'); 
   } else { 
     span.style.display = 'none'; 
     next.style.display = 'none'; 
     next_2.style.display = 'none'; 
-    obj.value = "Show table"; 
+    setMsg(obj, 'show_table'); 
   } 
 }</script> <script>// Search text input tags in a table and show only matching rows 
 //    Results are shown immediately. 
@@ -1339,21 +1546,21 @@ function getPlotMaxNo(){
 function addInputTab({ obj, id }){ 
   // input PLOT name 
   if(id == void 0){ 
-    var id = prompt("Input PLOT name", ""); 
+    var id = prompt(msg('prompt_plot'), ""); 
   } 
-  if(null === id){  
+  if(null === id){ 
     return void 0; 
   } 
   if(/_/.test(id)){ 
-    alert("PLOT should NOT include '_' !\n Please use '-' instead."); 
-    return void 0;  
+    alert( msg('alert_plot_ub') ); 
+    return void 0; 
   } 
   if('' === id){ 
-    alert("PLOT should NOT be empty!"); 
-    return void 0;  
+    alert( msg('alert_plot_empty') ); 
+    return void 0; 
   } 
   if(null !== document.getElementById(id)){ 
-    alert(id + " is already exist. PLOT should NOT be DUPLICATED!"); 
+    alert( msgF('alert_plot_dup', id) ); 
     return void 0;  
   } 
   // create tabcontrol 
@@ -1571,7 +1778,7 @@ function addComp(obj, sp = 'Species'){
 } 
  
 function createAddCompButton(id){ 
-  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Add from Composition', onclick: 'addComp(this)'} }); 
+  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('add_from_comp'), 'data-msg': 'add_from_comp', onclick: 'addComp(this)'} }); 
 } 
  
 function createSpecieUlModule({ species, ns, 
@@ -1638,15 +1845,16 @@ function createSpanWithId(id){
  
 // Select species list 
 function createSelectSL(id){ 
-  var span   = crEl({ el:'span', ih: 'Species <b>list</b>' }); 
+  var span   = crEl({ el:'span' }); 
   var select = createSL(id); 
+  span.appendChild( msgSpan('s_list') ); 
   span.appendChild(select); 
   return span; 
 } 
 function createDeleteSL(id){ 
   var delete_name = id.replace('delete', 'delete_name'); 
   var span   = crEl({ el:'span' }); 
-  var delete_button = crEl({ el:'input', ats:{type: 'button', value: 'DELETE', onclick: 'deleteSl(this)', id: id} }); 
+  var delete_button = crEl({ el:'input', ats:{type: 'button', value: msg('delete_list'), 'data-msg': 'delete_list', onclick: 'deleteSl(this)', id: id} }); 
   var select = createSL(delete_name, value = '', first_option = ''); 
   span.appendChild( delete_button ); 
   span.appendChild( select ); 
@@ -1656,7 +1864,7 @@ function deleteSl(obj){
   var sel_de = obj.id.replace('delete', 'delete_name'); 
   var select = obj.id.replace('delete', 'select'); 
   var del_list = document.getElementById(sel_de).value; 
-  var is_ok = confirm('Sure to DELETE ' + del_list); 
+  var is_ok = confirm( msgF('confirm_del_sl', del_list) ); 
   if(is_ok){ 
     removeSLinLS(del_list); 
     updateSelectSLById(select); 
@@ -1692,8 +1900,9 @@ function setSelectOption(select, value){
  
  
 function createCompCheckbox(id){ 
-  var span     = crEl({ el:'span', ih: 'Include <b>composition</b>' , ats:{class: 'margin_right'} }); 
+  var span     = crEl({ el:'span', ats:{class: 'margin_right'} }); 
   var checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} }); 
+  span.appendChild( msgSpan('include_comp') ); 
   span.appendChild(checkbox); 
   return span; 
 } 
@@ -1734,17 +1943,19 @@ function readFile(file){
   }) 
 } 
 function createRegisterSLButton(id){ 
-  var span = crEl({el:'span', ih: "<b>Register</b>" }); 
+  var span = crEl({el:'span' }); 
   var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "registerSL(this)" } }); 
+  span.appendChild( msgSpan('register') ); 
   span.appendChild(file_input); 
   return span; 
 } 
  
 // No. of columns 
 function createSelectNumber(id){ 
-  var span = crEl({el:'span', ih: "<b>No.</b> of cols" }); 
+  var span = crEl({el:'span' }); 
   var select = createSelectOpt([1,2,3,4,5,6,7,8,9], 5, id); 
   select.setAttribute('onchange', 'changeUlColumns(this)'); 
+  span.appendChild( msgSpan('n_cols') ); 
   span.appendChild(select); 
   return span; 
 } 
@@ -1790,16 +2001,16 @@ function createSpeciesButton({ sp, to_stage, ns }){
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } }); 
 } 
 function createSLInput(id){ 
-  var placeholder = "Input species (separate with ',' , '，' or '、')"; 
-  return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: placeholder, size:'100'} }); 
+  return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: msg('input_species'), 'data-msg-ph': 'input_species', size:'100'} }); 
 } 
  
 // Plot and Layer 
 function createUpdatePLButton(id){ 
-  return crEl({ el:'input', ats:{type:'button', id: id, value: 'Update plot and layer', onclick: 'updatePlotLayer({ obj:this })'} }); 
+  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('update_pl'), 'data-msg': 'update_pl', onclick: 'updatePlotLayer({ obj:this })'} }); 
 } 
 function createSelectPlot(id){ 
-  var span = crEl({ el:'span', ih: 'PLOT' }); 
+  var span = crEl({ el:'span' }); 
+  span.appendChild( msgSpan('plot_label') ); 
   var ns = id.split('-')[1]; 
   if(ns === 'all' || ns === 'flora'){ 
     var tables = document.querySelectorAll("table[id^='input_occ']"); 
@@ -1813,7 +2024,8 @@ function createSelectPlot(id){
   return span; 
 } 
 function createSelectLayer(id){ 
-  var span = crEl({ el:'span', ih: 'Layer:' }); 
+  var span = crEl({ el:'span' }); 
+  span.appendChild( msgSpan('layer_label') ); 
   var tables = document.querySelectorAll("table[id^='input_occ']"); 
   var ly = 'Layer'; 
   // console.log(getMultiTableOptions(tables, [ly])); 
@@ -1867,7 +2079,7 @@ function createSelectOptions(id){
  
 // Add species 
 function createSLAdd(id){ 
-  return crEl({ el:'input', ats:{type: 'button', id: id, value: 'Add species to', onclick: 'addSpecies(this)' } }); 
+  return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } }); 
 } 
 function addSpeciesList(id, add_sp){ 
   var old_sp_list = document.getElementById(id); 
@@ -29069,28 +29281,27 @@ function getGrandChildrenValues(element){
 ワンピ` 
 var flora = wamei.split("\n");</script> <script charset="utf-8">//  
 function createSearchFloraSpan(name = 'wamei'){ 
-  var note_search = ' "aaa bbb" matches texts including both "aaa" and "bbb".'; 
-  var note_wamei  = `Wamei (Japanese plant names) is obtained from <br> 
-                     Yamanouchi, T., Shutoh, K., Osawa, T., Yonekura, K., Kato, S., Shiga, T. 2019. <br> 
-                     A checklist of Japanese plant names. <br> 
-                     https://www.gbif.jp/v2/activities/wamei_checklist.html`; 
+  var span_wamei = msgSpan('note_wamei'); 
+  span_wamei.setAttribute('id', 'note_wamei'); 
   var main = crEl({ el:'span', ats:{id: 'flora'} }); 
   main.appendChild( createReplaceFloraButton()                                    ); 
   main.appendChild( crEl({ el:'br'                                             }) ); 
   main.appendChild( createSearchShowInput('flora_input')                          ); 
   main.appendChild( createSearchFloraButton(name)                                 ); 
-  main.appendChild( crEl({ el:'span', ih: note_search                          }) ); 
+  main.appendChild( msgSpan('note_search')                                        ); 
   main.appendChild( createSpecieUlModule({ species: '', ns: 'flora', 
                                            show_select_plot: true, 
                                            show_select_options: true           }) ); 
-  main.appendChild( crEl({ el:'span', ih: note_wamei, ats:{id : 'note_wamei'}  }) ); 
+  main.appendChild( span_wamei                                                    ); 
   return main; 
 } 
  
+// @param name  A name of the flora, that is data and NOT translated. 
 function createSearchFloraButton(name){ 
-  var value = "Search " + name; 
   var id    = "search_flora_button"; 
-  return crEl({ el:'input', ats:{ type: "button", id: id, value: value, onclick: "searchFlora(this)" } }); 
+  return crEl({ el:'input', ats:{ type: "button", id: id, value: msgF('search_name', name), 
+                                  'data-msg': 'search_name', 'data-msg-args': JSON.stringify([name]), 
+                                  onclick: "searchFlora(this)" } }); 
 } 
  
 function searchFlora(obj){ 
@@ -29104,7 +29315,7 @@ function searchFlora(obj){
   } 
   var limits = 200; 
   if(species.length > limits){ 
-    alert('Over ' + limits + ' matches, showing ' + limits + ' matches'); 
+    alert( msgF('alert_over_hits', limits, limits) ); 
     species.splice(limits); 
   } 
   var new_flora  = createSpecieUlModule({ species             : species, 
@@ -29116,8 +29327,9 @@ function searchFlora(obj){
 } 
 function createReplaceFloraButton(){ 
   var id = ''; 
-  var span = crEl({el:'span', ih: "Replace <b>flora</b>" }); 
+  var span = crEl({el:'span' }); 
   var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "replaceFlora(this)" } }); 
+  span.appendChild( msgSpan('replace_flora') ); 
   span.appendChild(file_input); 
   return span; 
 } 
@@ -29205,7 +29417,7 @@ function addHideRowTr(table){
   return table; 
 } 
 function createHideTableColButton(){ 
-  return createInput({ type:"button", value: "Hide", onclick: "hideTableCol(this)" }); 
+  return createInput({ type:"button", value: msg('hide'), 'data-msg': 'hide', onclick: "hideTableCol(this)" }); 
 } 
  
 // Helper to create input with select options 
@@ -29320,8 +29532,11 @@ function convertTableData(table_data){
  
   // data_00["setting_plot_01"]["biss_inputs"]["item"] 
   // JSON.stringify(data_00) 
-  // JSON.parse(JSON.stringify(data_00))</script> <script charset="utf-8">function showManual(){ 
-  window.open("https://github.com/matutosi/biodiv/blob/main/man/01-howtouse.md"); 
+  // JSON.parse(JSON.stringify(data_00))</script> <script charset="utf-8">// Open the manual of the current language. 
+function showManual(){ 
+  var base = "https://github.com/matutosi/biodiv/blob/main/man/01-howtouse"; 
+  var suffix = (currentLanguage === 'ja') ? "_jp.md" : "_en.md"; 
+  window.open(base + suffix); 
 } 
  
 function showExample(obj){ 
@@ -29448,4 +29663,4 @@ function setAutoSave(n){
   var min = 1000 * 60; // 1 min: 1000ms * 60sec 
   // timerId: set as global object 
   timerId = setInterval(autoSave, n * min ); 
-}</script> <style> #tabcontrol{ margin:0;} #tabcontrol a{ display:inline-block;border-width:1px 1px 0px 1px; border-style:solid;border-color:black;border-radius:0.75em 0.75em 0px 0px; padding:0.75em 1em;text-decoration:none; color:black;background-color:white;font-weight:bold;position:relative; } #tabbody div{ border:1px solid black;margin-top:-1px; padding:1em;background-color:white;position:relative; z-index:0; min-height:5em; } #tabcontrol a:nth-child(1), #tabbody div:nth-child(1){ background-color:#FFFFE0;}#tabcontrol a:nth-child(2), #tabbody div:nth-child(2){ background-color:#efefff;}#tabcontrol a:nth-child(n+3), #tabbody div:nth-child(n+3){ background-color:#efffef;} </style> <style>select,.margin_right{ margin-right:20px;}:root{ --font-size:16px;}table{ border-collapse:collapse;}input[type="number"]{ width :5em;}input,select,b,span,div{ font-size :var(--font-size);}input[type=checkbox]{ transform:scale(1.2);}input{ }table td,th{ font-size :var(--font-size);border-style:solid; padding :0.3em 1em; text-align :center; }table th{ color:white;background-color:#00552e;cursor:pointer;}table td{ border-width:0px 0px; border-color:#00552e; }table tr:nth-child(odd){ background:#AEFFBD;}table td:before{ content:attr(th-lab);}table tr{ border-width:0.5px 0.5px;border-color:#00552e; border-style:solid; }#tab_tools table tr{ background:#FFFFFF;}#tab_tools table th{ color:white;background-color:#FF6E00;}#tab_settings table th{ color:white;background-color:#0033CC;}#tab_settings table td{ border-width:1px 0px; border-color:#0033CC; }#tab_settings table tr:nth-child(odd){ background:#BAD3FF;}#tab_tools td{ text-align :left;vertical-align:top;background:#FFFFF0;} td #sp_staged{ background:#FF6E00;}</style> <style>:not(:root):fullscreen::backdrop{ background-color:white;}</style> <style>:root{ --cc:5;}ul{ column-count :var(--cc);list-style-type:none;padding-left :1px;padding-right :1px;}</style> <script></script> </head> <body> <p> <input type="button" value="Save input data" onclick="saveAllTableDataAsCSV()"> <input type="button" value="small" onclick="smaller()"> <input type="button" value="LARGE" onclick="larger()"> <span>Biodiversity Investigation Support System (BiSS)</span> <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" onclick="switchScreenShow(this.id)"> <input type="button" value="Show example" onclick="showExample(this)"> <input type="button" value="Show manual" onclick="showManual()"> </p> <div class="Biodiversity Investigation System (BIS)"> <p id="tabcontrol"> <a href="#tab_tools">Tools </a> <a href="#tab_settings">Settings </a> <a href="#tab_all">All plots</a> <input id="add_tab" type="button" value="+ PLOT" onclick="addInputTab({ obj:this })"> </p> <div id="tabbody"> <div id="tab_tools"> <script>var tab_tools=document.getElementById("tab_tools"),ul_all=createSpecieUlModule({species:"",ns:"all",show_select_button:!0,show_comp_checkbox:!0,show_select_ncol:!0,show_delete_list:!0,show_button_register_sl:!0,show_text_input:!0,show_select_plot:!0,show_select_layer:!0});tab_tools.appendChild(ul_all),tab_tools.appendChild(createSearchFloraSpan());</script> </div> <div id="tab_settings"> <script>var tab_setting=document.getElementById("tab_settings");tab_setting.appendChild(createAutoSaveIntervalSelect()),tab_setting.appendChild(createStartGPSButton()),tab_setting.appendChild(createMailerSpan()),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(createSettingSelect()),tab_setting.appendChild(addSettingPartButton("plot")),tab_setting.appendChild(addSettingPartButton("occ")),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(crEl({el:"span"})),tab_setting.appendChild(crEl({el:"span"})),changeSettingsByName("empty");</script> </div> <div id="tab_all"> <span id="plot_all"></span> <span id="occ_all"></span> <span id="comp_table"> <script></script> </span></div> </div> </div> <div> <script>var column_no=0,column_no_prev=0,dir="asc",tabs=document.getElementById("tabcontrol").getElementsByTagName("a"),pages=document.getElementById("tabbody").getElementsByTagName("div");updateTab(),tabs[1].onclick();</script> <div> </div></div></body> </html> 
+}</script> <style> #tabcontrol{ margin:0;} #tabcontrol a{ display:inline-block;border-width:1px 1px 0px 1px; border-style:solid;border-color:black;border-radius:0.75em 0.75em 0px 0px; padding:0.75em 1em;text-decoration:none; color:black;background-color:white;font-weight:bold;position:relative; } #tabbody div{ border:1px solid black;margin-top:-1px; padding:1em;background-color:white;position:relative; z-index:0; min-height:5em; } #tabcontrol a:nth-child(1), #tabbody div:nth-child(1){ background-color:#FFFFE0;}#tabcontrol a:nth-child(2), #tabbody div:nth-child(2){ background-color:#efefff;}#tabcontrol a:nth-child(n+3), #tabbody div:nth-child(n+3){ background-color:#efffef;} </style> <style>select,.margin_right{ margin-right:20px;}:root{ --font-size:16px;}table{ border-collapse:collapse;}input[type="number"]{ width :5em;}input,select,b,span,div{ font-size :var(--font-size);}input[type=checkbox]{ transform:scale(1.2);}input{ }table td,th{ font-size :var(--font-size);border-style:solid; padding :0.3em 1em; text-align :center; }table th{ color:white;background-color:#00552e;cursor:pointer;}table td{ border-width:0px 0px; border-color:#00552e; }table tr:nth-child(odd){ background:#AEFFBD;}table td:before{ content:attr(th-lab);}table tr{ border-width:0.5px 0.5px;border-color:#00552e; border-style:solid; }#tab_tools table tr{ background:#FFFFFF;}#tab_tools table th{ color:white;background-color:#FF6E00;}#tab_settings table th{ color:white;background-color:#0033CC;}#tab_settings table td{ border-width:1px 0px; border-color:#0033CC; }#tab_settings table tr:nth-child(odd){ background:#BAD3FF;}#tab_tools td{ text-align :left;vertical-align:top;background:#FFFFF0;} td #sp_staged{ background:#FF6E00;}</style> <style>:not(:root):fullscreen::backdrop{ background-color:white;}</style> <style>:root{ --cc:5;}ul{ column-count :var(--cc);list-style-type:none;padding-left :1px;padding-right :1px;}</style> <script></script> </head> <body> <p> <select id="select_language" onchange="changeLanguage(this)"> <option value="en">English</option> <option value="ja">日本語</option> </select> <input type="button" value="Save input data" data-msg="save_input" onclick="saveAllTableDataAsCSV()"> <input type="button" value="small" data-msg="small" onclick="smaller()"> <input type="button" value="LARGE" data-msg="large" onclick="larger()"> <span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span> <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)"> <input type="button" value="Show example" data-msg="show_example" onclick="showExample(this)"> <input type="button" value="Show manual" data-msg="show_manual" onclick="showManual()"> </p> <div class="Biodiversity Investigation System (BIS)"> <p id="tabcontrol"> <a href="#tab_tools" data-msg="tab_tools">Tools </a> <a href="#tab_settings" data-msg="tab_settings">Settings </a> <a href="#tab_all" data-msg="tab_all">All plots</a> <input id="add_tab" type="button" value="+ PLOT" data-msg="plus_plot" onclick="addInputTab({ obj:this })"> </p> <div id="tabbody"> <div id="tab_tools"> <script>var tab_tools=document.getElementById("tab_tools"),ul_all=createSpecieUlModule({species:"",ns:"all",show_select_button:!0,show_comp_checkbox:!0,show_select_ncol:!0,show_delete_list:!0,show_button_register_sl:!0,show_text_input:!0,show_select_plot:!0,show_select_layer:!0});tab_tools.appendChild(ul_all),tab_tools.appendChild(createSearchFloraSpan());</script> </div> <div id="tab_settings"> <script>var tab_setting=document.getElementById("tab_settings");tab_setting.appendChild(createAutoSaveIntervalSelect()),tab_setting.appendChild(createStartGPSButton()),tab_setting.appendChild(createMailerSpan()),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(createSettingSelect()),tab_setting.appendChild(addSettingPartButton("plot")),tab_setting.appendChild(addSettingPartButton("occ")),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(crEl({el:"span"})),tab_setting.appendChild(crEl({el:"span"})),changeSettingsByName("empty");</script> </div> <div id="tab_all"> <span id="plot_all"></span> <span id="occ_all"></span> <span id="comp_table"> <script></script> </span></div> </div> </div> <div> <script>var column_no=0,column_no_prev=0,dir="asc",tabs=document.getElementById("tabcontrol").getElementsByTagName("a"),pages=document.getElementById("tabbody").getElementsByTagName("div");updateTab(),tabs[1].onclick(),initLanguage();</script> <div> </div></div></body> </html> 
