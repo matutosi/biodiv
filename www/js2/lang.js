@@ -12,10 +12,14 @@
 //     - setting names ("empty", "full", "_5_layers", ...)
 //     - species names, plot names, layer names
 //     - option values that drive logic ('no save' in the auto save select)
-//     - buttons inside a data table (DELETE, UPDATE_TIME_GPS), because
-//       getCellData() exports the value of the button as the cell data;
-//       translating them would change the saved TSV/JSON and break
-//       ecan::read_biss().
+//
+//   The buttons inside a data table (DELETE, UPDATE_TIME_GPS) ARE translated,
+//   but their English labels are kept as they are. getCellData() exports the
+//   value of a button as the cell data, so a translated label would end up in
+//   a saved settings JSON. That is harmless: createAllInputsTable() drops both
+//   columns before the survey data is saved (so ecan::read_biss() never sees
+//   them), and makeTableJO() rebuilds the buttons from the column name, not
+//   from the saved value.
 
 var LANGUAGES    = ['en', 'ja'];
 var LANGUAGE_KEY = 'biss_language';
@@ -55,6 +59,8 @@ var msgs = {
   include_comp    :{ en: "Include <b>composition</b>"                 , ja: "<b>組成</b>を含める"              },
   register        :{ en: "<b>Register</b>"                            , ja: "<b>登録</b>"                      },
   delete_list     :{ en: "DELETE"                                     , ja: "削除"                             },
+  del_row         :{ en: "DELETE"                                     , ja: "削除"                             },
+  update_time_gps :{ en: "UPDATE_TIME_GPS"                            , ja: "日時・GPS"                        },
   input_species   :{ en: "Input species (separate with ',' , '，' or '、')", ja: "種名を入力 (「,」「，」「、」区切り)" },
   update_pl       :{ en: "Update plot and layer"                      , ja: "地点・階層を更新"                 },
   add_species_to  :{ en: "Add species to"                             , ja: "種を追加"                         },
