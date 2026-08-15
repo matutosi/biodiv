@@ -3,6 +3,15 @@
 
 The goal of BISS is to support biodiversity investigation. 
 
+## Try it in your browser
+
+You can launch BISS without downloading it.
+
+- Current version (recommended): <https://matutosi.github.io/biodiv/biss2.html>
+- Old version (frozen, no longer updated): <https://matutosi.github.io/biodiv/biss.html>
+
+For field survey, download the file (see below) so that it also works offline.
+
 ## How to install
 
 Download the HTML file below and save it in your mobile device or PC.

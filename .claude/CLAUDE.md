@@ -146,6 +146,10 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   多言語対応の案内と，ビルド例 (`biodiv2.html` → `biss2.html`) も現行版に合わせた．
   **ブラウザでの動作確認をしないまま公開している**ので，実機で確認すること
   (見る点は「課題一覧 > A」に書いた)．問題があれば `main` を戻す．
+- **README に GitHub Pages の URL を足した** (`README.md`・`READMEjp.md`)．
+  「ブラウザで試す」の節を作り，<https://matutosi.github.io/biodiv/biss2.html> (現行版) と
+  `biss.html` (旧版) を書いた．ダウンロード用の raw URL は用途が違うのでそのまま残し，
+  野外ではオフラインで動くようダウンロードをすすめる旨を添えた．
 
 ### 課題一覧
 
