@@ -25,6 +25,8 @@
 | `www/css2/`     | 現行版のスタイルシート (こちらを編集する)                              |
 | `man/`          | 使い方マニュアル (`01-howtouse_jp.md` / `_en.md`) と画像・サンプルデータ |
 | `R/`            | `code_analysis.R` (コードの静的な確認用)                               |
+| `test/`         | jsdom の回帰スモークテスト (`npm test`)                                |
+| `e2e/`          | Playwright のブラウザテスト (`pytest`)                                 |
 | `2210veg/`      | 2022年10月 植生学会 発表資料 (要旨・ポスター用画像)                    |
 | `2310veg/`      | 2023年10月 植生学会 発表資料 (要旨・ポスター用画像)                    |
 
@@ -34,7 +36,7 @@
 
 ```
 npm install -g inliner
-inliner -m biodiv2.html > biss2.html
+inliner --inlinemin biodiv2.html > biss2.html
 ```
 
 `www/run_inliner2.bat` が上記を実行する．
@@ -49,10 +51,18 @@ inliner -m biodiv2.html > biss2.html
 スクリプトや自動化から `inliner ... > biss2.html` を実行すると**空のファイルができる**．
 自動化から実行するときは Node の API を使う．
 
+`www/` の中で次を実行する (`npm root -g` でグローバルの場所が分かる)．
+
 ```
-node -e "const I=require('<npmグローバル>/node_modules/inliner');const fs=require('fs');
-process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync('biss2.html',h)})"
+node -e "const I=require('C:/Users/matutosi/AppData/Roaming/npm/node_modules/inliner');
+const fs=require('fs');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync('biss2.html',h)})"
 ```
+
+出力は `.bat` の `--inlinemin` とほぼ同じになる (差は加えた変更の分だけ)．
+
+**サイズを比べるときは行末に注意**．作業ディレクトリの `biss2.html` は CRLF，
+git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見かけの差が出る．
+中身が減ったわけではない．比較は `git show HEAD:www/biss2.html | wc -c` と揃える．
 
 ## 多言語 (日本語・英語)
 
@@ -126,10 +136,22 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 | ファイル | 内容 |
 | -------- | ---- |
-| `package.json`      | `npm run lint` / `npm test` の定義と devDependencies |
-| `eslint.config.js`  | ESLint の設定 (flat config) |
-| `test/biss.js`      | jsdom で `www/biodiv2.html` を組み立てる土台 |
-| `test/smoke.test.js`| 回帰スモークテスト (14件) |
+| `package.json`         | `npm run lint` / `npm test` の定義と devDependencies |
+| `eslint.config.js`     | ESLint の設定 (flat config) |
+| `test/biss.js`         | jsdom で `www/biodiv2.html` を組み立てる土台 |
+| `test/smoke.test.js`   | 回帰スモークテスト (16件) |
+| `requirements-dev.txt` | ブラウザテストの Python 依存 |
+| `pytest.ini`           | pytest の設定 |
+| `e2e/conftest.py`      | Playwright で実ブラウザに読み込ませる土台 |
+| `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (8件 × 2ページ) |
+
+**テストは 2 段構え**．jsdom は速いので編集のたびに，Playwright は遅いので区切りで走らせる．
+
+| | `npm test` (jsdom) | `pytest` (Playwright) |
+| --- | --- | --- |
+| 速さ | 約 9 秒 | 約 8 秒 (初回のブラウザ取得は別) |
+| 対象 | `biodiv2.html` + `js2/` | `biodiv2.html` **と** `biss2.html` の両方 |
+| 見るもの | ロジック・データ・列名 | ファイル選択ダイアログ，実際のダウンロード，表示・非表示，配布物の自己完結 |
 
 - `npm run lint` … `www/js2/` を検査する．旧版 (`www/js/`)・配布物 (`biss*.html`)・
   和名辞書 (`wamei*.js`) は対象外．
@@ -148,11 +170,36 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   ページは `http://biss.test/` から配ったことにする．`file://` だと origin が無く
   `localStorage` が使えないため．
 
+### ブラウザテスト (Playwright + pytest)
+
+初回だけ準備が要る (`.venv` は `.gitignore` 済み)．
+
+```
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements-dev.txt
+.venv/Scripts/python.exe -m playwright install chromium
+.venv/Scripts/python.exe -m pytest
+```
+
+- **`biodiv2.html` と `biss2.html` の両方に同じテストを流す**．
+  `js2/` を直したのに `biss2.html` を再ビルドし忘れると，**配布物の側だけ失敗する**．
+  再ビルド忘れの見張りを兼ねている (実際に A7 で機能することを確認済み)．
+- **`file://` で開く**．野外での使い方 (1ファイルを落として offline で開く) に合わせる．
+  Chromium は `file://` でも `localStorage` を使えるので，jsdom のような細工は要らない．
+- 見ているのは，jsdom では届かないところ．
+  ファイル選択ダイアログ (種一覧の登録)，実際のダウンロード
+  (保存した TSV をファイルとして読み，ヘッダが `ecan::read_biss()` の列と一致すること)，
+  表と列の非表示・再表示 (レイアウトが要る)，配布物が外部へ通信しないこと，
+  言語切替後の実際の表示．
+- **ロケールは `en-US` に固定する** (`conftest.py` の `browser_context_args`)．
+  BISS はブラウザの言語で起動するので，日本語環境と英語環境でテストの結果が変わってしまう．
+  切り替えそのものは，切替のテストの中で明示的に行う．
+
 ## 進捗状況
 
 ### 現在の状態
 
-2026-08-16 06:54 (JST) 更新．
+2026-08-16 08:25 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -263,6 +310,27 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
     `readFile()` が2箇所に重複，`getTableData()` と `getTableDataPlus()` がほぼ同一，
     死にコード (`createNewOccButton`・`createSelectLayer`・`saveHTML`)．
   - **D. 体制**: テストと lint が無かった → 導入済み．
+- **ブラウザテスト (Playwright + pytest) を入れた** (「開発ツール」の節を参照)．
+  jsdom で届かない範囲 — ファイル選択ダイアログ，実際のダウンロード，表示・非表示，
+  配布物の自己完結 — を実ブラウザで見る．8件のテストを
+  `biodiv2.html` と `biss2.html` の**両方**に流すので，計16件．約8秒．
+  - **配布物の再ビルド忘れを見張れることを確かめた**．
+    `biss2.html` を再ビルド前に戻すと，ソース側は成功したまま**配布物側だけが失敗**し，
+    「the species disappeared on coming back」と出た．
+- **`www/biss2.html` を再ビルドした** (777,934 バイト，git 上は前回比 +708 バイト)．
+  ラベル変更と A7 修正が配布物に入った．外部参照が残っていないことは
+  ブラウザテストが毎回確かめる．
+- **ブラウザでの確認で見つかった不具合 (A7) を直した**．**修正済み**．
+  ツールで種一覧を選んだあと，別のタブに移って戻ると一覧の表示が消えていた．
+  `tab.js` の `updateSpeciesList()` が，種一覧のプルダウンを探すセレクタに
+  **表示用 (`sp_list_select-`) と削除用 (`sp_list_delete_name-`) の両方**を入れており，
+  同じ `sp_list_sp_list-<ns>` を2回作り直していた．2回目は削除用プルダウンの値
+  (常に空) から作るため，1回目に並べた種が消える．
+  削除用プルダウンがあるのはツール (`ns = 'all'`) だけなので，ツールでしか起きなかった．
+  選択肢の貼り直しは両方に行い，**表示する一覧を決めるのは表示用だけ**に変えた．
+  貼り直しで要素が入れ替わるため，値は貼り直した後の要素から読む．
+  回帰テストを2件足した (表示が残ること，種一覧の削除が従来どおり動くこと)．
+- **ブラウザでの確認は，これ以外は問題なしとの報告を得た** (課題一覧 A の未確認4件)．
 - **種一覧のチェックボックスのラベルを変えた** (`include_comp`)．
   「組成を含める」→「**出現種を含める**」，"Include composition" → "**Observed species**"．
   `man/01-howtouse_jp.md`・`_en.md` の該当箇所 (各2件) も合わせた．
@@ -282,17 +350,14 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 - **実バグ 6件の修正 (A1〜A6)**: 内容は「現在の状態」の分類 A を参照．
   A6 (地点名のハイフン) は**利用者が案内どおりに操作すると必ず踏む**ので優先度が高い．
-- **ブラウザでしか確認できないものが残っている**．
-  スモークテスト (`npm test`) が見るようになった分は，手で確認しなくてよい．
-  - 自動で見ている: 言語切替でデータが消えないこと，保存する列名が英語のままであること，
-    既存の行のボタンが言語に追随すること，切替後に作った地点のラベルが新しい言語になること，
-    `DELETE` の行削除，`UPDATE_TIME_GPS` の日時更新，列見出しでの並べ替え，
-    地点タブの追加，組成表の作成．
-  - **手で見るしかない**: ファイル選択ダイアログの3か所 (設定の読込・種一覧の登録・
-    植物相の入替)．jsdom では実ダイアログを開けない．
-  - **手で見たほうがよい**: 見た目の崩れ全般．とくに「表を非表示 / 表を表示」の切替と，
-    列の「非表示 → 表示: 全列」の並び (`table_hide_show.js` の子要素数の判定を 2 → 3 に
-    変えたため)．保存した TSV/JSON を実際に `ecan::read_biss()` に通すこと．
+  A7 (ツールの種一覧が消える) は修正済み．
+- **ブラウザでの確認は一巡した**．未確認4件は「問題なし」，A7 のみ見つかって修正済み．
+  以降の確認は，スモークテスト (`npm test`) が見る分を除いて次だけでよい．
+  - ファイル選択ダイアログは Playwright が見るようになった (種一覧の登録)．
+    設定の読込と植物相の入替は，同じ `createFileInput()` を使うのでまだ書いていないだけ．
+  - **手で見たほうがよい**: 見た目の崩れ全般 (テストは要素の表示・非表示までしか見ない)．
+    保存した TSV/JSON を実際に `ecan::read_biss()` に通すこと．
+    スマートフォン・タブレットでの操作．
 
 #### B. 開発環境・ツールの不整合 (優先度 中)
 
@@ -308,3 +373,6 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 `js2/`・`css2/`・`biodiv2.html` を改修したら `www/biss2.html` を再ビルドすること．
 再ビルドを忘れると，配布物だけが古いまま公開される．
+
+**`pytest` がこれを見張る**．同じテストを `biodiv2.html` と `biss2.html` の両方に流すので，
+再ビルドを忘れると配布物の側だけが失敗する．`main` へマージする前に必ず走らせる．
