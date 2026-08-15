@@ -185,7 +185,7 @@ function readFile(file){
 }
 function createRegisterSLButton(id){
   var span = crEl({el:'span' });
-  var file_input = crEl({ el:'input', ats:{ type: "file", id: id, onchange: "registerSL(this)" } });
+  var file_input = createFileInput({ id: id, onchange: "registerSL(this)" });
   span.appendChild( msgSpan('register') );
   span.appendChild(file_input);
   return span;

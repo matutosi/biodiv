@@ -62,6 +62,9 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   (親に直接書くと，貼り直しのときに子要素が消える)．
 - 実行中にラベルが変わるボタンは `setMsg(el, 'キー')` を使う (`value` の直接代入は切替に追随しない)．
 - 選択した言語は localStorage (`biss_language`) に残す．初回はブラウザの言語．
+- **ブラウザが描く UI は翻訳できない**: `<input type="file">` のボタンと
+  「選択されていません」はブラウザの言語で表示され，JS でも CSS でも変えられない．
+  ファイル選択は `createFileInput()` を使う (file 入力を隠し，`msg()` のボタンから開く)．
 - **データは翻訳しない**: 列名・項目名 (`Species`，`DATE` など)，設定名 (`_5_layers` など)，
   種名・地点名・階層名，動作を分岐する option の値 (`no save`，`NEW`)，
   そして**表の中のボタン** (`DELETE`，`UPDATE_TIME_GPS`)．
@@ -150,6 +153,13 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   「ブラウザで試す」の節を作り，<https://matutosi.github.io/biodiv/biss2.html> (現行版) と
   `biss.html` (旧版) を書いた．ダウンロード用の raw URL は用途が違うのでそのまま残し，
   野外ではオフラインで動くようダウンロードをすすめる旨を添えた．
+- **ファイル選択の日本語表示を直した**．英語表示のときも「ファイルを選択」「選択されていません」が
+  出ていたのは，`<input type="file">` の文言をブラウザが描いているため
+  (ページの言語切替では変えられない．CSS でも消せない)．
+  `createFileInput()` (`js2/create_input.js`) を作り，file 入力を `display:none` で隠して
+  `msg('choose_file')` のボタンから `click()` する形にした．
+  該当は3か所 (設定の読込・種一覧の登録・植物相の入替)．
+  `www/biss2.html` を再ビルドした (769,375 バイト)．
 
 ### 課題一覧
 
