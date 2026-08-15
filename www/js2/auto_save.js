@@ -42,7 +42,6 @@ function autoSave(){
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-  delete json;
 }
 
 // Restart the auto save timer with the interval just selected.

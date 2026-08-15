@@ -36,8 +36,12 @@ function successCallback(position){
 }
 
 // GPS error
+//   The book this came from had a <div id="poslog"> to write into. BISS has
+//   no such element, so writing there threw and the error was lost. Report
+//   it to the console instead, where it can be read while the app keeps
+//   running: a position that does not arrive must not stop the survey.
 function errorCallback(positionError) {
-  document.getElementById('poslog').innerHTML += positionError.code + ', ' + positionError.message+ '<br>';
+  console.error('GPS: ' + positionError.code + ', ' + positionError.message);
 }
 
 // stop GPS

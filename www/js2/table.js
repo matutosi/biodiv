@@ -125,22 +125,20 @@ function getTableData(table){
   }
 }
 
-//   @param 
-//   @param 
-//   @return  A table
+// Build a table out of a table definition.
+//   @param table_data  A table definition: biss_c_names, biss_d_types,
+//                        biss_selects and biss_inputs.
+//   @param table_name  A string. The id of the table.
+//   @return  A table element.
 function makeTableJO(table_data, table_name){
-  if(Array.isArray(table_data) === true){
-    var table = createSpeciesListTable(table_data, table_name, n=15);
-  }else{
-    var col_names = table_data.biss_c_names;
-    var dat_types = table_data.biss_d_types;
-    var selects   = table_data.biss_selects;
-    var inputs    = table_data.biss_inputs ;
-    var table = crEl({ el: 'table', ats:{id: table_name} });
-    var table = addThTr(table, col_names);                                    // tr with th (col names)
-    var table = addHideRowTr(table);                                          // tr with hide buttons
-    var table = addTableData(table, col_names, dat_types, selects, inputs);   // table data
-  }
+  var col_names = table_data.biss_c_names;
+  var dat_types = table_data.biss_d_types;
+  var selects   = table_data.biss_selects;
+  var inputs    = table_data.biss_inputs ;
+  var table = crEl({ el: 'table', ats:{id: table_name} });
+  var table = addThTr(table, col_names);                                    // tr with th (col names)
+  var table = addHideRowTr(table);                                          // tr with hide buttons
+  var table = addTableData(table, col_names, dat_types, selects, inputs);   // table data
   return table;
 }
 

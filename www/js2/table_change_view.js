@@ -18,7 +18,7 @@ function shortTable(obj){
     tr.style["flex-wrap"] = "wrap";
   }
   addThLabel(table);
-  obj.replaceWith( createWideTable() );
+  obj.replaceWith( createWideTable(obj.id) );  // keep the id: the two buttons swap
 }
 // Put a table back to its normal shape (th shown, no label in td).
 function wideTable(obj){
@@ -30,7 +30,7 @@ function wideTable(obj){
     tr.style["flex-wrap"] = "";
   }
   removeThLabel(table);
-  obj.replaceWith( createFitTable() );
+  obj.replaceWith( createFitTable(obj.id) );  // keep the id: the two buttons swap
 }
 // Copy the column name into every td, as the 'th-lab' attribute the short table shows.
 function addThLabel(table){

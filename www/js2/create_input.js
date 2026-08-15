@@ -25,13 +25,16 @@ function createUpdateButton(){
   return createInput({ type: "button", value: msg('update_time_gps'), 'data-msg': 'update_time_gps', onclick: "updateTimeGPS(this)" });
 }
 
+// The two buttons below replace each other, so both carry the same id.
+//   Without it the id is lost the first time the shape is switched, and
+//   addInputTab(), which reaches the button by id, no longer finds it.
 // Create the button that folds a table into the narrow (one record per block) shape.
-function createFitTable(id){
+function createFitTable(id = ''){
   return createInput({ type:"button", value: msg('fit_width'), 'data-msg': 'fit_width', onclick: "shortTable(this)", id: id});
 }
 // Create the button that puts a folded table back to its normal shape.
-function createWideTable(){
-  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)" });
+function createWideTable(id = ''){
+  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)", id: id });
 }
 // Create the file input for loading a saved settings JSON.
 function createFileButton(){
