@@ -5,13 +5,22 @@ The goal of BISS is to support biodiversity investigation.
 
 ## How to install
 
-Download biss.html from URL below and save it in your mobile device or PC.
-https://github.com/matutosi/biodiv/tree/main/www
+Download the HTML file below and save it in your mobile device or PC.
+
+- Current version (recommended): biss2.html
+  <https://github.com/matutosi/biodiv/raw/main/www/biss2.html>
+- Old version (frozen, no longer updated): biss.html
+  <https://github.com/matutosi/biodiv/raw/main/www/biss.html>
+
+Both files are in <https://github.com/matutosi/biodiv/tree/main/www>.
+
+The current version supports Japanese and English.
+Use the language select at the top left to switch.
 
 
 ## How to use
 
-Launch biss.html with browser (Chrome etc.).
+Launch biss2.html with browser (Chrome etc.).
 
   # See example
 
@@ -64,7 +73,7 @@ npm install -g inliner
 Run inliner
 
 ```
-inliner -m biodiv.html > biss.html
+inliner -m biodiv2.html > biss2.html
 ```
 
 
