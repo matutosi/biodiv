@@ -10,6 +10,7 @@ function switchScreenShow(id){
   //     button.setAttribute("value", "normal show");
   }
 }
+// true while the page is in full screen.
 function checkFullScreen(){
   var fullscreen_flag = false;
   if(document.fullscreenElement) { fullscreen_flag = true; }

@@ -31,8 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Only the files the app needs. www/tools/ holds prototypes and is
-      # deliberately left out.
+      # Only the files the app needs.
       - name: Collect the files to publish
         run: |
           mkdir -p _site

@@ -23,7 +23,6 @@
 | `www/js2/`      | 現行版の JavaScript (こちらを編集する)                                 |
 | `www/css/`      | 旧版のスタイルシート                                                   |
 | `www/css2/`     | 現行版のスタイルシート (こちらを編集する)                              |
-| `www/tools/`    | 試作・検証用の断片 (配布物には含めない)                                |
 | `man/`          | 使い方マニュアル (`01-howtouse_jp.md` / `_en.md`) と画像・サンプルデータ |
 | `R/`            | `code_analysis.R` (コードの静的な確認用)                               |
 | `2210veg/`      | 2022年10月 植生学会 発表資料 (要旨・ポスター用画像)                    |
@@ -40,6 +39,10 @@ inliner -m biodiv2.html > biss2.html
 
 `www/run_inliner2.bat` が上記を実行する．
 配布するのは `www/biss2.html` (旧版は `www/biss.html`)．
+
+**JavaScript は圧縮されない**．inliner が同梱する uglify が古く ES5 しか解釈できないため，
+`js2/` の ES6 記法 (`...args`，アロー関数，`let`) で圧縮に失敗し，そのまま埋め込まれる．
+動作に問題はなく，ファイルが 2% ほど大きくなるだけ (旧版 `biss.html` は圧縮済みのまま)．
 
 **注意**: inliner は標準入力が端末でないとき，引数のファイルではなく標準入力を読もうとする．
 このため cmd やエクスプローラから `.bat` を実行する分には問題ないが，
@@ -80,7 +83,6 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 ## 配信 (GitHub Pages)
 
 `.github/workflows/pages.yml` が `main` への push で `www/` の中身をサイトのルートとして配信する．
-`www/tools/` は試作物なので配信対象から外している．
 
 - 現行版: <https://matutosi.github.io/biodiv/biss2.html>
 - 旧版: <https://matutosi.github.io/biodiv/biss.html>
@@ -172,6 +174,21 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   英語のラベルは変えず，日本語だけ足している (「多言語」の節を参照)．
   `man/01-howtouse_jp.md` の該当箇所と，前回のファイル選択の変更で古くなった
   「Choose file」の記述も直した (`_en.md` は英語ラベルを変えていないので修正不要)．
+- **積み残しの課題を片づけた** (課題一覧の B と C)．
+  - `R/code_analysis.R` を相対パス化した (作業ディレクトリはプロジェクトルート)．
+    出力先を `dup_codes.txt` に変え，最後のブロックが落ちる `ecodes_funs` のタイプミスも直した．
+  - マニュアルを現行版に合わせた．言語セレクタと「入力データを保存」(TSV 2ファイル) の節を
+    日英に追加し，種名の区切りが「,」「，」「、」であることを明記．
+    日本語版に残っていた英語のボタン名は，実際に表示される日本語ラベルに置き換えた．
+  - **`www/tools/` を削除した**．試作・検証用の断片 54ファイル (jquery・prototype.js などの
+    第三者ライブラリ，`old/` 一式を含む) で，配布物にも配信対象にも入っていなかった．
+    必要になったら git の履歴から取り出す (`R/code_analysis.R` のコメントが参照している
+    `unused.js` も同様)．
+  - `biodiv2.html` の TODO を解消した．`var` を `const`/`let` に整理し
+    (`tabs`・`pages` は他ファイルから参照する live collection なので `const`，
+    `column_no`・`column_no_prev`・`dir` は `sortable.js` が書き換えるので `let`)，
+    `js2/` の全 189 関数に1行の説明コメントを入れた．
+  - `2310veg/missfont.log` を追跡から外し，`.gitignore` に LaTeX の生成物を足した．
 
 ### 課題一覧
 
@@ -196,19 +213,13 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 #### B. 開発環境・ツールの不整合 (優先度 中)
 
-- **`R/code_analysis.R` のパスが古い**: 5行目・8行目が `D:/matu/work/ToDo/biodiv/` を指しており，
-  現在の場所 (`D:/Dropbox/ToDo/biodiv/`) では動かない．
-  `www/run_inliner2.bat` と同じ原因なので，相対パス化するのが望ましい．
+- (なし)
 
 #### C. 整理・確認 (優先度 低)
 
-- **マニュアルと現行機能の突き合わせ**: `_jp.md` / `_en.md` の内容が現行版の挙動と合っているか確認する．
-  最終更新は 2023年で，その後の変更 (入力データの保存，区切り文字の追加，多言語化) が
-  反映されていない．とくに言語セレクタの説明は両方に追記が要る．
-- **`www/tools/` の整理**: 試作・検証用の断片が多数残っている
-  (`not_used.js`，`unused.js`，`old/`，`jquery-3.6.0.js` など)．配布物には含まれない．
-- **`biodiv2.html` 内の TODO**: `var` → `const` への置き換えと，関数のドキュメント整備．
-- **ビルド副産物のコミット**: `2310veg/missfont.log` など，追跡不要なファイルが入っている．
+- **マニュアルの画像が英語表示のまま**: `man/img/*.png` は英語表示で撮ったもの．
+  `01-howtouse_jp.md` のボタン名は日本語に直したので，画像とは表記が食い違う．
+  日本語表示で撮り直すのが望ましい (当面は，画像は英語表示である旨の注記で対応)．
 
 ### 補足: 配布物とソースの同期状況
 

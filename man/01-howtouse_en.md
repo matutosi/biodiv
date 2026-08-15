@@ -7,6 +7,17 @@ Can use auto saving and select several setting for plots and occurrences data.
 
 <img src="img/settings00.png" width="70%">
 
+## Switch the language
+
+The pull-down menu at the top left switches the display between English and Japanese.
+The first time, the browser language is used; the language you pick is remembered on
+the device, so the app opens in the same language next time.
+
+Switching does not clear the data you have already input.
+Column names and item names ("Species", "DATE", ...), species names, plot names,
+layer names and setting names ("\_5\_layers", ...) are **data and are not translated**,
+so a saved file has the same content in either language.
+
 ## Change font size
 
 To change the font size of the entire screen, click "small" and "LAGE" buttons.
@@ -37,6 +48,19 @@ The e-mail application can be set by your tablet or computer.
 
 To use the data in R, save the body of the email as text data.
 For the subsequent operations, see ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#inport-data-into-r-1).
+
+## Save the input data by hand
+
+Click "Save input data" at the top left to save the data as it is at that moment.
+The plot data and the occurrence data are saved as two TSV files (tab separated, UTF8).
+
+- File name: biss\_yyyy\_mm\_dd\_hh\_mm\_ss\_plot.tsv   
+- File name: biss\_yyyy\_mm\_dd\_hh\_mm\_ss\_occ.tsv   
+
+The format differs from the auto save (JSON), so use whichever fits:
+TSV opens in a spreadsheet, JSON is read by `ecan::read_biss()`.
+The columns of the row delete button and the time/GPS update button are not
+included in either of them.
 
 ## Auto save
 
@@ -142,7 +166,7 @@ settigs of flora
 
 > {"biss\_c\_names":["item","type","value","DELETE","memo"],"biss\_d\_types":["text","list","text","button","text"],"biss\_selects":[null,["auto","button","checkbox","fixed","list","text","number","","","","",""],null,null,null],"biss\_inputs":{"item":["DATE","Investigator","Location","Memo"],"type":["auto","fixed","text","text"],"value":["","","",""],"DELETE":["DELETE","DELETE","DELETE","DELETE"],"memo":["","","",""]}}
 
-To restore the saved settings, click the "Choose file" button to the right of "Laod" and select the saved file.
+To restore the saved settings, click the "Choose file" button to the right of "Load" and select the saved file.
 
 ### Setting all items by yourself (not recommended)
 
@@ -332,6 +356,7 @@ Clicking on a temporary registered species button cancels the temporary registra
 Select a layer (if you need) to add from the pull-down menu.
 Species names that do not exist as a button can be registered with the text box.
 When registering multiple species in the text box, separate them with "," (comma).
+The Japanese separators "，" and "、" work as well.
 
 <img src="img/example_species_list02.png" width="90%">
 
@@ -455,6 +480,7 @@ Selecting a PLOT is required, while not layer etc are not required.
 
 Species names that do not exist as a button can be registered with the text box.
 When registering multiple species in the text box, separate them with "," (comma).
+The Japanese separators "，" and "、" work as well.
 
 <img src="img/tools_list08.png" width="70%">
 

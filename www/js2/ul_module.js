@@ -9,6 +9,7 @@ function getSpeciesInComposition(sp = 'Species'){
   removeEmptyInArray(species);
   return species;
 }
+// Add every species of the composition table to the species list of the clicked module.
 function addComp(obj, sp = 'Species'){
   // var sp = 'Species';
   var ns = obj.id.split('-')[1];
@@ -18,10 +19,12 @@ function addComp(obj, sp = 'Species'){
   addSpeciesList(id, species);
 }
 
+// Create the button that calls addComp().
 function createAddCompButton(id){
   return crEl({ el:'input', ats:{type:'button', id: id, value: msg('add_from_comp'), 'data-msg': 'add_from_comp', onclick: 'addComp(this)'} });
 }
 
+// Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out.
 function createSpecieUlModule({ species, ns,
                                 show_select_button     , show_comp_checkbox, show_delete_list, 
                                 show_select_ncol       , 
@@ -92,6 +95,7 @@ function createSelectSL(id){
   span.appendChild(select);
   return span;
 }
+// Create the delete button and the pull down of the list it deletes.
 function createDeleteSL(id){
   var delete_name = id.replace('delete', 'delete_name');
   var span   = crEl({ el:'span' });
@@ -101,6 +105,7 @@ function createDeleteSL(id){
   span.appendChild( select );
   return span;
 }
+// Delete the selected species list after a confirmation, then redraw the pull downs.
 function deleteSl(obj){
   var sel_de = obj.id.replace('delete', 'delete_name');
   var select = obj.id.replace('delete', 'select');
@@ -115,6 +120,7 @@ function deleteSl(obj){
 }
 
 
+// Redraw a species list pull down, keeping what was selected.
 function updateSelectSLById(id){
   var old_select = document.getElementById(id);
   var first_option = (/delete/.test(id)) ? '' : 'NEW'
@@ -122,6 +128,7 @@ function updateSelectSLById(id){
   var new_select = createSL(id, selected_value, first_option);
   old_select.replaceWith(new_select);
 }
+// Create the pull down of the stored species lists ('NEW' first, unless it is the delete one).
 function createSL(id, value = '', first_option = 'NEW'){
   var species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', '');
   species_list.sort();
@@ -132,6 +139,7 @@ function createSL(id, value = '', first_option = 'NEW'){
   return select
 }
 
+// Select the option of that value, or the first one when it is not there.
 function setSelectOption(select, value){
   var options = getSelectOptionInCell(select);
   var index = options.indexOf(value);
@@ -140,6 +148,7 @@ function setSelectOption(select, value){
 }
 
 
+// Create the checkbox that adds the composition species to the list.
 function createCompCheckbox(id){
   var span     = crEl({ el:'span', ats:{class: 'margin_right'} });
   var checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} });
@@ -148,6 +157,7 @@ function createCompCheckbox(id){
   return span;
 }
 
+// Redraw the species buttons for the list just selected.
 function changeSL(obj){
   var ns = obj.id.split('-')[1];
   var id = 'sp_list_sp_list-' + ns;
@@ -183,6 +193,7 @@ function readFile(file){
     reader.readAsText(file);
   })
 }
+// Create the file input that registers a species list from a text file.
 function createRegisterSLButton(id){
   var span = crEl({el:'span' });
   var file_input = createFileInput({ id: id, onchange: "registerSL(this)" });
@@ -200,6 +211,7 @@ function createSelectNumber(id){
   span.appendChild(select);
   return span;
 }
+// Set how many columns the species lists are shown in ('--cc' in the CSS).
 function changeUlColumns(obj){
   var ncols = obj.value;
   document.documentElement.style.setProperty('--cc', ncols);
@@ -231,6 +243,7 @@ function replaceSpeciesList(sl, id, add_comp = true){
   var old_sp_list = document.getElementById(id);
   old_sp_list.replaceWith(new_sp_list);
 }
+// Create the button of one species (to_stage: click stages it, otherwise click takes it back).
 function createSpeciesButton({ sp, to_stage, ns }){
   if(to_stage){
     var id = ns + '_sp_' + sp
@@ -241,6 +254,7 @@ function createSpeciesButton({ sp, to_stage, ns }){
   }
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
 }
+// Create the box for typing species names that have no button.
 function createSLInput(id){
   return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: msg('input_species'), 'data-msg-ph': 'input_species', size:'100'} });
 }
@@ -249,6 +263,7 @@ function createSLInput(id){
 function createUpdatePLButton(id){
   return crEl({ el:'input', ats:{type:'button', id: id, value: msg('update_pl'), 'data-msg': 'update_pl', onclick: 'updatePlotLayer({ obj:this })'} });
 }
+// Create the PLOT pull down: every plot for 'all' and 'flora', the own plot otherwise.
 function createSelectPlot(id){
   var span = crEl({ el:'span' });
   span.appendChild( msgSpan('plot_label') );
@@ -264,6 +279,7 @@ function createSelectPlot(id){
   span.appendChild(plot_select)
   return span;
 }
+// Create the Layer pull down, from the layers the occurrence tables offer.
 function createSelectLayer(id){
   var span = crEl({ el:'span' });
   span.appendChild( msgSpan('layer_label') );
@@ -275,6 +291,7 @@ function createSelectLayer(id){
   span.appendChild(layer_select)
   return span;
 }
+// Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given.
 function updatePlotLayer({ obj }){
   var nss = (obj === void 0) ? ['all', 'flora'] : [obj.id.split('-')[1]];
   var base_name = 'sp_list_';
@@ -285,11 +302,13 @@ function updatePlotLayer({ obj }){
     replaceSelectLayer(layer_id);
   }
 }
+// Replace a PLOT select with a freshly built one.
 function replaceSelectPlot(id){
   var old_plot = document.getElementById(id).parentNode;
   var new_plot = createSelectPlot(id);
   old_plot.replaceWith(new_plot);
 }
+// Replace a Layer select with a freshly built one.
 function replaceSelectLayer(id){
   // console.log(id);
   var old_layer = document.getElementById(id);
@@ -298,6 +317,7 @@ function replaceSelectLayer(id){
   old_layer.replaceWith(new_layer);
 }
 
+// Create one pull down per 'list' column of the occurrence tables (Layer and the like).
 function createSelectOptions(id){
   var ns = id.split('-')[1];
   // console.log(ns);
@@ -322,6 +342,7 @@ function createSelectOptions(id){
 function createSLAdd(id){
   return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } });
 }
+// Add species to a list, keeping it unique and sorted.
 function addSpeciesList(id, add_sp){
   var old_sp_list = document.getElementById(id);
   // console.log(id);
@@ -333,6 +354,7 @@ function addSpeciesList(id, add_sp){
   var new_sp_list = createSpecieList(id, new_sp);
   old_sp_list.replaceWith(new_sp_list);
 }
+// Move a species to the staged row and grey out its button.
 function stageSpecies(obj){
   var ns = obj.parentNode.parentNode.id.split('-')[1];
   var sp_staged = document.getElementById('sp_list_staged-' + ns);
@@ -341,6 +363,7 @@ function stageSpecies(obj){
   var button = createSpeciesButton({ sp: sp, to_stage: false, ns: ns });
   sp_staged.appendChild( button );
 }
+// Take a species off the staged row and enable its button again.
 function unStageSpecies(obj){
   // console.log(obj)
   var ns = obj.parentNode.parentNode.id.split('-')[1];
@@ -350,6 +373,7 @@ function unStageSpecies(obj){
   obj.remove();
 }
 
+// The values of the pull downs of a module, as a JSON string keyed by column name.
 function getSelectOptionsAsJSON(ns){
   // ns = 'all'
   var selector =  "select[id^='sp_list_options_'][id$=" + ns + "]";
@@ -365,6 +389,7 @@ function getSelectOptionsAsJSON(ns){
   return opt_value;
 }
 
+// Add the staged and typed species to the occurrence table of the selected plot, one row each. A name with '_' is read as species_SameAs and counted as unidentified.
 function addSpecies(obj){
   // console.log(obj);
   // console.log(obj.id);
@@ -406,6 +431,7 @@ function addSpecies(obj){
     staged.children[i-1].click();
   }
 }
+// The values of the children of an element.
 function getChildrenValues(element){
   var values = [];
   for(let child of element.children){
@@ -414,6 +440,7 @@ function getChildrenValues(element){
   return values;
 }
 
+// The values of the grandchildren of an element (the buttons in the li of a ul).
 function getGrandChildrenValues(element){
   var values = [];
   for(let child of element.children){

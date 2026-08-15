@@ -20,6 +20,7 @@ function shortTable(obj){
   addThLabel(table);
   obj.replaceWith( createWideTable() );
 }
+// Put a table back to its normal shape (th shown, no label in td).
 function wideTable(obj){
   var table = obj.parentNode.nextElementSibling;
   var rows = table.rows;
@@ -31,6 +32,7 @@ function wideTable(obj){
   removeThLabel(table);
   obj.replaceWith( createFitTable() );
 }
+// Copy the column name into every td, as the 'th-lab' attribute the short table shows.
 function addThLabel(table){
   var c_names = getColNames(table);
   var rows = table.rows;
@@ -42,6 +44,7 @@ function addThLabel(table){
     }
   }
 }
+// Remove the 'th-lab' attribute added by addThLabel().
 function removeThLabel(table){
   var rows = table.rows;
   for(let Ri = 1; Ri < rows.length; Ri++){

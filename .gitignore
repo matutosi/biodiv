@@ -10,3 +10,13 @@ node_modules
 .Rhistory
 merge_push.bat
 .claude/worktrees/
+
+# LaTeX build artifacts (2210veg/, 2310veg/)
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Output of R/code_analysis.R
+dup_codes.txt

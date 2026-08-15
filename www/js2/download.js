@@ -1,3 +1,4 @@
+// Save a string as a file (UTF-8 with BOM) through a click on a hidden link.
 function downloadStrings(strings, file_name){
   var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
   var blob = new Blob([bom, strings], { "type" : "text/tsv" });

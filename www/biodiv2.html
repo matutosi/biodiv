@@ -43,13 +43,6 @@
     <link rel="stylesheet" href="css2/full_screen.css">
     <link rel="stylesheet" href="css2/ul.css">
 
-<script>
-  // test script
-  // // // // // // // // // // // // // // // // // // // 
-  // TODO: var -> const ?
-  // TODO: Write documents for functions.
-  // // // // // // // // // // // // // // // // // // // 
-</script>
 
 </head>
 
@@ -86,8 +79,8 @@
   <div id="tabbody">
     <div id="tab_tools">
       <script>
-        var tab_tools = document.getElementById("tab_tools");
-        var ul_all    = createSpecieUlModule({ species: '', ns: 'all',
+        const tab_tools = document.getElementById("tab_tools");
+        const ul_all    = createSpecieUlModule({ species: '', ns: 'all',
                         show_select_button       : true, show_comp_checkbox   : true, 
                         show_select_ncol         : true, show_delete_list     : true, 
                         show_button_register_sl  : true, 
@@ -100,7 +93,7 @@
 
     <div id="tab_settings">
       <script>
-        var tab_setting = document.getElementById("tab_settings");
+        const tab_setting = document.getElementById("tab_settings");
         tab_setting.appendChild( createAutoSaveIntervalSelect() );
         tab_setting.appendChild( createStartGPSButton()         );
         tab_setting.appendChild( createMailerSpan()     );
@@ -129,12 +122,14 @@
 
 <div>  <!-- need to located at the end of tab HTML -->
   <script>
-    var column_no = 0;       // now clicked
-    var column_no_prev = 0;  // previous clicked
-    var dir = "asc";
+    // let, not const: sortable.js reassigns these three while sorting.
+    let column_no = 0;       // now clicked
+    let column_no_prev = 0;  // previous clicked
+    let dir = "asc";
 
-    var tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
-    var pages = document.getElementById('tabbody').getElementsByTagName('div');
+    // Live HTMLCollections, so a new plot tab shows up without reassigning.
+    const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
+    const pages = document.getElementById('tabbody').getElementsByTagName('div');
     updateTab()
     tabs[1].onclick();  // tab at first
     initLanguage();     // label the page, after it is built

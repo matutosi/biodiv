@@ -1,3 +1,4 @@
+// Create a td for a column, with the input that its data type asks for.
 function createTd(col_name, data_type, select, table_data){
   switch(data_type){
     case "auto": // date, no, GPS
@@ -39,6 +40,7 @@ function createTd(col_name, data_type, select, table_data){
   return td;
 }
 
+// Add the header row (th) built from the column names.
 function addThTr(table, col_names){
   var tr = document.createElement('tr');
   for(let Ni = 0; Ni < col_names.length; Ni++){
@@ -51,13 +53,16 @@ function addThTr(table, col_names){
   return table;
 }
 
+// Number of rows in a table.
 function nRow(table){
   return table.rows.length;
 }
+// Number of cells in the first row of a table.
 function nCol(table){
   return table.rows[0].cells.length;
 }
 
+// Add the second row, which holds a hide button for every column.
 function addHideRowTr(table){
   var tr = crEl({ el: 'tr', ats: {class: 'hide_button'} });
   for(let i = 0; i < nCol(table); i++){
@@ -68,6 +73,7 @@ function addHideRowTr(table){
   table.appendChild(tr)
   return table;
 }
+// Create the button that hides the column it sits in.
 function createHideTableColButton(){
   return createInput({ type:"button", value: msg('hide'), 'data-msg': 'hide', onclick: "hideTableCol(this)" });
 }
@@ -138,6 +144,7 @@ function makeTableJO(table_data, table_name){
   return table;
 }
 
+// Add one tr per record, filling each td through createTd().
 function addTableData(table, col_names, dat_types, selects, inputs){
   for(let Ri = 0; Ri < inputs[col_names[0]].length; Ri++){
     var tr = document.createElement('tr');
@@ -151,6 +158,7 @@ function addTableData(table, col_names, dat_types, selects, inputs){
   return table;
 }
 
+// Turn a settings table (item, type, value per row) into a table definition, where the items become the column names.
 function convertTableData(table_data){
   // var table_data = temp1;
   var c_names = table_data['biss_inputs']['item'];

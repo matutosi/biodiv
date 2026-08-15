@@ -2,10 +2,12 @@ rm(list=ls(all=TRUE));gc();gc();
 library(tidyverse)
 
 ## read file
-main_path <- "D:/matu/work/ToDo/biodiv/www/biodiv2.html"
+## Paths are relative to the project root, so set the working directory
+##   to the folder that holds R/ and www/ before running this script.
+main_path <- "www/biodiv2.html"
 main <- readr::read_tsv(main_path, col_names = "main", show_col_types = FALSE)
 
-funs_path <- "D:/matu/work/ToDo/biodiv/www/js2/"
+funs_path <- "www/js2/"
 
   # fun <- 
 codes_funs <-
@@ -115,7 +117,7 @@ setdiff(sort(all_funs[[1]]), sort(main_funs[[1]])) %>%
 
 
  #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-12-02 16:30前後
- #              D:/matu/work/ToDo/biodiv/www/tools/unused.js
+ #              www/tools/unused.js (deleted; take it from the git history)
  #      hideRow, showRow
  #      createShowRowButton, createHideRowButton
  #      restoreTable restoreTd makeTable
@@ -128,7 +130,7 @@ setdiff(sort(all_funs[[1]]), sort(main_funs[[1]])) %>%
 
 
    #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-07-11 16:18ぐらい
-   #              D:/matu/work/ToDo/biodiv/www/tools/unused.js
+   #              www/tools/unused.js (deleted; take it from the git history)
    #     #  #  #  #  #  #  #  MAYBE UNUSED  #  #  #  #  #  #  #  #  
    #    "fetchLSKeys" "saveTable" "getPosition" "restoreInputPart" "createInputPart" "createSettingSpan"  "createButtonNewTable"
    #      "createInputTable" "createTable" "cloneRows" "cloneRow"  "hiddenInputCols"  "showInputCols" "hideInputCol" 
@@ -141,10 +143,10 @@ rm(list=ls(all=TRUE));gc();gc();
 library(tidyverse)
 
   # read file
-main_path <- "D:/matu/work/ToDo/biodiv/www/biodiv.html"
+main_path <- "www/biodiv2.html"
 main <- readr::read_tsv(main_path, col_names = "main", show_col_types = FALSE)
 
-funs_path <- "D:/matu/work/ToDo/biodiv/www/js2/"
+funs_path <- "www/js2/"
 
 detect_fun <- function(code){
   for(i in 2:length(code)) if(code[i] == "") code[i] <- code[i-1]
@@ -187,9 +189,9 @@ dup_funs <-
   dplyr::filter(n > 4) %>%
   `$`("f")
 
-ecodes_funs %>%
+codes_funs %>%
   dplyr::left_join(dup) %>%
   dplyr::mutate(n = tidyr::replace_na(as.character(n), "")) %>%
   dplyr::filter(f %in% dup_funs) %>%
   dplyr::distinct() %>%
-  readr::write_tsv("d:/dup_codes.txt")
+  readr::write_tsv("dup_codes.txt")
