@@ -122,7 +122,7 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 ### 現在の状態
 
-2026-08-15 (JST) 更新．
+2026-08-16 02:33 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -189,6 +189,15 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
     `column_no`・`column_no_prev`・`dir` は `sortable.js` が書き換えるので `let`)，
     `js2/` の全 189 関数に1行の説明コメントを入れた．
   - `2310veg/missfont.log` を追跡から外し，`.gitignore` に LaTeX の生成物を足した．
+  - 以上を7つのコミットに分け，`develop` から `main` へマージして `origin` へ push した
+    (公開済み)．
+- **ブラウザでの動作確認が溜まっている**．次の4つは実機で未確認のまま公開している．
+  問題があれば `main` を戻す．
+  - 多言語化 (言語セレクタ・切替後のラベル・保存ファイルの列名)
+  - ファイル選択のボタン (`Choose file` / 「ファイルを選ぶ」でダイアログが開くこと)
+  - 表の中のボタン (「削除」「日時・GPS」と，行削除・日時 GPS 更新の動作)
+  - `biodiv2.html` の `const`/`let` 化 (とくに列見出しをクリックしたときの並べ替え．
+    `sortable.js` が `column_no`・`dir` を書き換えるため)
 
 ### 課題一覧
 
@@ -203,13 +212,18 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 - **多言語化のブラウザでの動作確認**: 実機で未確認．次の点を見る．
   - 言語セレクタで日英が切り替わり，入力済みのデータが消えないこと．
   - 切替後に新しく作った地点タブ・表・種一覧のラベルも切り替わっていること．
-  - 保存した TSV/JSON の列名と `DELETE` 列の値が英語のままであること
-    (ここが変わると `ecan::read_biss()` が壊れる)．
+  - 保存した TSV/JSON の列名が英語のままであること
+    (ここが変わると `ecan::read_biss()` が壊れる．
+    `DELETE`・`UPDATE_TIME_GPS` の2列は元から保存されない)．
   - 「表を非表示 / 表を表示」の切替と，列の「非表示 → 表示: 全列」の並びが崩れていないこと
     (`table_hide_show.js` の子要素数の判定を 2 → 3 に変えたため)．
 - **表の中のボタンの動作確認**: `DELETE`・`UPDATE_TIME_GPS` を翻訳した (「多言語」の節を参照)．
   日本語表示で「削除」「日時・GPS」になること，行の削除と日時・GPS の更新が従来どおり動くこと，
   言語を切り替えたときに既存の行のボタンも貼り替わることを見る．
+- **ファイル選択ボタンの動作確認**: 隠した file 入力を自前のボタンから開く方式に変えた．
+  設定の読込・種一覧の登録・植物相の入替の3か所で，ダイアログが開いて読み込めることを見る．
+- **`const`/`let` 化の動作確認**: 列見出しをクリックしたときの並べ替え
+  (`sortable.js` が `column_no`・`dir` を書き換える) と，地点タブの追加・切替を見る．
 
 #### B. 開発環境・ツールの不整合 (優先度 中)
 
