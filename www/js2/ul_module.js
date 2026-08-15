@@ -1,3 +1,17 @@
+// The name space of a species list element, taken from its id.
+//    Every element of a module is named 'sp_list_<part>-<ns>', where <part>
+//    is fixed and holds no '-' (select, checkbox, staged, delete_name, ...)
+//    and <ns> is a plot name, 'all' or 'flora'.
+//    A plot name MAY hold a '-': addInputTab() refuses '_' and tells the user
+//    to write '-' instead. So the name space is everything after the FIRST
+//    '-', not the second field of a split: 'sp_list_select-sito-A' is the
+//    module of plot 'sito-A', not of a plot called 'sito'.
+//    @param  id  A string, the id of an element of a species list module.
+//    @return     A string.
+function getSlNs(id){
+  return id.slice(id.indexOf('-') + 1);
+}
+
 // Get species list in compotition table
 //    @param  sp  A string to specify a species column.
 //                Usually and in default, use 'Species'.
@@ -12,7 +26,7 @@ function getSpeciesInComposition(sp = 'Species'){
 // Add every species of the composition table to the species list of the clicked module.
 function addComp(obj, sp = 'Species'){
   // var sp = 'Species';
-  var ns = obj.id.split('-')[1];
+  var ns = getSlNs(obj.id);
   var id = 'sp_list_sp_list-'+ ns;
   var species = getSpeciesInComposition();
   // console.log(sp_list);
@@ -159,7 +173,7 @@ function createCompCheckbox(id){
 
 // Redraw the species buttons for the list just selected.
 function changeSL(obj){
-  var ns = obj.id.split('-')[1];
+  var ns = getSlNs(obj.id);
   var id = 'sp_list_sp_list-' + ns;
   var sl = document.getElementById('sp_list_select-' + ns).value;
   // console.log('id:' + id + ', sl:' + sl);
@@ -219,7 +233,7 @@ function changeUlColumns(obj){
 
 // Species list
 function createSpecieList(id, species){
-  var ns = id.split('-')[1];
+  var ns = getSlNs(id);
   var ul = crEl({ el:'ul', ats:{id: id} });
   // console.log(species);
   for(let sp of species){
@@ -267,7 +281,7 @@ function createUpdatePLButton(id){
 function createSelectPlot(id){
   var span = crEl({ el:'span' });
   span.appendChild( msgSpan('plot_label') );
-  var ns = id.split('-')[1];
+  var ns = getSlNs(id);
   if(ns === 'all' || ns === 'flora'){
     var tables = document.querySelectorAll("table[id^='input_occ']");
     var pl = 'PLOT';
@@ -293,7 +307,7 @@ function createSelectLayer(id){
 }
 // Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given.
 function updatePlotLayer({ obj }){
-  var nss = (obj === void 0) ? ['all', 'flora'] : [obj.id.split('-')[1]];
+  var nss = (obj === void 0) ? ['all', 'flora'] : [getSlNs(obj.id)];
   var base_name = 'sp_list_';
   for(let ns of nss){
     var plot_id  = base_name + 'plot-'    + ns;
@@ -319,7 +333,7 @@ function replaceSelectLayer(id){
 
 // Create one pull down per 'list' column of the occurrence tables (Layer and the like).
 function createSelectOptions(id){
-  var ns = id.split('-')[1];
+  var ns = getSlNs(id);
   // console.log(ns);
   var selector =  "table[id^='input_occ_']";
   var tables = document.querySelectorAll(selector);
@@ -356,7 +370,7 @@ function addSpeciesList(id, add_sp){
 }
 // Move a species to the staged row and grey out its button.
 function stageSpecies(obj){
-  var ns = obj.parentNode.parentNode.id.split('-')[1];
+  var ns = getSlNs(obj.parentNode.parentNode.id);
   var sp_staged = document.getElementById('sp_list_staged-' + ns);
   var sp = obj.value;
   obj.setAttribute("disabled", true);
@@ -366,7 +380,7 @@ function stageSpecies(obj){
 // Take a species off the staged row and enable its button again.
 function unStageSpecies(obj){
   // console.log(obj)
-  var ns = obj.parentNode.parentNode.id.split('-')[1];
+  var ns = getSlNs(obj.parentNode.parentNode.id);
   var id = ns + '_sp_' + obj.value;
   var sp_button = document.getElementById(id);
   sp_button.removeAttribute("disabled");
@@ -376,13 +390,21 @@ function unStageSpecies(obj){
 // The values of the pull downs of a module, as a JSON string keyed by column name.
 function getSelectOptionsAsJSON(ns){
   // ns = 'all'
-  var selector =  "select[id^='sp_list_options_'][id$=" + ns + "]";
+  // Quote the value and anchor it on the '-'. Unquoted it breaks on a plot
+  // name that is not a plain CSS ident, and unanchored it also matches a
+  // name that merely ends the same way ('all' would match 'small').
+  var selector =  "select[id^='sp_list_options_'][id$='-" + ns + "']";
   var options  = document.querySelectorAll(selector);
+  var prefix = 'sp_list_options_';
   var opt_value = '{"';
   for(let opt of options){
-    var opt_value = 
-      opt_value + 
-      opt.id.replace('sp_list_options_', '').split('-')[0] + '": "' + 
+    // The id is 'sp_list_options_<column>-<ns>'. Either part may hold a '-',
+    // so cut away the prefix and the name space, both of which are known,
+    // instead of splitting on the first '-'.
+    var column = opt.id.slice(prefix.length, opt.id.length - ns.length - 1);
+    var opt_value =
+      opt_value +
+      column + '": "' +
       opt.value + '", "';
   }
   var opt_value = opt_value.replace(/, "$/, '') + '}';
@@ -394,7 +416,7 @@ function addSpecies(obj){
   // console.log(obj);
   // console.log(obj.id);
   var base_name = 'sp_list_';
-  var ns = obj.id.split('-')[1];
+  var ns = getSlNs(obj.id);
   var staged  = document.getElementById(base_name + 'staged-' + ns);
   var input   = document.getElementById(base_name + 'input-'  + ns);
   var plot    = document.getElementById(base_name + 'plot-'   + ns).value;

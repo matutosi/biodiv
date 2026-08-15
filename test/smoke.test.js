@@ -294,17 +294,43 @@ test('deleting one species list leaves the one on screen alone', async () => {
   biss.close();
 });
 
-// A6. addInputTab() refuses '_' and tells the user to use '-' instead, but the
-//   species list module takes the name apart with id.split('-')[1], so a name
-//   that holds a '-' is cut short and the module of that plot is not found.
-//   Marked todo: it fails on purpose until the bug is fixed. See 課題一覧 A.
-test('a plot name may hold a hyphen, as the app tells the user', { todo: 'A6' }, async () => {
+// addInputTab() refuses '_' and tells the user to write '-' instead, so a
+//   plot name that holds a '-' is not an edge case: it is what the message
+//   asks for. The species list module used to take the name apart with
+//   id.split('-')[1] and read 'sito-A' as 'sito'.
+test('a plot name may hold a hyphen, as the app tells the user', async () => {
   const biss = await loadBiss();
   const w = biss.window;
   w.changeSettingsByName('_5_layers');
   addPlot(w, 'sito-A');
 
   assert.ok(w.document.getElementById('input_occ_sito-A_tb'), 'the occurrence table exists');
+  assert.ok(w.document.getElementById('sp_list_module-sito-A'), 'its species list module exists');
+
+  // Adding species has to reach the right plot, not one named 'sito'.
+  w.document.getElementById('sp_list_input-sito-A').value = 'Fagus crenata,Quercus serrata';
+  w.document.getElementById('sp_list_add-sito-A').click();
+  w.updateInputsPlotLayerSpecies();
+
+  const species = colData(w, 'input_occ_sito-A_tb', 'Species');
+  assert.ok(species.includes('Fagus crenata'), 'the species landed in the right table');
+  const plots = colData(w, 'occ_all_tb', 'PLOT').filter(p => p !== '');
+  assert.ok(plots.length > 0, 'the all plots table has rows');
+  assert.ok(plots.every(p => p === 'sito-A'),
+            `the whole plot name is carried over, got ${[...new Set(plots)]}`);
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('a hyphenated plot name keeps its layer pull down', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.changeSettingsByName('_5_layers');
+  addPlot(w, 'sito-A');
+
+  // getSelectOptionsAsJSON() matches the pull downs of one module by id.
+  const options = JSON.parse(w.getSelectOptionsAsJSON('sito-A'));
+  assert.ok('Layer' in options, `Layer is offered, got ${Object.keys(options)}`);
   assert.deepEqual(biss.errors, []);
   biss.close();
 });

@@ -41,6 +41,22 @@ def test_the_species_list_picked_in_tools_survives_a_tab_change(biss):
     assert biss.errors == []
 
 
+def test_a_plot_named_with_a_hyphen_works(biss):
+    """Adding a plot refuses '_' and asks for '-', so '-' has to work."""
+    page = biss.page
+    biss.js("changeSettingsByName('_5_layers')")
+    biss.add_plot("sito-A")
+
+    page.fill("#sp_list_input-sito-A", "Fagus crenata,Quercus serrata")
+    page.click("#sp_list_add-sito-A")
+
+    species = biss.col_data("input_occ_sito-A_tb", "Species")
+    assert "Fagus crenata" in species, "the species did not reach the plot"
+    plots = [p for p in biss.col_data("occ_all_tb", "PLOT") if p != ""]
+    assert set(plots) == {"sito-A"}, f"the plot name was cut: {set(plots)}"
+    assert biss.errors == []
+
+
 def test_a_species_list_can_be_registered_from_a_file(biss, tmp_path):
     """The file dialog is drawn by the browser, so jsdom cannot open it."""
     page = biss.tab("Tools").page

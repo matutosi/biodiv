@@ -59,7 +59,7 @@ function updateSpeciesList(){
   }
   // Query again: updateSelectSLById() puts a new element in place of each one.
   for(let select of document.querySelectorAll(SL_SELECT_SELECTOR)){
-    var ns = select.id.split('-')[1];
+    var ns = getSlNs(select.id);
     var id = 'sp_list_sp_list-' + ns;
     var is_checked = document.getElementById('sp_list_checkbox-' + ns).checked;
     replaceSpeciesList(select.value, id, is_checked);
