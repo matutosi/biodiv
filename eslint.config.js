@@ -61,6 +61,7 @@ module.exports = [
       'www/biss.html',    // built by inliner
       'www/biss2.html',
       'node_modules/**',
+      '.venv/**',         // the Python side of the browser tests
     ],
   },
   {
