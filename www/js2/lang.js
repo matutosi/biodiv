@@ -56,7 +56,7 @@ var msgs = {
   // Species list module
   n_cols          :{ en: "<b>No.</b> of cols"                         , ja: "<b>表示</b>列数"                  },
   s_list          :{ en: "Species <b>list</b>"                        , ja: "種<b>一覧</b>"                    },
-  include_comp    :{ en: "Include <b>composition</b>"                 , ja: "<b>組成</b>を含める"              },
+  include_comp    :{ en: "<b>Observed species</b>"                    , ja: "<b>出現種</b>を含める"            },
   register        :{ en: "<b>Register</b>"                            , ja: "<b>登録</b>"                      },
   delete_list     :{ en: "DELETE"                                     , ja: "削除"                             },
   del_row         :{ en: "DELETE"                                     , ja: "削除"                             },

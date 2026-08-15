@@ -365,7 +365,7 @@ The temporary registered species will be returned to the species list.
 
 <img src="img/example_species_list03.png" width="90%">
 
-If "Include composition" is checked, the names of species that have already been entered for all sites are added to the list.
+If "Observed species" is checked, the names of species that have already been entered for all sites are added to the list.
 Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
 
 <img src="img/example_species_list05.png" width="90%">
@@ -487,7 +487,7 @@ The Japanese separators "，" and "、" work as well.
 Click "Add Species to" to add the species name to the occurrence table.
 The temporary registered species will be returned to the species list.
 
-When "Include composition" is checked, the names of species that have already been entered for all sites are added to the species list.
+When "Observed species" is checked, the names of species that have already been entered for all sites are added to the species list.
 Unidentified species (those not checked in "Identified") will be displayed with the name of the site in a format such as "sp8\_biss02".
 
 <img src="img/tools_list07.png" width="70%">

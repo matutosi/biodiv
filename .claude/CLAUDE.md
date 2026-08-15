@@ -263,6 +263,12 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
     `readFile()` が2箇所に重複，`getTableData()` と `getTableDataPlus()` がほぼ同一，
     死にコード (`createNewOccButton`・`createSelectLayer`・`saveHTML`)．
   - **D. 体制**: テストと lint が無かった → 導入済み．
+- **種一覧のチェックボックスのラベルを変えた** (`include_comp`)．
+  「組成を含める」→「**出現種を含める**」，"Include composition" → "**Observed species**"．
+  `man/01-howtouse_jp.md`・`_en.md` の該当箇所 (各2件) も合わせた．
+  キー名 `include_comp` は変えていない．表示が変わっただけで，
+  組成表から種名を集める仕組みそのものは同じため．
+  **`www/biss2.html` は未再ビルド**なので，配布物にはまだ反映されていない．
 
 ### 課題一覧
 
