@@ -1,3 +1,4 @@
+// Rows of a table as an array, without the second row (the hide buttons).
 function getTableDataAsArray(id_table){
   var data = table2array(id_table, false);
   var data_array =[];
@@ -9,6 +10,7 @@ function getTableDataAsArray(id_table){
   return data_array;
 }
 
+// Save the plot data and the occurrence data as two TSV files.
 function saveAllTableDataAsCSV(){
   var occ  = getTableDataAsArray('occ_all_tb');
   var plot = getTableDataAsArray('plot_all_tb');
@@ -16,6 +18,7 @@ function saveAllTableDataAsCSV(){
   saveArrayToTsv(plot, "biss_" + getNow() + "_plot.tsv");
 }
 
+// The plot data and the occurrence data as one JSON string.
 function getAllPlotOccDataAsJSON(){
   var plot = getTableData( document.getElementById('plot_all_tb') );
   var occ  = getTableData( document.getElementById('occ_all_tb' ) );
@@ -42,6 +45,7 @@ function autoSave(){
   delete json;
 }
 
+// Restart the auto save timer with the interval just selected.
 function changeAutoSaveSttting(obj){
   var n = obj.value;
   if(typeof timerId === 'undefined'){
@@ -56,6 +60,7 @@ function changeAutoSaveSttting(obj){
   }
 }
 
+// Save every n minutes from now on.
 function setAutoSave(n){
   var min = 1000 * 60; // 1 min: 1000ms * 60sec
   // timerId: set as global object

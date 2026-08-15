@@ -23,6 +23,7 @@ function createSearchFloraButton(name){
                                   onclick: "searchFlora(this)" } });
 }
 
+// Search the flora for the input text and show the hits as species buttons.
 function searchFlora(obj){
   var parent    = obj.parentNode;
   var input     = document.getElementById('flora_input').value;
@@ -44,6 +45,7 @@ function searchFlora(obj){
   var old_flora = document.getElementById('sp_list_module-flora');
   old_flora.replaceWith(new_flora);
 }
+// Create the file input that replaces the flora with a text file.
 function createReplaceFloraButton(){
   var id = '';
   var span = crEl({el:'span' });
@@ -52,6 +54,7 @@ function createReplaceFloraButton(){
   span.appendChild(file_input);
   return span;
 }
+// Replace the flora with the species read from the chosen file.
 async function replaceFlora(obj){
   var name = obj.files[0].name.split("\.")[0];
   var text = await readFile(obj.files[0]);

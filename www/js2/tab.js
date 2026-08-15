@@ -1,3 +1,4 @@
+// Show the page of the clicked tab and hide the others (used as the onclick of a tab).
 function changeTab(){
   var ref = decodeURI(this.href);  // For multibyte character
   var targetid = ref.substring(ref.indexOf('#')+1, ref.length);
@@ -24,6 +25,7 @@ function changeTab(){
 }
 
 
+// Give every tab, new ones included, changeTab() as its onclick.
 function updateTab(){
   // get elements
   var tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
@@ -34,12 +36,14 @@ function updateTab(){
   }
 }
 
+// Redraw everything that follows the input: the all plots tables, the PLOT and Layer selects, and the species lists.
 function updateInputsPlotLayerSpecies(){
   updateAllInputsTables();  // All plots
   updatePlotLayer({});      // PLOT and Layer select in Tools
   updateSpeciesList();      // species list
 }
 
+// Redraw every species list from the list selected in it.
 function updateSpeciesList(){
   var selector =  "select[id^='sp_list_delete_name-all'],select[id^='sp_list_select-']:not([id$='-flora'])";
   var sp_sl_selects = document.querySelectorAll(selector);
@@ -53,6 +57,7 @@ function updateSpeciesList(){
   }
 }
 
+// Add the PLOT column, holding the plot name, in front of a table definition.
 function addPlotId(plot_data, id){
   // var plot_data = temp1;
   plot_data['biss_c_names'].unshift('PLOT');
@@ -62,6 +67,7 @@ function addPlotId(plot_data, id){
   return plot_data;
 }
 
+// Add the NO column, holding the plot number, in front of a table definition.
 function addPlotNo(plot_data, no){
   // var plot_data = temp1;
   plot_data['biss_c_names'].unshift('NO');
@@ -71,6 +77,7 @@ function addPlotNo(plot_data, no){
   return plot_data;
 }
 
+// The largest plot number in use, or 0 when there is no plot yet.
 function getPlotMaxNo(){
   var tables = document.querySelectorAll("table[id^='input_plot']");
   var max_no = [0];
@@ -152,6 +159,7 @@ function addInputTab({ obj, id }){
   updateInputsPlotLayerSpecies()
 }
 
+// Rebuild the plot, occurrence and composition tables of the All plots tab.
 function updateAllInputsTables(){
   var pl_table = createAllInputsTable('input_plot')
   var oc_table = createAllInputsTable('input_occ' )
@@ -167,6 +175,7 @@ function updateAllInputsTables(){
   setSortable( searchParentTable(comp_table).id );
 }
 
+// Stack every input table of one kind into one table, without the button columns (DELETE, UPDATE_TIME_GPS).
 function createAllInputsTable(table_name){
   // var table_name = "input_occ"; var table_name = "input_plot";
   var tables = document.querySelectorAll("table[id^='" + table_name + "']");
@@ -194,6 +203,7 @@ function createAllInputsTable(table_name){
                               fit_button: true, hide_button: true});
   return all_table;
 }
+// The column names of several tables, each of them once.
 function getUniqeColNames(tables){
   var c_names = [];
   for(let i = 0; i < tables.length; i++) {
@@ -201,6 +211,7 @@ function getUniqeColNames(tables){
   }
   return uniq(c_names);
 }
+// The data of the given columns, read from several tables and joined per column.
 function getMultiTableInputs(tables, c_names){
   var inputs = [];
   for(let c_name of c_names){
@@ -214,6 +225,7 @@ function getMultiTableInputs(tables, c_names){
   return inputs;
 }
 
+// The names of the columns that hold a pull down in any of the tables.
 function getMultiTableSelects(tables){
   var selects = [];
   for(let table of tables){
@@ -227,6 +239,7 @@ function getMultiTableSelects(tables){
   return uniq(selects);
 }
 
+// The options of the given columns, collected over several tables.
 function getMultiTableOptions(tables, c_names){
   var options = [];
   for(let c_name of c_names){
@@ -238,6 +251,7 @@ function getMultiTableOptions(tables, c_names){
   return options;
 }
 
+// Make an unidentified species name unique per plot (or per the plot named in SameAs), so that two of them are not counted as one.
 function checkSameAs(inputs, pl, sp, id, sa){
   // var inputs = temp1; var pl = 'PLOT'; var sp = 'Species'; var id = 'Identified'; var sa = 'SameAs';
   for(let i=0; i < inputs[pl].length; i++){
@@ -250,6 +264,7 @@ function checkSameAs(inputs, pl, sp, id, sa){
   }
   return inputs;
 }
+// Build the composition table: species by plot, holding the cover ('--' when present without a cover).
 function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id = "Identified", sa = "SameAs"){
   // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']");
   var inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]);

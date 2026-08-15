@@ -76,6 +76,7 @@ function randInt(n, max){
   }
   return sample
 }
+// Take n random elements from an array (only_once: never take the same one twice).
 function randSample(n, array, only_once = false){
   var sample = [];
   if(only_once){
@@ -93,6 +94,7 @@ function randSample(n, array, only_once = false){
   }
   return sample;
 }
+// Shuffle an array.
 function randSort(array){
   return randSample(array.length, array, true);
 }
@@ -149,6 +151,7 @@ function hash2table(hash_array){
 function isTable(obj){
   return obj.tagName === 'TABLE';
 }
+// true when an element holds at least one table.
 function hasTable(obj){
   return obj.getElementsByTagName('table').length > 0;
 }
@@ -382,11 +385,13 @@ function uniq(array){
   return Array.from(new Set(array));
 }
 
+// Remove every empty string from an array, in place.
 function removeEmptyInArray(array){
   while(array.indexOf('') >= 0){
     array.splice(array.indexOf(''), 1);
   }
 }
+// Every index at which an element appears in an array.
 function multiIndexOf(array, element){
   var indices = [];
   let idx = array.indexOf(element);

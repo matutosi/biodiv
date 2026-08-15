@@ -19,6 +19,7 @@ function addSLinLS(sp_list, ns='base'){
   var new_list = uniq(new_list.sort());
   localStorage.setItem('biss_sl-' + ns, new_list);
 }
+// The species list stored for a name space, or '' when there is none.
 function getSLinLS(ns='base'){
   if(localStorage['biss_sl-' + ns] === void 0){
     return '';
@@ -26,7 +27,9 @@ function getSLinLS(ns='base'){
     return localStorage['biss_sl-' + ns].split(',');
   }
 }
+// Remove every stored species list.
 function removeSLinLSAll(){ removeSLinLS('all_remove'); }
+// Remove the species list of a name space ('all_remove' for all of them).
 function removeSLinLS(ns='base'){
   if(ns === 'all_remove'){
     var keys = getKeysOfSLinLS();
@@ -35,14 +38,17 @@ function removeSLinLS(ns='base'){
     localStorage.removeItem('biss_sl-' + ns);
   }
 }
+// Every key in localStorage.
 function getLSKeys(){
   return Object.keys(localStorage);
 }
+// The localStorage keys that hold a species list.
 function getKeysOfSLinLS(){
   var keys = getLSKeys();
   // var keys = ['biss_sl-2', 'biss_sl-1', 'bis_sl-1', 'abiss_sl-1'];
   return grepArray(keys, /^biss_sl-/);
 }
+// The elements of an array that match a regular expression.
 function grepArray(array, regex){
   var matched = [];
   for(let a of array){
@@ -52,6 +58,7 @@ function grepArray(array, regex){
   }
   return matched;
 }
+// Replace a string in every element of an array.
 function replaceArrayAll(array, search, replace){
   var replaced = [];
   for(let a of array){

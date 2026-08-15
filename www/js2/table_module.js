@@ -25,6 +25,7 @@ function addSettingPart(category, obj){
   }
 }
 
+// Create one button per setting part (date_GPS etc.) of a category, plot or occ.
 function addSettingPartButton(category){
   var keys = Object.keys(data_settings_part[category]);
   var main = crEl({ el:'span'});
@@ -38,6 +39,7 @@ function addSettingPartButton(category){
   return main;
 }
 
+// Create the pull down that picks the auto save interval in minutes.
 function createAutoSaveIntervalSelect(){
   var main = crEl({ el:'span' });
   main.appendChild( msgSpan('interval') );
@@ -50,6 +52,7 @@ function createAutoSaveIntervalSelect(){
 }
 
 
+// Create the pull down that picks the base setting (full, _5_layers, ...).
 function createSettingSelect(){
   var main = crEl({ el:'span' });
   main.appendChild( msgSpan('base_setting') );
@@ -62,11 +65,13 @@ function createSettingSelect(){
   return main;
 }
 
+// Switch to the base setting of that name, as if it were picked in the pull down.
 function changeSettingsByName(ns){
   var select = document.getElementById('select_settings');
   select.selectedIndex = getSelectOptionInCell(select).indexOf(ns)
   changeSettings(select);
 }
+// Rebuild the plot and occ setting tables from the base setting just picked.
 function changeSettings(obj){
   var setting = obj.value;
   var new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot',

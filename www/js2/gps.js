@@ -16,8 +16,11 @@ var locations = {
   acc: []
 };
 
+// The latitude of the last position the GPS reported.
 function getLat() { return String(locations.lat[locations.lat.length - 1]); }
+// The longitude of the last position the GPS reported.
 function getLon() { return String(locations.lon[locations.lon.length - 1]); }
+// The accuracy (m) of the last position the GPS reported.
 function getAcc() { return String(locations.acc[locations.acc.length - 1]); }
 
 
@@ -49,11 +52,13 @@ function startGPS(obj) {
   obj.replaceWith( createStopGPSButton() );
 }
 
+// Create the button that starts watching the position.
 function createStartGPSButton(){
   //   return createInput({ type: "button", value: "Use GPS", onclick: "startGPS(this)" });
   return crEl({ el:'input', ats:{type: 'button', value: msg('use_gps'), 'data-msg': 'use_gps', onclick: 'startGPS(this)', class: 'margin_right'} });
 
 }
+// Create the button that stops watching the position.
 function createStopGPSButton(){
   return createInput({ type: "button", value: msg('stop_gps'), 'data-msg': 'stop_gps', onclick: "stopGPS(this)" });
 }

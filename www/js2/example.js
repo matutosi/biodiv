@@ -5,6 +5,7 @@ function showManual(){
   window.open(base + suffix);
 }
 
+// Fill the app with a sample survey (two plots, five layers, random cover).
 function showExample(obj){
 
   // select settings: '_5_layers'
@@ -58,6 +59,7 @@ function showExample(obj){
   obj.remove();
 }
 
+// Add n random occurrence rows to a plot table.
 function addSampleOcc(plot, n ,layers, species, identified){
   var ly = randSample(n, layers,  false);
   var sp = randSample(n, species, false);

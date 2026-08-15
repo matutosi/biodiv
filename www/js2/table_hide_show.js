@@ -14,6 +14,7 @@ function showAllCols(obj){
   }
   obj.parentNode.textContent = "";
 }
+// Hide the column of the clicked button, and add a button that brings it back.
 function hideTableCol(obj){
   // console.log(obj.parentNode.parentNode.parentNode);
   var table = searchParentTable(obj);
@@ -33,6 +34,7 @@ function hideTableCol(obj){
   }
   span.appendChild( createShowColButton(c_name) );
 }
+// Show the column named on the clicked button, then drop that button.
 function showCol(obj){
   // show col
   var c_name = obj.value;
@@ -45,6 +47,7 @@ function showCol(obj){
   if(obj.parentNode.children.length === 3){ obj.parentNode.textContent = ""; } // 3: "Show: " + All cols + this col
   obj.remove();
 }
+// Hide or show the table that follows the clicked button.
 function hideShowNext(obj){
   // console.log(obj);
   // console.log(obj.parentNode.nextElementSibling);

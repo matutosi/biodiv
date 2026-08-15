@@ -19,6 +19,7 @@ function larger(){
   var size = Number(f_size.replace('px', '')) * 1.2;
   document.documentElement.style.setProperty('--font-size', size + 'px');
 }
+// Shrink the whole screen by 1/1.2, from the same '--font-size'.
 function smaller(){
   if(document.documentElement.style.getPropertyValue('--font-size') === ''){
     document.documentElement.style.setProperty('--font-size', '16px');
