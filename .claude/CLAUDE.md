@@ -152,7 +152,7 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 ### 現在の状態
 
-2026-08-16 02:33 (JST) 更新．
+2026-08-16 06:54 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -228,6 +228,41 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   - 表の中のボタン (「削除」「日時・GPS」と，行削除・日時 GPS 更新の動作)
   - `biodiv2.html` の `const`/`let` 化 (とくに列見出しをクリックしたときの並べ替え．
     `sortable.js` が `column_no`・`dir` を書き換えるため)
+- **リファクタリングに着手した**．方針は「案1 安全第一」(振る舞いを変えず，
+  実バグの修正・暗黙のグローバル撲滅・`var`→`let`/`const`・死にコード削除・重複統合まで．
+  ES モジュール化などの構造変更はしない)．手順は
+  「未確認4件の確認 → ツール導入 → 実バグ(A) → 言語仕様(B) → 整理(C) → 再ビルド → マージ」．
+- **開発ツールを導入した** (「開発ツール」の節を参照)．`package.json`・`eslint.config.js`・
+  `test/` を新規作成した．配布物 `www/biss2.html` は inliner が `js2/` から作るので，
+  これらは**配布物に一切入らない**．
+  - ESLint の初回結果は**エラー 102 件・警告 530 件** (警告はほぼ `no-var`・`prefer-const`)．
+  - jsdom のスモークテストは 14 件中 13 件成功，1 件は未修正のバグ (A6) を記録する `todo` (約 9 秒)．
+  - **テストが新しい実バグ (A6) を見つけた**．地点名にハイフンを含めると種一覧が壊れる．
+- **コードを点検して問題を4つに分類した**．
+  - **A. 実バグ (6件)**:
+    (A1) `table.js:133` の `createSpeciesListTable()` が未定義で，`makeTableJO()` に配列を渡すと
+    ReferenceError． (A2) `gps.js:40` が参照する `poslog` 要素が `biodiv2.html` に無く，
+    GPS エラー時に TypeError． (A3) `table_change_view.js:33` の `wideTable()` が
+    `createFitTable()` を id 無しで呼ぶため，「横長に」で `input_occ_*_fit` の id が消える．
+    (A4) `sortable.js` の `column_no`・`column_no_prev`・`dir` が全表で共有され，
+    表をまたぐと並べ替えの方向が混線する． (A5) `auto_save.js:45` の `delete json;` は無意味
+    (strict mode では SyntaxError)．
+    (A6) **地点名にハイフンを含めると種一覧モジュールが壊れる**．
+    `tab.js` の `updateSpeciesList()` と `ul_module.js` の各所が `id.split('-')[1]` で
+    名前空間を取り出しており，`sp_list_select-sito-A` が `sito` に切られる．
+    `addInputTab()` は「`_` は使えないので `-` を使ってください」と案内するので，
+    利用者は必ず踏む (`sito-A` で `Cannot read properties of null (reading 'checked')`)．
+    スモークテストが見つけた．
+  - **B. 言語仕様レベル**: `var` 525 に対し `let`/`const` 129．
+    `f(a, id = 'x')` という名前付き引数のエミュレーションが**グローバル変数を作ってから**値を渡している
+    (`strings`・`file_name`・`selected_no`・`id`・`value`・`first_option`・`n`・`list_with_index`)．
+    宣言なしの代入によるグローバルも多数 (`Ri`・`i`・`sum`・`new_array`・`selected_opt`・
+    `layers`・`species`・`identified`・`timerId`・`span`)．
+  - **C. 設計上の脆さ**: DOM を `parentNode.nextSibling` の4連で辿る，配列をハッシュとして使う，
+    `table.rows[2]` (最初のデータ行) というマジックインデックスが6箇所，列名リテラルの散在，
+    `readFile()` が2箇所に重複，`getTableData()` と `getTableDataPlus()` がほぼ同一，
+    死にコード (`createNewOccButton`・`createSelectLayer`・`saveHTML`)．
+  - **D. 体制**: テストと lint が無かった → 導入済み．
 
 ### 課題一覧
 
@@ -239,25 +274,23 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 #### A. 機能として未完了 (優先度 高)
 
-- **多言語化のブラウザでの動作確認**: 実機で未確認．次の点を見る．
-  - 言語セレクタで日英が切り替わり，入力済みのデータが消えないこと．
-  - 切替後に新しく作った地点タブ・表・種一覧のラベルも切り替わっていること．
-  - 保存した TSV/JSON の列名が英語のままであること
-    (ここが変わると `ecan::read_biss()` が壊れる．
-    `DELETE`・`UPDATE_TIME_GPS` の2列は元から保存されない)．
-  - 「表を非表示 / 表を表示」の切替と，列の「非表示 → 表示: 全列」の並びが崩れていないこと
-    (`table_hide_show.js` の子要素数の判定を 2 → 3 に変えたため)．
-- **表の中のボタンの動作確認**: `DELETE`・`UPDATE_TIME_GPS` を翻訳した (「多言語」の節を参照)．
-  日本語表示で「削除」「日時・GPS」になること，行の削除と日時・GPS の更新が従来どおり動くこと，
-  言語を切り替えたときに既存の行のボタンも貼り替わることを見る．
-- **ファイル選択ボタンの動作確認**: 隠した file 入力を自前のボタンから開く方式に変えた．
-  設定の読込・種一覧の登録・植物相の入替の3か所で，ダイアログが開いて読み込めることを見る．
-- **`const`/`let` 化の動作確認**: 列見出しをクリックしたときの並べ替え
-  (`sortable.js` が `column_no`・`dir` を書き換える) と，地点タブの追加・切替を見る．
+- **実バグ 6件の修正 (A1〜A6)**: 内容は「現在の状態」の分類 A を参照．
+  A6 (地点名のハイフン) は**利用者が案内どおりに操作すると必ず踏む**ので優先度が高い．
+- **ブラウザでしか確認できないものが残っている**．
+  スモークテスト (`npm test`) が見るようになった分は，手で確認しなくてよい．
+  - 自動で見ている: 言語切替でデータが消えないこと，保存する列名が英語のままであること，
+    既存の行のボタンが言語に追随すること，切替後に作った地点のラベルが新しい言語になること，
+    `DELETE` の行削除，`UPDATE_TIME_GPS` の日時更新，列見出しでの並べ替え，
+    地点タブの追加，組成表の作成．
+  - **手で見るしかない**: ファイル選択ダイアログの3か所 (設定の読込・種一覧の登録・
+    植物相の入替)．jsdom では実ダイアログを開けない．
+  - **手で見たほうがよい**: 見た目の崩れ全般．とくに「表を非表示 / 表を表示」の切替と，
+    列の「非表示 → 表示: 全列」の並び (`table_hide_show.js` の子要素数の判定を 2 → 3 に
+    変えたため)．保存した TSV/JSON を実際に `ecan::read_biss()` に通すこと．
 
 #### B. 開発環境・ツールの不整合 (優先度 中)
 
-- (なし)
+- (なし．lint とテストは「開発ツール」の節のとおり導入済み)
 
 #### C. 整理・確認 (優先度 低)
 
