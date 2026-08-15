@@ -13,13 +13,14 @@ function createInput( ...args ){
   return input;
 }
 
-// NOT translated: the buttons below live in a data table and getCellData()
-//   exports their value as the cell data. See js2/lang.js.
+// The buttons below live in a data table. They are translated, but the cell
+//   they sit in is identified by its column name, never by the label.
+//   See js2/lang.js.
 function createDelButton(){
-  return createInput({ type: "button", value: "DELETE", onclick: "delRow(this)" });
+  return createInput({ type: "button", value: msg('del_row'), 'data-msg': 'del_row', onclick: "delRow(this)" });
 }
 function createUpdateButton(){
-  return createInput({ type: "button", value: "UPDATE_TIME_GPS", onclick: "updateTimeGPS(this)" });
+  return createInput({ type: "button", value: msg('update_time_gps'), 'data-msg': 'update_time_gps', onclick: "updateTimeGPS(this)" });
 }
 
 function createFitTable(id){

@@ -66,10 +66,16 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   「選択されていません」はブラウザの言語で表示され，JS でも CSS でも変えられない．
   ファイル選択は `createFileInput()` を使う (file 入力を隠し，`msg()` のボタンから開く)．
 - **データは翻訳しない**: 列名・項目名 (`Species`，`DATE` など)，設定名 (`_5_layers` など)，
-  種名・地点名・階層名，動作を分岐する option の値 (`no save`，`NEW`)，
-  そして**表の中のボタン** (`DELETE`，`UPDATE_TIME_GPS`)．
-  表の中のボタンは `getCellData()` が `value` をセルのデータとして書き出すため，
-  翻訳すると保存する TSV/JSON が変わり `ecan::read_biss()` が壊れる．
+  種名・地点名・階層名，動作を分岐する option の値 (`no save`，`NEW`)．
+- **表の中のボタン** (`DELETE`，`UPDATE_TIME_GPS`) は**翻訳する**．
+  英語のラベルは従来どおりに保ち，日本語だけ足してある (`del_row`・`update_time_gps`)．
+  `getCellData()` が `value` をセルのデータとして書き出すので，
+  日本語表示で保存した**設定 JSON** には「削除」が入るが，実害はない．
+  - 調査データ (TSV/JSON) には入らない．`createAllInputsTable()` (`js2/tab.js`) が
+    `DELETE`・`UPDATE_TIME_GPS` の2列を落としてから `plot_all_tb`・`occ_all_tb` を作るため，
+    `ecan::read_biss()` は元から両列を見ていない (`man/example.json` にも無い)．
+  - 設定 JSON を読み直すときは `makeTableJO()` が**列名**からボタンを組み立て直すので，
+    保存された値は使われない．英語で保存したファイルもそのまま読める．
 
 ## 配信 (GitHub Pages)
 
@@ -160,6 +166,12 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   `msg('choose_file')` のボタンから `click()` する形にした．
   該当は3か所 (設定の読込・種一覧の登録・植物相の入替)．
   `www/biss2.html` を再ビルドした (769,375 バイト)．
+- **表の中のボタンも翻訳した** (`DELETE`・`UPDATE_TIME_GPS`)．
+  影響を調べたところ，保存する調査データには元から両列が入らないことが分かったので
+  (`js2/tab.js` の `createAllInputsTable()` が除外)，翻訳を避ける理由は無かった．
+  英語のラベルは変えず，日本語だけ足している (「多言語」の節を参照)．
+  `man/01-howtouse_jp.md` の該当箇所と，前回のファイル選択の変更で古くなった
+  「Choose file」の記述も直した (`_en.md` は英語ラベルを変えていないので修正不要)．
 
 ### 課題一覧
 
@@ -178,8 +190,9 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
     (ここが変わると `ecan::read_biss()` が壊れる)．
   - 「表を非表示 / 表を表示」の切替と，列の「非表示 → 表示: 全列」の並びが崩れていないこと
     (`table_hide_show.js` の子要素数の判定を 2 → 3 に変えたため)．
-- **未翻訳の残り**: 表の中のボタン (`DELETE`，`UPDATE_TIME_GPS`) は仕様上あえて英語のまま．
-  日本語で見せたい場合は，セルのデータを列名から取るようにする改修が別途必要．
+- **表の中のボタンの動作確認**: `DELETE`・`UPDATE_TIME_GPS` を翻訳した (「多言語」の節を参照)．
+  日本語表示で「削除」「日時・GPS」になること，行の削除と日時・GPS の更新が従来どおり動くこと，
+  言語を切り替えたときに既存の行のボタンも貼り替わることを見る．
 
 #### B. 開発環境・ツールの不整合 (優先度 中)
 
