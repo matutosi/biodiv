@@ -118,6 +118,36 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 - 配布ファイル (`www/biss2.html`) を更新したら `main` へマージする．
 - このプロジェクトは公開リポジトリのため，`main` への反映は動作確認後に行う．
 
+## 開発ツール
+
+リファクタリングのために入れた．**配布物 (`www/biss2.html`) には一切入らない**
+(inliner は `biodiv2.html` が読む `js2/`・`css2/` だけをまとめるため)．
+`node_modules` は `.gitignore` 済み．
+
+| ファイル | 内容 |
+| -------- | ---- |
+| `package.json`      | `npm run lint` / `npm test` の定義と devDependencies |
+| `eslint.config.js`  | ESLint の設定 (flat config) |
+| `test/biss.js`      | jsdom で `www/biodiv2.html` を組み立てる土台 |
+| `test/smoke.test.js`| 回帰スモークテスト (14件) |
+
+- `npm run lint` … `www/js2/` を検査する．旧版 (`www/js/`)・配布物 (`biss*.html`)・
+  和名辞書 (`wamei*.js`) は対象外．
+  BISS は**イベントハンドラを文字列で書いている** (`onclick: "delRow(this)"`) ため
+  全関数がグローバルである必要がある．`eslint.config.js` は `js2/` と `biodiv2.html` を読んで
+  トップレベルの宣言を集め，globals として登録する．手書きの一覧を保守せずに
+  `no-undef` でタイプミスや宣言漏れを拾うための仕掛け．
+- `npm test` … jsdom で実際にページを組み立て，「設定を選ぶ → 地点を追加 → 種を追加 →
+  全地点の表を作る → TSV の中身を見る」を通す．
+  とくに **`ecan::read_biss()` が読む列名と列順を固定**し，
+  `DELETE`・`UPDATE_TIME_GPS` が保存側に出ないことを見張る．
+- 直っていないバグは `{ todo: '...' }` を付けたテストとして残す．
+  失敗しても `npm test` は緑のままで，直ると `# TODO` が消える．
+- jsdom に無くてブラウザにはあるものは `test/biss.js` の `stub()` で補う
+  (`innerText`，`HTMLCollection` の反復，`URL.createObjectURL`，geolocation，各ダイアログ)．
+  ページは `http://biss.test/` から配ったことにする．`file://` だと origin が無く
+  `localStorage` が使えないため．
+
 ## 進捗状況
 
 ### 現在の状態
