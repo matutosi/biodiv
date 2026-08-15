@@ -12,7 +12,7 @@ function launchMailer(){
   var email_adress = document.getElementById('email_adress').value;
   var check = /.+@.+\..+/;
   if( !check.test(email_adress) ){
-    alert('Input e-mail adress!');
+    alert( msg('alert_email') );
     return void 0;
   }
   var body = getAllPlotOccDataAsJSON();
@@ -25,5 +25,5 @@ function createEmailInput(){
 }
 
 function createLaunchMailerButton(){
-  return createInput({ type: 'button', value: 'Launch mailer', onclick: 'launchMailer()' });
+  return createInput({ type: 'button', value: msg('launch_mailer'), 'data-msg': 'launch_mailer', onclick: 'launchMailer()' });
 }

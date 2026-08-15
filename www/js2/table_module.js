@@ -28,8 +28,9 @@ function addSettingPart(category, obj){
 function addSettingPartButton(category){
   var keys = Object.keys(data_settings_part[category]);
   var main = crEl({ el:'span'});
-  main.appendChild( crEl({ el: 'span', ih: 'Add to <b>' + category + '</b>: ' }) );
+  main.appendChild( msgSpan('add_to', category) );
   for(let key of keys){
+    // NOT translated: key is a name of a setting part, that is data.
     var input = crEl({ el:'input', ats:{ type:'button', value: key, onclick: 'addSettingPart("' + category + '", this)'} });
     main.appendChild(input);
   }
@@ -39,7 +40,8 @@ function addSettingPartButton(category){
 
 function createAutoSaveIntervalSelect(){
   var main = crEl({ el:'span' });
-  main.appendChild( crEl({ el: 'span', ih: 'Auto save interval (min)' }) );
+  main.appendChild( msgSpan('interval') );
+  // NOT translated: 'no save' is compared in changeAutoSaveSttting().
   var settings = ['no save', '1', '3', '5', '10', '15', '30', '60'];
   var selects = createSelectOpt(settings, selected_no = 0, id = 'select_auto_save_interval');
   selects.setAttribute('onChange', 'changeAutoSaveSttting(this)');
@@ -50,7 +52,8 @@ function createAutoSaveIntervalSelect(){
 
 function createSettingSelect(){
   var main = crEl({ el:'span' });
-  main.appendChild( crEl({ el: 'span', ih: '<b>Base</b> setting: ' }) );
+  main.appendChild( msgSpan('base_setting') );
+  // NOT translated: the keys are names of settings, that are data.
   var settings = Object.keys(data_settings);
   var selects = createSelectOpt(settings, selected_no = 0, id = 'select_settings');
   selects.setAttribute('onChange', 'changeSettings(this)');
@@ -97,12 +100,12 @@ function tableModule({ table_data, ns,
   if(id_text      != void 0){   up.appendChild( crEl({ el: 'B', tc: ns}) ); 
                                 up.appendChild( crEl({ el: 'br' }) );
   }
-  if(load_button  != void 0){   up.appendChild( crEl({ el: 'span', ih: "<b>Load: </b>" }) );
+  if(load_button  != void 0){   up.appendChild( msgSpan('load') );
                                 up.appendChild( createFileButton() );
   }
                               //     up.appendChild( crEl({ el: 'br' }) );
   if(save_button  != void 0){   up.appendChild( createSaveButton() );
-                                up.appendChild( createInput({ type: "text", placeholder: "File name" }) );
+                                up.appendChild( createInput({ type: "text", placeholder: msg('file_name'), 'data-msg-ph': 'file_name' }) );
                                 up.appendChild( crEl({ el: 'br' }) );
   }
   if(search_input != void 0)    up.appendChild( createSearchInput() );
@@ -121,9 +124,9 @@ function tableModule({ table_data, ns,
                                 dn.appendChild( createAddRowButton( ns + '_add_rows') );
   }
   if(calc_button != void 0){    dn.appendChild( crEl({ el: 'hr' }) );
-                                dn.appendChild( crEl({ el: 'span', ih: "<b>Value</b>" }) );
+                                dn.appendChild( msgSpan('value_label') );
                                 dn.appendChild( createSelectOpt( colByType(table, "number") ) );
-                                dn.appendChild( crEl({ el: 'span', ih: "<b>Group</b>" }) );
+                                dn.appendChild( msgSpan('group_label') );
                                 dn.appendChild( createSelectOpt( colByType(table, "list") ) );
                                 dn.appendChild( createSumButton() );
   }

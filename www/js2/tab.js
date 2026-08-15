@@ -85,21 +85,21 @@ function getPlotMaxNo(){
 function addInputTab({ obj, id }){
   // input PLOT name
   if(id == void 0){
-    var id = prompt("Input PLOT name", "");
+    var id = prompt(msg('prompt_plot'), "");
   }
-  if(null === id){ 
+  if(null === id){
     return void 0;
   }
   if(/_/.test(id)){
-    alert("PLOT should NOT include '_' !\n Please use '-' instead.");
-    return void 0; 
+    alert( msg('alert_plot_ub') );
+    return void 0;
   }
   if('' === id){
-    alert("PLOT should NOT be empty!");
-    return void 0; 
+    alert( msg('alert_plot_empty') );
+    return void 0;
   }
   if(null !== document.getElementById(id)){
-    alert(id + " is already exist. PLOT should NOT be DUPLICATED!");
+    alert( msgF('alert_plot_dup', id) );
     return void 0; 
   }
   // create tabcontrol

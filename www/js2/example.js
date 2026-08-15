@@ -1,5 +1,8 @@
+// Open the manual of the current language.
 function showManual(){
-  window.open("https://github.com/matutosi/biodiv/blob/main/man/01-howtouse.md");
+  var base = "https://github.com/matutosi/biodiv/blob/main/man/01-howtouse";
+  var suffix = (currentLanguage === 'ja') ? "_jp.md" : "_en.md";
+  window.open(base + suffix);
 }
 
 function showExample(obj){

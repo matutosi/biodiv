@@ -69,7 +69,7 @@ function addHideRowTr(table){
   return table;
 }
 function createHideTableColButton(){
-  return createInput({ type:"button", value: "Hide", onclick: "hideTableCol(this)" });
+  return createInput({ type:"button", value: msg('hide'), 'data-msg': 'hide', onclick: "hideTableCol(this)" });
 }
 
 // Helper to create input with select options
