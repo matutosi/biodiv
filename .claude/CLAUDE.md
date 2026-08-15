@@ -114,7 +114,7 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   `man/01-howtouse_jp.md` / `_en.md` を開く．旧統合版 `01-howtouse.md` は参照されなくなった．
 - 配布ファイル `www/biss2.html` を再ビルドした (768,127 バイト)．
   外部参照が残っていないこと，日本語文字列と言語セレクタが入っていることは確認済み．
-- 多言語化を `main` へマージして公開した．
+- 多言語化・CSS の分離・README の更新を `main` へマージして公開した．
 - **CSS を旧版・現行版で分離した**．`www/css2/` を作り，`biodiv2.html` の参照先を移した．
   これで現行版の CSS を触っても凍結した旧版の見た目は変わらない．
 - **README に旧版・現行版のダウンロード URL を明記した** (`README.md`・`READMEjp.md`)．
