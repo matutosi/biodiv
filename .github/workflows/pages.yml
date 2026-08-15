@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+# Publish the contents of www/ as the site root, so the distributed files
+# keep their URLs:
+#   https://matutosi.github.io/biodiv/biss2.html  (current version)
+#   https://matutosi.github.io/biodiv/biss.html   (old version, frozen)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'www/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only the files the app needs. www/tools/ holds prototypes and is
+      # deliberately left out.
+      - name: Collect the files to publish
+        run: |
+          mkdir -p _site
+          cp www/*.html _site/
+          cp -r www/js www/js2 www/css www/css2 _site/
+          ls -lR _site | head -40
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

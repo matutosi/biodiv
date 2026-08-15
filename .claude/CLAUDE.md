@@ -68,6 +68,20 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   表の中のボタンは `getCellData()` が `value` をセルのデータとして書き出すため，
   翻訳すると保存する TSV/JSON が変わり `ecan::read_biss()` が壊れる．
 
+## 配信 (GitHub Pages)
+
+`.github/workflows/pages.yml` が `main` への push で `www/` の中身をサイトのルートとして配信する．
+`www/tools/` は試作物なので配信対象から外している．
+
+- 現行版: <https://matutosi.github.io/biodiv/biss2.html>
+- 旧版: <https://matutosi.github.io/biodiv/biss.html>
+
+もともとは `www/cp_biodiv.bat` で別リポジトリ (`matutosi.github.io` の `docs/biodiv/`) へ
+手作業でコピーしていたが，パスが古くなって動かず配信物が古いまま止まっていた．
+この仕組みに移したので **`cp_biodiv.bat` はもう使わない**．
+`matutosi.github.io` 側の `docs/biodiv/` は，混乱を避けるため整理するか，
+このリポジトリの Pages へ誘導するのが望ましい．
+
 ## 注意事項
 
 - 予約語のため，データの文字列として使えない語:
