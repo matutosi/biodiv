@@ -117,7 +117,7 @@ setdiff(sort(all_funs[[1]]), sort(main_funs[[1]])) %>%
 
 
  #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-12-02 16:30前後
- #              www/tools/unused.js
+ #              www/tools/unused.js (deleted; take it from the git history)
  #      hideRow, showRow
  #      createShowRowButton, createHideRowButton
  #      restoreTable restoreTd makeTable
@@ -130,7 +130,7 @@ setdiff(sort(all_funs[[1]]), sort(main_funs[[1]])) %>%
 
 
    #  使われていないっぽいので，一旦削除した関数  (とりあえず，以下に保存) 2022-07-11 16:18ぐらい
-   #              www/tools/unused.js
+   #              www/tools/unused.js (deleted; take it from the git history)
    #     #  #  #  #  #  #  #  MAYBE UNUSED  #  #  #  #  #  #  #  #  
    #    "fetchLSKeys" "saveTable" "getPosition" "restoreInputPart" "createInputPart" "createSettingSpan"  "createButtonNewTable"
    #      "createInputTable" "createTable" "cloneRows" "cloneRow"  "hiddenInputCols"  "showInputCols" "hideInputCol" 
