@@ -1,7 +1,10 @@
 // Save a string as a file (UTF-8 with BOM) through a click on a hidden link.
-function downloadStrings(strings, file_name){
+//   @param strings    A string, the content of the file.
+//   @param file_name  A string, the name to save it under.
+//   @param type       A string, the MIME type of the blob.
+function downloadStrings(strings, file_name, type = "text/tsv"){
   const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  const blob = new Blob([bom, strings], { "type" : "text/tsv" });
+  const blob = new Blob([bom, strings], { "type" : type });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   document.body.appendChild(a);

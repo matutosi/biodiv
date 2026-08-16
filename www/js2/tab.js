@@ -191,8 +191,8 @@ function createAllInputsTable(table_name){
   c_names = c_names.filter(item => ! removals.includes(item));
 
   const inputs = getMultiTableInputs(tables, c_names);
-  const d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
-  const selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
 
   const all_data = {
     biss_c_names: c_names,
@@ -304,8 +304,8 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
   }
   data_table;
 
-  const d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
-  const selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
   const comp_data = {
     biss_c_names: c_names,
     biss_d_types: d_types,

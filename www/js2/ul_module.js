@@ -182,15 +182,6 @@ async function registerSL(obj){
   setSelectOption(select, name);
   changeSL(select);
 }
-// Helper function
-function readFile(file){
-  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = x=> resolve(reader.result);
-    reader.readAsText(file);
-  })
-}
 // Create the file input that registers a species list from a text file.
 function createRegisterSLButton(id){
   const span = crEl({el:'span' });

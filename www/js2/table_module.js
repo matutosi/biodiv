@@ -260,15 +260,6 @@ async function replaceTable(obj){
   old_module.replaceWith(new_module);
 }
 
-// Helper for replaceTable(). 
-function readFile(file){
-  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = x=> resolve(reader.result);
-    reader.readAsText(file);
-  })
-}
 
 // Save settings of plot or occurrence data.
 //   @param obj  A input element.

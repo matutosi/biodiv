@@ -27,20 +27,9 @@ function getAllPlotOccDataAsJSON(){
   return json;
 }
 
-// 
+// Write the input data out as a JSON file, without asking.
 function autoSave(){
-  const json = getAllPlotOccDataAsJSON();
-  const f_name = 'biss_' + getNow() + '.json';
-  const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  const blob = new Blob([bom, json], { "type" : "text/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.download = f_name;
-  a.href = url;
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  downloadStrings(getAllPlotOccDataAsJSON(), 'biss_' + getNow() + '.json', "text/json");
 }
 
 // The handle of the auto save timer, or undefined while nothing is scheduled.

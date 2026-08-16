@@ -314,6 +314,21 @@ function crEl({ el, ats, ih, tc }){
   return ele;
 }
 
+// Read a chosen file as text.
+//    Used by whatever reads a file the user picked: a settings JSON,
+//    a species list, a flora.
+//    @param  file  A File from an <input type="file">.
+//    @return       A Promise of the text.
+//    @reference
+//      https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
+function readFile(file){
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsText(file);
+  })
+}
+
 // Unique array
 function uniq(array){
   return Array.from(new Set(array));
