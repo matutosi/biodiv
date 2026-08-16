@@ -199,7 +199,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-16 08:33 (JST) 更新．
+2026-08-16 09:13 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -310,6 +310,35 @@ python -m venv .venv
     `readFile()` が2箇所に重複，`getTableData()` と `getTableDataPlus()` がほぼ同一，
     死にコード (`createNewOccButton`・`createSelectLayer`・`saveHTML`)．
   - **D. 体制**: テストと lint が無かった → 導入済み．
+- **B1〜B3 を片づけた．ESLint のエラーが 102 件から 0 になった**．
+  - **B1 名前付き引数のエミュレーション (6箇所)**．`f(a, id = 'x')` は「`id` という
+    グローバル変数を作ってから値を渡す」動作なので，位置引数の呼び出しに直した．
+    消えたグローバルは `list_with_index`・`selected_no`・`id`・`strings`・`file_name`・
+    `value`・`first_option`．
+  - **B2 暗黙のグローバル (8種)**．宣言なしの代入を宣言した．
+    `timerId` は `auto_save.js` の先頭で `let timerId;` として明示
+    (`changeAutoSaveSttting()` が読み `setAutoSave()` が書く)．
+    ほかは `layers`・`species`・`identified`・`span`・`new_array`・`i`・`selected_opt`・
+    `sum`・`Ri` で，いずれも関数内のローカルにした．
+  - **B3 `var` → `let`/`const`**．**`var` は 525 箇所から 0 になった** (`let`/`const` は 129 → 568)．
+    - 先に `no-redeclare` 49件を手で直した．同じ名前を同じスコープで何度も `var` する書き方で，
+      多くは「分岐の両方で宣言」「`var x = f(x)` の連鎖」「switch の各 case で `var td`」．
+      `let` にすると壊れるので，宣言を1つに寄せてから残りを代入に変えた．
+      `createTd()` の `td` は **case "auto" だけ宣言が無く**，ほかの `var td` の巻き上げで
+      動いていた．関数の先頭で `let td;` と宣言した．
+    - そのうえで `eslint --fix` をかけた (466 → 14 警告)．
+    - ESLint が触らずに残したトップレベルの `var` 8件は手で変換した．
+      `var` はグローバルなら `window` の属性になるが `let` はならないため，
+      自動修正が避けている．`window.msgs` のような参照が無いことを確かめてから変えた
+      (`lang.js` の `LANGUAGES`・`LANGUAGE_KEY`・`currentLanguage`・`msgs`，
+      `gps.js` の `watchId`・`positionOptions`・`locations`)．
+  - **変数のスコープが正しいことは `no-undef` が保証する**．0 件ということは，
+    ブロックの外から中の変数を参照している箇所が無いということ．
+    `var` → `let` でいちばん危ないのがこれなので，機械で確かめられる意味は大きい．
+  - 残る警告は5件で，すべて未使用の変数 (C1 の対象)．
+    `full_screen.js` の `button`，`tab.js` の `pages`，`wamei_search.js` の `parent`，
+    `lang.js` の `catch(e)` 2件．
+- **`www/biss2.html` を再ビルドした** (779,382 バイト)．
 - **実バグ A1〜A6 を直した**．リファクタリング (B・C) の前に，まず動作の誤りを片づけた．
   - **A1** `table.js` の `makeTableJO()` から，未定義の `createSpeciesListTable()` を呼ぶ分岐を消した．
     この関数は `3e6c690` (2022-11) で種一覧が表から `<ul>` に変わったときに削除され，
@@ -379,9 +408,15 @@ python -m venv .venv
 #### A. 機能として未完了 (優先度 高)
 
 - (実バグ A1〜A7 はすべて修正済み．内容は「現在の状態」を参照)
-- **リファクタリング本体が残っている**: B1 (名前付き引数のエミュレーション)，
-  B2 (暗黙のグローバル)，B3 (`var` → `let`/`const`)，C1 (死にコード)，C2 (重複)．
-  ESLint の残りはエラー 98 件 (`no-undef` 49・`no-redeclare` 49) と警告約 530 件．
+- (B1〜B3 も完了．ESLint のエラーは 0)
+- **C1 死にコードの削除**: 呼ばれていない関数 (`createNewOccButton`・`createSelectLayer`・
+  `saveHTML`) と，コメントアウト済みの塊 (`utils.js` の `getDataType`，`table.js` 末尾の作業メモ)．
+  ESLint が挙げる未使用変数5件も含む．
+- **C2 重複の統合**: `readFile()` が2箇所，`getTableData()` と `getTableDataPlus()` がほぼ同一，
+  `larger()`/`smaller()`，`Array(n).fill()` で済むループ，`auto_save.js` の Blob 生成
+  (`downloadStrings()` と同一)．
+  配列をハッシュとして使っている箇所 (`download.js` が `Object.assign({}, inputs)` で
+  辻褄を合わせている) もここで直す．
 - **ブラウザでの確認は一巡した**．未確認4件は「問題なし」，A7 のみ見つかって修正済み．
   以降の確認は，スモークテスト (`npm test`) が見る分を除いて次だけでよい．
   - ファイル選択ダイアログは Playwright が見るようになった (種一覧の登録)．
