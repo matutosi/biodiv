@@ -21,10 +21,10 @@ function showExample(obj){
   // sample occ
   var tb_1 = document.getElementById('input_occ_biss01_tb');
   var tb_2 = document.getElementById('input_occ_biss02_tb');
-  layers     = ['T1','T2','S1','S2','H'];
+  let layers     = ['T1','T2','S1','S2','H'];
     // Identified species
-  species    = ['sp01','sp02', 'sp03','sp04','sp05','sp06','sp07','sp08','sp09'];
-  identified = ['checked'];
+  let species    = ['sp01','sp02', 'sp03','sp04','sp05','sp06','sp07','sp08','sp09'];
+  let identified = ['checked'];
   addSampleOcc(tb_1, 6, layers, species, identified)
   addSampleOcc(tb_2, 5, layers, species, identified)
     // UN-identified species

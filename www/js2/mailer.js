@@ -24,7 +24,7 @@ function launchMailer(){
 
 // Create the box for the address the mail is sent to.
 function createEmailInput(){
-  return span = crEl({ el:'input', ats:{id: 'email_adress', type: 'email', placeholder: 'biss@send.mail.com'} });
+  return crEl({ el:'input', ats:{id: 'email_adress', type: 'email', placeholder: 'biss@send.mail.com'} });
 }
 
 // Create the button that calls launchMailer().

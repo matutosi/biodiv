@@ -48,7 +48,7 @@ function setSortable(id_table){
 //    "" in number will be converted into null for sorting in last element.
 //    "" in string keep "" (NOT null) for sorting in last element.
 function string2Numeric(array){
-  new_array = blank2Null(array);  // keep original for return in string
+  var new_array = blank2Null(array);  // keep original for return in string
   var res_array = [];
   for(let i=0; i<array.length; i++){
     if(isNaN(Number(new_array[i]))){ return array; } // string: return original array

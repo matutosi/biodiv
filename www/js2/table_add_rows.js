@@ -104,7 +104,7 @@ function addRow(table){
               next_row.children[Ci].firstChild.value = "";
               break;
             case null:      // select from list
-              selected_opt = last_row.children[Ci].firstChild.selectedIndex;
+              const selected_opt = last_row.children[Ci].firstChild.selectedIndex;
               next_row.children[Ci].firstChild.selectedIndex = selected_opt;
               break;
             case "checkbox": // do nothing

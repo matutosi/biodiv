@@ -241,7 +241,7 @@ function getMultiTableSelects(tables){
     var d_types = getDataTypes(table);
     var c_names = getColNames(table);
     var indices = multiIndexOf(d_types, 'list');
-    for(i of indices){
+    for(let i of indices){
       selects.push(c_names[i]);
     }
   }

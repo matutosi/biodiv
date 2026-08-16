@@ -200,7 +200,7 @@ function sumWithGroup(obj){
     sum_array[groups[i]] = Math.round(sum_array[groups[i]] * 10000) / 10000;  // avoid dicimal error
     if(sum_array[groups[i]] === 0){ delete sum_array[groups[i]]; }
   }
-  sum = hash2table(sum_array);
+  var sum = hash2table(sum_array);
   // add th
   var tr = document.createElement('tr');
   tr.appendChild( crEl({ el: 'th', tc: group }) );

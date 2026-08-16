@@ -193,7 +193,7 @@ function getColData(table, c_name, list_with_index = false){
     return group_value;
   }
   var table = table.querySelectorAll("tr:not([class=hide_button])");
-  for(Ri = 1; Ri < table.length; Ri++){    // except th (rows[0])
+  for(let Ri = 1; Ri < table.length; Ri++){    // except th (rows[0])
     group_value[Ri - 1] = getCellData(table[Ri].cells[col_no], list_with_index)
   }
   return group_value;

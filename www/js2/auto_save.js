@@ -44,6 +44,10 @@ function autoSave(){
   URL.revokeObjectURL(url);
 }
 
+// The handle of the auto save timer, or undefined while nothing is scheduled.
+//   Read by changeAutoSaveSttting(), written by setAutoSave().
+let timerId;
+
 // Restart the auto save timer with the interval just selected.
 function changeAutoSaveSttting(obj){
   var n = obj.value;
@@ -62,6 +66,5 @@ function changeAutoSaveSttting(obj){
 // Save every n minutes from now on.
 function setAutoSave(n){
   var min = 1000 * 60; // 1 min: 1000ms * 60sec
-  // timerId: set as global object
   timerId = setInterval(autoSave, n * min );
 }
