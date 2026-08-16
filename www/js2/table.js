@@ -2,14 +2,13 @@
 function createTd(col_name, data_type, select, table_data){
   let td;   // one declaration: case "auto" used to assign it without any
   switch(data_type){
-    case "auto": // date, no, GPS
-      if(col_name === "DATE"  )  td = crEl({ el: 'td', ih: getNow() });
-      if(col_name === "LOC_LAT") td = crEl({ el: 'td', ih: getLat() });
-      if(col_name === "LOC_LON") td = crEl({ el: 'td', ih: getLon() });
-      if(col_name === "LOC_ACC") td = crEl({ el: 'td', ih: getAcc() });
-      if(col_name === "NO"     ) td = crEl({ el: 'td', ih: 1        });
-      if(col_name === "SameAs" ) td = crEl({ el: 'td', ih: ''       });
+    case "auto": {  // date, no, GPS
+      const auto = autoValue(col_name);
+      if(auto !== void 0        ) td = crEl({ el: 'td', ih: auto });
+      if(col_name === COL.NO    ) td = crEl({ el: 'td', ih: 1    });
+      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', ih: ''  });
       break;
+    }
     case "text":
       if(Array.isArray(select)){ select = select.join(""); }
       td = createTdWithChild( crEl({ el:'input', ats:{type: data_type, value: table_data, size: select} }) );
@@ -26,8 +25,8 @@ function createTd(col_name, data_type, select, table_data){
       td = crEl({ el:'td', ih: table_data });
       break;
     case "button":
-      if(col_name === "DELETE")         { td = createTdWithChild( createDelButton() ); }
-      if(col_name === "UPDATE_TIME_GPS"){ td = createTdWithChild( createUpdateButton() ); }
+      if(col_name === COL.DELETE)         { td = createTdWithChild( createDelButton() ); }
+      if(col_name === COL.UPDATE_TIME_GPS){ td = createTdWithChild( createUpdateButton() ); }
       break;
     case "list":
       select.push('');
@@ -51,13 +50,33 @@ function addThTr(table, col_names){
   return table;
 }
 
+// Every table BISS builds has the same three parts, in this order.
+//   makeTableJO() puts them there: addThTr(), then addHideRowTr(), then the
+//   data. Anything that reaches into a table by row number means one of these.
+const ROW_HEADER     = 0;   // the column names, as th
+const ROW_HIDE       = 1;   // one Hide button per column
+const ROW_FIRST_DATA = 2;   // the first record
+
+// The row that holds the first record, or undefined when there is none.
+function firstDataRow(table){
+  return table.rows[ROW_FIRST_DATA];
+}
+// How many records a table holds.
+function nDataRow(table){
+  return table.rows.length - ROW_FIRST_DATA;
+}
+// The row that holds the column names.
+function headerRow(table){
+  return table.rows[ROW_HEADER];
+}
+
 // Number of rows in a table.
 function nRow(table){
   return table.rows.length;
 }
 // Number of cells in the first row of a table.
 function nCol(table){
-  return table.rows[0].cells.length;
+  return headerRow(table).cells.length;
 }
 
 // Add the second row, which holds a hide button for every column.

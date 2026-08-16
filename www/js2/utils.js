@@ -19,8 +19,8 @@ function table2array(id_table, header = true){
   }
   if(header){
     const header_row = [];
-    for(let i=0; i<table.rows[0].cells.length; i++){
-      header_row.push(table.rows[0].cells[i].innerHTML);
+    for(let i=0; i<headerRow(table).cells.length; i++){
+      header_row.push(headerRow(table).cells[i].innerHTML);
     }
     array.unshift(header_row);
   }
@@ -174,7 +174,7 @@ function searchParentTable(obj, index = 0){
 function getColData(table, c_name, list_with_index = false){
   const col_no = getColNames(table).indexOf(c_name);
   const group_value = [];
-  const n_row = nRow(table) - 2; // 2: th and hide row
+  const n_row = nDataRow(table);
   if(col_no < 0){
     for(let i=0; i<n_row; i++){ group_value.push(''); }
     return group_value;
@@ -245,7 +245,7 @@ function splitByGroup(array, group){
 function getDataTypes(table){
   const types = [];
   const rows = table.querySelectorAll("tr:not([class=hide_button])"); // remove tr with hide buttons
-  for(const cell of rows[1].cells){                                    // 1: first data row (0: colnames)
+  for(const cell of rows[1].cells){   // the hide row is filtered out, so 1 is the first record
     types.push(getDataTypeCell(cell));
   }
   return types;
@@ -264,7 +264,7 @@ function getDataTypeCell(cell){
 //   @return A string array.
 function getColNames(table){
   // console.log(table.rows[0]);
-  const row_0 = table.rows[0];
+  const row_0 = headerRow(table);
   const col_names = [];
   for(let Ri=0; Ri<row_0.cells.length; Ri++){
     col_names[Ri] = row_0.cells[Ri].innerText;

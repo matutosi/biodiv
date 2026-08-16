@@ -16,8 +16,9 @@ function searchTableText(obj){
   const trs   = table.rows;
   const data_types   = getDataTypes(table);
   const is_shown_col = isShownCol(table);
-  const display_flag = [1,2];                // [1,2]: show th and hide button
-  for(let Rj = 2; Rj < trs.length; Rj++){ display_flag[Rj] = 0; }
+  // The header and the hide row always stay: give them a count above zero.
+  const display_flag = [1, 2];
+  for(let Rj = ROW_FIRST_DATA; Rj < trs.length; Rj++){ display_flag[Rj] = 0; }
   for(let Ci = 0; Ci < data_types.length; Ci++){
     if((data_types[Ci] === "text" || data_types[Ci] === "fixed") && is_shown_col[Ci]){
       for(let Rj = 1; Rj < trs.length; Rj++){
@@ -38,7 +39,7 @@ function searchTableText(obj){
 //    @return       An array of logical, which has length of columns.
 function isShownCol(table){
   const display_style_none = [];
-  const ths = table.rows[0].cells;
+  const ths = headerRow(table).cells;
   for(let i=0; i<ths.length; i++){
     display_style_none.push(!!!ths[i].getAttribute('style'));
   }

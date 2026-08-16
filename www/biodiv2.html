@@ -6,6 +6,7 @@
     <script src="js2/lang.js"          charset="utf-8"></script>
     <script src="js2/font_size.js">                   </script>
     <script src="js2/data.js">                        </script>
+    <script src="js2/columns.js">                     </script>
     <script src="js2/utils.js">                       </script>
     <script src="js2/sortable.js">                    </script>
     <script src="js2/gps.js">                         </script>
@@ -99,8 +100,9 @@
         tab_setting.appendChild( addSettingPartButton('plot')   );
         tab_setting.appendChild( addSettingPartButton('occ')    );
         tab_setting.appendChild( crEl({ 'el': 'hr' })           );
-        tab_setting.appendChild( crEl({ 'el': 'span' })         );
-        tab_setting.appendChild( crEl({ 'el': 'span' })         );
+        // changeSettings() puts the two setting modules in these.
+        tab_setting.appendChild( crEl({ el: 'span', ats: {id: 'setting_plot_holder'} }) );
+        tab_setting.appendChild( crEl({ el: 'span', ats: {id: 'setting_occ_holder' } }) );
         changeSettingsByName('empty');
       </script>
     </div>

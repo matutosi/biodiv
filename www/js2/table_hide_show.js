@@ -7,7 +7,7 @@
 //                  Normally use "this". 
 function showAllCols(obj){
   const table = searchParentTable(obj);
-  for(let Ci = 0; Ci < table.rows[0].cells.length; Ci++){
+  for(let Ci = 0; Ci < nCol(table); Ci++){
     for(let Rj = 0; Rj < table.rows.length; Rj++){
       table.rows[Rj].cells[Ci].style.display = '';
     }
@@ -19,13 +19,12 @@ function hideTableCol(obj){
   // console.log(obj.parentNode.parentNode.parentNode);
   const table = searchParentTable(obj);
   const c_no = obj.parentElement.cellIndex;
-  const c_name = table.rows[0].cells[c_no].innerText;
+  const c_name = headerRow(table).cells[c_no].innerText;
   // console.log(c_name);
   for(let Rj = 0; Rj < table.rows.length; Rj++){
     table.rows[Rj].cells[c_no].style.display = 'none';
   }
-  const span = table.previousElementSibling.lastChild;
-  // console.log(span);
+  const span = document.getElementById(table.id.replace(/_tb$/, '_up')).lastElementChild;
   // tc: "Show "
   if(span.children.length === 0){
     span.textContent = "";
@@ -51,18 +50,11 @@ function showCol(obj){
 function hideShowNext(obj){
   // console.log(obj);
   // console.log(obj.parentNode.nextElementSibling);
-  const span   = obj.nextElementSibling.nextElementSibling;
-  const next   = obj.parentNode.nextElementSibling;
-  const next_2 = obj.parentNode.nextElementSibling.nextElementSibling;
-  if(next.style.display === 'none'){
-    span.style.display = '';
-    next.style.display = '';
-    next_2.style.display = '';
-    setMsg(obj, 'hide_table');
-  } else {
-    span.style.display = 'none';
-    next.style.display = 'none';
-    next_2.style.display = 'none';
-    setMsg(obj, 'show_table');
-  }
+  const ns = moduleNS(obj);
+  const span  = document.getElementById(ns + '_up').lastElementChild;  // hidden columns
+  const table = document.getElementById(ns + '_tb');
+  const dn    = document.getElementById(ns + '_dn');
+  const shown = (table.style.display === 'none') ? '' : 'none';
+  for(const part of [span, table, dn]){ part.style.display = shown; }
+  setMsg(obj, (shown === 'none') ? 'show_table' : 'hide_table');
 }

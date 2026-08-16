@@ -328,9 +328,29 @@ test('a hyphenated plot name keeps its layer pull down', async () => {
   w.changeSettingsByName('_5_layers');
   addPlot(w, 'sito-A');
 
-  // getSelectOptionsAsJSON() matches the pull downs of one module by id.
-  const options = JSON.parse(w.getSelectOptionsAsJSON('sito-A'));
+  // getSelectOptionsValues() matches the pull downs of one module by id.
+  const options = w.getSelectOptionsValues('sito-A');
   assert.ok('Layer' in options, `Layer is offered, got ${Object.keys(options)}`);
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('a species name may hold a quote', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.changeSettingsByName('_5_layers');
+  addPlot(w, 'quoted');
+
+  // The names are typed by hand, so anything can arrive. A name that used to
+  // be pasted into a JSON string took the whole batch down with it.
+  w.document.getElementById('sp_list_input-quoted').value =
+    'Quercus "serrata",Fagus crenata,back\\slash';
+  w.document.getElementById('sp_list_add-quoted').click();
+
+  const species = colData(w, 'input_occ_quoted_tb', 'Species').filter(s => s !== '');
+  assert.ok(species.includes('Quercus "serrata"'), `the quoted name, got ${species}`);
+  assert.ok(species.includes('Fagus crenata'), 'and the ones next to it are not lost');
+  assert.ok(species.includes('back\\slash'), 'a backslash too');
   assert.deepEqual(biss.errors, []);
   biss.close();
 });

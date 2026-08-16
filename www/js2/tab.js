@@ -68,20 +68,20 @@ function updateSpeciesList(){
 // Add the PLOT column, holding the plot name, in front of a table definition.
 function addPlotId(plot_data, id){
   // var plot_data = temp1;
-  plot_data['biss_c_names'].unshift('PLOT');
+  plot_data['biss_c_names'].unshift(COL.PLOT);
   plot_data['biss_d_types'].unshift('fixed');
   plot_data['biss_selects'].unshift('');
-  plot_data['biss_inputs']['PLOT'] = [id];
+  plot_data['biss_inputs'][COL.PLOT] = [id];
   return plot_data;
 }
 
 // Add the NO column, holding the plot number, in front of a table definition.
 function addPlotNo(plot_data, no){
   // var plot_data = temp1;
-  plot_data['biss_c_names'].unshift('NO');
+  plot_data['biss_c_names'].unshift(COL.NO);
   plot_data['biss_d_types'].unshift('fixed');
   plot_data['biss_selects'].unshift('');
-  plot_data['biss_inputs']['NO'] = [no];
+  plot_data['biss_inputs'][COL.NO] = [no];
   return plot_data;
 }
 
@@ -90,7 +90,7 @@ function getPlotMaxNo(){
   const tables = document.querySelectorAll("table[id^='input_plot']");
   const max_no = [0];
   for(const tb of tables){
-    max_no.push(getColData(tb, "NO")[0]);
+    max_no.push(getColData(tb, COL.NO)[0]);
   }
   return Math.max.apply(Math, string2Numeric(max_no));
 }
@@ -153,7 +153,7 @@ function addInputTab({ obj, id }){
   setSortable(table.id);  // Should setSortable() after appendChild()
 
   // void 0 hides the pull downs: createSpecieUlModule() reads it as "do not show"
-  const show_select_options = (occ_setting.biss_c_names.indexOf('Layer') < 0) ? void 0 : true;
+  const show_select_options = (occ_setting.biss_c_names.indexOf(COL.LAYER) < 0) ? void 0 : true;
   const ul_module = createSpecieUlModule({ species: '', ns: id,
                   show_select_button   : true, 
                   show_comp_checkbox   : true, 
@@ -186,9 +186,7 @@ function createAllInputsTable(table_name){
   const tables = document.querySelectorAll("table[id^='" + table_name + "']");
   if(0 === tables.length){ return void 0; }  // return void 0, when no input tables
   let c_names = getUniqeColNames(tables);
-  const removals = ["DELETE","UPDATE_TIME_GPS"];
-  //   var removals = ['DATE', "LOC_LAT","LOC_LON","LOC_ACC","DELETE","UPDATE_TIME_GPS"];
-  c_names = c_names.filter(item => ! removals.includes(item));
+  c_names = c_names.filter(item => ! BUTTON_COLS.includes(item));
 
   const inputs = getMultiTableInputs(tables, c_names);
   const d_types = Array(c_names.length).fill('fixed');
@@ -270,7 +268,7 @@ function checkSameAs(inputs, pl, sp, id, sa){
   return inputs;
 }
 // Build the composition table: species by plot, holding the cover ('--' when present without a cover).
-function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id = "Identified", sa = "SameAs"){
+function createCompTable(tables, pl = COL.PLOT, sp = COL.SPECIES, ab = COL.COVER, id = COL.IDENTIFIED, sa = COL.SAME_AS){
   // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']");
   let inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]);
   // console.log(inputs);

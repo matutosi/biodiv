@@ -8,11 +8,11 @@
 //                   Normally use "this". 
 //    @param table A table element.
 function shortTable(obj){
-  const table = obj.parentNode.nextElementSibling;
+  const table = document.getElementById(obj.id.replace(/_fit$/, '_tb'));
   const rows = table.rows;
-  rows[0].style.display = 'none';          //  0: colnames
-  rows[1].style.display = 'none';          //  1: hide buttons
-  for(let Ri = 2; Ri < rows.length; Ri++){ //  2: data
+  rows[ROW_HEADER].style.display = 'none';
+  rows[ROW_HIDE].style.display = 'none';
+  for(let Ri = ROW_FIRST_DATA; Ri < rows.length; Ri++){
     const tr = rows[Ri];
     tr.style.display = "flex";
     tr.style["flex-wrap"] = "wrap";
@@ -22,7 +22,7 @@ function shortTable(obj){
 }
 // Put a table back to its normal shape (th shown, no label in td).
 function wideTable(obj){
-  const table = obj.parentNode.nextElementSibling;
+  const table = document.getElementById(obj.id.replace(/_fit$/, '_tb'));
   const rows = table.rows;
   for(let Ri = 0; Ri < rows.length; Ri++){
     const tr = rows[Ri];

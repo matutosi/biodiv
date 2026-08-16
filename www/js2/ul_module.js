@@ -16,7 +16,7 @@ function getSlNs(id){
 //    @param  sp  A string to specify a species column.
 //                Usually and in default, use 'Species'.
 //    @return     An array of species in composition table.
-function getSpeciesInComposition(sp = 'Species'){
+function getSpeciesInComposition(sp = COL.SPECIES){
   const comp = document.getElementById('comp_table_tb');
   if(comp === null){ return []; } // return, when no inputs
   const species = getColData(comp, sp);
@@ -255,7 +255,7 @@ function createSelectPlot(id){
   let plot_list;   // declared here: both branches and the line below share it
   if(ns === 'all' || ns === 'flora'){
     const tables = document.querySelectorAll("table[id^='input_occ']");
-    const pl = 'PLOT';
+    const pl = COL.PLOT;
     plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]);
   }else{
     plot_list = [ns];
@@ -333,28 +333,24 @@ function unStageSpecies(obj){
   obj.remove();
 }
 
-// The values of the pull downs of a module, as a JSON string keyed by column name.
-function getSelectOptionsAsJSON(ns){
-  // ns = 'all'
+// What the pull downs of a module are set to, keyed by column name.
+//    @param  ns  A string, the name space of the module.
+//    @return     An object, e.g. { Layer: 'H' }.
+function getSelectOptionsValues(ns){
+  const prefix = 'sp_list_options_';
   // Quote the value and anchor it on the '-'. Unquoted it breaks on a plot
   // name that is not a plain CSS ident, and unanchored it also matches a
   // name that merely ends the same way ('all' would match 'small').
-  const selector =  "select[id^='sp_list_options_'][id$='-" + ns + "']";
-  const options  = document.querySelectorAll(selector);
-  const prefix = 'sp_list_options_';
-  let opt_value = '{"';
-  for(const opt of options){
+  const selector = "select[id^='" + prefix + "'][id$='-" + ns + "']";
+  const values = {};
+  for(const opt of document.querySelectorAll(selector)){
     // The id is 'sp_list_options_<column>-<ns>'. Either part may hold a '-',
     // so cut away the prefix and the name space, both of which are known,
     // instead of splitting on the first '-'.
     const column = opt.id.slice(prefix.length, opt.id.length - ns.length - 1);
-    opt_value =
-      opt_value +
-      column + '": "' +
-      opt.value + '", "';
+    values[column] = opt.value;
   }
-  opt_value = opt_value.replace(/, "$/, '') + '}';
-  return opt_value;
+  return values;
 }
 
 // Add the staged and typed species to the occurrence table of the selected plot, one row each. A name with '_' is read as species_SameAs and counted as unidentified.
@@ -366,7 +362,7 @@ function addSpecies(obj){
   const staged  = document.getElementById(base_name + 'staged-' + ns);
   const input   = document.getElementById(base_name + 'input-'  + ns);
   const plot    = document.getElementById(base_name + 'plot-'   + ns).value;
-  const options = getSelectOptionsAsJSON(ns);
+  const options = getSelectOptionsValues(ns);
   let species = getChildrenValues(staged);
   if(input.value !== ''){
     const input_val = input.value.replaceAll('，', ',').replaceAll('、', ',') // FULL size JP -> half size
@@ -378,15 +374,12 @@ function addSpecies(obj){
     const [sp, same_as] = spec.split('_');
     const iden = (same_as === void 0);  // no '_' in the name: an identified species
     const sa   = iden ? '' : same_as;
-    const values_json = options.replace(/\}$/, '') + ', '  +
-                 '"Species": "'    + sp   + '", ' +
-                 '"SameAs": "'     + sa   + '", ' +
-                 '"Identified": ' +  iden + '}' ;
-  // console.log(values);
-  // console.log(table);
-    const values = JSON.parse(values_json);
+    // Build the row as an object. It used to be pasted together as JSON text
+    // and parsed back, so a name holding a " or a \ threw and took the whole
+    // batch with it.
+    const values = Object.assign({}, options,
+                                 { [COL.SPECIES]: sp, [COL.SAME_AS]: sa, [COL.IDENTIFIED]: iden });
     addRowWithValues({ table: table, values: values });
-  //     addRowWithValues({ table: table, values: {Layer: layer, Species: sp, SameAs: sa, Identified: iden} });
   }
   // clear inputs
   input.value = '';
