@@ -1,0 +1,15 @@
+{
+  "name": "biodiv",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Development tooling for BISS (Biodiversity Investigation Support System). Not part of the distributed app: www/biss2.html is built by inliner and has no dependency on this.",
+  "scripts": {
+    "lint": "eslint",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "globals": "^17.11.0",
+    "jsdom": "^25.0.1"
+  }
+}

@@ -6,19 +6,19 @@ function addSettingPart(category, obj){
   //   console.log(category);   //  "plot" or "occ"
   //   console.log(obj.value);  //  items to add
   //   var obj = temp1; obj  var obj = temp1; obj.parentNode.nextSibling.nextSibling.nextSibling;
-  var table_category = "_" + category + "_tb";
-  var table = document.getElementById('tab_settings').querySelector("table[id$='" + table_category + "']");
-  var values = data_settings_part[category][obj.value];
+  const table_category = "_" + category + "_tb";
+  const table = document.getElementById('tab_settings').querySelector("table[id$='" + table_category + "']");
+  const values = data_settings_part[category][obj.value];
 
-  var keys = Object.keys(values);
-  var n = values[keys[0]].length;
+  const keys = Object.keys(values);
+  const n = values[keys[0]].length;
 
   for(let i = 0; i < n; i++){
-    var json = '{';
-    for(let key of keys){
-      var json = json + '"' + key + '":"' + values[key][i] + '",';
+    let json = '{';
+    for(const key of keys){
+      json = json + '"' + key + '":"' + values[key][i] + '",';
     }
-    var json = json.slice(0, -1) + '}';
+    json = json.slice(0, -1) + '}';
   // console.log( table );
   // console.log( JSON.parse(json) );
     addRowWithValues({ table: table, values: JSON.parse(json) });
@@ -27,12 +27,12 @@ function addSettingPart(category, obj){
 
 // Create one button per setting part (date_GPS etc.) of a category, plot or occ.
 function addSettingPartButton(category){
-  var keys = Object.keys(data_settings_part[category]);
-  var main = crEl({ el:'span'});
+  const keys = Object.keys(data_settings_part[category]);
+  const main = crEl({ el:'span'});
   main.appendChild( msgSpan('add_to', category) );
-  for(let key of keys){
+  for(const key of keys){
     // NOT translated: key is a name of a setting part, that is data.
-    var input = crEl({ el:'input', ats:{ type:'button', value: key, onclick: 'addSettingPart("' + category + '", this)'} });
+    const input = crEl({ el:'input', ats:{ type:'button', value: key, onclick: 'addSettingPart("' + category + '", this)'} });
     main.appendChild(input);
   }
   main.appendChild( crEl({ 'el': 'br' }) );
@@ -41,11 +41,11 @@ function addSettingPartButton(category){
 
 // Create the pull down that picks the auto save interval in minutes.
 function createAutoSaveIntervalSelect(){
-  var main = crEl({ el:'span' });
+  const main = crEl({ el:'span' });
   main.appendChild( msgSpan('interval') );
   // NOT translated: 'no save' is compared in changeAutoSaveSttting().
-  var settings = ['no save', '1', '3', '5', '10', '15', '30', '60'];
-  var selects = createSelectOpt(settings, selected_no = 0, id = 'select_auto_save_interval');
+  const settings = ['no save', '1', '3', '5', '10', '15', '30', '60'];
+  const selects = createSelectOpt(settings, 0, 'select_auto_save_interval');
   selects.setAttribute('onChange', 'changeAutoSaveSttting(this)');
   main.appendChild(selects);
   return main;
@@ -54,11 +54,11 @@ function createAutoSaveIntervalSelect(){
 
 // Create the pull down that picks the base setting (full, _5_layers, ...).
 function createSettingSelect(){
-  var main = crEl({ el:'span' });
+  const main = crEl({ el:'span' });
   main.appendChild( msgSpan('base_setting') );
   // NOT translated: the keys are names of settings, that are data.
-  var settings = Object.keys(data_settings);
-  var selects = createSelectOpt(settings, selected_no = 0, id = 'select_settings');
+  const settings = Object.keys(data_settings);
+  const selects = createSelectOpt(settings, 0, 'select_settings');
   selects.setAttribute('onChange', 'changeSettings(this)');
   main.appendChild(selects);
   main.appendChild( crEl({ 'el': 'br' }) );
@@ -67,22 +67,22 @@ function createSettingSelect(){
 
 // Switch to the base setting of that name, as if it were picked in the pull down.
 function changeSettingsByName(ns){
-  var select = document.getElementById('select_settings');
+  const select = document.getElementById('select_settings');
   select.selectedIndex = getSelectOptionInCell(select).indexOf(ns)
   changeSettings(select);
 }
 // Rebuild the plot and occ setting tables from the base setting just picked.
 function changeSettings(obj){
-  var setting = obj.value;
-  var new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot',
+  const setting = obj.value;
+  const new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot',
                                       id_text: true, load_button: true, save_button: true, hide_button: true, 
                                       add_button: true });
-  var new_occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ',
+  const new_occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ',
                                       id_text: true, load_button: true, save_button: true, hide_button: true, 
                                       add_button: true });
-  var old_plot_module = obj.parentNode.nextSibling.nextSibling.nextSibling.nextSibling;
+  const old_plot_module = obj.parentNode.nextSibling.nextSibling.nextSibling.nextSibling;
   old_plot_module.replaceWith(new_plot_module);
-  var old_occ_module = new_plot_module.nextSibling;
+  const old_occ_module = new_plot_module.nextSibling;
   old_occ_module.replaceWith(new_occ_module);
   setSortable(setting + '_plot_tb');
   setSortable(setting + '_occ_tb');
@@ -99,9 +99,9 @@ function tableModule({ table_data, ns,
                        load_button, save_button, 
                        hide_button, fit_button, 
                        add_button, calc_button }){
-  var main  = crEl({ el:'span', ats:{id: ns} });
+  const main  = crEl({ el:'span', ats:{id: ns} });
   // Up span
-  var up = crEl({ el:'span', ats:{id: ns + "_up"} });
+  const up = crEl({ el:'span', ats:{id: ns + "_up"} });
   if(id_text      != void 0){   up.appendChild( crEl({ el: 'B', tc: ns}) ); 
                                 up.appendChild( crEl({ el: 'br' }) );
   }
@@ -121,10 +121,10 @@ function tableModule({ table_data, ns,
   up.appendChild( crEl({ el: 'span'}) ); // for show button
 
   // Table
-  var table = makeTableJO(table_data, ns + "_tb");
+  const table = makeTableJO(table_data, ns + "_tb");
 
   // Down span
-  var dn = crEl({ el:'span', ats:{id: ns + "_dn"} });
+  const dn = crEl({ el:'span', ats:{id: ns + "_dn"} });
   if(add_button  != void 0){    dn.appendChild( createNrowInput( ns + '_nrow') );
                                 dn.appendChild( createAddRowButton( ns + '_add_rows') );
   }
@@ -154,15 +154,15 @@ function tableModule({ table_data, ns,
 function updateTimeGPS(obj){
   // settings
   // var obj = temp1;
-  var cols = ["DATE", "LOC_LAT", "LOC_LON", "LOC_ACC"];
-  var funs = [getNow, getLat, getLon, getAcc]
-  var table = searchParentTable(obj);
-  var tr = obj.parentNode.parentNode;
-  var row_no = tr.sectionRowIndex;
+  const cols = ["DATE", "LOC_LAT", "LOC_LON", "LOC_ACC"];
+  const funs = [getNow, getLat, getLon, getAcc]
+  const table = searchParentTable(obj);
+  const tr = obj.parentNode.parentNode;
+  const row_no = tr.sectionRowIndex;
   // update
   for(let i = 0; i < cols.length; i++){
-    var col_no = getColNames(table).indexOf(cols[i]);
-    var cell = table.rows[row_no].cells[col_no];
+    const col_no = getColNames(table).indexOf(cols[i]);
+    const cell = table.rows[row_no].cells[col_no];
     cell.innerHTML = funs[i]();
   }
 }
@@ -175,22 +175,22 @@ function updateTimeGPS(obj){
 //   @param obj  A input element.
 //                 Normally use "this". 
 function sumWithGroup(obj){
-  var array = obj.previousElementSibling.previousElementSibling.previousElementSibling.value;
-  var group = obj.previousElementSibling.value;
-  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  var array_val = getColData(table, array);
-  var group_val = getColData(table, group);
-  var grouped_array = splitByGroup(array_val, group_val);
+  const array = obj.previousElementSibling.previousElementSibling.previousElementSibling.value;
+  const group = obj.previousElementSibling.value;
+  const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  const array_val = getColData(table, array);
+  const group_val = getColData(table, group);
+  const grouped_array = splitByGroup(array_val, group_val);
   // set groups order with 'list'
-  var c_no = getColNames(table).indexOf(group);
-  var opts = table.rows[2].cells[c_no].firstChild.options;
-  var groups = [];
-  for(let o of opts){ groups.push(o.value); }
-  var sum_array = [];
+  const c_no = getColNames(table).indexOf(group);
+  const opts = table.rows[2].cells[c_no].firstChild.options;
+  const groups = [];
+  for(const o of opts){ groups.push(o.value); }
+  const sum_array = {};   // keyed by group name
   for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
   for(let i = 0; i < groups.length; i++){
     if(grouped_array[groups[i]] !== void 0){
-      var gr_ar = grouped_array[groups[i]];
+      const gr_ar = grouped_array[groups[i]];
       for(let j = 0; j < gr_ar.length; j++){
         sum_array[groups[i]] += Number(gr_ar[j]);
       }
@@ -200,9 +200,9 @@ function sumWithGroup(obj){
     sum_array[groups[i]] = Math.round(sum_array[groups[i]] * 10000) / 10000;  // avoid dicimal error
     if(sum_array[groups[i]] === 0){ delete sum_array[groups[i]]; }
   }
-  sum = hash2table(sum_array);
+  const sum = hash2table(sum_array);
   // add th
-  var tr = document.createElement('tr');
+  const tr = document.createElement('tr');
   tr.appendChild( crEl({ el: 'th', tc: group }) );
   tr.appendChild( crEl({ el: 'th', tc: array }) );
   sum.insertBefore(tr, sum.firstChild);
@@ -224,9 +224,9 @@ function sumWithGroup(obj){
 //    @return  A string array.
 //    @examples
 function colByType(table, type){
-  var types = getDataTypes(table);
-  var c_names = getColNames(table);
-  var cols = [];
+  const types = getDataTypes(table);
+  const c_names = getColNames(table);
+  const cols = [];
   for(let i = 0; i < types.length; i++){
     if(types[i] === type){ cols.push(c_names[i]); }
   }
@@ -237,7 +237,7 @@ function colByType(table, type){
 //    @param child A child element.
 //    @return  A td element with a child element
 function createTdWithChild(child){
-  var td = document.createElement('td');
+  const td = document.createElement('td');
   td.appendChild(child);
   return td;
 }
@@ -249,36 +249,27 @@ function createTdWithChild(child){
 //   @param obj  A input element.
 //                 Normally use "this". 
 async function replaceTable(obj){
-  var json = await readFile(obj.files[0]);
-  var table_data = JSON.parse(json);
-  var ns = obj.value.split("\\").slice(-1)[0].replace("\.json", "")
-  var new_module = tableModule({ table_data: table_data, ns: ns,
+  const json = await readFile(obj.files[0]);
+  const table_data = JSON.parse(json);
+  const ns = obj.value.split("\\").slice(-1)[0].replace("\.json", "")
+  const new_module = tableModule({ table_data: table_data, ns: ns,
                                       id_text: true, load_button: true, save_button: true, hide_button: true, 
                                       add_button: true });
-  var old_ns = obj.parentNode.parentNode.id;
-  var old_module = document.getElementById(old_ns);
+  const old_ns = obj.parentNode.parentNode.id;
+  const old_module = document.getElementById(old_ns);
   old_module.replaceWith(new_module);
 }
 
-// Helper for replaceTable(). 
-function readFile(file){
-  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
-  return new Promise((resolve, reject) => {
-    let reader = new FileReader();
-    reader.onload = x=> resolve(reader.result);
-    reader.readAsText(file);
-  })
-}
 
 // Save settings of plot or occurrence data.
 //   @param obj  A input element.
 //                 Normally use "this". 
 function saveSettings(obj){
-  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  var table_data = getTableDataPlus(table);
-  var table_json = JSON.stringify(table_data);
-  var f_name = obj.nextElementSibling.value;
+  const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  const table_data = getTableData(table);
+  const table_json = JSON.stringify(table_data);
+  let f_name = obj.nextElementSibling.value;
   if(f_name === ""){ f_name = table.id.replace(/_tb$/, ''); }
-  downloadStrings(strings = table_json, file_name = f_name + ".json")
+  downloadStrings(table_json, f_name + ".json")
 }
 

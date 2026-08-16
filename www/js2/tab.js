@@ -1,10 +1,10 @@
 // Show the page of the clicked tab and hide the others (used as the onclick of a tab).
 function changeTab(){
-  var ref = decodeURI(this.href);  // For multibyte character
-  var targetid = ref.substring(ref.indexOf('#')+1, ref.length);
+  const ref = decodeURI(this.href);  // For multibyte character
+  const targetid = ref.substring(ref.indexOf('#')+1, ref.length);
   // console.log([ref,targetid]);
   // show selected tab
-  for(var i = 0; i < pages.length; i++) {
+  for(let i = 0; i < pages.length; i++) {
     if( pages[i].id != targetid ) {
       pages[i].style.display = "none";
     }
@@ -13,7 +13,7 @@ function changeTab(){
     }
   }
   // show front
-  for(var i = 0; i < tabs.length; i++) {
+  for(let i = 0; i < tabs.length; i++) {
     tabs[i].style.zIndex = "0";
   }
   this.style.zIndex = "10";
@@ -28,10 +28,9 @@ function changeTab(){
 // Give every tab, new ones included, changeTab() as its onclick.
 function updateTab(){
   // get elements
-  var tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
-  var pages = document.getElementById('tabbody').getElementsByTagName('div');
+  const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
   // when clicked, enable to run changeTab() in all tab
-  for(var i = 0; i < tabs.length; i++) {
+  for(let i = 0; i < tabs.length; i++) {
     tabs[i].onclick = changeTab;
   }
 }
@@ -44,16 +43,25 @@ function updateInputsPlotLayerSpecies(){
 }
 
 // Redraw every species list from the list selected in it.
+//   A module can hold two pull downs of species lists: the one that says
+//   which list is shown, and the one that says which list to delete. Both
+//   need their options refreshed, because a list may have been registered
+//   or deleted since they were built. Only the first one decides what is
+//   shown: rebuilding from the delete pull down as well would take its own
+//   empty value and wipe the species the first one just put there.
+const SL_SELECT_SELECTOR = "select[id^='sp_list_select-']:not([id$='-flora'])";
+const SL_DELETE_SELECTOR = "select[id^='sp_list_delete_name-']";
+
 function updateSpeciesList(){
-  var selector =  "select[id^='sp_list_delete_name-all'],select[id^='sp_list_select-']:not([id$='-flora'])";
-  var sp_sl_selects = document.querySelectorAll(selector);
-  for(let select of sp_sl_selects){
+  for(const select of document.querySelectorAll(SL_SELECT_SELECTOR + ',' + SL_DELETE_SELECTOR)){
     updateSelectSLById(select.id);
-    var ns = select.id.split('-')[1];
-    var id = 'sp_list_sp_list-' + ns;
-    var sl = select.value;
-    var is_checked = document.getElementById('sp_list_checkbox-' + ns).checked;
-    replaceSpeciesList(sl, id, is_checked);
+  }
+  // Query again: updateSelectSLById() puts a new element in place of each one.
+  for(const select of document.querySelectorAll(SL_SELECT_SELECTOR)){
+    const ns = getSlNs(select.id);
+    const id = 'sp_list_sp_list-' + ns;
+    const is_checked = document.getElementById('sp_list_checkbox-' + ns).checked;
+    replaceSpeciesList(select.value, id, is_checked);
   }
 }
 
@@ -79,9 +87,9 @@ function addPlotNo(plot_data, no){
 
 // The largest plot number in use, or 0 when there is no plot yet.
 function getPlotMaxNo(){
-  var tables = document.querySelectorAll("table[id^='input_plot']");
-  var max_no = [0];
-  for(let tb of tables){
+  const tables = document.querySelectorAll("table[id^='input_plot']");
+  const max_no = [0];
+  for(const tb of tables){
     max_no.push(getColData(tb, "NO")[0]);
   }
   return Math.max.apply(Math, string2Numeric(max_no));
@@ -92,7 +100,7 @@ function getPlotMaxNo(){
 function addInputTab({ obj, id }){
   // input PLOT name
   if(id == void 0){
-    var id = prompt(msg('prompt_plot'), "");
+    id = prompt(msg('prompt_plot'), "");
   }
   if(null === id){
     return void 0;
@@ -110,29 +118,29 @@ function addInputTab({ obj, id }){
     return void 0; 
   }
   // create tabcontrol
-  var a = crEl({ el: 'a', ats: {href: "#" + id}, ih: id });
+  const a = crEl({ el: 'a', ats: {href: "#" + id}, ih: id });
   document.getElementById('tabcontrol').insertBefore(a, obj);
 
   // create tabbody
-  var tabbody = document.getElementById('tabbody');
-  var div = crEl({ el: 'div', ats: {id: id} });
+  const tabbody = document.getElementById('tabbody');
+  const div = crEl({ el: 'div', ats: {id: id} });
   tabbody.appendChild(div);
 
   // create input tables
       // PLOT
-  var plot_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[0] ) );
-  var plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
-  var plot_setting = addPlotId(plot_setting, id);
-  var pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
+  let plot_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[0] ) );
+  plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
+  plot_setting = addPlotId(plot_setting, id);
+  const pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
                               id_text: true, 
                               hide_button: true, fit_button: true })
   div.appendChild( pl_table );
   document.getElementById('input_plot_' + id + '_fit').onclick();
 
       // OCC
-  var occ_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[1] ) );
-  var occ_setting  = addPlotId(occ_setting, id);
-  var oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
+  let occ_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[1] ) );
+  occ_setting = addPlotId(occ_setting, id);
+  const oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
                               id_text: true, search_input: true,
                               hide_button: true, fit_button: true, 
                               add_button: true, calc_button: true})
@@ -141,15 +149,12 @@ function addInputTab({ obj, id }){
   document.getElementById('input_occ_' + id + '_add_rows').onclick();
   updateTab();
   tabs[tabs.length - 1].onclick();  // move tab
-  var table = searchParentTable(oc_table);
+  const table = searchParentTable(oc_table);
   setSortable(table.id);  // Should setSortable() after appendChild()
 
-  if(occ_setting.biss_c_names.indexOf('Layer') < 0){ 
-    var show_select_options = void 0;
-  }else{
-    var show_select_options = true;
-  }
-  var ul_module = createSpecieUlModule({ species: '', ns: id,
+  // void 0 hides the pull downs: createSpecieUlModule() reads it as "do not show"
+  const show_select_options = (occ_setting.biss_c_names.indexOf('Layer') < 0) ? void 0 : true;
+  const ul_module = createSpecieUlModule({ species: '', ns: id,
                   show_select_button   : true, 
                   show_comp_checkbox   : true, 
                   show_text_input      : true, 
@@ -161,16 +166,16 @@ function addInputTab({ obj, id }){
 
 // Rebuild the plot, occurrence and composition tables of the All plots tab.
 function updateAllInputsTables(){
-  var pl_table = createAllInputsTable('input_plot')
-  var oc_table = createAllInputsTable('input_occ' )
+  const pl_table = createAllInputsTable('input_plot')
+  const oc_table = createAllInputsTable('input_occ' )
   if(pl_table === void 0){ return void 0; }
   document.getElementById('plot_all').replaceWith(pl_table);
   document.getElementById('occ_all' ).replaceWith(oc_table);
   setSortable( searchParentTable(pl_table).id );
   setSortable( searchParentTable(oc_table).id );
 
-  var tables = document.querySelectorAll("table[id^='input_occ']");
-  var comp_table = createCompTable(tables);
+  const tables = document.querySelectorAll("table[id^='input_occ']");
+  const comp_table = createCompTable(tables);
   document.getElementById('comp_table').replaceWith(comp_table);
   setSortable( searchParentTable(comp_table).id );
 }
@@ -178,45 +183,45 @@ function updateAllInputsTables(){
 // Stack every input table of one kind into one table, without the button columns (DELETE, UPDATE_TIME_GPS).
 function createAllInputsTable(table_name){
   // var table_name = "input_occ"; var table_name = "input_plot";
-  var tables = document.querySelectorAll("table[id^='" + table_name + "']");
+  const tables = document.querySelectorAll("table[id^='" + table_name + "']");
   if(0 === tables.length){ return void 0; }  // return void 0, when no input tables
-  var c_names = getUniqeColNames(tables);
-  var removals = ["DELETE","UPDATE_TIME_GPS"];
+  let c_names = getUniqeColNames(tables);
+  const removals = ["DELETE","UPDATE_TIME_GPS"];
   //   var removals = ['DATE', "LOC_LAT","LOC_LON","LOC_ACC","DELETE","UPDATE_TIME_GPS"];
-  var c_names = c_names.filter(item => ! removals.includes(item));
+  c_names = c_names.filter(item => ! removals.includes(item));
 
-  var inputs = getMultiTableInputs(tables, c_names);
-  var d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
-  var selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+  const inputs = getMultiTableInputs(tables, c_names);
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
 
-  var all_data = {
+  const all_data = {
     biss_c_names: c_names,
     biss_d_types: d_types,
     biss_selects: selects,
     biss_inputs : inputs
   }
 
-  var all_table_name = table_name.split("_")[1] + '_all';
+  const all_table_name = table_name.split("_")[1] + '_all';
   //   var all_table = makeTableJO(all_data, all_table_name);
-  var all_table = tableModule({table_data: all_data, ns: all_table_name,
+  const all_table = tableModule({table_data: all_data, ns: all_table_name,
                               search_input: true,
                               fit_button: true, hide_button: true});
   return all_table;
 }
 // The column names of several tables, each of them once.
 function getUniqeColNames(tables){
-  var c_names = [];
+  let c_names = [];
   for(let i = 0; i < tables.length; i++) {
-    var c_names = c_names.concat(getColNames(tables[i]));
+    c_names = c_names.concat(getColNames(tables[i]));
   }
   return uniq(c_names);
 }
 // The data of the given columns, read from several tables and joined per column.
 function getMultiTableInputs(tables, c_names){
-  var inputs = [];
-  for(let c_name of c_names){
+  const inputs = {};   // keyed by column name
+  for(const c_name of c_names){
     inputs[c_name] = [];
-    for(let tb of tables){
+    for(const tb of tables){
   // console.log(tb);
   // console.log(c_name);
       inputs[c_name] = inputs[c_name].concat(getColData(tb, c_name));
@@ -227,12 +232,12 @@ function getMultiTableInputs(tables, c_names){
 
 // The names of the columns that hold a pull down in any of the tables.
 function getMultiTableSelects(tables){
-  var selects = [];
-  for(let table of tables){
-    var d_types = getDataTypes(table);
-    var c_names = getColNames(table);
-    var indices = multiIndexOf(d_types, 'list');
-    for(i of indices){
+  const selects = [];
+  for(const table of tables){
+    const d_types = getDataTypes(table);
+    const c_names = getColNames(table);
+    const indices = multiIndexOf(d_types, 'list');
+    for(const i of indices){
       selects.push(c_names[i]);
     }
   }
@@ -241,10 +246,10 @@ function getMultiTableSelects(tables){
 
 // The options of the given columns, collected over several tables.
 function getMultiTableOptions(tables, c_names){
-  var options = [];
-  for(let c_name of c_names){
+  const options = {};   // keyed by column name
+  for(const c_name of c_names){
     options[c_name] = [];
-    for(let tb of tables){
+    for(const tb of tables){
       options[c_name] = options[c_name].concat(getSelectOne(tb, c_name));
     }
   }
@@ -267,19 +272,19 @@ function checkSameAs(inputs, pl, sp, id, sa){
 // Build the composition table: species by plot, holding the cover ('--' when present without a cover).
 function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id = "Identified", sa = "SameAs"){
   // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']");
-  var inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]);
+  let inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]);
   // console.log(inputs);
-  var inputs = checkSameAs(inputs, pl, sp, id, sa)
-  var uniq_pl = uniq(inputs[pl]);
-  var uniq_sp = uniq(inputs[sp]);
-  var c_names = [sp].concat(uniq_pl);
-  var data_table = [];
+  inputs = checkSameAs(inputs, pl, sp, id, sa)
+  const uniq_pl = uniq(inputs[pl]);
+  const uniq_sp = uniq(inputs[sp]);
+  const c_names = [sp].concat(uniq_pl);
+  const data_table = {};   // keyed by column name: the species, then one per plot
   data_table[sp] = uniq_sp;
-  for(let p of uniq_pl){
-    var data_col = [];
-    for(let s of uniq_sp){
-      var value = 0;
-      var is_present = 0;
+  for(const p of uniq_pl){
+    const data_col = [];
+    for(const s of uniq_sp){
+      let value = 0;
+      let is_present = 0;
       for(let i=0; i < inputs[ab].length; i++){
         if(inputs[pl][i] === p && inputs[sp][i] === s ){
           value = value + Number(inputs[ab][i]);
@@ -287,10 +292,10 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
         }
       }
       if(is_present === 0){  // absent
-        var value = '';
+        value = '';
       }else{                 // present
         if(value === 0){
-          var value = '--';
+          value = '--';    // present, but no cover was given
         }
       }
       data_col.push(value);
@@ -299,15 +304,15 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
   }
   data_table;
 
-  var d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
-  var selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
-  var comp_data = {
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
+  const comp_data = {
     biss_c_names: c_names,
     biss_d_types: d_types,
     biss_selects: selects,
     biss_inputs : data_table
   }
-  var comp_table = tableModule({table_data: comp_data, ns: 'comp_table',
+  const comp_table = tableModule({table_data: comp_data, ns: 'comp_table',
                               id_text: true, search_input: true,
                               hide_button: true})
   return comp_table;

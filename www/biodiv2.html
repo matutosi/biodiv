@@ -60,9 +60,6 @@
 <span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span>
 <!--            Switch full screen           -->
 <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)" />
-<!--
-<input type="button" value="saveHTML"  onclick="saveHTML()" />
--->
 <input type='button' value="Show example" data-msg="show_example" onclick="showExample(this)" />
 <input type='button' value="Show manual"  data-msg="show_manual"  onclick="showManual()" />
 </p>
@@ -85,7 +82,7 @@
                         show_select_ncol         : true, show_delete_list     : true, 
                         show_button_register_sl  : true, 
                         show_text_input          : true, 
-                        show_select_plot         : true, show_select_layer   : true });
+                        show_select_plot         : true, show_select_options : true });
         tab_tools.appendChild( ul_all );
         tab_tools.appendChild( createSearchFloraSpan() );
       </script>
@@ -122,11 +119,6 @@
 
 <div>  <!-- need to located at the end of tab HTML -->
   <script>
-    // let, not const: sortable.js reassigns these three while sorting.
-    let column_no = 0;       // now clicked
-    let column_no_prev = 0;  // previous clicked
-    let dir = "asc";
-
     // Live HTMLCollections, so a new plot tab shows up without reassigning.
     const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
     const pages = document.getElementById('tabbody').getElementsByTagName('div');

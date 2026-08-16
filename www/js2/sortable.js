@@ -8,37 +8,33 @@
 //    If executed before creation, a table will not be sortable.
 //    
 function setSortable(id_table){
-  // console.log(id_table);
-  // console.log( document.querySelectorAll('#' + id_table + ' th') );
-  // var id_table = "occ_input_table_example_01";
-  // var id_table = "comp_table";
+  // Which column was clicked last, and which way it went, belong to this
+  // table alone. They used to live in three globals shared by every table,
+  // so sorting one table ascending and then clicking the same column number
+  // in another started it descending.
+  let column_no_prev = -1;  // -1: nothing clicked yet in this table
+  let dir = "asc";
   document.querySelectorAll('#' + id_table + ' th').forEach(elm => {
     elm.onclick = function (){
       // settings
-      var table = document.getElementById(id_table);
-      column_no = this.cellIndex; // now clicked
-      // sort direction: clicked: sort reverse
-      if(column_no_prev !== column_no) {
-        dir = "asc"; 
-      } else if(column_no_prev === column_no && dir === "desc") {
-        dir = "asc"; 
-      } else if(column_no_prev === column_no && dir === "asc"){
-        dir = "desc"; 
-      } 
+      const table = document.getElementById(id_table);
+      const column_no = this.cellIndex; // now clicked
+      // sort direction: the same column again reverses, anything else starts ascending
+      dir = (column_no_prev === column_no && dir === "asc") ? "desc" : "asc";
       column_no_prev = column_no;
-      var col_name = getColNames(table)[column_no];
-      var elements = getColData(table, col_name, list_with_index = true);
+      const col_name = getColNames(table)[column_no];
+      const elements = getColData(table, col_name, true);  // true: list as its index
   //       elements.shift() // delete hide button
   // console.log("elements in sort: " + elements);
-      var rank_index = rank(elements, dir);  // rank_index: sorting order
+      const rank_index = rank(elements, dir);  // rank_index: sorting order
       // sort table
-      var trs = table.rows;
+      const trs = table.rows;
       for(let i = 0; i < rank_index.length; i++){ 
         rank_index[i]++;  // add 2 (colnames and hide button)
         rank_index[i]++;
       }
       rank_index.unshift(0, 1);  // 0: colnames, 1: hide button
-      var new_trs = sortByOrder(trs, rank_index);
+      const new_trs = sortByOrder(trs, rank_index);
       for(let i = 0; i < new_trs.length; i++){
         table.appendChild(new_trs[i]);
       }
@@ -52,8 +48,8 @@ function setSortable(id_table){
 //    "" in number will be converted into null for sorting in last element.
 //    "" in string keep "" (NOT null) for sorting in last element.
 function string2Numeric(array){
-  new_array = blank2Null(array);  // keep original for return in string
-  var res_array = [];
+  const new_array = blank2Null(array);  // keep original for return in string
+  const res_array = [];
   for(let i=0; i<array.length; i++){
     if(isNaN(Number(new_array[i]))){ return array; } // string: return original array
     if(new_array[i] === null){ res_array[i] = null;                }
@@ -64,7 +60,7 @@ function string2Numeric(array){
 
 // Convert blank ("") string in array to null.
 function blank2Null(array){
-  var res_array = [];
+  const res_array = [];
   for(let i=0; i<array.length; i++){
     if(array[i] === ""){ res_array[i] = null;     }
     else               { res_array[i] = array[i]; }
@@ -89,8 +85,8 @@ function rank(array, dir = "asc"){
 // string MUST keep "", do NOT convert into null 
 //    in string2Numeric
     array = string2Numeric(array);
-    var rank = [];
-    var n_array = array.length;
+    const rank = [];
+    const n_array = array.length;
     for (let i = 0; i < n_array; i++) { rank[i] = 0; }
     if(dir === "desc"){
       for (let i=1; i<n_array; i++) {
@@ -125,7 +121,7 @@ function sortByOrder(array, rank_array){
     alert("Length of array and rank_array must be same!");
     return array;
   }
-  var sorted_array = [];
+  const sorted_array = [];
   for(let Ni = 0; Ni < n; Ni++){
     sorted_array[rank_array[Ni]] = array[Ni];
   }

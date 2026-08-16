@@ -20,3 +20,9 @@ merge_push.bat
 
 # Output of R/code_analysis.R
 dup_codes.txt
+
+# Browser tests (e2e/): the virtualenv and what pytest and playwright leave
+.venv/
+__pycache__/
+.pytest_cache/
+test-results/

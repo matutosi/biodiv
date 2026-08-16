@@ -5,9 +5,9 @@
 //    createInput({ type: "text", value: "Val"});
 //    createInput({ type: "button", value: "Push here"});
 function createInput( ...args ){
-  var input = document.createElement('input');
-  var keys  = Object.keys(args[0]);
-  for(let key of keys){
+  const input = document.createElement('input');
+  const keys  = Object.keys(args[0]);
+  for(const key of keys){
     input.setAttribute(key, args[0][key]);
   }
   return input;
@@ -25,13 +25,16 @@ function createUpdateButton(){
   return createInput({ type: "button", value: msg('update_time_gps'), 'data-msg': 'update_time_gps', onclick: "updateTimeGPS(this)" });
 }
 
+// The two buttons below replace each other, so both carry the same id.
+//   Without it the id is lost the first time the shape is switched, and
+//   addInputTab(), which reaches the button by id, no longer finds it.
 // Create the button that folds a table into the narrow (one record per block) shape.
-function createFitTable(id){
+function createFitTable(id = ''){
   return createInput({ type:"button", value: msg('fit_width'), 'data-msg': 'fit_width', onclick: "shortTable(this)", id: id});
 }
 // Create the button that puts a folded table back to its normal shape.
-function createWideTable(){
-  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)" });
+function createWideTable(id = ''){
+  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)", id: id });
 }
 // Create the file input for loading a saved settings JSON.
 function createFileButton(){
@@ -42,8 +45,8 @@ function createFileButton(){
 //   switched by the language select. Hide it and open it from a normal
 //   button so that the visible label goes through msg().
 function createFileInput({ id = '', accept = '', onchange = '' } = {}){
-  var span = crEl({ el:'span' });
-  var ats  = { type: "file", onchange: onchange, style: "display:none" };
+  const span = crEl({ el:'span' });
+  const ats  = { type: "file", onchange: onchange, style: "display:none" };
   if(id     !== ''){ ats.id     = id;     }
   if(accept !== ''){ ats.accept = accept; }
   span.appendChild( createInput({ type: "button", value: msg('choose_file'),
@@ -86,8 +89,4 @@ function createAddRowButton(id){
 // Create the button that hides or shows the table below it.
 function createHideButton(){
   return createInput({ type: "button", value: msg('hide_table'), 'data-msg': 'hide_table', onclick: "hideShowNext(this)" });
-}
-// Create the button that adds another occurrence table to a plot.
-function createNewOccButton(){
-  return createInput({ type: "button", value: msg('new_occ_table'), 'data-msg': 'new_occ_table', onclick: "makeNewOccTableModule(this)" });
 }

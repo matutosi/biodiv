@@ -25,6 +25,8 @@
 | `www/css2/`     | 現行版のスタイルシート (こちらを編集する)                              |
 | `man/`          | 使い方マニュアル (`01-howtouse_jp.md` / `_en.md`) と画像・サンプルデータ |
 | `R/`            | `code_analysis.R` (コードの静的な確認用)                               |
+| `test/`         | jsdom の回帰スモークテスト (`npm test`)                                |
+| `e2e/`          | Playwright のブラウザテスト (`pytest`)                                 |
 | `2210veg/`      | 2022年10月 植生学会 発表資料 (要旨・ポスター用画像)                    |
 | `2310veg/`      | 2023年10月 植生学会 発表資料 (要旨・ポスター用画像)                    |
 
@@ -34,7 +36,7 @@
 
 ```
 npm install -g inliner
-inliner -m biodiv2.html > biss2.html
+inliner --inlinemin biodiv2.html > biss2.html
 ```
 
 `www/run_inliner2.bat` が上記を実行する．
@@ -49,10 +51,18 @@ inliner -m biodiv2.html > biss2.html
 スクリプトや自動化から `inliner ... > biss2.html` を実行すると**空のファイルができる**．
 自動化から実行するときは Node の API を使う．
 
+`www/` の中で次を実行する (`npm root -g` でグローバルの場所が分かる)．
+
 ```
-node -e "const I=require('<npmグローバル>/node_modules/inliner');const fs=require('fs');
-process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync('biss2.html',h)})"
+node -e "const I=require('C:/Users/matutosi/AppData/Roaming/npm/node_modules/inliner');
+const fs=require('fs');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync('biss2.html',h)})"
 ```
+
+出力は `.bat` の `--inlinemin` とほぼ同じになる (差は加えた変更の分だけ)．
+
+**サイズを比べるときは行末に注意**．作業ディレクトリの `biss2.html` は CRLF，
+git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見かけの差が出る．
+中身が減ったわけではない．比較は `git show HEAD:www/biss2.html | wc -c` と揃える．
 
 ## 多言語 (日本語・英語)
 
@@ -118,11 +128,78 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 - 配布ファイル (`www/biss2.html`) を更新したら `main` へマージする．
 - このプロジェクトは公開リポジトリのため，`main` への反映は動作確認後に行う．
 
+## 開発ツール
+
+リファクタリングのために入れた．**配布物 (`www/biss2.html`) には一切入らない**
+(inliner は `biodiv2.html` が読む `js2/`・`css2/` だけをまとめるため)．
+`node_modules` は `.gitignore` 済み．
+
+| ファイル | 内容 |
+| -------- | ---- |
+| `package.json`         | `npm run lint` / `npm test` の定義と devDependencies |
+| `eslint.config.js`     | ESLint の設定 (flat config) |
+| `test/biss.js`         | jsdom で `www/biodiv2.html` を組み立てる土台 |
+| `test/smoke.test.js`   | 回帰スモークテスト (16件) |
+| `requirements-dev.txt` | ブラウザテストの Python 依存 |
+| `pytest.ini`           | pytest の設定 |
+| `e2e/conftest.py`      | Playwright で実ブラウザに読み込ませる土台 |
+| `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (8件 × 2ページ) |
+
+**テストは 2 段構え**．jsdom は速いので編集のたびに，Playwright は遅いので区切りで走らせる．
+
+| | `npm test` (jsdom) | `pytest` (Playwright) |
+| --- | --- | --- |
+| 速さ | 約 9 秒 | 約 8 秒 (初回のブラウザ取得は別) |
+| 対象 | `biodiv2.html` + `js2/` | `biodiv2.html` **と** `biss2.html` の両方 |
+| 見るもの | ロジック・データ・列名 | ファイル選択ダイアログ，実際のダウンロード，表示・非表示，配布物の自己完結 |
+
+- `npm run lint` … `www/js2/` を検査する．旧版 (`www/js/`)・配布物 (`biss*.html`)・
+  和名辞書 (`wamei*.js`) は対象外．
+  BISS は**イベントハンドラを文字列で書いている** (`onclick: "delRow(this)"`) ため
+  全関数がグローバルである必要がある．`eslint.config.js` は `js2/` と `biodiv2.html` を読んで
+  トップレベルの宣言を集め，globals として登録する．手書きの一覧を保守せずに
+  `no-undef` でタイプミスや宣言漏れを拾うための仕掛け．
+- `npm test` … jsdom で実際にページを組み立て，「設定を選ぶ → 地点を追加 → 種を追加 →
+  全地点の表を作る → TSV の中身を見る」を通す．
+  とくに **`ecan::read_biss()` が読む列名と列順を固定**し，
+  `DELETE`・`UPDATE_TIME_GPS` が保存側に出ないことを見張る．
+- 直っていないバグは `{ todo: '...' }` を付けたテストとして残す．
+  失敗しても `npm test` は緑のままで，直ると `# TODO` が消える．
+- jsdom に無くてブラウザにはあるものは `test/biss.js` の `stub()` で補う
+  (`innerText`，`HTMLCollection` の反復，`URL.createObjectURL`，geolocation，各ダイアログ)．
+  ページは `http://biss.test/` から配ったことにする．`file://` だと origin が無く
+  `localStorage` が使えないため．
+
+### ブラウザテスト (Playwright + pytest)
+
+初回だけ準備が要る (`.venv` は `.gitignore` 済み)．
+
+```
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements-dev.txt
+.venv/Scripts/python.exe -m playwright install chromium
+.venv/Scripts/python.exe -m pytest
+```
+
+- **`biodiv2.html` と `biss2.html` の両方に同じテストを流す**．
+  `js2/` を直したのに `biss2.html` を再ビルドし忘れると，**配布物の側だけ失敗する**．
+  再ビルド忘れの見張りを兼ねている (実際に A7 で機能することを確認済み)．
+- **`file://` で開く**．野外での使い方 (1ファイルを落として offline で開く) に合わせる．
+  Chromium は `file://` でも `localStorage` を使えるので，jsdom のような細工は要らない．
+- 見ているのは，jsdom では届かないところ．
+  ファイル選択ダイアログ (種一覧の登録)，実際のダウンロード
+  (保存した TSV をファイルとして読み，ヘッダが `ecan::read_biss()` の列と一致すること)，
+  表と列の非表示・再表示 (レイアウトが要る)，配布物が外部へ通信しないこと，
+  言語切替後の実際の表示．
+- **ロケールは `en-US` に固定する** (`conftest.py` の `browser_context_args`)．
+  BISS はブラウザの言語で起動するので，日本語環境と英語環境でテストの結果が変わってしまう．
+  切り替えそのものは，切替のテストの中で明示的に行う．
+
 ## 進捗状況
 
 ### 現在の状態
 
-2026-08-16 02:33 (JST) 更新．
+2026-08-16 09:33 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -198,6 +275,166 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
   - 表の中のボタン (「削除」「日時・GPS」と，行削除・日時 GPS 更新の動作)
   - `biodiv2.html` の `const`/`let` 化 (とくに列見出しをクリックしたときの並べ替え．
     `sortable.js` が `column_no`・`dir` を書き換えるため)
+- **リファクタリングに着手した**．方針は「案1 安全第一」(振る舞いを変えず，
+  実バグの修正・暗黙のグローバル撲滅・`var`→`let`/`const`・死にコード削除・重複統合まで．
+  ES モジュール化などの構造変更はしない)．手順は
+  「未確認4件の確認 → ツール導入 → 実バグ(A) → 言語仕様(B) → 整理(C) → 再ビルド → マージ」．
+- **開発ツールを導入した** (「開発ツール」の節を参照)．`package.json`・`eslint.config.js`・
+  `test/` を新規作成した．配布物 `www/biss2.html` は inliner が `js2/` から作るので，
+  これらは**配布物に一切入らない**．
+  - ESLint の初回結果は**エラー 102 件・警告 530 件** (警告はほぼ `no-var`・`prefer-const`)．
+  - jsdom のスモークテストは 14 件中 13 件成功，1 件は未修正のバグ (A6) を記録する `todo` (約 9 秒)．
+  - **テストが新しい実バグ (A6) を見つけた**．地点名にハイフンを含めると種一覧が壊れる．
+- **コードを点検して問題を4つに分類した**．
+  - **A. 実バグ (6件)** (発見時の記録．いずれも修正済み):
+    (A1) `table.js:133` の `createSpeciesListTable()` が未定義で，`makeTableJO()` に配列を渡すと
+    ReferenceError． (A2) `gps.js:40` が参照する `poslog` 要素が `biodiv2.html` に無く，
+    GPS エラー時に TypeError． (A3) `table_change_view.js:33` の `wideTable()` が
+    `createFitTable()` を id 無しで呼ぶため，「横長に」で `input_occ_*_fit` の id が消える．
+    (A4) `sortable.js` の `column_no`・`column_no_prev`・`dir` が全表で共有され，
+    表をまたぐと並べ替えの方向が混線する． (A5) `auto_save.js:45` の `delete json;` は無意味
+    (strict mode では SyntaxError)．
+    (A6) **地点名にハイフンを含めると種一覧モジュールが壊れる**．
+    `tab.js` の `updateSpeciesList()` と `ul_module.js` の各所が `id.split('-')[1]` で
+    名前空間を取り出しており，`sp_list_select-sito-A` が `sito` に切られる．
+    `addInputTab()` は「`_` は使えないので `-` を使ってください」と案内するので，
+    利用者は必ず踏む (`sito-A` で `Cannot read properties of null (reading 'checked')`)．
+    スモークテストが見つけた．
+  - **B. 言語仕様レベル**: `var` 525 に対し `let`/`const` 129．
+    `f(a, id = 'x')` という名前付き引数のエミュレーションが**グローバル変数を作ってから**値を渡している
+    (`strings`・`file_name`・`selected_no`・`id`・`value`・`first_option`・`n`・`list_with_index`)．
+    宣言なしの代入によるグローバルも多数 (`Ri`・`i`・`sum`・`new_array`・`selected_opt`・
+    `layers`・`species`・`identified`・`timerId`・`span`)．
+  - **C. 設計上の脆さ**: DOM を `parentNode.nextSibling` の4連で辿る，配列をハッシュとして使う，
+    `table.rows[2]` (最初のデータ行) というマジックインデックスが6箇所，列名リテラルの散在，
+    `readFile()` が2箇所に重複，`getTableData()` と `getTableDataPlus()` がほぼ同一，
+    死にコード (`createNewOccButton`・`createSelectLayer`・`saveHTML`)．
+  - **D. 体制**: テストと lint が無かった → 導入済み．
+- **C1・C2 を片づけた．ESLint の指摘が 0 件になった** (エラーも警告も)．
+  `js2/` は 3,049 行から 2,865 行に減った (和名辞書を除く)．
+  - **C1 死にコード**．参照が無い関数を消したところ**連鎖した**ので，
+    「消す → 走査し直す」を繰り返して 0 になるまで続けた．
+    `createAddCompButton` (「組成から追加」ボタン．どこにも置かれていなかった) を消すと
+    `addComp` が浮き，それを消すと `addSpeciesList` が浮き，さらに
+    `getGrandChildrenValues` が浮いた．
+    ほかに `createNewOccButton` (未定義の `makeNewOccTableModule` を呼ぶ)，
+    `createSelectLayer` (`createSelectOptions` に置き換わっていた)，
+    `NS` (shiny 風の名前空間ヘルパ)，`removeSLinLSAll`，
+    `saveHTML` (`biodiv2.html` の呼び出しはコメントの中だった．HTML 側も消した)．
+    未使用になったメッセージ 3件 (`add_from_comp`・`layer_label`・`new_occ_table`) も消した．
+    コメントアウト済みの塊 (`utils.js` の `getDataType`，`table.js` 末尾の作業メモ) と，
+    未使用の局所変数 4件も消した．
+    **必要になれば git の履歴から取り出せる** (走査スクリプトは使い捨て)．
+  - **`biodiv2.html` の `show_select_layer : true` を `show_select_options : true` に直した**．
+    `createSpecieUlModule()` にそんな引数は無く，指定は無視されていた．
+    それでも階層のプルダウンが見えていたのは，起動直後の `updatePlotLayer({})` が
+    `display:none` の付いていない要素に差し替えるため．見た目は変わらない．
+  - **C2 重複**．
+    `readFile()` が `table_module.js` と `ul_module.js` に同じ実装で2つあったので
+    `utils.js` に1つ置いた．
+    `getTableData()` と `getTableDataPlus()` は，違いが
+    「`biss_inputs` を配列で作って後から object に変換するか，最初から object か」と
+    「list でない列の `biss_selects` が `''` か `null` か」だけだったので1つにした．
+    `null` は `data.js` と保存済みの設定ファイルが元から使っている形で，
+    `''` の側の呼び出し元は `biss_selects` を見ていない．
+    `larger()`/`smaller()` は倍率を引数に取る `changeFontSize()` にまとめた．
+    `autoSave()` が書き直していた Blob とリンクの手順は `downloadStrings()` に寄せた
+    (MIME を引数にして，従来の `text/json` を保つ)．
+    同じ値を n 個積むループは `Array(n).fill()` にした．
+  - **キーが列名なら配列ではなく object にした** (6箇所)．
+    配列に文字列のキーを入れる書き方は動くが，`JSON.stringify()` が `[]` を書くため
+    `getTableDataPlus()` は `Object.assign({}, inputs)` で辻褄を合わせていた．
+    object にしたのでその変換も要らなくなった．
+  - **保存形式が変わっていないことをテストで固定した**．
+    設定 JSON が `JSON.stringify` → `JSON.parse` → `makeTableJO()` を往復すること，
+    list でない列の `biss_selects` が `null` であること，
+    自動保存の JSON が列名をキーに持つこと (`npm test` は 17 → 19件)．
+- **B1〜B3 を片づけた．ESLint のエラーが 102 件から 0 になった**．
+  - **B1 名前付き引数のエミュレーション (6箇所)**．`f(a, id = 'x')` は「`id` という
+    グローバル変数を作ってから値を渡す」動作なので，位置引数の呼び出しに直した．
+    消えたグローバルは `list_with_index`・`selected_no`・`id`・`strings`・`file_name`・
+    `value`・`first_option`．
+  - **B2 暗黙のグローバル (8種)**．宣言なしの代入を宣言した．
+    `timerId` は `auto_save.js` の先頭で `let timerId;` として明示
+    (`changeAutoSaveSttting()` が読み `setAutoSave()` が書く)．
+    ほかは `layers`・`species`・`identified`・`span`・`new_array`・`i`・`selected_opt`・
+    `sum`・`Ri` で，いずれも関数内のローカルにした．
+  - **B3 `var` → `let`/`const`**．**`var` は 525 箇所から 0 になった** (`let`/`const` は 129 → 568)．
+    - 先に `no-redeclare` 49件を手で直した．同じ名前を同じスコープで何度も `var` する書き方で，
+      多くは「分岐の両方で宣言」「`var x = f(x)` の連鎖」「switch の各 case で `var td`」．
+      `let` にすると壊れるので，宣言を1つに寄せてから残りを代入に変えた．
+      `createTd()` の `td` は **case "auto" だけ宣言が無く**，ほかの `var td` の巻き上げで
+      動いていた．関数の先頭で `let td;` と宣言した．
+    - そのうえで `eslint --fix` をかけた (466 → 14 警告)．
+    - ESLint が触らずに残したトップレベルの `var` 8件は手で変換した．
+      `var` はグローバルなら `window` の属性になるが `let` はならないため，
+      自動修正が避けている．`window.msgs` のような参照が無いことを確かめてから変えた
+      (`lang.js` の `LANGUAGES`・`LANGUAGE_KEY`・`currentLanguage`・`msgs`，
+      `gps.js` の `watchId`・`positionOptions`・`locations`)．
+  - **変数のスコープが正しいことは `no-undef` が保証する**．0 件ということは，
+    ブロックの外から中の変数を参照している箇所が無いということ．
+    `var` → `let` でいちばん危ないのがこれなので，機械で確かめられる意味は大きい．
+  - 残る警告は5件で，すべて未使用の変数 (C1 の対象)．
+    `full_screen.js` の `button`，`tab.js` の `pages`，`wamei_search.js` の `parent`，
+    `lang.js` の `catch(e)` 2件．
+- **`www/biss2.html` を再ビルドした** (779,382 バイト)．
+- **実バグ A1〜A6 を直した**．リファクタリング (B・C) の前に，まず動作の誤りを片づけた．
+  - **A1** `table.js` の `makeTableJO()` から，未定義の `createSpeciesListTable()` を呼ぶ分岐を消した．
+    この関数は `3e6c690` (2022-11) で種一覧が表から `<ul>` に変わったときに削除され，
+    呼び出しだけが残っていた．`makeTableJO()` に配列が渡る経路は無いので，分岐ごと削除．
+  - **A2** `gps.js` の `errorCallback()` が，存在しない `poslog` 要素に書こうとして
+    TypeError になっていた (元にした書籍のサンプルに合わせた名残)．`console.error` に変えた．
+    位置が取れなくても調査は続けられるべきなので，止めない．
+  - **A3** 「幅を狭く」と「横長に」を往復すると，ボタンの id が失われていた
+    (`createFitTable()` を id 無しで呼んでいた)．両方のボタンが id を持ち回るようにした．
+    `addInputTab()` が id でこのボタンを取るので，失うと2回目以降が壊れる．
+  - **A4** 並べ替えの方向が `column_no`・`column_no_prev`・`dir` の3グローバルにあり，
+    **全表で共有**されていた．表 A を昇順にしてから表 B の同じ列番号を押すと降順から始まる．
+    `setSortable()` のクロージャに入れて**表ごとの状態**にした．
+    未使用になった3つのグローバルは `biodiv2.html` から削除した．
+  - **A5** `auto_save.js` の `delete json;` を消した (変数への delete で無意味)．
+  - **A6** 地点名のハイフン．`id.split('-')[1]` を使う10箇所を，
+    **最初の `-` より後ろを全部取る** `getSlNs()` に置き換えた
+    (`ul_module.js` 9箇所・`tab.js` 1箇所)．
+    あわせて `getSelectOptionsAsJSON()` のセレクタを引用符で囲み `-` で固定した．
+    囲まないと ident にならない地点名で壊れ，固定しないと
+    `all` が `small` にも一致してしまう．列名の取り出しも，
+    最初の `-` で切るのをやめ，既知の接頭辞と名前空間を削る形にした
+    (列名にも `-` を使えるため)．
+- **回帰テストを足した** (jsdom 17件・Playwright 8件×2ページ=17件，すべて成功)．
+  A6 は jsdom と Playwright の両方に置いた．
+  Playwright に置いたのは，**配布物の再ビルド忘れを見張るのは Playwright 側だけ**のため
+  (ソースと配布物の両方に流すのは Playwright)．
+  実際，A6 を直した直後は `biodiv2.html` が成功・`biss2.html` が失敗になり，
+  再ビルドの必要がその場で分かった．
+- **`www/biss2.html` を再ビルドした** (778,352 バイト)．A1〜A6 が配布物に入った．
+- **ブラウザテスト (Playwright + pytest) を入れた** (「開発ツール」の節を参照)．
+  jsdom で届かない範囲 — ファイル選択ダイアログ，実際のダウンロード，表示・非表示，
+  配布物の自己完結 — を実ブラウザで見る．8件のテストを
+  `biodiv2.html` と `biss2.html` の**両方**に流すので，計16件．約8秒．
+  - **配布物の再ビルド忘れを見張れることを確かめた**．
+    `biss2.html` を再ビルド前に戻すと，ソース側は成功したまま**配布物側だけが失敗**し，
+    「the species disappeared on coming back」と出た．
+- **`www/biss2.html` を再ビルドした** (777,934 バイト，git 上は前回比 +708 バイト)．
+  ラベル変更と A7 修正が配布物に入った．外部参照が残っていないことは
+  ブラウザテストが毎回確かめる．
+- **ブラウザでの確認で見つかった不具合 (A7) を直した**．**修正済み**．
+  ツールで種一覧を選んだあと，別のタブに移って戻ると一覧の表示が消えていた．
+  `tab.js` の `updateSpeciesList()` が，種一覧のプルダウンを探すセレクタに
+  **表示用 (`sp_list_select-`) と削除用 (`sp_list_delete_name-`) の両方**を入れており，
+  同じ `sp_list_sp_list-<ns>` を2回作り直していた．2回目は削除用プルダウンの値
+  (常に空) から作るため，1回目に並べた種が消える．
+  削除用プルダウンがあるのはツール (`ns = 'all'`) だけなので，ツールでしか起きなかった．
+  選択肢の貼り直しは両方に行い，**表示する一覧を決めるのは表示用だけ**に変えた．
+  貼り直しで要素が入れ替わるため，値は貼り直した後の要素から読む．
+  回帰テストを2件足した (表示が残ること，種一覧の削除が従来どおり動くこと)．
+- **ブラウザでの確認は，これ以外は問題なしとの報告を得た** (課題一覧 A の未確認4件)．
+- **種一覧のチェックボックスのラベルを変えた** (`include_comp`)．
+  「組成を含める」→「**出現種を含める**」，"Include composition" → "**Observed species**"．
+  `man/01-howtouse_jp.md`・`_en.md` の該当箇所 (各2件) も合わせた．
+  キー名 `include_comp` は変えていない．表示が変わっただけで，
+  組成表から種名を集める仕組みそのものは同じため．
+  **`www/biss2.html` は未再ビルド**なので，配布物にはまだ反映されていない．
 
 ### 課題一覧
 
@@ -209,25 +446,25 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 #### A. 機能として未完了 (優先度 高)
 
-- **多言語化のブラウザでの動作確認**: 実機で未確認．次の点を見る．
-  - 言語セレクタで日英が切り替わり，入力済みのデータが消えないこと．
-  - 切替後に新しく作った地点タブ・表・種一覧のラベルも切り替わっていること．
-  - 保存した TSV/JSON の列名が英語のままであること
-    (ここが変わると `ecan::read_biss()` が壊れる．
-    `DELETE`・`UPDATE_TIME_GPS` の2列は元から保存されない)．
-  - 「表を非表示 / 表を表示」の切替と，列の「非表示 → 表示: 全列」の並びが崩れていないこと
-    (`table_hide_show.js` の子要素数の判定を 2 → 3 に変えたため)．
-- **表の中のボタンの動作確認**: `DELETE`・`UPDATE_TIME_GPS` を翻訳した (「多言語」の節を参照)．
-  日本語表示で「削除」「日時・GPS」になること，行の削除と日時・GPS の更新が従来どおり動くこと，
-  言語を切り替えたときに既存の行のボタンも貼り替わることを見る．
-- **ファイル選択ボタンの動作確認**: 隠した file 入力を自前のボタンから開く方式に変えた．
-  設定の読込・種一覧の登録・植物相の入替の3か所で，ダイアログが開いて読み込めることを見る．
-- **`const`/`let` 化の動作確認**: 列見出しをクリックしたときの並べ替え
-  (`sortable.js` が `column_no`・`dir` を書き換える) と，地点タブの追加・切替を見る．
+- (実バグ A1〜A7 はすべて修正済み．内容は「現在の状態」を参照)
+- **「案1 安全第一」の範囲は完了した** (A・B・C すべて)．ESLint の指摘は 0 件．
+  残っているのは，当初「案2 中規模」として見送った次の項目．
+  - DOM を兄弟の連鎖で辿る (`obj.parentNode.nextSibling` の4連など)．要素を1つ足すと壊れる．
+  - `table.rows[2]` (最初のデータ行) というマジックインデックスの散在．
+  - 列名リテラル (`"DATE"`・`"PLOT"`・`"Species"` など) が各ファイルに直書き．
+  - `addSpecies()` が JSON を文字列連結で組み立てている
+    (種名に `"` が入ると `JSON.parse` が壊れる)．
+- **ブラウザでの確認は一巡した**．未確認4件は「問題なし」，A7 のみ見つかって修正済み．
+  以降の確認は，スモークテスト (`npm test`) が見る分を除いて次だけでよい．
+  - ファイル選択ダイアログは Playwright が見るようになった (種一覧の登録)．
+    設定の読込と植物相の入替は，同じ `createFileInput()` を使うのでまだ書いていないだけ．
+  - **手で見たほうがよい**: 見た目の崩れ全般 (テストは要素の表示・非表示までしか見ない)．
+    保存した TSV/JSON を実際に `ecan::read_biss()` に通すこと．
+    スマートフォン・タブレットでの操作．
 
 #### B. 開発環境・ツールの不整合 (優先度 中)
 
-- (なし)
+- (なし．lint とテストは「開発ツール」の節のとおり導入済み)
 
 #### C. 整理・確認 (優先度 低)
 
@@ -239,3 +476,6 @@ process.chdir('www');new I('biodiv2.html',(e,h)=>{if(e)throw e;fs.writeFileSync(
 
 `js2/`・`css2/`・`biodiv2.html` を改修したら `www/biss2.html` を再ビルドすること．
 再ビルドを忘れると，配布物だけが古いまま公開される．
+
+**`pytest` がこれを見張る**．同じテストを `biodiv2.html` と `biss2.html` の両方に流すので，
+再ビルドを忘れると配布物の側だけが失敗する．`main` へマージする前に必ず走らせる．
