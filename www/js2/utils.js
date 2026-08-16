@@ -18,11 +18,11 @@ function table2array(id_table, header = true){
     array.push(array_row);
   }
   if(header){
-    var header = [];
+    const header_row = [];
     for(let i=0; i<table.rows[0].cells.length; i++){
-      header.push(table.rows[0].cells[i].innerHTML);
+      header_row.push(table.rows[0].cells[i].innerHTML);
     }
-    array.unshift(header);
+    array.unshift(header_row);
   }
   return array
 }
@@ -83,12 +83,12 @@ function randSample(n, array, only_once = false){
     var array_copy = Object.assign([], array);
     var m = Math.min(n, array_copy.length);
     for(let i=0; i<m; i++){
-      var index = randInt(1, array_copy.length);
+      const index = randInt(1, array_copy.length);
       sample.push(array_copy.splice(index, 1)[0]);
     }
   }else{
     for(let i=0; i<n; i++){
-      var index = randInt(1, array.length);
+      const index = randInt(1, array.length);
       sample.push(array[index]);
     }
   }
@@ -165,7 +165,7 @@ function hasTable(obj){
 //    @return A table.
 function searchParentTable(obj, index = 0){
   while( !isTable(obj) && !hasTable(obj) ){
-    var obj = obj.parentNode;
+    obj = obj.parentNode;
   }
   if(isTable(obj)){
     return obj;
@@ -192,9 +192,9 @@ function getColData(table, c_name, list_with_index = false){
     for(let i=0; i<n_row; i++){ group_value.push(''); }
     return group_value;
   }
-  var table = table.querySelectorAll("tr:not([class=hide_button])");
-  for(let Ri = 1; Ri < table.length; Ri++){    // except th (rows[0])
-    group_value[Ri - 1] = getCellData(table[Ri].cells[col_no], list_with_index)
+  const rows = table.querySelectorAll("tr:not([class=hide_button])");
+  for(let Ri = 1; Ri < rows.length; Ri++){    // except th (rows[0])
+    group_value[Ri - 1] = getCellData(rows[Ri].cells[col_no], list_with_index)
   }
   return group_value;
 }
@@ -301,8 +301,8 @@ function splitByGroup(array, group){
 // Helper for getDataType()
 function getDataTypes(table){
   var types = [];
-  var table = table.querySelectorAll("tr:not([class=hide_button])"); // remove tr with hide buttons
-  for(let cell of table[1].cells){                                   // 1: first data row (0: colnames)
+  const rows = table.querySelectorAll("tr:not([class=hide_button])"); // remove tr with hide buttons
+  for(let cell of rows[1].cells){                                    // 1: first data row (0: colnames)
     types.push(getDataTypeCell(cell));
   }
   return types;
@@ -311,8 +311,8 @@ function getDataTypes(table){
 // Helper for getDataType()
 function getDataTypeCell(cell){
   if(cell.firstChild === null){ return "fixed"; }
-  var type = (cell.firstChild.type === void 0) ? "fixed" : cell.firstChild.type;
-  if(type === 'select-one') var type = 'list';
+  let type = (cell.firstChild.type === void 0) ? "fixed" : cell.firstChild.type;
+  if(type === 'select-one'){ type = 'list'; }
   return type;
 }
 

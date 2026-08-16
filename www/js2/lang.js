@@ -171,7 +171,7 @@ function setMsg(el, key, ...args){
 // Helper for applyLanguage() and setMsg().
 function applyMsgToElement(el){
   var args = el.getAttribute('data-msg-args');
-  var args = (args === null) ? [] : JSON.parse(args);
+  args = (args === null) ? [] : JSON.parse(args);
   var text = msgF(el.getAttribute('data-msg'), ...args);
   if(el.tagName === 'INPUT'){ el.value = text; } else { el.innerHTML = text; }
 }

@@ -10,13 +10,14 @@
 //    console.log(addSLinLS([1,2,5,6,7]));
 //    console.log(uniq(getSLinLS()));
 function addSLinLS(sp_list, ns='base'){
+  let new_list;   // declared here: the two branches and the line below share it
   if(getSLinLS(ns) === ''){
-    var new_list = sp_list;
+    new_list = sp_list;
   }else{
-    var old_list = getSLinLS(ns);
-    var new_list = old_list.concat(sp_list);
+    const old_list = getSLinLS(ns);
+    new_list = old_list.concat(sp_list);
   }
-  var new_list = uniq(new_list.sort());
+  new_list = uniq(new_list.sort());
   localStorage.setItem('biss_sl-' + ns, new_list);
 }
 // The species list stored for a name space, or '' when there is none.

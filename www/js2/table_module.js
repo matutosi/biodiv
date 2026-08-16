@@ -14,11 +14,11 @@ function addSettingPart(category, obj){
   var n = values[keys[0]].length;
 
   for(let i = 0; i < n; i++){
-    var json = '{';
+    let json = '{';
     for(let key of keys){
-      var json = json + '"' + key + '":"' + values[key][i] + '",';
+      json = json + '"' + key + '":"' + values[key][i] + '",';
     }
-    var json = json.slice(0, -1) + '}';
+    json = json.slice(0, -1) + '}';
   // console.log( table );
   // console.log( JSON.parse(json) );
     addRowWithValues({ table: table, values: JSON.parse(json) });

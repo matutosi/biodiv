@@ -64,7 +64,7 @@ function addSampleOcc(plot, n ,layers, species, identified){
   var ly = randSample(n, layers,  false);
   var sp = randSample(n, species, false);
   var cv = randInt(n-1, 100).concat(['']);
-  var cv = randSort(cv);
+  cv = randSort(cv);
   var id = randSample(n, identified, false);
   for(let i = 0; i<n; i++){
     addRowWithValues({ table: plot, values:{ Layer: ly[i], Species:sp[i], Cover:cv[i], Identified: id[i] } }); 

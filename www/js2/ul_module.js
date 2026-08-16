@@ -156,8 +156,7 @@ function createSL(id, value = '', first_option = 'NEW'){
 // Select the option of that value, or the first one when it is not there.
 function setSelectOption(select, value){
   var options = getSelectOptionInCell(select);
-  var index = options.indexOf(value);
-  var index = Math.max(0, index);
+  const index = Math.max(0, options.indexOf(value));  // -1 (not there) picks the first
   select.options[index].selected = true;
 }
 
@@ -252,20 +251,15 @@ function replaceSpeciesList(sl, id, add_comp = true){
   // var sl = 'tabu';
   var new_sp  = (sl === 'NEW' || sl === '') ? [] : getSLinLS(sl);
   var comp_sp = add_comp ? getSpeciesInComposition() : [];
-  var new_sp  = new_sp.concat(comp_sp).sort();
+  new_sp = new_sp.concat(comp_sp).sort();
   var new_sp_list = createSpecieList(id, new_sp);
   var old_sp_list = document.getElementById(id);
   old_sp_list.replaceWith(new_sp_list);
 }
 // Create the button of one species (to_stage: click stages it, otherwise click takes it back).
 function createSpeciesButton({ sp, to_stage, ns }){
-  if(to_stage){
-    var id = ns + '_sp_' + sp
-    var onclick = "stageSpecies(this)"
-  }else{
-    var id = ns +  '_staged_sp_' + sp;
-    var onclick = "unStageSpecies(this)"
-  }
+  const id      = to_stage ? ns + '_sp_' + sp      : ns + '_staged_sp_' + sp;
+  const onclick = to_stage ? "stageSpecies(this)" : "unStageSpecies(this)";
   return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
 }
 // Create the box for typing species names that have no button.
@@ -282,12 +276,13 @@ function createSelectPlot(id){
   var span = crEl({ el:'span' });
   span.appendChild( msgSpan('plot_label') );
   var ns = getSlNs(id);
+  let plot_list;   // declared here: both branches and the line below share it
   if(ns === 'all' || ns === 'flora'){
-    var tables = document.querySelectorAll("table[id^='input_occ']");
-    var pl = 'PLOT';
-    var plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]);
+    const tables = document.querySelectorAll("table[id^='input_occ']");
+    const pl = 'PLOT';
+    plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]);
   }else{
-    var plot_list = [ns];
+    plot_list = [ns];
   }
   var plot_select = createSelectOpt(plot_list.reverse(), 0, id);  // up: new plot, down: old plot
   span.appendChild(plot_select)
@@ -343,9 +338,9 @@ function createSelectOptions(id){
   var span = crEl({ el: 'span', ats:{id: id} });
   for(let key of opt_keys){
     span.appendChild( crEl({ el: 'span', ih: key}) );
-    var select = uniq(options[key]);
-    select.unshift('');
-    var select = createSelectOpt(uniq(select), 0, 'sp_list_options_' + key + '-' + ns);
+    const opts = uniq(options[key]);
+    opts.unshift('');
+    const select = createSelectOpt(uniq(opts), 0, 'sp_list_options_' + key + '-' + ns);
     span.appendChild( select );
   }
   return span;
@@ -361,7 +356,7 @@ function addSpeciesList(id, add_sp){
   var old_sp_list = document.getElementById(id);
   // console.log(id);
   var old_sp = getGrandChildrenValues( old_sp_list );
-  if(old_sp === void 0) var old_sp = [];
+  if(old_sp === void 0){ old_sp = []; }
   var new_sp = uniq(old_sp.concat(add_sp)).sort();
   //   if(new_sp.indexOf('') >= 0){ new_sp.splice(new_sp.indexOf(''), 1); }  // remove ''
   removeEmptyInArray(new_sp);
@@ -396,18 +391,18 @@ function getSelectOptionsAsJSON(ns){
   var selector =  "select[id^='sp_list_options_'][id$='-" + ns + "']";
   var options  = document.querySelectorAll(selector);
   var prefix = 'sp_list_options_';
-  var opt_value = '{"';
+  let opt_value = '{"';
   for(let opt of options){
     // The id is 'sp_list_options_<column>-<ns>'. Either part may hold a '-',
     // so cut away the prefix and the name space, both of which are known,
     // instead of splitting on the first '-'.
     var column = opt.id.slice(prefix.length, opt.id.length - ns.length - 1);
-    var opt_value =
+    opt_value =
       opt_value +
       column + '": "' +
       opt.value + '", "';
   }
-  var opt_value = opt_value.replace(/, "$/, '') + '}';
+  opt_value = opt_value.replace(/, "$/, '') + '}';
   return opt_value;
 }
 
@@ -424,25 +419,21 @@ function addSpecies(obj){
   var species = getChildrenValues(staged);
   if(input.value !== ''){
     var input_val = input.value.replaceAll('，', ',').replaceAll('、', ',') // FULL size JP -> half size
-    var species = species.concat(input_val.split(','));
+    species = species.concat(input_val.split(','));
   }
   // add species
   var table = document.getElementById('input_occ_' + plot + '_tb');
   for(let spec of species){
-    var [sp, sa] = spec.split('_');
-    if(sa === void 0){
-      var sa = ''; 
-      var iden = true;
-    }else{
-      var iden = false;
-    }
-    var values = options.replace(/\}$/, '') + ', '  +
+    const [sp, same_as] = spec.split('_');
+    const iden = (same_as === void 0);  // no '_' in the name: an identified species
+    const sa   = iden ? '' : same_as;
+    const values_json = options.replace(/\}$/, '') + ', '  +
                  '"Species": "'    + sp   + '", ' +
                  '"SameAs": "'     + sa   + '", ' +
                  '"Identified": ' +  iden + '}' ;
   // console.log(values);
   // console.log(table);
-    var values = JSON.parse(values);
+    const values = JSON.parse(values_json);
     addRowWithValues({ table: table, values: values });
   //     addRowWithValues({ table: table, values: {Layer: layer, Species: sp, SameAs: sa, Identified: iden} });
   }

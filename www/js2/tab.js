@@ -4,7 +4,7 @@ function changeTab(){
   var targetid = ref.substring(ref.indexOf('#')+1, ref.length);
   // console.log([ref,targetid]);
   // show selected tab
-  for(var i = 0; i < pages.length; i++) {
+  for(let i = 0; i < pages.length; i++) {
     if( pages[i].id != targetid ) {
       pages[i].style.display = "none";
     }
@@ -13,7 +13,7 @@ function changeTab(){
     }
   }
   // show front
-  for(var i = 0; i < tabs.length; i++) {
+  for(let i = 0; i < tabs.length; i++) {
     tabs[i].style.zIndex = "0";
   }
   this.style.zIndex = "10";
@@ -101,7 +101,7 @@ function getPlotMaxNo(){
 function addInputTab({ obj, id }){
   // input PLOT name
   if(id == void 0){
-    var id = prompt(msg('prompt_plot'), "");
+    id = prompt(msg('prompt_plot'), "");
   }
   if(null === id){
     return void 0;
@@ -130,8 +130,8 @@ function addInputTab({ obj, id }){
   // create input tables
       // PLOT
   var plot_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[0] ) );
-  var plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
-  var plot_setting = addPlotId(plot_setting, id);
+  plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
+  plot_setting = addPlotId(plot_setting, id);
   var pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
                               id_text: true, 
                               hide_button: true, fit_button: true })
@@ -140,7 +140,7 @@ function addInputTab({ obj, id }){
 
       // OCC
   var occ_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[1] ) );
-  var occ_setting  = addPlotId(occ_setting, id);
+  occ_setting = addPlotId(occ_setting, id);
   var oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
                               id_text: true, search_input: true,
                               hide_button: true, fit_button: true, 
@@ -153,11 +153,8 @@ function addInputTab({ obj, id }){
   var table = searchParentTable(oc_table);
   setSortable(table.id);  // Should setSortable() after appendChild()
 
-  if(occ_setting.biss_c_names.indexOf('Layer') < 0){ 
-    var show_select_options = void 0;
-  }else{
-    var show_select_options = true;
-  }
+  // void 0 hides the pull downs: createSpecieUlModule() reads it as "do not show"
+  const show_select_options = (occ_setting.biss_c_names.indexOf('Layer') < 0) ? void 0 : true;
   var ul_module = createSpecieUlModule({ species: '', ns: id,
                   show_select_button   : true, 
                   show_comp_checkbox   : true, 
@@ -192,7 +189,7 @@ function createAllInputsTable(table_name){
   var c_names = getUniqeColNames(tables);
   var removals = ["DELETE","UPDATE_TIME_GPS"];
   //   var removals = ['DATE', "LOC_LAT","LOC_LON","LOC_ACC","DELETE","UPDATE_TIME_GPS"];
-  var c_names = c_names.filter(item => ! removals.includes(item));
+  c_names = c_names.filter(item => ! removals.includes(item));
 
   var inputs = getMultiTableInputs(tables, c_names);
   var d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
@@ -216,7 +213,7 @@ function createAllInputsTable(table_name){
 function getUniqeColNames(tables){
   var c_names = [];
   for(let i = 0; i < tables.length; i++) {
-    var c_names = c_names.concat(getColNames(tables[i]));
+    c_names = c_names.concat(getColNames(tables[i]));
   }
   return uniq(c_names);
 }
@@ -278,7 +275,7 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
   // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']");
   var inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]);
   // console.log(inputs);
-  var inputs = checkSameAs(inputs, pl, sp, id, sa)
+  inputs = checkSameAs(inputs, pl, sp, id, sa)
   var uniq_pl = uniq(inputs[pl]);
   var uniq_sp = uniq(inputs[sp]);
   var c_names = [sp].concat(uniq_pl);
@@ -296,10 +293,10 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
         }
       }
       if(is_present === 0){  // absent
-        var value = '';
+        value = '';
       }else{                 // present
         if(value === 0){
-          var value = '--';
+          value = '--';    // present, but no cover was given
         }
       }
       data_col.push(value);

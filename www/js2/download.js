@@ -28,7 +28,7 @@ function getTableDataPlus(table){
   for(let name of c_names){
     inputs[name] = getColData(table, name);
   }
-  var inputs = Object.assign({}, inputs)
+  inputs = Object.assign({}, inputs)
   var selects = [];
   for(var i = 0; i < d_types.length; i++){ 
     selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null) 

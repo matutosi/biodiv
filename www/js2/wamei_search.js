@@ -27,11 +27,12 @@ function createSearchFloraButton(name){
 function searchFlora(obj){
   var parent    = obj.parentNode;
   var input     = document.getElementById('flora_input').value;
+  let species;    // declared here: both branches and the code below share it
   if(input === ''){
-    var species = '';
+    species = '';
   }else{
-    var reg_exp   = makeLookAheadReg(input);
-    var species   = grepArray(flora, reg_exp);
+    const reg_exp = makeLookAheadReg(input);
+    species = grepArray(flora, reg_exp);
   }
   var limits = 200;
   if(species.length > limits){

@@ -1,5 +1,6 @@
 // Create a td for a column, with the input that its data type asks for.
 function createTd(col_name, data_type, select, table_data){
+  let td;   // one declaration: case "auto" used to assign it without any
   switch(data_type){
     case "auto": // date, no, GPS
       if(col_name === "DATE"  )  td = crEl({ el: 'td', ih: getNow() });
@@ -10,31 +11,28 @@ function createTd(col_name, data_type, select, table_data){
       if(col_name === "SameAs" ) td = crEl({ el: 'td', ih: ''       });
       break;
     case "text":
-      if(Array.isArray(select)){ var select = select.join(""); }
-      var td = createTdWithChild( crEl({ el:'input', ats:{type: data_type, value: table_data, size: select} }) );
+      if(Array.isArray(select)){ select = select.join(""); }
+      td = createTdWithChild( crEl({ el:'input', ats:{type: data_type, value: table_data, size: select} }) );
       break;
     case "number":
-      var td = createTdWithChild( 
+      td = createTdWithChild(
         crEl({ el:'input', ats:{type: data_type, value: "", inputmode: "numeric", min: "0", step: select} }) );
       break;
     case "checkbox":
-  // console.log([table_data, !!table_data]);
-      var td = createTdWithChild( crEl({ el:'input', ats:{type: data_type} }) );
+      td = createTdWithChild( crEl({ el:'input', ats:{type: data_type} }) );
       td.firstChild.checked = !!table_data;
       break;
     case "fixed":
-  //       if(table_data === ""){ table_data = "NO_INPUT"; }   // alert("Fixed columns should be input!");
-      var td = crEl({ el:'td', ih: table_data });
+      td = crEl({ el:'td', ih: table_data });
       break;
     case "button":
-      if(col_name === "DELETE")         { var td = createTdWithChild( createDelButton() ); }
-      if(col_name === "UPDATE_TIME_GPS"){ var td = createTdWithChild( createUpdateButton() ); }
+      if(col_name === "DELETE")         { td = createTdWithChild( createDelButton() ); }
+      if(col_name === "UPDATE_TIME_GPS"){ td = createTdWithChild( createUpdateButton() ); }
       break;
     case "list":
       select.push('');
-      if(select.indexOf(table_data) === -1){ var selected_no = 0;                          }
-      else                                 { var selected_no = select.indexOf(table_data); }
-      var td = createTdWithChild( createSelectOpt(select, selected_no) );
+      // -1 (not among the options) picks the first one
+      td = createTdWithChild( createSelectOpt(select, Math.max(0, select.indexOf(table_data))) );
       break;
   }
   return td;
@@ -136,9 +134,9 @@ function makeTableJO(table_data, table_name){
   var selects   = table_data.biss_selects;
   var inputs    = table_data.biss_inputs ;
   var table = crEl({ el: 'table', ats:{id: table_name} });
-  var table = addThTr(table, col_names);                                    // tr with th (col names)
-  var table = addHideRowTr(table);                                          // tr with hide buttons
-  var table = addTableData(table, col_names, dat_types, selects, inputs);   // table data
+  table = addThTr(table, col_names);                                    // tr with th (col names)
+  table = addHideRowTr(table);                                          // tr with hide buttons
+  table = addTableData(table, col_names, dat_types, selects, inputs);   // table data
   return table;
 }
 
