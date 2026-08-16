@@ -51,9 +51,8 @@ function addRowWithValues({ table, values }){
 function addRows(obj){
   // console.log(obj);
   //   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  const n_row = obj.previousElementSibling.value;
-  const table_id = obj.id.replace('add_rows', 'tb');
-  const table = document.getElementById(table_id);
+  const n_row = document.getElementById(obj.id.replace('add_rows', 'nrow')).value;
+  const table = document.getElementById(obj.id.replace('add_rows', 'tb'));
   for(let i = 0; i < n_row; i++){ addRow(table); }
 }
 
@@ -71,26 +70,20 @@ function addRow(table){
   const next_row = table.rows[n_row - 1].cloneNode(true);
   for(let Ci = 0; Ci < n_col; Ci++){
     switch(col_names[Ci]){
-      case "DATE":  // update "DATE"
-        next_row.children[Ci].innerHTML = getNow();
+      case COL.DATE:     // the time and place the new row is made
+      case COL.LOC_LAT:
+      case COL.LOC_LON:
+      case COL.LOC_ACC:
+        next_row.children[Ci].innerHTML = autoValue(col_names[Ci]);
         break;
-      case "LOC_LAT":  // update GPS data
-        next_row.children[Ci].innerHTML = getLat();
+      case COL.UPDATE_TIME_GPS: // do nothing
+      case COL.DELETE:          // do nothing
         break;
-      case "LOC_LON":
-        next_row.children[Ci].innerHTML = getLon();
-        break;
-      case "LOC_ACC":
-        next_row.children[Ci].innerHTML = getAcc();
-        break;
-      case "UPDATE_TIME_GPS": // do nothing
-      case "DELETE":          // do nothing
-        break;
-      case "NO":             // no = max(no) + 1
+      case COL.NO:           // no = max(no) + 1
         const nos = getColData(table, col_names[Ci]);
         next_row.children[Ci].innerHTML = Math.max.apply(Math, string2Numeric(nos)) + 1;
         break;
-      case "SameAs":        // clear
+      case COL.SAME_AS:     // clear
         next_row.children[Ci].innerHTML = "";
         break;
       default:

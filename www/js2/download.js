@@ -24,7 +24,7 @@ function getSelectOne(table, col_name){
   // var table = document.getElementById('flora_plot_tb'); var col_name = "value";
   const col_no = getColNames(table).indexOf(col_name);
   if(col_no < 0){ return []; }  // no col_name
-  const options = table.rows[2].cells[col_no].firstChild.options;
+  const options = firstDataRow(table).cells[col_no].firstChild.options;
   const sel_opt = [];
   for(const option of options){
     sel_opt.push(option.innerText);

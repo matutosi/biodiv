@@ -78,6 +78,34 @@ def test_a_species_list_can_be_registered_from_a_file(biss, tmp_path):
     assert biss.errors == []
 
 
+def test_a_settings_file_can_be_loaded_back(biss, tmp_path):
+    """Save the plot settings, load them again, and get that table back."""
+    page = biss.page
+    biss.js("changeSettingsByName('_5_layers')")
+
+    settings = tmp_path / "mysetting.json"
+    settings.write_text(
+        biss.js("JSON.stringify(getTableData(document.getElementById('_5_layers_plot_tb')))"),
+        encoding="utf-8",
+    )
+
+    page.get_by_role("link", name="Settings").click()
+    # The first Choose file on the page belongs to the plot settings module.
+    with page.expect_file_chooser() as chooser:
+        page.locator("#_5_layers_plot input[data-msg='choose_file']").click()
+    chooser.value.set_files(settings)
+
+    page.wait_for_function("() => document.getElementById('mysetting_tb') !== null")
+    loaded = page.locator("#mysetting_tb")
+    assert loaded.count() == 1, "the loaded settings built a table"
+    assert biss.col_names("mysetting_tb") == ["item", "type", "value", "DELETE", "memo"]
+
+    # The module it replaced is gone: one settings table per side, not two.
+    assert page.locator("#_5_layers_plot_tb").count() == 0, "the old table is still there"
+    assert page.locator("#tab_settings table").count() == 2, "one plot and one occ table"
+    assert biss.errors == []
+
+
 def test_saving_writes_the_plot_and_occurrence_tsv(biss):
     """A real download, read back as a file."""
     page = biss.page
@@ -119,11 +147,22 @@ def test_hiding_the_table_really_hides_it(biss):
     table = page.locator(f"#input_occ_{plot}_tb")
     button = page.locator(f"#input_occ_{plot} input[data-msg='hide_table']")
 
+    # Hide a column first: that puts a "Show: All cols | Species" list in the
+    # module, which has to go with the table. Walking to the next sibling used
+    # to reach a <br> instead whenever a Fit width button sat in between.
+    species_col = biss.col_names(f"input_occ_{plot}_tb").index("Species")
+    table.locator("tr.hide_button td").nth(species_col).locator("input").click()
+    shown_list = page.locator(f"#input_occ_{plot}_up > span").last
+    assert shown_list.is_visible()
+
     assert table.is_visible()
     button.click()
     assert table.is_hidden(), "the table is still on screen after Hide table"
+    assert shown_list.is_hidden(), "the list of hidden columns stayed behind"
+
     page.locator(f"#input_occ_{plot} input[data-msg='show_table']").click()
     assert table.is_visible(), "the table did not come back"
+    assert shown_list.is_visible(), "the list of hidden columns did not come back"
     assert biss.errors == []
 
 

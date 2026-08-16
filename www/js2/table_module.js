@@ -14,14 +14,11 @@ function addSettingPart(category, obj){
   const n = values[keys[0]].length;
 
   for(let i = 0; i < n; i++){
-    let json = '{';
-    for(const key of keys){
-      json = json + '"' + key + '":"' + values[key][i] + '",';
-    }
-    json = json.slice(0, -1) + '}';
-  // console.log( table );
-  // console.log( JSON.parse(json) );
-    addRowWithValues({ table: table, values: JSON.parse(json) });
+    // Build the row as an object. Pasting it together as JSON text and
+    // parsing it back breaks on any value holding a " or a \.
+    const row = {};
+    for(const key of keys){ row[key] = values[key][i]; }
+    addRowWithValues({ table: table, values: row });
   }
 }
 
@@ -80,12 +77,43 @@ function changeSettings(obj){
   const new_occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ',
                                       id_text: true, load_button: true, save_button: true, hide_button: true, 
                                       add_button: true });
-  const old_plot_module = obj.parentNode.nextSibling.nextSibling.nextSibling.nextSibling;
-  old_plot_module.replaceWith(new_plot_module);
-  const old_occ_module = new_plot_module.nextSibling;
-  old_occ_module.replaceWith(new_occ_module);
+  // The two modules live in named holders, so this works the first time,
+  // when there is nothing to replace yet, as well as on every switch after.
+  showInHolder('setting_plot_holder', new_plot_module);
+  showInHolder('setting_occ_holder',  new_occ_module);
   setSortable(setting + '_plot_tb');
   setSortable(setting + '_occ_tb');
+}
+
+// Which module a control belongs to, and how to reach the rest of it.
+//   tableModule() builds span#<ns> holding span#<ns>_up, table#<ns>_tb and
+//   span#<ns>_dn. Walking to a sibling to find one of those breaks the moment
+//   an element is added next to it, which is how loading a settings file came
+//   to replace the wrong span. Ask by name instead.
+//   @param  obj  An element inside a module.
+//   @return      The name space, or null when the element is not in one.
+function moduleNS(obj){
+  const part = obj.closest('[id$="_up"], [id$="_dn"]');
+  return (part === null) ? null : part.id.replace(/_(up|dn)$/, '');
+}
+// The whole module a control belongs to.
+function moduleSpan(obj){
+  const ns = moduleNS(obj);
+  return (ns === null) ? null : document.getElementById(ns);
+}
+// The table of the module a control belongs to.
+function moduleTable(obj){
+  const ns = moduleNS(obj);
+  return (ns === null) ? null : document.getElementById(ns + '_tb');
+}
+
+// Put an element in a holder, replacing whatever was in it.
+//   @param id       A string, the id of the holder.
+//   @param element  The element to show.
+function showInHolder(id, element){
+  const holder = document.getElementById(id);
+  holder.textContent = '';
+  holder.appendChild(element);
 }
 
 // Create table module
@@ -110,7 +138,8 @@ function tableModule({ table_data, ns,
   }
                               //     up.appendChild( crEl({ el: 'br' }) );
   if(save_button  != void 0){   up.appendChild( createSaveButton() );
-                                up.appendChild( createInput({ type: "text", placeholder: msg('file_name'), 'data-msg-ph': 'file_name' }) );
+                                up.appendChild( createInput({ type: "text", id: ns + '_fname',
+                                                              placeholder: msg('file_name'), 'data-msg-ph': 'file_name' }) );
                                 up.appendChild( crEl({ el: 'br' }) );
   }
   if(search_input != void 0)    up.appendChild( createSearchInput() );
@@ -130,9 +159,9 @@ function tableModule({ table_data, ns,
   }
   if(calc_button != void 0){    dn.appendChild( crEl({ el: 'hr' }) );
                                 dn.appendChild( msgSpan('value_label') );
-                                dn.appendChild( createSelectOpt( colByType(table, "number") ) );
+                                dn.appendChild( createSelectOpt( colByType(table, "number"), 0, ns + '_sum_value') );
                                 dn.appendChild( msgSpan('group_label') );
-                                dn.appendChild( createSelectOpt( colByType(table, "list") ) );
+                                dn.appendChild( createSelectOpt( colByType(table, "list"), 0, ns + '_sum_group') );
                                 dn.appendChild( createSumButton() );
   }
 
@@ -154,16 +183,15 @@ function tableModule({ table_data, ns,
 function updateTimeGPS(obj){
   // settings
   // var obj = temp1;
-  const cols = ["DATE", "LOC_LAT", "LOC_LON", "LOC_ACC"];
-  const funs = [getNow, getLat, getLon, getAcc]
   const table = searchParentTable(obj);
   const tr = obj.parentNode.parentNode;
   const row_no = tr.sectionRowIndex;
+  const c_names = getColNames(table);
   // update
-  for(let i = 0; i < cols.length; i++){
-    const col_no = getColNames(table).indexOf(cols[i]);
-    const cell = table.rows[row_no].cells[col_no];
-    cell.innerHTML = funs[i]();
+  for(const col of AUTO_COLS){
+    const col_no = c_names.indexOf(col);
+    if(col_no < 0){ continue; }   // a setting need not offer every one of them
+    table.rows[row_no].cells[col_no].innerHTML = autoValue(col);
   }
 }
 
@@ -175,15 +203,16 @@ function updateTimeGPS(obj){
 //   @param obj  A input element.
 //                 Normally use "this". 
 function sumWithGroup(obj){
-  const array = obj.previousElementSibling.previousElementSibling.previousElementSibling.value;
-  const group = obj.previousElementSibling.value;
-  const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  const ns = moduleNS(obj);
+  const array = document.getElementById(ns + '_sum_value').value;
+  const group = document.getElementById(ns + '_sum_group').value;
+  const table = document.getElementById(ns + '_tb');
   const array_val = getColData(table, array);
   const group_val = getColData(table, group);
   const grouped_array = splitByGroup(array_val, group_val);
   // set groups order with 'list'
   const c_no = getColNames(table).indexOf(group);
-  const opts = table.rows[2].cells[c_no].firstChild.options;
+  const opts = firstDataRow(table).cells[c_no].firstChild.options;
   const groups = [];
   for(const o of opts){ groups.push(o.value); }
   const sum_array = {};   // keyed by group name
@@ -255,9 +284,7 @@ async function replaceTable(obj){
   const new_module = tableModule({ table_data: table_data, ns: ns,
                                       id_text: true, load_button: true, save_button: true, hide_button: true, 
                                       add_button: true });
-  const old_ns = obj.parentNode.parentNode.id;
-  const old_module = document.getElementById(old_ns);
-  old_module.replaceWith(new_module);
+  moduleSpan(obj).replaceWith(new_module);
 }
 
 
@@ -265,10 +292,10 @@ async function replaceTable(obj){
 //   @param obj  A input element.
 //                 Normally use "this". 
 function saveSettings(obj){
-  const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  const table = moduleTable(obj);
   const table_data = getTableData(table);
   const table_json = JSON.stringify(table_data);
-  let f_name = obj.nextElementSibling.value;
+  let f_name = document.getElementById(moduleNS(obj) + '_fname').value;
   if(f_name === ""){ f_name = table.id.replace(/_tb$/, ''); }
   downloadStrings(table_json, f_name + ".json")
 }
