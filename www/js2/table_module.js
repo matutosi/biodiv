@@ -186,7 +186,7 @@ function sumWithGroup(obj){
   const opts = table.rows[2].cells[c_no].firstChild.options;
   const groups = [];
   for(const o of opts){ groups.push(o.value); }
-  const sum_array = [];
+  const sum_array = {};   // keyed by group name
   for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
   for(let i = 0; i < groups.length; i++){
     if(grouped_array[groups[i]] !== void 0){
@@ -275,7 +275,7 @@ function readFile(file){
 //                 Normally use "this". 
 function saveSettings(obj){
   const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  const table_data = getTableDataPlus(table);
+  const table_data = getTableData(table);
   const table_json = JSON.stringify(table_data);
   let f_name = obj.nextElementSibling.value;
   if(f_name === ""){ f_name = table.id.replace(/_tb$/, ''); }

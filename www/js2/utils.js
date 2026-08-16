@@ -232,7 +232,7 @@ function getSelectOptionInCell(select){
 //    // [a: [1,3], b: [2,4]]
 function splitByGroup(array, group){
   if(array.length !== group.length){ return array; }
-  const grouped = [];
+  const grouped = {};   // keyed by group name
   for(let i=0; i < array.length; i++){ grouped[group[i]] = []; }
   for(let i=0; i < array.length; i++){
     grouped[group[i]].push(array[i]);

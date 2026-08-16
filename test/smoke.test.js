@@ -335,6 +335,48 @@ test('a hyphenated plot name keeps its layer pull down', async () => {
   biss.close();
 });
 
+test('a settings table round trips through its saved JSON', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.changeSettingsByName('_5_layers');
+  const table = w.document.getElementById('_5_layers_occ_tb');
+
+  // What saveSettings() writes.
+  const json = w.JSON.stringify(w.getTableData(table));
+  const saved = JSON.parse(json);
+
+  assert.deepEqual(plain(saved.biss_c_names), ['item', 'type', 'value', 'DELETE', 'memo'],
+                   'the settings columns');
+  assert.ok(Array.isArray(saved.biss_inputs.item), 'biss_inputs survives JSON.stringify');
+  assert.ok(saved.biss_inputs.item.includes('Species'), 'and holds the items');
+  // A column that is not a list has null, the form data.js and the saved
+  // files use. An array here would be written as [] and lose the data.
+  const types = plain(saved.biss_d_types);
+  saved.biss_selects.forEach((s, i) => {
+    if(types[i] === 'list'){ assert.ok(Array.isArray(s), `${i} is a list`); }
+    else                   { assert.equal(s, null, `${i} is not a list`); }
+  });
+
+  // And it builds back into the same table.
+  const rebuilt = w.makeTableJO(saved, 'round_trip_tb');
+  assert.deepEqual(plain(w.getColNames(rebuilt)), plain(w.getColNames(table)));
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('the auto saved JSON holds the plot and occurrence data', async () => {
+  const biss = await surveyOnePlot();
+  const w = biss.window;
+
+  const data = JSON.parse(w.getAllPlotOccDataAsJSON());
+
+  assert.deepEqual(Object.keys(data), ['plot', 'occ']);
+  assert.deepEqual(Object.keys(data.occ), OCC_COLS, 'keyed by the column names');
+  assert.ok(data.occ.Species.includes('Fagus crenata'), 'and holds the species');
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
 test('the built in example runs end to end', async () => {
   const biss = await loadBiss();
   const w = biss.window;

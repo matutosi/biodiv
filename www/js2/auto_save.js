@@ -22,8 +22,7 @@ function saveAllTableDataAsCSV(){
 function getAllPlotOccDataAsJSON(){
   const plot = getTableData( document.getElementById('plot_all_tb') );
   const occ  = getTableData( document.getElementById('occ_all_tb' ) );
-  // need Object.assign({}, obj)
-  const data = { plot: Object.assign({}, plot.biss_inputs), occ: Object.assign({}, occ.biss_inputs) }
+  const data = { plot: plot.biss_inputs, occ: occ.biss_inputs }
   const json = JSON.stringify(data);
   return json;
 }

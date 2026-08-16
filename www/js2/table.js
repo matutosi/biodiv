@@ -93,33 +93,31 @@ function createSelectOpt(list, selected_no = 0, id = ''){
 }
 
 
-// Get data and optional information from a table.
-//    getTableDataPlus() retrieve table data as well as column names, data types, selects. 
-//    @param id_table      A string to specify table id.
-//    @return               A string with 4 parts as shown below. 
-//                          Each part is JSON format.
-//                            c_names: Column names of table, which will be used for making th.
-//                            d_types: Data types of each column for judging the td and input types.
-//                            selects: Select options for 'list' element. null for other types.
-//                            t_data : Table data for making td values or innnerHTML.
+// Read a table back into the table definition it was built from.
+//    The definition is what makeTableJO() takes, what a settings file holds,
+//    and what the saved survey data is made of.
+//    @param table  A table element.
+//    @return  An object with four parts.
+//               biss_c_names: the column names, which become the th.
+//               biss_d_types: the data type of each column, which decides the input.
+//               biss_selects: the options of a 'list' column, null for the others.
+//               biss_inputs : the data, keyed by column name.
 function getTableData(table){
-  // var table = document.getElementById("setting_plot_tb");
   const c_names = getColNames(table);
   const d_types = getDataTypes(table);
-  // getInputs
-  const t_data = [];
-  for(const name of c_names){
-    t_data[name] = getColData(table, name);
+  const inputs = {};   // an object, not an array: JSON.stringify() of an array
+  for(const name of c_names){   //   with string keys writes []
+    inputs[name] = getColData(table, name);
   }
   const selects = [];
-  for(let i = 0; i < d_types.length; i++){ 
-    selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]): '');
+  for(let i = 0; i < d_types.length; i++){
+    selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null);
   }
-  return{
+  return {
     biss_c_names: c_names,
     biss_d_types: d_types,
     biss_selects: selects,
-    biss_inputs : t_data
+    biss_inputs : inputs
   }
 }
 
@@ -160,7 +158,7 @@ function convertTableData(table_data){
   const c_names = table_data['biss_inputs']['item'];
   const d_types = table_data['biss_inputs']['type'];
   const selects = [];
-  const inputs  = [];
+  const inputs  = {};   // keyed by column name
   for(let i = 0; i < d_types.length; i++){
     const inputs_value = table_data['biss_inputs']['value'][i];
     selects.push( (d_types[i] === 'list' ) ? inputs_value.split(':') : inputs_value );

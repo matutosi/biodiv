@@ -218,7 +218,7 @@ function getUniqeColNames(tables){
 }
 // The data of the given columns, read from several tables and joined per column.
 function getMultiTableInputs(tables, c_names){
-  const inputs = [];
+  const inputs = {};   // keyed by column name
   for(const c_name of c_names){
     inputs[c_name] = [];
     for(const tb of tables){
@@ -246,7 +246,7 @@ function getMultiTableSelects(tables){
 
 // The options of the given columns, collected over several tables.
 function getMultiTableOptions(tables, c_names){
-  const options = [];
+  const options = {};   // keyed by column name
   for(const c_name of c_names){
     options[c_name] = [];
     for(const tb of tables){
@@ -278,7 +278,7 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
   const uniq_pl = uniq(inputs[pl]);
   const uniq_sp = uniq(inputs[sp]);
   const c_names = [sp].concat(uniq_pl);
-  const data_table = [];
+  const data_table = {};   // keyed by column name: the species, then one per plot
   data_table[sp] = uniq_sp;
   for(const p of uniq_pl){
     const data_col = [];

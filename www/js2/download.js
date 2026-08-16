@@ -13,33 +13,6 @@ function downloadStrings(strings, file_name){
 }
 
 
-// Get data and optional information from a table.
-//    getTableDataPlus() retrieve table data as well as column names, data types, selects. 
-//    @param table      A table.
-//    @return              A JavaScript Object.
-//                            c_names: Column names of table, which will be used for making th.
-//                            d_types: Data types of each column for judging the td and input types.
-//                            selects: Select options for 'list' element. null for other types.
-//                            inputs : Table data for making td values or innnerHTML.
-function getTableDataPlus(table){
-  const c_names = getColNames(table);
-  const d_types = getDataTypes(table);
-  let inputs  = [];
-  for(const name of c_names){
-    inputs[name] = getColData(table, name);
-  }
-  inputs = Object.assign({}, inputs)
-  const selects = [];
-  for(let i = 0; i < d_types.length; i++){ 
-    selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null) 
-  }
-  const biss_data = { biss_c_names: c_names,
-                    biss_d_types: d_types,
-                    biss_selects: selects,
-                    biss_inputs : inputs  };
-  return biss_data;
-}
-
 // Helper for getInputData()
 //    @param table      A table element.
 //    @param c_names  A string of column name to get options in select element.
