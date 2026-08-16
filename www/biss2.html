@@ -29,7 +29,7 @@ let currentLanguage = initialLanguage();
 //    @return  A string, 'en' or 'ja'.
 function initialLanguage(){
   let saved = null;
-  try { saved = localStorage.getItem(LANGUAGE_KEY); } catch(e) { saved = null; }
+  try { saved = localStorage.getItem(LANGUAGE_KEY); } catch { saved = null; }
   if(LANGUAGES.indexOf(saved) >= 0){ return saved; }
   const nav = String(window.navigator.language || 'en').split('-')[0];
   return (LANGUAGES.indexOf(nav) >= 0) ? nav : 'en';
@@ -64,9 +64,7 @@ const msgs = {
   input_species   :{ en: "Input species (separate with ',' , '，' or '、')", ja: "種名を入力 (「,」「，」「、」区切り)" },
   update_pl       :{ en: "Update plot and layer"                      , ja: "地点・階層を更新"                 },
   add_species_to  :{ en: "Add species to"                             , ja: "種を追加"                         },
-  add_from_comp   :{ en: "Add from Composition"                       , ja: "組成から追加"                     },
   plot_label      :{ en: "PLOT"                                       , ja: "地点"                             },
-  layer_label     :{ en: "Layer:"                                     , ja: "階層:"                            },
   confirm_del_sl  :{ en: "Sure to DELETE %s"                          , ja: "%s を削除します．よろしいですか？"},
 
   // Flora search
@@ -102,7 +100,6 @@ const msgs = {
   add_rows        :{ en: "Add row(s)"                                 , ja: "行を追加"                         },
   hide_table      :{ en: "Hide table"                                 , ja: "表を非表示"                       },
   show_table      :{ en: "Show table"                                 , ja: "表を表示"                         },
-  new_occ_table   :{ en: "New occ table"                              , ja: "occ 表を新規作成"                 },
   fit_width       :{ en: "Fit width"                                  , ja: "幅を狭く"                         },
   extend_width    :{ en: "Extend width"                               , ja: "横長に"                           },
   search_text     :{ en: "Search text"                                , ja: "文字列検索"                       },
@@ -194,7 +191,7 @@ function changeLanguage(obj){
   const lang = obj.value;
   if(LANGUAGES.indexOf(lang) < 0){ return void 0; }
   currentLanguage = lang;
-  try { localStorage.setItem(LANGUAGE_KEY, lang); } catch(e) { }
+  try { localStorage.setItem(LANGUAGE_KEY, lang); } catch { }
   applyLanguage();
 }
 
@@ -204,7 +201,7 @@ function initLanguage(){
   const select = document.getElementById('select_language');
   if(select !== null){ setSelectOption(select, currentLanguage); }
   applyLanguage();
-}</script> <script>function larger(){""===document.documentElement.style.getPropertyValue("--font-size")&&document.documentElement.style.setProperty("--font-size","16px");const e=document.documentElement.style.getPropertyValue("--font-size"),t=1.2*Number(e.replace("px",""));document.documentElement.style.setProperty("--font-size",t+"px")}function smaller(){""===document.documentElement.style.getPropertyValue("--font-size")&&document.documentElement.style.setProperty("--font-size","16px");const e=document.documentElement.style.getPropertyValue("--font-size"),t=Number(e.replace("px",""))/1.2;document.documentElement.style.setProperty("--font-size",t+"px")}</script> <script>const data_settings={empty:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}}},full:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","auto","auto","auto","auto","button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","","","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","",""]}}},_5_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},_3_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T_height","S_height","H_height","T_cover","S_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T:S:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},no_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],value:["","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}},flora:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","Memo"],type:["auto","fixed","text","text"],value:["","","",""],DELETE:["","","",""],memo:["","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Sampled","Identified","Photo","Memo"],type:["button","text","auto","auto","auto","button","checkbox","checkbox","text","text"],value:["","","","","","","","checked","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}}},data_settings_part={plot:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},altitude_etc:{item:["Altitude","Aspect","Inclination"],type:["number","text","number"]},_5_layers:{item:["T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover"],type:["number","number","number","number","number","number","number","number","number","number"]},_3_layers:{item:["T_height","S_height","H_height","T_cover","S_cover","H_cover"],type:["number","number","number","number","number","number"]},memo:{item:["Photo","Memo"],type:["text","text"]}},occ:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},delete_button:{item:["DELETE"],type:["button"]},_5_layers:{item:["Layer"],type:["list"],value:["T1:T2:S1:S2:H"]},_3_layers:{item:["Layer"],type:["list"],value:["T:S:H"]},species:{item:["Species"],type:["text"],value:[""]},cover_rank:{item:["Cover","Rank"],type:["number","list"],value:["","5:4:3:2:1:+:r"]},sampled_identified:{item:["Sampled","Identified"],type:["checkbox","checkbox"],value:["","checked"]},memo:{item:["Photo","Memo","SameAs"],type:["text","text","auto"]}}};</script> <script>// convert table into array
+}</script> <script>function larger(){changeFontSize(FONT_SIZE_STEP)}function smaller(){changeFontSize(1/FONT_SIZE_STEP)}function changeFontSize(e){const t=document.documentElement;""===t.style.getPropertyValue("--font-size")&&t.style.setProperty("--font-size","16px");const n=t.style.getPropertyValue("--font-size"),o=Number(n.replace("px",""))*e;t.style.setProperty("--font-size",o+"px")}const FONT_SIZE_STEP=1.2;</script> <script>const data_settings={empty:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}}},full:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","auto","auto","auto","auto","button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","","","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","",""]}}},_5_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},_3_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T_height","S_height","H_height","T_cover","S_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T:S:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},no_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],value:["","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}},flora:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","Memo"],type:["auto","fixed","text","text"],value:["","","",""],DELETE:["","","",""],memo:["","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Sampled","Identified","Photo","Memo"],type:["button","text","auto","auto","auto","button","checkbox","checkbox","text","text"],value:["","","","","","","","checked","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}}},data_settings_part={plot:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},altitude_etc:{item:["Altitude","Aspect","Inclination"],type:["number","text","number"]},_5_layers:{item:["T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover"],type:["number","number","number","number","number","number","number","number","number","number"]},_3_layers:{item:["T_height","S_height","H_height","T_cover","S_cover","H_cover"],type:["number","number","number","number","number","number"]},memo:{item:["Photo","Memo"],type:["text","text"]}},occ:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},delete_button:{item:["DELETE"],type:["button"]},_5_layers:{item:["Layer"],type:["list"],value:["T1:T2:S1:S2:H"]},_3_layers:{item:["Layer"],type:["list"],value:["T:S:H"]},species:{item:["Species"],type:["text"],value:[""]},cover_rank:{item:["Cover","Rank"],type:["number","list"],value:["","5:4:3:2:1:+:r"]},sampled_identified:{item:["Sampled","Identified"],type:["checkbox","checkbox"],value:["","checked"]},memo:{item:["Photo","Memo","SameAs"],type:["text","text","auto"]}}};</script> <script>// convert table into array
 //    @param   id_table  A string. A table id.
 //    @param   header    A logical. true: add header.
 //    @return  An array.
@@ -319,19 +316,6 @@ function makeLookAheadReg(input){
   const look_ahead = "^(?=.*" + input.replaceAll(" ", ")(?=.*") + ").*$";
   const reg_ex = new RegExp(look_ahead, 'i');  // i: case-insensitive
   return reg_ex;
-}
-
-// Use namespace like shiny::NS.
-//  @examples
-//  var ns = NS('plot');
-//  ns('table');
-//  // 'plot-table'
-//  
-function NS(namespace){
-  const f = function f(id){
-    return namespace + '-' + id;
-  }
-  return f;
 }
 
 // Convert hasy array table
@@ -451,57 +435,13 @@ function getSelectOptionInCell(select){
 //    // [a: [1,3], b: [2,4]]
 function splitByGroup(array, group){
   if(array.length !== group.length){ return array; }
-  const grouped = [];
+  const grouped = {};   // keyed by group name
   for(let i=0; i < array.length; i++){ grouped[group[i]] = []; }
   for(let i=0; i < array.length; i++){
     grouped[group[i]].push(array[i]);
   }
   return grouped;
 }
-
-
-// DEPRECATED, use getDataTypes()
-// 
-// Get data types from occurrence table.
-//    Columns shown below are special, 
-//        "DATE", "DELETE", "NO", "LOC_LAT", "LOC_LON", "LOC_ACC":
-//        These columns can not be set by users. 
-//    Other columns can be devided into 5 data types: 
-//        "fixed", "checkbox", "text", "number", "list".
-//   @param table A table element.
-//   @return        A string array.
-// function getDataType(table){
-// //   const table = document.getElementById(id_table);
-//   const col_names = getColNames(table);
-//   const n_col = col_names.length;
-//   const first_row = table.rows[2].cells; // 2: data, (0: colnames, 1: hide buttons)
-//   var data_type = [];
-//   for(let Ci = 0; Ci < n_col; Ci++){
-//     switch(col_names[Ci]){
-//       case "DATE":
-//       case "DELETE":
-//       case "UPDATE_TIME_GPS":
-//       case "NO":
-//         data_type[Ci] = col_names[Ci];
-//         break;
-//       default:
-//   // console.log(col_names[Ci]);
-//         var f_child = first_row[Ci].firstChild;
-//         if(f_child.value === void 0){
-//           data_type[Ci] = "fixed";
-//         } else {
-//           if(f_child.getAttribute("type") === null){
-//             data_type[Ci] = "list";
-//           } else {
-//             data_type[Ci] = f_child.getAttribute("type");
-//           }
-//         }
-//       break;
-//     }
-//   }
-//   return data_type;
-// }
-
 
 
 // Helper for getDataType()
@@ -577,13 +517,19 @@ function crEl({ el, ats, ih, tc }){
   return ele;
 }
 
-// Save html as it is.
-//   Crtl + S can save an original html file 
-//   that is not generated by JavaScript.
-//   saveHTML() save the generated html file as it is.
-function saveHTML(obj){
-  const doc = document.documentElement.outerHTML;
-  downloadStrings(doc, "biodiv.html")
+// Read a chosen file as text.
+//    Used by whatever reads a file the user picked: a settings JSON,
+//    a species list, a flora.
+//    @param  file  A File from an <input type="file">.
+//    @return       A Promise of the text.
+//    @reference
+//      https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
+function readFile(file){
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsText(file);
+  })
 }
 
 // Unique array
@@ -801,23 +747,22 @@ function createStartGPSButton(){
 // Create the button that stops watching the position.
 function createStopGPSButton(){
   return createInput({ type: "button", value: msg('stop_gps'), 'data-msg': 'stop_gps', onclick: "stopGPS(this)" });
-}</script> <script>// Switch full screen mode 
-// https://gray-code.com/javascript/display-the-page-in-full-screen/ 
-function switchScreenShow(id){ 
-  const button = document.getElementById(id); 
-  if( checkFullScreen() ) { 
-    document.exitFullscreen();  
-  //     button.setAttribute("value", "FULL-SCRN"); 
-  } else { 
-    document.body.requestFullscreen();  
-  //     button.setAttribute("value", "normal show"); 
-  } 
-} 
-// true while the page is in full screen. 
-function checkFullScreen(){ 
-  let fullscreen_flag = false; 
-  if(document.fullscreenElement) { fullscreen_flag = true; } 
-  return fullscreen_flag; 
+}</script> <script>// Switch full screen mode
+// https://gray-code.com/javascript/display-the-page-in-full-screen/
+function switchScreenShow(id){
+  if( checkFullScreen() ) {
+    document.exitFullscreen(); 
+  //     button.setAttribute("value", "FULL-SCRN");
+  } else {
+    document.body.requestFullscreen(); 
+  //     button.setAttribute("value", "normal show");
+  }
+}
+// true while the page is in full screen.
+function checkFullScreen(){
+  let fullscreen_flag = false;
+  if(document.fullscreenElement) { fullscreen_flag = true; }
+  return fullscreen_flag;
 }</script> <script>// 
 // 
 //    @param sp_list An array.
@@ -848,8 +793,6 @@ function getSLinLS(ns='base'){
     return localStorage['biss_sl-' + ns].split(',');
   }
 }
-// Remove every stored species list.
-function removeSLinLSAll(){ removeSLinLS('all_remove'); }
 // Remove the species list of a name space ('all_remove' for all of them).
 function removeSLinLS(ns='base'){
   if(ns === 'all_remove'){
@@ -887,9 +830,12 @@ function replaceArrayAll(array, search, replace){
   }
   return replaced;
 }</script> <script>function createMailerSpan(){const e=crEl({el:"span",ats:{id:"mailer"}});return e.appendChild(createLaunchMailerButton()),e.appendChild(createEmailInput()),e}function launchMailer(){const e=document.getElementById("email_adress").value;if(!/.+@.+\..+/.test(e))return void alert(msg("alert_email"));const a=getAllPlotOccDataAsJSON(),t="mailto: "+e+"?subject=biss_"+getNow()+"&body="+a;location.href=t}function createEmailInput(){return crEl({el:"input",ats:{id:"email_adress",type:"email",placeholder:"biss@send.mail.com"}})}function createLaunchMailerButton(){return createInput({type:"button",value:msg("launch_mailer"),"data-msg":"launch_mailer",onclick:"launchMailer()"})}</script> <script>// Save a string as a file (UTF-8 with BOM) through a click on a hidden link.
-function downloadStrings(strings, file_name){
+//   @param strings    A string, the content of the file.
+//   @param file_name  A string, the name to save it under.
+//   @param type       A string, the MIME type of the blob.
+function downloadStrings(strings, file_name, type = "text/tsv"){
   const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  const blob = new Blob([bom, strings], { "type" : "text/tsv" });
+  const blob = new Blob([bom, strings], { "type" : type });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   document.body.appendChild(a);
@@ -900,33 +846,6 @@ function downloadStrings(strings, file_name){
   URL.revokeObjectURL(url);
 }
 
-
-// Get data and optional information from a table.
-//    getTableDataPlus() retrieve table data as well as column names, data types, selects. 
-//    @param table      A table.
-//    @return              A JavaScript Object.
-//                            c_names: Column names of table, which will be used for making th.
-//                            d_types: Data types of each column for judging the td and input types.
-//                            selects: Select options for 'list' element. null for other types.
-//                            inputs : Table data for making td values or innnerHTML.
-function getTableDataPlus(table){
-  const c_names = getColNames(table);
-  const d_types = getDataTypes(table);
-  let inputs  = [];
-  for(const name of c_names){
-    inputs[name] = getColData(table, name);
-  }
-  inputs = Object.assign({}, inputs)
-  const selects = [];
-  for(let i = 0; i < d_types.length; i++){ 
-    selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null) 
-  }
-  const biss_data = { biss_c_names: c_names,
-                    biss_d_types: d_types,
-                    biss_selects: selects,
-                    biss_inputs : inputs  };
-  return biss_data;
-}
 
 // Helper for getInputData()
 //    @param table      A table element.
@@ -942,101 +861,97 @@ function getSelectOne(table, col_name){
     sel_opt.push(option.innerText);
   }
   return sel_opt;
-}</script> <script>// Helper to create input tag with attributes such as class, id, type, value, and placeholder. 
-//    @param ...args Some arguments. 
-//    @return  An input element. 
-//    @examples 
-//    createInput({ type: "text", value: "Val"}); 
-//    createInput({ type: "button", value: "Push here"}); 
-function createInput( ...args ){ 
-  const input = document.createElement('input'); 
-  const keys  = Object.keys(args[0]); 
-  for(const key of keys){ 
-    input.setAttribute(key, args[0][key]); 
-  } 
-  return input; 
-} 
- 
-// The buttons below live in a data table. They are translated, but the cell 
-//   they sit in is identified by its column name, never by the label. 
-//   See js2/lang.js. 
-// Create the button that deletes the row it sits in. 
-function createDelButton(){ 
-  return createInput({ type: "button", value: msg('del_row'), 'data-msg': 'del_row', onclick: "delRow(this)" }); 
-} 
-// Create the button that writes the current time and position into its row. 
-function createUpdateButton(){ 
-  return createInput({ type: "button", value: msg('update_time_gps'), 'data-msg': 'update_time_gps', onclick: "updateTimeGPS(this)" }); 
-} 
- 
-// The two buttons below replace each other, so both carry the same id. 
-//   Without it the id is lost the first time the shape is switched, and 
-//   addInputTab(), which reaches the button by id, no longer finds it. 
-// Create the button that folds a table into the narrow (one record per block) shape. 
-function createFitTable(id = ''){ 
-  return createInput({ type:"button", value: msg('fit_width'), 'data-msg': 'fit_width', onclick: "shortTable(this)", id: id}); 
-} 
-// Create the button that puts a folded table back to its normal shape. 
-function createWideTable(id = ''){ 
-  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)", id: id }); 
-} 
-// Create the file input for loading a saved settings JSON. 
-function createFileButton(){ 
-  return createFileInput({ accept: ".json", onchange: "replaceTable(this)" }); 
-} 
-// A file input shows labels drawn by the browser ("Choose file", 
-//   "No file chosen"), which follow the browser language and are NOT 
-//   switched by the language select. Hide it and open it from a normal 
-//   button so that the visible label goes through msg(). 
-function createFileInput({ id = '', accept = '', onchange = '' } = {}){ 
-  const span = crEl({ el:'span' }); 
-  const ats  = { type: "file", onchange: onchange, style: "display:none" }; 
-  if(id     !== ''){ ats.id     = id;     } 
-  if(accept !== ''){ ats.accept = accept; } 
-  span.appendChild( createInput({ type: "button", value: msg('choose_file'), 
-                                  'data-msg': 'choose_file', onclick: "clickFileInput(this)" }) ); 
-  span.appendChild( crEl({ el:'input', ats: ats }) ); 
-  return span; 
-} 
-// Open the hidden file input next to the clicked button. 
-function clickFileInput(obj){ 
-  obj.nextElementSibling.click(); 
-} 
-// Create the button that saves the settings of the table it belongs to. 
-function createSaveButton(){ 
-  return createInput({ type: "button", value: msg('save'), 'data-msg': 'save', onclick: "saveSettings(this)" }); 
-} 
-// NOT translated: c_name is a column name, that is data. 
-function createShowColButton(c_name){ 
-  return createInput({ type: "Button", value: c_name, onclick: "showCol(this)" }); 
-} 
-// Create the button that sums a column by group. 
-function createSumButton(){ 
-  return createInput({ type: "Button", value: msg('calculate'), 'data-msg': 'calculate', onclick: "sumWithGroup(this)" }); 
-} 
-// Create the box that searches the text of the table below it. 
-function createSearchInput(){ 
-  return createInput({ type:"text", onkeyup: "searchTableText(this)", placeholder: msg('search_text'), 'data-msg-ph': 'search_text' }); 
-} 
-// Create the box that holds the text to search a species list for. 
-function createSearchShowInput(id=''){ 
-  return crEl({ el:'input', ats:{type:'text', id: id, placeholder: msg('input_text'), 'data-msg-ph': 'input_text'} }); 
-} 
-// Create the number box for how many rows to add at once. 
-function createNrowInput(id){ 
-  return createInput({ type: "number", value: "1", step: "1", min: "1", max:"20", id: id }); 
-} 
-// Create the button that adds rows to the table it belongs to. 
-function createAddRowButton(id){ 
-  return createInput({ type: "button", value: msg('add_rows'), 'data-msg': 'add_rows', onclick: "addRows(this)", id: id }); 
-} 
-// Create the button that hides or shows the table below it. 
-function createHideButton(){ 
-  return createInput({ type: "button", value: msg('hide_table'), 'data-msg': 'hide_table', onclick: "hideShowNext(this)" }); 
-} 
-// Create the button that adds another occurrence table to a plot. 
-function createNewOccButton(){ 
-  return createInput({ type: "button", value: msg('new_occ_table'), 'data-msg': 'new_occ_table', onclick: "makeNewOccTableModule(this)" }); 
+}</script> <script>// Helper to create input tag with attributes such as class, id, type, value, and placeholder.
+//    @param ...args Some arguments.
+//    @return  An input element.
+//    @examples
+//    createInput({ type: "text", value: "Val"});
+//    createInput({ type: "button", value: "Push here"});
+function createInput( ...args ){
+  const input = document.createElement('input');
+  const keys  = Object.keys(args[0]);
+  for(const key of keys){
+    input.setAttribute(key, args[0][key]);
+  }
+  return input;
+}
+
+// The buttons below live in a data table. They are translated, but the cell
+//   they sit in is identified by its column name, never by the label.
+//   See js2/lang.js.
+// Create the button that deletes the row it sits in.
+function createDelButton(){
+  return createInput({ type: "button", value: msg('del_row'), 'data-msg': 'del_row', onclick: "delRow(this)" });
+}
+// Create the button that writes the current time and position into its row.
+function createUpdateButton(){
+  return createInput({ type: "button", value: msg('update_time_gps'), 'data-msg': 'update_time_gps', onclick: "updateTimeGPS(this)" });
+}
+
+// The two buttons below replace each other, so both carry the same id.
+//   Without it the id is lost the first time the shape is switched, and
+//   addInputTab(), which reaches the button by id, no longer finds it.
+// Create the button that folds a table into the narrow (one record per block) shape.
+function createFitTable(id = ''){
+  return createInput({ type:"button", value: msg('fit_width'), 'data-msg': 'fit_width', onclick: "shortTable(this)", id: id});
+}
+// Create the button that puts a folded table back to its normal shape.
+function createWideTable(id = ''){
+  return createInput({ type:"button", value: msg('extend_width'), 'data-msg': 'extend_width', onclick: "wideTable(this)", id: id });
+}
+// Create the file input for loading a saved settings JSON.
+function createFileButton(){
+  return createFileInput({ accept: ".json", onchange: "replaceTable(this)" });
+}
+// A file input shows labels drawn by the browser ("Choose file",
+//   "No file chosen"), which follow the browser language and are NOT
+//   switched by the language select. Hide it and open it from a normal
+//   button so that the visible label goes through msg().
+function createFileInput({ id = '', accept = '', onchange = '' } = {}){
+  const span = crEl({ el:'span' });
+  const ats  = { type: "file", onchange: onchange, style: "display:none" };
+  if(id     !== ''){ ats.id     = id;     }
+  if(accept !== ''){ ats.accept = accept; }
+  span.appendChild( createInput({ type: "button", value: msg('choose_file'),
+                                  'data-msg': 'choose_file', onclick: "clickFileInput(this)" }) );
+  span.appendChild( crEl({ el:'input', ats: ats }) );
+  return span;
+}
+// Open the hidden file input next to the clicked button.
+function clickFileInput(obj){
+  obj.nextElementSibling.click();
+}
+// Create the button that saves the settings of the table it belongs to.
+function createSaveButton(){
+  return createInput({ type: "button", value: msg('save'), 'data-msg': 'save', onclick: "saveSettings(this)" });
+}
+// NOT translated: c_name is a column name, that is data.
+function createShowColButton(c_name){
+  return createInput({ type: "Button", value: c_name, onclick: "showCol(this)" });
+}
+// Create the button that sums a column by group.
+function createSumButton(){
+  return createInput({ type: "Button", value: msg('calculate'), 'data-msg': 'calculate', onclick: "sumWithGroup(this)" });
+}
+// Create the box that searches the text of the table below it.
+function createSearchInput(){
+  return createInput({ type:"text", onkeyup: "searchTableText(this)", placeholder: msg('search_text'), 'data-msg-ph': 'search_text' });
+}
+// Create the box that holds the text to search a species list for.
+function createSearchShowInput(id=''){
+  return crEl({ el:'input', ats:{type:'text', id: id, placeholder: msg('input_text'), 'data-msg-ph': 'input_text'} });
+}
+// Create the number box for how many rows to add at once.
+function createNrowInput(id){
+  return createInput({ type: "number", value: "1", step: "1", min: "1", max:"20", id: id });
+}
+// Create the button that adds rows to the table it belongs to.
+function createAddRowButton(id){
+  return createInput({ type: "button", value: msg('add_rows'), 'data-msg': 'add_rows', onclick: "addRows(this)", id: id });
+}
+// Create the button that hides or shows the table below it.
+function createHideButton(){
+  return createInput({ type: "button", value: msg('hide_table'), 'data-msg': 'hide_table', onclick: "hideShowNext(this)" });
 }</script> <script>// 
 // 
 // 
@@ -1225,7 +1140,7 @@ function sumWithGroup(obj){
   const opts = table.rows[2].cells[c_no].firstChild.options;
   const groups = [];
   for(const o of opts){ groups.push(o.value); }
-  const sum_array = [];
+  const sum_array = {};   // keyed by group name
   for(let i = 0; i < groups.length; i++){ sum_array[groups[i]] = 0; }
   for(let i = 0; i < groups.length; i++){
     if(grouped_array[groups[i]] !== void 0){
@@ -1299,22 +1214,13 @@ async function replaceTable(obj){
   old_module.replaceWith(new_module);
 }
 
-// Helper for replaceTable(). 
-function readFile(file){
-  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = x=> resolve(reader.result);
-    reader.readAsText(file);
-  })
-}
 
 // Save settings of plot or occurrence data.
 //   @param obj  A input element.
 //                 Normally use "this". 
 function saveSettings(obj){
   const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  const table_data = getTableDataPlus(table);
+  const table_data = getTableData(table);
   const table_json = JSON.stringify(table_data);
   let f_name = obj.nextElementSibling.value;
   if(f_name === ""){ f_name = table.id.replace(/_tb$/, ''); }
@@ -1637,7 +1543,6 @@ function changeTab(){
 function updateTab(){
   // get elements
   const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
-  const pages = document.getElementById('tabbody').getElementsByTagName('div');
   // when clicked, enable to run changeTab() in all tab
   for(let i = 0; i < tabs.length; i++) {
     tabs[i].onclick = changeTab;
@@ -1800,8 +1705,8 @@ function createAllInputsTable(table_name){
   c_names = c_names.filter(item => ! removals.includes(item));
 
   const inputs = getMultiTableInputs(tables, c_names);
-  const d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
-  const selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
 
   const all_data = {
     biss_c_names: c_names,
@@ -1827,7 +1732,7 @@ function getUniqeColNames(tables){
 }
 // The data of the given columns, read from several tables and joined per column.
 function getMultiTableInputs(tables, c_names){
-  const inputs = [];
+  const inputs = {};   // keyed by column name
   for(const c_name of c_names){
     inputs[c_name] = [];
     for(const tb of tables){
@@ -1855,7 +1760,7 @@ function getMultiTableSelects(tables){
 
 // The options of the given columns, collected over several tables.
 function getMultiTableOptions(tables, c_names){
-  const options = [];
+  const options = {};   // keyed by column name
   for(const c_name of c_names){
     options[c_name] = [];
     for(const tb of tables){
@@ -1887,7 +1792,7 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
   const uniq_pl = uniq(inputs[pl]);
   const uniq_sp = uniq(inputs[sp]);
   const c_names = [sp].concat(uniq_pl);
-  const data_table = [];
+  const data_table = {};   // keyed by column name: the species, then one per plot
   data_table[sp] = uniq_sp;
   for(const p of uniq_pl){
     const data_col = [];
@@ -1913,8 +1818,8 @@ function createCompTable(tables, pl = "PLOT", sp = "Species", ab = "Cover", id =
   }
   data_table;
 
-  const d_types = []; for(let i = 0; i <c_names.length; i++){ d_types.push('fixed'); }
-  const selects = []; for(let i = 0; i <c_names.length; i++){ selects.push(''); }
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
   const comp_data = {
     biss_c_names: c_names,
     biss_d_types: d_types,
@@ -1950,21 +1855,6 @@ function getSpeciesInComposition(sp = 'Species'){
   removeEmptyInArray(species);
   return species;
 }
-// Add every species of the composition table to the species list of the clicked module.
-function addComp(obj, sp = 'Species'){
-  // var sp = 'Species';
-  const ns = getSlNs(obj.id);
-  const id = 'sp_list_sp_list-'+ ns;
-  const species = getSpeciesInComposition();
-  // console.log(sp_list);
-  addSpeciesList(id, species);
-}
-
-// Create the button that calls addComp().
-function createAddCompButton(id){
-  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('add_from_comp'), 'data-msg': 'add_from_comp', onclick: 'addComp(this)'} });
-}
-
 // Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out.
 function createSpecieUlModule({ species, ns,
                                 show_select_button     , show_comp_checkbox, show_delete_list, 
@@ -2124,15 +2014,6 @@ async function registerSL(obj){
   setSelectOption(select, name);
   changeSL(select);
 }
-// Helper function
-function readFile(file){
-  // https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = x=> resolve(reader.result);
-    reader.readAsText(file);
-  })
-}
 // Create the file input that registers a species list from a text file.
 function createRegisterSLButton(id){
   const span = crEl({el:'span' });
@@ -2215,18 +2096,6 @@ function createSelectPlot(id){
   span.appendChild(plot_select)
   return span;
 }
-// Create the Layer pull down, from the layers the occurrence tables offer.
-function createSelectLayer(id){
-  const span = crEl({ el:'span' });
-  span.appendChild( msgSpan('layer_label') );
-  const tables = document.querySelectorAll("table[id^='input_occ']");
-  const ly = 'Layer';
-  // console.log(getMultiTableOptions(tables, [ly]));
-  const layer_list = uniq(getMultiTableOptions(tables, [ly])[ly]);
-  const layer_select = createSelectOpt(layer_list, layer_list.length - 1, id);
-  span.appendChild(layer_select)
-  return span;
-}
 // Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given.
 function updatePlotLayer({ obj }){
   const nss = (obj === void 0) ? ['all', 'flora'] : [getSlNs(obj.id)];
@@ -2248,7 +2117,6 @@ function replaceSelectPlot(id){
 function replaceSelectLayer(id){
   // console.log(id);
   const old_layer = document.getElementById(id);
-  //   var new_layer = createSelectLayer(id);
   const new_layer = createSelectOptions(id);
   old_layer.replaceWith(new_layer);
 }
@@ -2277,18 +2145,6 @@ function createSelectOptions(id){
 // Add species
 function createSLAdd(id){
   return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } });
-}
-// Add species to a list, keeping it unique and sorted.
-function addSpeciesList(id, add_sp){
-  const old_sp_list = document.getElementById(id);
-  // console.log(id);
-  let old_sp = getGrandChildrenValues( old_sp_list );
-  if(old_sp === void 0){ old_sp = []; }
-  const new_sp = uniq(old_sp.concat(add_sp)).sort();
-  //   if(new_sp.indexOf('') >= 0){ new_sp.splice(new_sp.indexOf(''), 1); }  // remove ''
-  removeEmptyInArray(new_sp);
-  const new_sp_list = createSpecieList(id, new_sp);
-  old_sp_list.replaceWith(new_sp_list);
 }
 // Move a species to the staged row and grey out its button.
 function stageSpecies(obj){
@@ -2376,17 +2232,6 @@ function getChildrenValues(element){
   const values = [];
   for(const child of element.children){
     values.push(child.value);
-  }
-  return values;
-}
-
-// The values of the grandchildren of an element (the buttons in the li of a ul).
-function getGrandChildrenValues(element){
-  const values = [];
-  for(const child of element.children){
-    for(const ch of child.children){
-      values.push(ch.value);
-    }
   }
   return values;
 }</script> <script charset="utf-8">var wamei = ` 
@@ -29514,7 +29359,6 @@ function createSearchFloraButton(name){
 
 // Search the flora for the input text and show the hits as species buttons.
 function searchFlora(obj){
-  const parent    = obj.parentNode;
   const input     = document.getElementById('flora_input').value;
   let species;    // declared here: both branches and the code below share it
   if(input === ''){
@@ -29653,33 +29497,31 @@ function createSelectOpt(list, selected_no = 0, id = ''){
 }
 
 
-// Get data and optional information from a table.
-//    getTableDataPlus() retrieve table data as well as column names, data types, selects. 
-//    @param id_table      A string to specify table id.
-//    @return               A string with 4 parts as shown below. 
-//                          Each part is JSON format.
-//                            c_names: Column names of table, which will be used for making th.
-//                            d_types: Data types of each column for judging the td and input types.
-//                            selects: Select options for 'list' element. null for other types.
-//                            t_data : Table data for making td values or innnerHTML.
+// Read a table back into the table definition it was built from.
+//    The definition is what makeTableJO() takes, what a settings file holds,
+//    and what the saved survey data is made of.
+//    @param table  A table element.
+//    @return  An object with four parts.
+//               biss_c_names: the column names, which become the th.
+//               biss_d_types: the data type of each column, which decides the input.
+//               biss_selects: the options of a 'list' column, null for the others.
+//               biss_inputs : the data, keyed by column name.
 function getTableData(table){
-  // var table = document.getElementById("setting_plot_tb");
   const c_names = getColNames(table);
   const d_types = getDataTypes(table);
-  // getInputs
-  const t_data = [];
-  for(const name of c_names){
-    t_data[name] = getColData(table, name);
+  const inputs = {};   // an object, not an array: JSON.stringify() of an array
+  for(const name of c_names){   //   with string keys writes []
+    inputs[name] = getColData(table, name);
   }
   const selects = [];
-  for(let i = 0; i < d_types.length; i++){ 
-    selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]): '');
+  for(let i = 0; i < d_types.length; i++){
+    selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null);
   }
-  return{
+  return {
     biss_c_names: c_names,
     biss_d_types: d_types,
     biss_selects: selects,
-    biss_inputs : t_data
+    biss_inputs : inputs
   }
 }
 
@@ -29720,7 +29562,7 @@ function convertTableData(table_data){
   const c_names = table_data['biss_inputs']['item'];
   const d_types = table_data['biss_inputs']['type'];
   const selects = [];
-  const inputs  = [];
+  const inputs  = {};   // keyed by column name
   for(let i = 0; i < d_types.length; i++){
     const inputs_value = table_data['biss_inputs']['value'][i];
     selects.push( (d_types[i] === 'list' ) ? inputs_value.split(':') : inputs_value );
@@ -29732,23 +29574,7 @@ function convertTableData(table_data){
     biss_selects: selects,
     biss_inputs : inputs 
   }
-}
-
-
-  // editing now
-  // var table_name = "setting_occ_default";
-  // var table_name = "input_plot_default";
-  // var table_name = "setting_plot_01";
-  // var table = document.getElementById(table_name);
-  // var table_data = getTableData(table);
-  // var t_data = convertTableData(table_data);
-  // var table_new = makeTableJO(t_data, "test")
-  // document.getElementById("setting_occ_default").replaceWith(table_new);
-
-
-  // data_00["setting_plot_01"]["biss_inputs"]["item"]
-  // JSON.stringify(data_00)
-  // JSON.parse(JSON.stringify(data_00))</script> <script charset="utf-8">// Open the manual of the current language.
+}</script> <script charset="utf-8">// Open the manual of the current language.
 function showManual(){
   const base = "https://github.com/matutosi/biodiv/blob/main/man/01-howtouse";
   const suffix = (currentLanguage === 'ja') ? "_jp.md" : "_en.md";
@@ -29843,26 +29669,14 @@ function saveAllTableDataAsCSV(){
 function getAllPlotOccDataAsJSON(){
   const plot = getTableData( document.getElementById('plot_all_tb') );
   const occ  = getTableData( document.getElementById('occ_all_tb' ) );
-  // need Object.assign({}, obj)
-  const data = { plot: Object.assign({}, plot.biss_inputs), occ: Object.assign({}, occ.biss_inputs) }
+  const data = { plot: plot.biss_inputs, occ: occ.biss_inputs }
   const json = JSON.stringify(data);
   return json;
 }
 
-// 
+// Write the input data out as a JSON file, without asking.
 function autoSave(){
-  const json = getAllPlotOccDataAsJSON();
-  const f_name = 'biss_' + getNow() + '.json';
-  const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);  //set encoding UTF-8 with BOM
-  const blob = new Blob([bom, json], { "type" : "text/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.download = f_name;
-  a.href = url;
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  downloadStrings(getAllPlotOccDataAsJSON(), 'biss_' + getNow() + '.json', "text/json");
 }
 
 // The handle of the auto save timer, or undefined while nothing is scheduled.
@@ -29888,4 +29702,4 @@ function changeAutoSaveSttting(obj){
 function setAutoSave(n){
   const min = 1000 * 60; // 1 min: 1000ms * 60sec
   timerId = setInterval(autoSave, n * min );
-}</script> <style> #tabcontrol{ margin:0;} #tabcontrol a{ display:inline-block;border-width:1px 1px 0px 1px; border-style:solid;border-color:black;border-radius:0.75em 0.75em 0px 0px; padding:0.75em 1em;text-decoration:none; color:black;background-color:white;font-weight:bold;position:relative; } #tabbody div{ border:1px solid black;margin-top:-1px; padding:1em;background-color:white;position:relative; z-index:0; min-height:5em; } #tabcontrol a:nth-child(1), #tabbody div:nth-child(1){ background-color:#FFFFE0;}#tabcontrol a:nth-child(2), #tabbody div:nth-child(2){ background-color:#efefff;}#tabcontrol a:nth-child(n+3), #tabbody div:nth-child(n+3){ background-color:#efffef;} </style> <style>select,.margin_right{ margin-right:20px;}:root{ --font-size:16px;}table{ border-collapse:collapse;}input[type="number"]{ width :5em;}input,select,b,span,div{ font-size :var(--font-size);}input[type=checkbox]{ transform:scale(1.2);}input{ }table td,th{ font-size :var(--font-size);border-style:solid; padding :0.3em 1em; text-align :center; }table th{ color:white;background-color:#00552e;cursor:pointer;}table td{ border-width:0px 0px; border-color:#00552e; }table tr:nth-child(odd){ background:#AEFFBD;}table td:before{ content:attr(th-lab);}table tr{ border-width:0.5px 0.5px;border-color:#00552e; border-style:solid; }#tab_tools table tr{ background:#FFFFFF;}#tab_tools table th{ color:white;background-color:#FF6E00;}#tab_settings table th{ color:white;background-color:#0033CC;}#tab_settings table td{ border-width:1px 0px; border-color:#0033CC; }#tab_settings table tr:nth-child(odd){ background:#BAD3FF;}#tab_tools td{ text-align :left;vertical-align:top;background:#FFFFF0;} td #sp_staged{ background:#FF6E00;}</style> <style>:not(:root):fullscreen::backdrop{ background-color:white;}</style> <style>:root{ --cc:5;}ul{ column-count :var(--cc);list-style-type:none;padding-left :1px;padding-right :1px;}</style> </head> <body> <p> <select id="select_language" onchange="changeLanguage(this)"> <option value="en">English</option> <option value="ja">日本語</option> </select> <input type="button" value="Save input data" data-msg="save_input" onclick="saveAllTableDataAsCSV()"> <input type="button" value="small" data-msg="small" onclick="smaller()"> <input type="button" value="LARGE" data-msg="large" onclick="larger()"> <span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span> <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)"> <input type="button" value="Show example" data-msg="show_example" onclick="showExample(this)"> <input type="button" value="Show manual" data-msg="show_manual" onclick="showManual()"> </p> <div class="Biodiversity Investigation System (BIS)"> <p id="tabcontrol"> <a href="#tab_tools" data-msg="tab_tools">Tools </a> <a href="#tab_settings" data-msg="tab_settings">Settings </a> <a href="#tab_all" data-msg="tab_all">All plots</a> <input id="add_tab" type="button" value="+ PLOT" data-msg="plus_plot" onclick="addInputTab({ obj:this })"> </p> <div id="tabbody"> <div id="tab_tools"> <script>const tab_tools=document.getElementById("tab_tools"),ul_all=createSpecieUlModule({species:"",ns:"all",show_select_button:!0,show_comp_checkbox:!0,show_select_ncol:!0,show_delete_list:!0,show_button_register_sl:!0,show_text_input:!0,show_select_plot:!0,show_select_layer:!0});tab_tools.appendChild(ul_all),tab_tools.appendChild(createSearchFloraSpan());</script> </div> <div id="tab_settings"> <script>const tab_setting=document.getElementById("tab_settings");tab_setting.appendChild(createAutoSaveIntervalSelect()),tab_setting.appendChild(createStartGPSButton()),tab_setting.appendChild(createMailerSpan()),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(createSettingSelect()),tab_setting.appendChild(addSettingPartButton("plot")),tab_setting.appendChild(addSettingPartButton("occ")),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(crEl({el:"span"})),tab_setting.appendChild(crEl({el:"span"})),changeSettingsByName("empty");</script> </div> <div id="tab_all"> <span id="plot_all"></span> <span id="occ_all"></span> <span id="comp_table"> <script></script> </span></div> </div> </div> <div> <script>const tabs=document.getElementById("tabcontrol").getElementsByTagName("a"),pages=document.getElementById("tabbody").getElementsByTagName("div");updateTab(),tabs[1].onclick(),initLanguage();</script> <div> </div></div></body> </html> 
+}</script> <style> #tabcontrol{ margin:0;} #tabcontrol a{ display:inline-block;border-width:1px 1px 0px 1px; border-style:solid;border-color:black;border-radius:0.75em 0.75em 0px 0px; padding:0.75em 1em;text-decoration:none; color:black;background-color:white;font-weight:bold;position:relative; } #tabbody div{ border:1px solid black;margin-top:-1px; padding:1em;background-color:white;position:relative; z-index:0; min-height:5em; } #tabcontrol a:nth-child(1), #tabbody div:nth-child(1){ background-color:#FFFFE0;}#tabcontrol a:nth-child(2), #tabbody div:nth-child(2){ background-color:#efefff;}#tabcontrol a:nth-child(n+3), #tabbody div:nth-child(n+3){ background-color:#efffef;} </style> <style>select,.margin_right{ margin-right:20px;}:root{ --font-size:16px;}table{ border-collapse:collapse;}input[type="number"]{ width :5em;}input,select,b,span,div{ font-size :var(--font-size);}input[type=checkbox]{ transform:scale(1.2);}input{ }table td,th{ font-size :var(--font-size);border-style:solid; padding :0.3em 1em; text-align :center; }table th{ color:white;background-color:#00552e;cursor:pointer;}table td{ border-width:0px 0px; border-color:#00552e; }table tr:nth-child(odd){ background:#AEFFBD;}table td:before{ content:attr(th-lab);}table tr{ border-width:0.5px 0.5px;border-color:#00552e; border-style:solid; }#tab_tools table tr{ background:#FFFFFF;}#tab_tools table th{ color:white;background-color:#FF6E00;}#tab_settings table th{ color:white;background-color:#0033CC;}#tab_settings table td{ border-width:1px 0px; border-color:#0033CC; }#tab_settings table tr:nth-child(odd){ background:#BAD3FF;}#tab_tools td{ text-align :left;vertical-align:top;background:#FFFFF0;} td #sp_staged{ background:#FF6E00;}</style> <style>:not(:root):fullscreen::backdrop{ background-color:white;}</style> <style>:root{ --cc:5;}ul{ column-count :var(--cc);list-style-type:none;padding-left :1px;padding-right :1px;}</style> </head> <body> <p> <select id="select_language" onchange="changeLanguage(this)"> <option value="en">English</option> <option value="ja">日本語</option> </select> <input type="button" value="Save input data" data-msg="save_input" onclick="saveAllTableDataAsCSV()"> <input type="button" value="small" data-msg="small" onclick="smaller()"> <input type="button" value="LARGE" data-msg="large" onclick="larger()"> <span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span> <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)"> <input type="button" value="Show example" data-msg="show_example" onclick="showExample(this)"> <input type="button" value="Show manual" data-msg="show_manual" onclick="showManual()"> </p> <div class="Biodiversity Investigation System (BIS)"> <p id="tabcontrol"> <a href="#tab_tools" data-msg="tab_tools">Tools </a> <a href="#tab_settings" data-msg="tab_settings">Settings </a> <a href="#tab_all" data-msg="tab_all">All plots</a> <input id="add_tab" type="button" value="+ PLOT" data-msg="plus_plot" onclick="addInputTab({ obj:this })"> </p> <div id="tabbody"> <div id="tab_tools"> <script>const tab_tools=document.getElementById("tab_tools"),ul_all=createSpecieUlModule({species:"",ns:"all",show_select_button:!0,show_comp_checkbox:!0,show_select_ncol:!0,show_delete_list:!0,show_button_register_sl:!0,show_text_input:!0,show_select_plot:!0,show_select_options:!0});tab_tools.appendChild(ul_all),tab_tools.appendChild(createSearchFloraSpan());</script> </div> <div id="tab_settings"> <script>const tab_setting=document.getElementById("tab_settings");tab_setting.appendChild(createAutoSaveIntervalSelect()),tab_setting.appendChild(createStartGPSButton()),tab_setting.appendChild(createMailerSpan()),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(createSettingSelect()),tab_setting.appendChild(addSettingPartButton("plot")),tab_setting.appendChild(addSettingPartButton("occ")),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(crEl({el:"span"})),tab_setting.appendChild(crEl({el:"span"})),changeSettingsByName("empty");</script> </div> <div id="tab_all"> <span id="plot_all"></span> <span id="occ_all"></span> <span id="comp_table"> <script></script> </span></div> </div> </div> <div> <script>const tabs=document.getElementById("tabcontrol").getElementsByTagName("a"),pages=document.getElementById("tabbody").getElementsByTagName("div");updateTab(),tabs[1].onclick(),initLanguage();</script> <div> </div></div></body> </html> 
