@@ -199,7 +199,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-16 09:13 (JST) 更新．
+2026-08-16 09:33 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -310,6 +310,45 @@ python -m venv .venv
     `readFile()` が2箇所に重複，`getTableData()` と `getTableDataPlus()` がほぼ同一，
     死にコード (`createNewOccButton`・`createSelectLayer`・`saveHTML`)．
   - **D. 体制**: テストと lint が無かった → 導入済み．
+- **C1・C2 を片づけた．ESLint の指摘が 0 件になった** (エラーも警告も)．
+  `js2/` は 3,049 行から 2,865 行に減った (和名辞書を除く)．
+  - **C1 死にコード**．参照が無い関数を消したところ**連鎖した**ので，
+    「消す → 走査し直す」を繰り返して 0 になるまで続けた．
+    `createAddCompButton` (「組成から追加」ボタン．どこにも置かれていなかった) を消すと
+    `addComp` が浮き，それを消すと `addSpeciesList` が浮き，さらに
+    `getGrandChildrenValues` が浮いた．
+    ほかに `createNewOccButton` (未定義の `makeNewOccTableModule` を呼ぶ)，
+    `createSelectLayer` (`createSelectOptions` に置き換わっていた)，
+    `NS` (shiny 風の名前空間ヘルパ)，`removeSLinLSAll`，
+    `saveHTML` (`biodiv2.html` の呼び出しはコメントの中だった．HTML 側も消した)．
+    未使用になったメッセージ 3件 (`add_from_comp`・`layer_label`・`new_occ_table`) も消した．
+    コメントアウト済みの塊 (`utils.js` の `getDataType`，`table.js` 末尾の作業メモ) と，
+    未使用の局所変数 4件も消した．
+    **必要になれば git の履歴から取り出せる** (走査スクリプトは使い捨て)．
+  - **`biodiv2.html` の `show_select_layer : true` を `show_select_options : true` に直した**．
+    `createSpecieUlModule()` にそんな引数は無く，指定は無視されていた．
+    それでも階層のプルダウンが見えていたのは，起動直後の `updatePlotLayer({})` が
+    `display:none` の付いていない要素に差し替えるため．見た目は変わらない．
+  - **C2 重複**．
+    `readFile()` が `table_module.js` と `ul_module.js` に同じ実装で2つあったので
+    `utils.js` に1つ置いた．
+    `getTableData()` と `getTableDataPlus()` は，違いが
+    「`biss_inputs` を配列で作って後から object に変換するか，最初から object か」と
+    「list でない列の `biss_selects` が `''` か `null` か」だけだったので1つにした．
+    `null` は `data.js` と保存済みの設定ファイルが元から使っている形で，
+    `''` の側の呼び出し元は `biss_selects` を見ていない．
+    `larger()`/`smaller()` は倍率を引数に取る `changeFontSize()` にまとめた．
+    `autoSave()` が書き直していた Blob とリンクの手順は `downloadStrings()` に寄せた
+    (MIME を引数にして，従来の `text/json` を保つ)．
+    同じ値を n 個積むループは `Array(n).fill()` にした．
+  - **キーが列名なら配列ではなく object にした** (6箇所)．
+    配列に文字列のキーを入れる書き方は動くが，`JSON.stringify()` が `[]` を書くため
+    `getTableDataPlus()` は `Object.assign({}, inputs)` で辻褄を合わせていた．
+    object にしたのでその変換も要らなくなった．
+  - **保存形式が変わっていないことをテストで固定した**．
+    設定 JSON が `JSON.stringify` → `JSON.parse` → `makeTableJO()` を往復すること，
+    list でない列の `biss_selects` が `null` であること，
+    自動保存の JSON が列名をキーに持つこと (`npm test` は 17 → 19件)．
 - **B1〜B3 を片づけた．ESLint のエラーが 102 件から 0 になった**．
   - **B1 名前付き引数のエミュレーション (6箇所)**．`f(a, id = 'x')` は「`id` という
     グローバル変数を作ってから値を渡す」動作なので，位置引数の呼び出しに直した．
@@ -408,15 +447,13 @@ python -m venv .venv
 #### A. 機能として未完了 (優先度 高)
 
 - (実バグ A1〜A7 はすべて修正済み．内容は「現在の状態」を参照)
-- (B1〜B3 も完了．ESLint のエラーは 0)
-- **C1 死にコードの削除**: 呼ばれていない関数 (`createNewOccButton`・`createSelectLayer`・
-  `saveHTML`) と，コメントアウト済みの塊 (`utils.js` の `getDataType`，`table.js` 末尾の作業メモ)．
-  ESLint が挙げる未使用変数5件も含む．
-- **C2 重複の統合**: `readFile()` が2箇所，`getTableData()` と `getTableDataPlus()` がほぼ同一，
-  `larger()`/`smaller()`，`Array(n).fill()` で済むループ，`auto_save.js` の Blob 生成
-  (`downloadStrings()` と同一)．
-  配列をハッシュとして使っている箇所 (`download.js` が `Object.assign({}, inputs)` で
-  辻褄を合わせている) もここで直す．
+- **「案1 安全第一」の範囲は完了した** (A・B・C すべて)．ESLint の指摘は 0 件．
+  残っているのは，当初「案2 中規模」として見送った次の項目．
+  - DOM を兄弟の連鎖で辿る (`obj.parentNode.nextSibling` の4連など)．要素を1つ足すと壊れる．
+  - `table.rows[2]` (最初のデータ行) というマジックインデックスの散在．
+  - 列名リテラル (`"DATE"`・`"PLOT"`・`"Species"` など) が各ファイルに直書き．
+  - `addSpecies()` が JSON を文字列連結で組み立てている
+    (種名に `"` が入ると `JSON.parse` が壊れる)．
 - **ブラウザでの確認は一巡した**．未確認4件は「問題なし」，A7 のみ見つかって修正済み．
   以降の確認は，スモークテスト (`npm test`) が見る分を除いて次だけでよい．
   - ファイル選択ダイアログは Playwright が見るようになった (種一覧の登録)．
