@@ -45,7 +45,7 @@ function createAutoSaveIntervalSelect(){
   main.appendChild( msgSpan('interval') );
   // NOT translated: 'no save' is compared in changeAutoSaveSttting().
   var settings = ['no save', '1', '3', '5', '10', '15', '30', '60'];
-  var selects = createSelectOpt(settings, selected_no = 0, id = 'select_auto_save_interval');
+  var selects = createSelectOpt(settings, 0, 'select_auto_save_interval');
   selects.setAttribute('onChange', 'changeAutoSaveSttting(this)');
   main.appendChild(selects);
   return main;
@@ -58,7 +58,7 @@ function createSettingSelect(){
   main.appendChild( msgSpan('base_setting') );
   // NOT translated: the keys are names of settings, that are data.
   var settings = Object.keys(data_settings);
-  var selects = createSelectOpt(settings, selected_no = 0, id = 'select_settings');
+  var selects = createSelectOpt(settings, 0, 'select_settings');
   selects.setAttribute('onChange', 'changeSettings(this)');
   main.appendChild(selects);
   main.appendChild( crEl({ 'el': 'br' }) );
@@ -279,6 +279,6 @@ function saveSettings(obj){
   var table_json = JSON.stringify(table_data);
   var f_name = obj.nextElementSibling.value;
   if(f_name === ""){ f_name = table.id.replace(/_tb$/, ''); }
-  downloadStrings(strings = table_json, file_name = f_name + ".json")
+  downloadStrings(table_json, f_name + ".json")
 }
 

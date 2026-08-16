@@ -23,7 +23,7 @@ function setSortable(id_table){
       dir = (column_no_prev === column_no && dir === "asc") ? "desc" : "asc";
       column_no_prev = column_no;
       var col_name = getColNames(table)[column_no];
-      var elements = getColData(table, col_name, list_with_index = true);
+      var elements = getColData(table, col_name, true);  // true: list as its index
   //       elements.shift() // delete hide button
   // console.log("elements in sort: " + elements);
       var rank_index = rank(elements, dir);  // rank_index: sorting order

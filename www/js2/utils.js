@@ -377,7 +377,7 @@ function crEl({ el, ats, ih, tc }){
 //   saveHTML() save the generated html file as it is.
 function saveHTML(obj){
   var doc = document.documentElement.outerHTML;
-  downloadStrings(strings = doc, file_name = "biodiv.html")
+  downloadStrings(doc, "biodiv.html")
 }
 
 // Unique array

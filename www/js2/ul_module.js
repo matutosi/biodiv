@@ -114,7 +114,7 @@ function createDeleteSL(id){
   var delete_name = id.replace('delete', 'delete_name');
   var span   = crEl({ el:'span' });
   var delete_button = crEl({ el:'input', ats:{type: 'button', value: msg('delete_list'), 'data-msg': 'delete_list', onclick: 'deleteSl(this)', id: id} });
-  var select = createSL(delete_name, value = '', first_option = '');
+  var select = createSL(delete_name, '', '');  // '', '': no value picked, no 'NEW' option
   span.appendChild( delete_button );
   span.appendChild( select );
   return span;
