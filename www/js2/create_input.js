@@ -90,7 +90,3 @@ function createAddRowButton(id){
 function createHideButton(){
   return createInput({ type: "button", value: msg('hide_table'), 'data-msg': 'hide_table', onclick: "hideShowNext(this)" });
 }
-// Create the button that adds another occurrence table to a plot.
-function createNewOccButton(){
-  return createInput({ type: "button", value: msg('new_occ_table'), 'data-msg': 'new_occ_table', onclick: "makeNewOccTableModule(this)" });
-}

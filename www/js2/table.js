@@ -173,19 +173,3 @@ function convertTableData(table_data){
     biss_inputs : inputs 
   }
 }
-
-
-  // editing now
-  // var table_name = "setting_occ_default";
-  // var table_name = "input_plot_default";
-  // var table_name = "setting_plot_01";
-  // var table = document.getElementById(table_name);
-  // var table_data = getTableData(table);
-  // var t_data = convertTableData(table_data);
-  // var table_new = makeTableJO(t_data, "test")
-  // document.getElementById("setting_occ_default").replaceWith(table_new);
-
-
-  // data_00["setting_plot_01"]["biss_inputs"]["item"]
-  // JSON.stringify(data_00)
-  // JSON.parse(JSON.stringify(data_00))

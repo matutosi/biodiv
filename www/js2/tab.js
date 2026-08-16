@@ -29,7 +29,6 @@ function changeTab(){
 function updateTab(){
   // get elements
   const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
-  const pages = document.getElementById('tabbody').getElementsByTagName('div');
   // when clicked, enable to run changeTab() in all tab
   for(let i = 0; i < tabs.length; i++) {
     tabs[i].onclick = changeTab;

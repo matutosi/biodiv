@@ -29,7 +29,7 @@ let currentLanguage = initialLanguage();
 //    @return  A string, 'en' or 'ja'.
 function initialLanguage(){
   let saved = null;
-  try { saved = localStorage.getItem(LANGUAGE_KEY); } catch(e) { saved = null; }
+  try { saved = localStorage.getItem(LANGUAGE_KEY); } catch { saved = null; }
   if(LANGUAGES.indexOf(saved) >= 0){ return saved; }
   const nav = String(window.navigator.language || 'en').split('-')[0];
   return (LANGUAGES.indexOf(nav) >= 0) ? nav : 'en';
@@ -64,9 +64,7 @@ const msgs = {
   input_species   :{ en: "Input species (separate with ',' , '，' or '、')", ja: "種名を入力 (「,」「，」「、」区切り)" },
   update_pl       :{ en: "Update plot and layer"                      , ja: "地点・階層を更新"                 },
   add_species_to  :{ en: "Add species to"                             , ja: "種を追加"                         },
-  add_from_comp   :{ en: "Add from Composition"                       , ja: "組成から追加"                     },
   plot_label      :{ en: "PLOT"                                       , ja: "地点"                             },
-  layer_label     :{ en: "Layer:"                                     , ja: "階層:"                            },
   confirm_del_sl  :{ en: "Sure to DELETE %s"                          , ja: "%s を削除します．よろしいですか？"},
 
   // Flora search
@@ -102,7 +100,6 @@ const msgs = {
   add_rows        :{ en: "Add row(s)"                                 , ja: "行を追加"                         },
   hide_table      :{ en: "Hide table"                                 , ja: "表を非表示"                       },
   show_table      :{ en: "Show table"                                 , ja: "表を表示"                         },
-  new_occ_table   :{ en: "New occ table"                              , ja: "occ 表を新規作成"                 },
   fit_width       :{ en: "Fit width"                                  , ja: "幅を狭く"                         },
   extend_width    :{ en: "Extend width"                               , ja: "横長に"                           },
   search_text     :{ en: "Search text"                                , ja: "文字列検索"                       },
@@ -194,7 +191,7 @@ function changeLanguage(obj){
   const lang = obj.value;
   if(LANGUAGES.indexOf(lang) < 0){ return void 0; }
   currentLanguage = lang;
-  try { localStorage.setItem(LANGUAGE_KEY, lang); } catch(e) { }
+  try { localStorage.setItem(LANGUAGE_KEY, lang); } catch { }
   applyLanguage();
 }
 

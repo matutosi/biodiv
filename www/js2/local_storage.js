@@ -28,8 +28,6 @@ function getSLinLS(ns='base'){
     return localStorage['biss_sl-' + ns].split(',');
   }
 }
-// Remove every stored species list.
-function removeSLinLSAll(){ removeSLinLS('all_remove'); }
 // Remove the species list of a name space ('all_remove' for all of them).
 function removeSLinLS(ns='base'){
   if(ns === 'all_remove'){

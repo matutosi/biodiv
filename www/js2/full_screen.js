@@ -1,7 +1,6 @@
 // Switch full screen mode
 // https://gray-code.com/javascript/display-the-page-in-full-screen/
 function switchScreenShow(id){
-  const button = document.getElementById(id);
   if( checkFullScreen() ) {
     document.exitFullscreen(); 
   //     button.setAttribute("value", "FULL-SCRN");

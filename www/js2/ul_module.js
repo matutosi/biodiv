@@ -23,21 +23,6 @@ function getSpeciesInComposition(sp = 'Species'){
   removeEmptyInArray(species);
   return species;
 }
-// Add every species of the composition table to the species list of the clicked module.
-function addComp(obj, sp = 'Species'){
-  // var sp = 'Species';
-  const ns = getSlNs(obj.id);
-  const id = 'sp_list_sp_list-'+ ns;
-  const species = getSpeciesInComposition();
-  // console.log(sp_list);
-  addSpeciesList(id, species);
-}
-
-// Create the button that calls addComp().
-function createAddCompButton(id){
-  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('add_from_comp'), 'data-msg': 'add_from_comp', onclick: 'addComp(this)'} });
-}
-
 // Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out.
 function createSpecieUlModule({ species, ns,
                                 show_select_button     , show_comp_checkbox, show_delete_list, 
@@ -288,18 +273,6 @@ function createSelectPlot(id){
   span.appendChild(plot_select)
   return span;
 }
-// Create the Layer pull down, from the layers the occurrence tables offer.
-function createSelectLayer(id){
-  const span = crEl({ el:'span' });
-  span.appendChild( msgSpan('layer_label') );
-  const tables = document.querySelectorAll("table[id^='input_occ']");
-  const ly = 'Layer';
-  // console.log(getMultiTableOptions(tables, [ly]));
-  const layer_list = uniq(getMultiTableOptions(tables, [ly])[ly]);
-  const layer_select = createSelectOpt(layer_list, layer_list.length - 1, id);
-  span.appendChild(layer_select)
-  return span;
-}
 // Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given.
 function updatePlotLayer({ obj }){
   const nss = (obj === void 0) ? ['all', 'flora'] : [getSlNs(obj.id)];
@@ -321,7 +294,6 @@ function replaceSelectPlot(id){
 function replaceSelectLayer(id){
   // console.log(id);
   const old_layer = document.getElementById(id);
-  //   var new_layer = createSelectLayer(id);
   const new_layer = createSelectOptions(id);
   old_layer.replaceWith(new_layer);
 }
@@ -350,18 +322,6 @@ function createSelectOptions(id){
 // Add species
 function createSLAdd(id){
   return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } });
-}
-// Add species to a list, keeping it unique and sorted.
-function addSpeciesList(id, add_sp){
-  const old_sp_list = document.getElementById(id);
-  // console.log(id);
-  let old_sp = getGrandChildrenValues( old_sp_list );
-  if(old_sp === void 0){ old_sp = []; }
-  const new_sp = uniq(old_sp.concat(add_sp)).sort();
-  //   if(new_sp.indexOf('') >= 0){ new_sp.splice(new_sp.indexOf(''), 1); }  // remove ''
-  removeEmptyInArray(new_sp);
-  const new_sp_list = createSpecieList(id, new_sp);
-  old_sp_list.replaceWith(new_sp_list);
 }
 // Move a species to the staged row and grey out its button.
 function stageSpecies(obj){
@@ -449,17 +409,6 @@ function getChildrenValues(element){
   const values = [];
   for(const child of element.children){
     values.push(child.value);
-  }
-  return values;
-}
-
-// The values of the grandchildren of an element (the buttons in the li of a ul).
-function getGrandChildrenValues(element){
-  const values = [];
-  for(const child of element.children){
-    for(const ch of child.children){
-      values.push(ch.value);
-    }
   }
   return values;
 }

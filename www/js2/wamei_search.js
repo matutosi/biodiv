@@ -25,7 +25,6 @@ function createSearchFloraButton(name){
 
 // Search the flora for the input text and show the hits as species buttons.
 function searchFlora(obj){
-  const parent    = obj.parentNode;
   const input     = document.getElementById('flora_input').value;
   let species;    // declared here: both branches and the code below share it
   if(input === ''){
