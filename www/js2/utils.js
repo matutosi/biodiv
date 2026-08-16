@@ -7,11 +7,11 @@
 //    var header = true;
 //    var array = table2array(id_table, header);
 function table2array(id_table, header = true){
-  var table = document.getElementById(id_table);
-  var array = [];
+  const table = document.getElementById(id_table);
+  const array = [];
   for(let i=0; i<table.rows.length; i++){
-    var row = table.rows[i];
-    var array_row = [];
+    const row = table.rows[i];
+    const array_row = [];
     for(let j=0; j<row.cells.length; j++){
       array_row.push(row.cells[j].innerHTML);
     }
@@ -40,7 +40,7 @@ function table2array(id_table, header = true){
 //    var header = true;
 //    saveArrayToCsv(array, filename, sep, header);
 function saveArrayToTsv(array, filename, sep = '\t', header = true){
-  var csv = ''; 
+  let csv = ''; 
   if(header){
     csv += array[0].join(sep) + '\n';
     array = array.slice(1);
@@ -48,9 +48,9 @@ function saveArrayToTsv(array, filename, sep = '\t', header = true){
   for(let i=0; i<array.length; i++){
     csv += array[i].join(sep) + '\n';
   }
-  var blob = new Blob([csv], {type: 'text/csv'});
-  var url = window.URL.createObjectURL(blob);
-  var a = document.createElement('a');
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
   a.href = url;
   a.download = filename;
   a.click();
@@ -70,7 +70,7 @@ function saveArrayToTsv(array, filename, sep = '\t', header = true){
 //    console.log(randSample(3, array, false));
 //    console.log(randSample(6, array, false));
 function randInt(n, max){ 
-  var sample = [];
+  const sample = [];
   for(let i=0; i<n; i++){
     sample.push(Math.floor(Math.random() * max));
   }
@@ -78,10 +78,10 @@ function randInt(n, max){
 }
 // Take n random elements from an array (only_once: never take the same one twice).
 function randSample(n, array, only_once = false){
-  var sample = [];
+  const sample = [];
   if(only_once){
-    var array_copy = Object.assign([], array);
-    var m = Math.min(n, array_copy.length);
+    const array_copy = Object.assign([], array);
+    const m = Math.min(n, array_copy.length);
     for(let i=0; i<m; i++){
       const index = randInt(1, array_copy.length);
       sample.push(array_copy.splice(index, 1)[0]);
@@ -110,8 +110,8 @@ function randSort(array){
 //    @reference
 //      look ahead: https://www-creators.com/archives/5332
 function makeLookAheadReg(input){
-  var look_ahead = "^(?=.*" + input.replaceAll(" ", ")(?=.*") + ").*$";
-  var reg_ex = new RegExp(look_ahead, 'i');  // i: case-insensitive
+  const look_ahead = "^(?=.*" + input.replaceAll(" ", ")(?=.*") + ").*$";
+  const reg_ex = new RegExp(look_ahead, 'i');  // i: case-insensitive
   return reg_ex;
 }
 
@@ -122,7 +122,7 @@ function makeLookAheadReg(input){
 //  // 'plot-table'
 //  
 function NS(namespace){
-  var f = function f(id){
+  const f = function f(id){
     return namespace + '-' + id;
   }
   return f;
@@ -135,9 +135,9 @@ function NS(namespace){
 //    hash2table(hasy_array);
 //    
 function hash2table(hash_array){
-  var table = document.createElement('table');
+  const table = document.createElement('table');
   for(let i = 0; i < Object.keys(hash_array).length; i++){
-    var tr = document.createElement('tr');
+    const tr = document.createElement('tr');
     tr.appendChild( crEl({ el: 'td', tc: Object.keys(hash_array)[i] }) );
     tr.appendChild( crEl({ el: 'td', ih: Object.values(hash_array)[i] }) );
     table.appendChild(tr);
@@ -186,8 +186,8 @@ function searchParentTable(obj, index = 0){
 //    for(let td of tds                 ){ console.log(getCellData(td)) }
 function getColData(table, c_name, list_with_index = false){
   const col_no = getColNames(table).indexOf(c_name);
-  var group_value = [];
-  var n_row = nRow(table) - 2; // 2: th and hide row
+  const group_value = [];
+  const n_row = nRow(table) - 2; // 2: th and hide row
   if(col_no < 0){
     for(let i=0; i<n_row; i++){ group_value.push(''); }
     return group_value;
@@ -228,8 +228,8 @@ function getCellData(td, list_with_index = false){
 // Get options in select tag in a cell
 //    Return string array.
 function getSelectOptionInCell(select){
-  var select_opt = [];
-  var opts = select.children;
+  const select_opt = [];
+  const opts = select.children;
   for(let i = 0; i < opts.length; i++){ select_opt.push(opts[i].value); }
   return select_opt;
 }
@@ -245,7 +245,7 @@ function getSelectOptionInCell(select){
 //    // [a: [1,3], b: [2,4]]
 function splitByGroup(array, group){
   if(array.length !== group.length){ return array; }
-  var grouped = [];
+  const grouped = [];
   for(let i=0; i < array.length; i++){ grouped[group[i]] = []; }
   for(let i=0; i < array.length; i++){
     grouped[group[i]].push(array[i]);
@@ -300,9 +300,9 @@ function splitByGroup(array, group){
 
 // Helper for getDataType()
 function getDataTypes(table){
-  var types = [];
+  const types = [];
   const rows = table.querySelectorAll("tr:not([class=hide_button])"); // remove tr with hide buttons
-  for(let cell of rows[1].cells){                                    // 1: first data row (0: colnames)
+  for(const cell of rows[1].cells){                                    // 1: first data row (0: colnames)
     types.push(getDataTypeCell(cell));
   }
   return types;
@@ -331,7 +331,7 @@ function getColNames(table){
 
 // Get time like 2022_05_18_15_51_28: yyyy-mm-dd-hh-mm-ss
 function getNow(){
-   var now = new Date();
+   const now = new Date();
    const yr  = now.getFullYear();
    const mo  = String(now.getMonth()+1).padStart(2, `0`); // getMonth() return 0 when January
    const dd  = String(now.getDate()).padStart(2, `0`);
@@ -345,9 +345,9 @@ function getNow(){
 //   When the raw is the only one row in a table, the row will not be deleted.
 //   @param  obj An element of input button of a row in a table.
 function delRow(obj){
-    var table = obj.parentNode.parentNode.parentNode; // clicked table
+    const table = obj.parentNode.parentNode.parentNode; // clicked table
     if(table.rows.length > 3){                        // delete more than 3 rows (th + tb * 2)
-      var tr = obj.parentNode.parentNode;             // clicked row
+      const tr = obj.parentNode.parentNode;             // clicked row
       tr.parentNode.deleteRow(tr.sectionRowIndex);    // delete clicked row
     }
 }
@@ -361,10 +361,10 @@ function delRow(obj){
 //   @examples 
 //   crEl({ el: 'p', ats: {id: "id_test", class: "some_class"}, ih: "test" });
 function crEl({ el, ats, ih, tc }){
-  var ele = document.createElement(el);
+  const ele = document.createElement(el);
   if(ats != void 0){
-    var keys  = Object.keys(ats);
-    for(let key of keys){ ele.setAttribute(key, ats[key]); }
+    const keys  = Object.keys(ats);
+    for(const key of keys){ ele.setAttribute(key, ats[key]); }
   }
   if(ih != void 0){ ele.innerHTML   = ih; }
   if(tc != void 0){ ele.textContent = tc; }
@@ -376,7 +376,7 @@ function crEl({ el, ats, ih, tc }){
 //   that is not generated by JavaScript.
 //   saveHTML() save the generated html file as it is.
 function saveHTML(obj){
-  var doc = document.documentElement.outerHTML;
+  const doc = document.documentElement.outerHTML;
   downloadStrings(doc, "biodiv.html")
 }
 
@@ -393,7 +393,7 @@ function removeEmptyInArray(array){
 }
 // Every index at which an element appears in an array.
 function multiIndexOf(array, element){
-  var indices = [];
+  const indices = [];
   let idx = array.indexOf(element);
   while (idx !== -1) {
     indices.push(idx);

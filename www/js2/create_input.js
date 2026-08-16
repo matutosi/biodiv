@@ -5,9 +5,9 @@
 //    createInput({ type: "text", value: "Val"});
 //    createInput({ type: "button", value: "Push here"});
 function createInput( ...args ){
-  var input = document.createElement('input');
-  var keys  = Object.keys(args[0]);
-  for(let key of keys){
+  const input = document.createElement('input');
+  const keys  = Object.keys(args[0]);
+  for(const key of keys){
     input.setAttribute(key, args[0][key]);
   }
   return input;
@@ -45,8 +45,8 @@ function createFileButton(){
 //   switched by the language select. Hide it and open it from a normal
 //   button so that the visible label goes through msg().
 function createFileInput({ id = '', accept = '', onchange = '' } = {}){
-  var span = crEl({ el:'span' });
-  var ats  = { type: "file", onchange: onchange, style: "display:none" };
+  const span = crEl({ el:'span' });
+  const ats  = { type: "file", onchange: onchange, style: "display:none" };
   if(id     !== ''){ ats.id     = id;     }
   if(accept !== ''){ ats.accept = accept; }
   span.appendChild( createInput({ type: "button", value: msg('choose_file'),

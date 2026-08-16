@@ -1,7 +1,7 @@
 // Open the manual of the current language.
 function showManual(){
-  var base = "https://github.com/matutosi/biodiv/blob/main/man/01-howtouse";
-  var suffix = (currentLanguage === 'ja') ? "_jp.md" : "_en.md";
+  const base = "https://github.com/matutosi/biodiv/blob/main/man/01-howtouse";
+  const suffix = (currentLanguage === 'ja') ? "_jp.md" : "_en.md";
   window.open(base + suffix);
 }
 
@@ -19,9 +19,9 @@ function showExample(obj){
   addInputTab({ obj:document.getElementById('add_tab'), id:'biss02' });
 
   // sample occ
-  var tb_1 = document.getElementById('input_occ_biss01_tb');
-  var tb_2 = document.getElementById('input_occ_biss02_tb');
-  let layers     = ['T1','T2','S1','S2','H'];
+  const tb_1 = document.getElementById('input_occ_biss01_tb');
+  const tb_2 = document.getElementById('input_occ_biss02_tb');
+  const layers     = ['T1','T2','S1','S2','H'];
     // Identified species
   let species    = ['sp01','sp02', 'sp03','sp04','sp05','sp06','sp07','sp08','sp09'];
   let identified = ['checked'];
@@ -38,12 +38,12 @@ function showExample(obj){
   for(let i = 1; i < 5; i++){ tb_2.rows[2].cells[1].firstChild.click(); }
 
   // update "all inputs tables" and "input species list"
-  var sp_nara   = grepArray(flora, /ナラ/);
-  var sp_buna   = grepArray(flora, /ブナ/);
-  var sp_kusu   = grepArray(flora, /クス/);
-  var sp_tabu   = grepArray(flora, /タブ/);
-  var sp_kaya   = grepArray(flora, /カヤ/);
-  var sp_susuki = grepArray(flora, /ススキ/);
+  const sp_nara   = grepArray(flora, /ナラ/);
+  const sp_buna   = grepArray(flora, /ブナ/);
+  const sp_kusu   = grepArray(flora, /クス/);
+  const sp_tabu   = grepArray(flora, /タブ/);
+  const sp_kaya   = grepArray(flora, /カヤ/);
+  const sp_susuki = grepArray(flora, /ススキ/);
   addSLinLS(sp_nara  , 'nara');
   addSLinLS(sp_buna  , 'buna');
   addSLinLS(sp_kusu  , 'kusu');
@@ -61,11 +61,11 @@ function showExample(obj){
 
 // Add n random occurrence rows to a plot table.
 function addSampleOcc(plot, n ,layers, species, identified){
-  var ly = randSample(n, layers,  false);
-  var sp = randSample(n, species, false);
-  var cv = randInt(n-1, 100).concat(['']);
+  const ly = randSample(n, layers,  false);
+  const sp = randSample(n, species, false);
+  let cv = randInt(n-1, 100).concat(['']);
   cv = randSort(cv);
-  var id = randSample(n, identified, false);
+  const id = randSample(n, identified, false);
   for(let i = 0; i<n; i++){
     addRowWithValues({ table: plot, values:{ Layer: ly[i], Species:sp[i], Cover:cv[i], Identified: id[i] } }); 
   }

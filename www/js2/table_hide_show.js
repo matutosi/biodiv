@@ -6,7 +6,7 @@
 //    @param obj  A input element.
 //                  Normally use "this". 
 function showAllCols(obj){
-  var table = searchParentTable(obj);
+  const table = searchParentTable(obj);
   for(let Ci = 0; Ci < table.rows[0].cells.length; Ci++){
     for(let Rj = 0; Rj < table.rows.length; Rj++){
       table.rows[Rj].cells[Ci].style.display = '';
@@ -17,14 +17,14 @@ function showAllCols(obj){
 // Hide the column of the clicked button, and add a button that brings it back.
 function hideTableCol(obj){
   // console.log(obj.parentNode.parentNode.parentNode);
-  var table = searchParentTable(obj);
-  var c_no = obj.parentElement.cellIndex;
-  var c_name = table.rows[0].cells[c_no].innerText;
+  const table = searchParentTable(obj);
+  const c_no = obj.parentElement.cellIndex;
+  const c_name = table.rows[0].cells[c_no].innerText;
   // console.log(c_name);
   for(let Rj = 0; Rj < table.rows.length; Rj++){
     table.rows[Rj].cells[c_no].style.display = 'none';
   }
-  var span = table.previousElementSibling.lastChild;
+  const span = table.previousElementSibling.lastChild;
   // console.log(span);
   // tc: "Show "
   if(span.children.length === 0){
@@ -37,9 +37,9 @@ function hideTableCol(obj){
 // Show the column named on the clicked button, then drop that button.
 function showCol(obj){
   // show col
-  var c_name = obj.value;
-  var table = searchParentTable(obj);
-  var c_no = getColNames(table).indexOf(c_name);
+  const c_name = obj.value;
+  const table = searchParentTable(obj);
+  const c_no = getColNames(table).indexOf(c_name);
   for(let Rj = 0; Rj < table.rows.length; Rj++){
       table.rows[Rj].cells[c_no].style.display = '';
   }
@@ -51,9 +51,9 @@ function showCol(obj){
 function hideShowNext(obj){
   // console.log(obj);
   // console.log(obj.parentNode.nextElementSibling);
-  var span   = obj.nextElementSibling.nextElementSibling;
-  var next   = obj.parentNode.nextElementSibling;
-  var next_2 = obj.parentNode.nextElementSibling.nextElementSibling;
+  const span   = obj.nextElementSibling.nextElementSibling;
+  const next   = obj.parentNode.nextElementSibling;
+  const next_2 = obj.parentNode.nextElementSibling.nextElementSibling;
   if(next.style.display === 'none'){
     span.style.display = '';
     next.style.display = '';

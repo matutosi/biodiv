@@ -15,7 +15,7 @@ function createTd(col_name, data_type, select, table_data){
       td = createTdWithChild( crEl({ el:'input', ats:{type: data_type, value: table_data, size: select} }) );
       break;
     case "number":
-      td = createTdWithChild(
+      td = createTdWithChild( 
         crEl({ el:'input', ats:{type: data_type, value: "", inputmode: "numeric", min: "0", step: select} }) );
       break;
     case "checkbox":
@@ -40,10 +40,10 @@ function createTd(col_name, data_type, select, table_data){
 
 // Add the header row (th) built from the column names.
 function addThTr(table, col_names){
-  var tr = document.createElement('tr');
+  const tr = document.createElement('tr');
   for(let Ni = 0; Ni < col_names.length; Ni++){
     if(col_names[Ni] !== ""){
-      var th = crEl({ el: 'th', ih: col_names[Ni] });
+      const th = crEl({ el: 'th', ih: col_names[Ni] });
       tr.appendChild(th);
     }
   }
@@ -62,9 +62,9 @@ function nCol(table){
 
 // Add the second row, which holds a hide button for every column.
 function addHideRowTr(table){
-  var tr = crEl({ el: 'tr', ats: {class: 'hide_button'} });
+  const tr = crEl({ el: 'tr', ats: {class: 'hide_button'} });
   for(let i = 0; i < nCol(table); i++){
-    var td = crEl({ el: 'td', ih: "" });
+    const td = crEl({ el: 'td', ih: "" });
     td.appendChild( createHideTableColButton() );
     tr.appendChild(td);
   }
@@ -82,9 +82,9 @@ function createHideTableColButton(){
 function createSelectOpt(list, selected_no = 0, id = ''){
   const n_list = list.length;
   //   var select = document.createElement('select');
-  var select = crEl({ el:'select', ats:{id: id} });
+  const select = crEl({ el:'select', ats:{id: id} });
   for(let j = 0; j < n_list; j++){
-    var option = document.createElement('option');
+    const option = document.createElement('option');
     if(selected_no === j){ option.setAttribute('selected', 'true'); }
     option.innerHTML = list[j];
     select.appendChild(option);
@@ -104,15 +104,15 @@ function createSelectOpt(list, selected_no = 0, id = ''){
 //                            t_data : Table data for making td values or innnerHTML.
 function getTableData(table){
   // var table = document.getElementById("setting_plot_tb");
-  var c_names = getColNames(table);
-  var d_types = getDataTypes(table);
+  const c_names = getColNames(table);
+  const d_types = getDataTypes(table);
   // getInputs
-  var t_data = [];
-  for(let name of c_names){
+  const t_data = [];
+  for(const name of c_names){
     t_data[name] = getColData(table, name);
   }
-  var selects = [];
-  for(var i = 0; i < d_types.length; i++){ 
+  const selects = [];
+  for(let i = 0; i < d_types.length; i++){ 
     selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]): '');
   }
   return{
@@ -129,11 +129,11 @@ function getTableData(table){
 //   @param table_name  A string. The id of the table.
 //   @return  A table element.
 function makeTableJO(table_data, table_name){
-  var col_names = table_data.biss_c_names;
-  var dat_types = table_data.biss_d_types;
-  var selects   = table_data.biss_selects;
-  var inputs    = table_data.biss_inputs ;
-  var table = crEl({ el: 'table', ats:{id: table_name} });
+  const col_names = table_data.biss_c_names;
+  const dat_types = table_data.biss_d_types;
+  const selects   = table_data.biss_selects;
+  const inputs    = table_data.biss_inputs ;
+  let table = crEl({ el: 'table', ats:{id: table_name} });
   table = addThTr(table, col_names);                                    // tr with th (col names)
   table = addHideRowTr(table);                                          // tr with hide buttons
   table = addTableData(table, col_names, dat_types, selects, inputs);   // table data
@@ -143,7 +143,7 @@ function makeTableJO(table_data, table_name){
 // Add one tr per record, filling each td through createTd().
 function addTableData(table, col_names, dat_types, selects, inputs){
   for(let Ri = 0; Ri < inputs[col_names[0]].length; Ri++){
-    var tr = document.createElement('tr');
+    const tr = document.createElement('tr');
     for(let Cj = 0; Cj < nCol(table); Cj++){
       if(col_names[Cj] !== ""){
         tr.appendChild( createTd(col_names[Cj], dat_types[Cj], uniq(selects[Cj]), inputs[col_names[Cj]][Ri]) );
@@ -157,12 +157,12 @@ function addTableData(table, col_names, dat_types, selects, inputs){
 // Turn a settings table (item, type, value per row) into a table definition, where the items become the column names.
 function convertTableData(table_data){
   // var table_data = temp1;
-  var c_names = table_data['biss_inputs']['item'];
-  var d_types = table_data['biss_inputs']['type'];
-  var selects = [];
-  var inputs  = [];
-  for(var i = 0; i < d_types.length; i++){
-    var inputs_value = table_data['biss_inputs']['value'][i];
+  const c_names = table_data['biss_inputs']['item'];
+  const d_types = table_data['biss_inputs']['type'];
+  const selects = [];
+  const inputs  = [];
+  for(let i = 0; i < d_types.length; i++){
+    const inputs_value = table_data['biss_inputs']['value'][i];
     selects.push( (d_types[i] === 'list' ) ? inputs_value.split(':') : inputs_value );
     inputs[c_names[i]] = [ /fixed|checkbox/.test(d_types[i]) ? inputs_value : '' ];
   }

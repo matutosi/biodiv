@@ -33,8 +33,8 @@ function removeSLinLSAll(){ removeSLinLS('all_remove'); }
 // Remove the species list of a name space ('all_remove' for all of them).
 function removeSLinLS(ns='base'){
   if(ns === 'all_remove'){
-    var keys = getKeysOfSLinLS();
-    for(let key of keys){ localStorage.removeItem(key); }
+    const keys = getKeysOfSLinLS();
+    for(const key of keys){ localStorage.removeItem(key); }
   }else{
     localStorage.removeItem('biss_sl-' + ns);
   }
@@ -45,14 +45,14 @@ function getLSKeys(){
 }
 // The localStorage keys that hold a species list.
 function getKeysOfSLinLS(){
-  var keys = getLSKeys();
+  const keys = getLSKeys();
   // var keys = ['biss_sl-2', 'biss_sl-1', 'bis_sl-1', 'abiss_sl-1'];
   return grepArray(keys, /^biss_sl-/);
 }
 // The elements of an array that match a regular expression.
 function grepArray(array, regex){
-  var matched = [];
-  for(let a of array){
+  const matched = [];
+  for(const a of array){
     if(regex.test(a)){
       matched.push(a);
     }
@@ -61,8 +61,8 @@ function grepArray(array, regex){
 }
 // Replace a string in every element of an array.
 function replaceArrayAll(array, search, replace){
-  var replaced = [];
-  for(let a of array){
+  const replaced = [];
+  for(const a of array){
     replaced.push(a.replaceAll(search, replace));
   }
   return replaced;

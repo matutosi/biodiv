@@ -21,23 +21,23 @@
 //   them), and makeTableJO() rebuilds the buttons from the column name, not
 //   from the saved value.
 
-var LANGUAGES    = ['en', 'ja'];
-var LANGUAGE_KEY = 'biss_language';
-var currentLanguage = initialLanguage();
+const LANGUAGES    = ['en', 'ja'];
+const LANGUAGE_KEY = 'biss_language';
+let currentLanguage = initialLanguage();
 
 // Language to start with: the one chosen last time, else the browser's.
 //    @return  A string, 'en' or 'ja'.
 function initialLanguage(){
-  var saved = null;
+  let saved = null;
   try { saved = localStorage.getItem(LANGUAGE_KEY); } catch(e) { saved = null; }
   if(LANGUAGES.indexOf(saved) >= 0){ return saved; }
-  var nav = String(window.navigator.language || 'en').split('-')[0];
+  const nav = String(window.navigator.language || 'en').split('-')[0];
   return (LANGUAGES.indexOf(nav) >= 0) ? nav : 'en';
 }
 
 // Messages in each language.
 //   A message may contain HTML tags and "%s", which msgF() replaces.
-var msgs = {
+const msgs = {
   // Header
   save_input      :{ en: "Save input data"                            , ja: "入力データを保存"                 },
   small           :{ en: "small"                                      , ja: "文字：小"                         },
@@ -128,9 +128,9 @@ var msgs = {
 //    @param key  A string, a key of msgs.
 //    @return     A string.
 function msg(key){
-  var m = msgs[key];
+  const m = msgs[key];
   if(m === void 0){ return key; }
-  var text = m[currentLanguage];
+  let text = m[currentLanguage];
   if(text === void 0 || text === ''){ text = m.en; }
   return text;
 }
@@ -142,8 +142,8 @@ function msg(key){
 //    @examples
 //    msgF('search_name', 'wamei');
 function msgF(key, ...args){
-  var text = msg(key);
-  for(let arg of args){ text = text.replace('%s', arg); }
+  let text = msg(key);
+  for(const arg of args){ text = text.replace('%s', arg); }
   return text;
 }
 
@@ -152,7 +152,7 @@ function msgF(key, ...args){
 //    @param args  Values to embed into "%s".
 //    @return      A span element.
 function msgSpan(key, ...args){
-  var ats = { 'data-msg': key };
+  const ats = { 'data-msg': key };
   if(args.length > 0){ ats['data-msg-args'] = JSON.stringify(args); }
   return crEl({ el: 'span', ih: msgF(key, ...args), ats: ats });
 }
@@ -170,18 +170,18 @@ function setMsg(el, key, ...args){
 
 // Helper for applyLanguage() and setMsg().
 function applyMsgToElement(el){
-  var args = el.getAttribute('data-msg-args');
+  let args = el.getAttribute('data-msg-args');
   args = (args === null) ? [] : JSON.parse(args);
-  var text = msgF(el.getAttribute('data-msg'), ...args);
+  const text = msgF(el.getAttribute('data-msg'), ...args);
   if(el.tagName === 'INPUT'){ el.value = text; } else { el.innerHTML = text; }
 }
 
 // Re-label every element that has a message key.
 function applyLanguage(){
-  for(let el of document.querySelectorAll('[data-msg]')){
+  for(const el of document.querySelectorAll('[data-msg]')){
     applyMsgToElement(el);
   }
-  for(let el of document.querySelectorAll('[data-msg-ph]')){
+  for(const el of document.querySelectorAll('[data-msg-ph]')){
     el.setAttribute('placeholder', msg(el.getAttribute('data-msg-ph')));
   }
   document.documentElement.setAttribute('lang', currentLanguage);
@@ -191,7 +191,7 @@ function applyLanguage(){
 //   @param obj  A select element.
 //                 Normally use "this".
 function changeLanguage(obj){
-  var lang = obj.value;
+  const lang = obj.value;
   if(LANGUAGES.indexOf(lang) < 0){ return void 0; }
   currentLanguage = lang;
   try { localStorage.setItem(LANGUAGE_KEY, lang); } catch(e) { }
@@ -201,7 +201,7 @@ function changeLanguage(obj){
 // Set the language select and label the page.
 //   Call once, after the page is built.
 function initLanguage(){
-  var select = document.getElementById('select_language');
+  const select = document.getElementById('select_language');
   if(select !== null){ setSelectOption(select, currentLanguage); }
   applyLanguage();
 }

@@ -4,14 +4,14 @@ function addRowWithValues({ table, values }){
   // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species';
   // var table = document.getElementById('full_plot_tb'); var key = "item"; value = "new_val";
   addRow(table);
-  var c_names = getColNames(table);
-  var keys = Object.keys(values);
-  var row_no   = table.rows.length - 1;
-  for(let key of keys){
-    var col_no = c_names.indexOf(key);
+  const c_names = getColNames(table);
+  const keys = Object.keys(values);
+  const row_no   = table.rows.length - 1;
+  for(const key of keys){
+    const col_no = c_names.indexOf(key);
     if(col_no < 0) continue;
-    var td = table.rows[row_no].cells[col_no];
-    var value = (values[key] === void 0) ? '' : values[key];
+    const td = table.rows[row_no].cells[col_no];
+    const value = (values[key] === void 0) ? '' : values[key];
   // console.log(c_names);
   // console.log(td);
   // console.log(values);
@@ -51,9 +51,9 @@ function addRowWithValues({ table, values }){
 function addRows(obj){
   // console.log(obj);
   //   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
-  var n_row = obj.previousElementSibling.value;
-  var table_id = obj.id.replace('add_rows', 'tb');
-  var table = document.getElementById(table_id);
+  const n_row = obj.previousElementSibling.value;
+  const table_id = obj.id.replace('add_rows', 'tb');
+  const table = document.getElementById(table_id);
   for(let i = 0; i < n_row; i++){ addRow(table); }
 }
 
@@ -67,8 +67,8 @@ function addRow(table){
   const col_names = getColNames(table);
   const n_col = col_names.length;
   const n_row = table.rows.length;
-  var last_row = table.rows[n_row - 1];  // to get selectedIndex
-  var next_row = table.rows[n_row - 1].cloneNode(true);
+  const last_row = table.rows[n_row - 1];  // to get selectedIndex
+  const next_row = table.rows[n_row - 1].cloneNode(true);
   for(let Ci = 0; Ci < n_col; Ci++){
     switch(col_names[Ci]){
       case "DATE":  // update "DATE"
@@ -87,7 +87,7 @@ function addRow(table){
       case "DELETE":          // do nothing
         break;
       case "NO":             // no = max(no) + 1
-        var nos = getColData(table, col_names[Ci]);
+        const nos = getColData(table, col_names[Ci]);
         next_row.children[Ci].innerHTML = Math.max.apply(Math, string2Numeric(nos)) + 1;
         break;
       case "SameAs":        // clear

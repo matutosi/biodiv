@@ -4,13 +4,13 @@
 //    Chap04 Sec03 c4_3002.html
 
 // settings for GPS
-var watchId = 0;
-var positionOptions = {
+let watchId = 0;
+const positionOptions = {
   enableHighAccuracy: true,
   timeout: 60000,
   maximumAge: 0
 };
-var locations = {
+const locations = {
   lat: [],
   lon: [],
   acc: []

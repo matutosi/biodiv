@@ -15,8 +15,8 @@ function larger(){
   if(document.documentElement.style.getPropertyValue('--font-size') === ''){
     document.documentElement.style.setProperty('--font-size', '16px');
   }
-  var f_size = document.documentElement.style.getPropertyValue('--font-size');
-  var size = Number(f_size.replace('px', '')) * 1.2;
+  const f_size = document.documentElement.style.getPropertyValue('--font-size');
+  const size = Number(f_size.replace('px', '')) * 1.2;
   document.documentElement.style.setProperty('--font-size', size + 'px');
 }
 // Shrink the whole screen by 1/1.2, from the same '--font-size'.
@@ -24,7 +24,7 @@ function smaller(){
   if(document.documentElement.style.getPropertyValue('--font-size') === ''){
     document.documentElement.style.setProperty('--font-size', '16px');
   }
-  var f_size = document.documentElement.style.getPropertyValue('--font-size');
-  var size = Number(f_size.replace('px', '')) / 1.2;
+  const f_size = document.documentElement.style.getPropertyValue('--font-size');
+  const size = Number(f_size.replace('px', '')) / 1.2;
   document.documentElement.style.setProperty('--font-size', size + 'px');
 }

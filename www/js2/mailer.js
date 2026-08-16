@@ -3,7 +3,7 @@
 
 // Create the span with the mailer button and the address box.
 function createMailerSpan(){
-  var span = crEl({ el:'span', ats:{id: 'mailer'} });
+  const span = crEl({ el:'span', ats:{id: 'mailer'} });
   span.appendChild( createLaunchMailerButton()    );
   span.appendChild( createEmailInput()            );
   return span;
@@ -11,14 +11,14 @@ function createMailerSpan(){
 
 // Open the default mailer with the input data as the mail body.
 function launchMailer(){
-  var email_adress = document.getElementById('email_adress').value;
-  var check = /.+@.+\..+/;
+  const email_adress = document.getElementById('email_adress').value;
+  const check = /.+@.+\..+/;
   if( !check.test(email_adress) ){
     alert( msg('alert_email') );
     return void 0;
   }
-  var body = getAllPlotOccDataAsJSON();
-  var ref = 'mailto: '+ email_adress + '?subject=biss_' + getNow() + '&body=' + body;
+  const body = getAllPlotOccDataAsJSON();
+  const ref = 'mailto: '+ email_adress + '?subject=biss_' + getNow() + '&body=' + body;
   location.href = ref;
 }
 

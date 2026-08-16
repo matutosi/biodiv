@@ -9,19 +9,19 @@ function searchTableText(obj){
   // console.log(obj);
   // console.log(obj.value);
   // console.log(obj.parentNode.nextElementSibling);
-  var input = obj.value;
-  var reg_ex = new RegExp(input, 'i');  // i: case-insensitive
-  var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  const input = obj.value;
+  const reg_ex = new RegExp(input, 'i');  // i: case-insensitive
+  const table = obj.parentNode.parentNode.querySelectorAll("table")[0];
   // var table = document.getElementById('occ_all_tb');
-  var trs   = table.rows;
-  var data_types   = getDataTypes(table);
-  var is_shown_col = isShownCol(table);
-  var display_flag = [1,2];                // [1,2]: show th and hide button
+  const trs   = table.rows;
+  const data_types   = getDataTypes(table);
+  const is_shown_col = isShownCol(table);
+  const display_flag = [1,2];                // [1,2]: show th and hide button
   for(let Rj = 2; Rj < trs.length; Rj++){ display_flag[Rj] = 0; }
   for(let Ci = 0; Ci < data_types.length; Ci++){
     if((data_types[Ci] === "text" || data_types[Ci] === "fixed") && is_shown_col[Ci]){
       for(let Rj = 1; Rj < trs.length; Rj++){
-        var text = getCellData(trs[Rj].cells[Ci]);
+        const text = getCellData(trs[Rj].cells[Ci]);
         if(reg_ex.test(text)){ display_flag[Rj]++; }
       }
     }
@@ -37,8 +37,8 @@ function searchTableText(obj){
 //    @param table  A table element.
 //    @return       An array of logical, which has length of columns.
 function isShownCol(table){
-  var display_style_none = [];
-  var ths = table.rows[0].cells;
+  const display_style_none = [];
+  const ths = table.rows[0].cells;
   for(let i=0; i<ths.length; i++){
     display_style_none.push(!!!ths[i].getAttribute('style'));
   }
