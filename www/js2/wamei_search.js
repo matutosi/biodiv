@@ -58,7 +58,10 @@ function createReplaceFloraButton(){
 async function replaceFlora(obj){
   const name = obj.files[0].name.split("\.")[0];
   const text = await readFile(obj.files[0]);
-  flora = uniq(text.split('\n'));
+  // A list written on Windows ends its lines with \r\n. A name left holding
+  // the \r is never found again: makeLookAheadReg() builds ^(?=.*x).*$, and
+  // neither . nor $ goes past a \r. registerSL() drops it for the same reason.
+  flora = uniq(text.replaceAll('\r', '').split('\n'));
   removeEmptyInArray(flora);
   flora.sort();
 

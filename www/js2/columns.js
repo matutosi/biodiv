@@ -26,6 +26,12 @@ const COL = {
   // before the survey data is written, so they never reach a saved file.
   DELETE         : 'DELETE',
   UPDATE_TIME_GPS: 'UPDATE_TIME_GPS',
+
+  // The columns of a settings table, where one row describes one column of
+  // the input tables: its name, what may be typed in it, and the options.
+  ITEM : 'item',
+  TYPE : 'type',
+  VALUE: 'value',
 };
 
 // The columns that hold a button instead of data.

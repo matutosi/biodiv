@@ -13,14 +13,14 @@ function table2array(id_table, header = true){
     const row = table.rows[i];
     const array_row = [];
     for(let j=0; j<row.cells.length; j++){
-      array_row.push(row.cells[j].innerHTML);
+      array_row.push(row.cells[j].textContent);
     }
     array.push(array_row);
   }
   if(header){
     const header_row = [];
     for(let i=0; i<headerRow(table).cells.length; i++){
-      header_row.push(headerRow(table).cells[i].innerHTML);
+      header_row.push(headerRow(table).cells[i].textContent);
     }
     array.unshift(header_row);
   }
@@ -126,7 +126,7 @@ function hash2table(hash_array){
   for(let i = 0; i < Object.keys(hash_array).length; i++){
     const tr = document.createElement('tr');
     tr.appendChild( crEl({ el: 'td', tc: Object.keys(hash_array)[i] }) );
-    tr.appendChild( crEl({ el: 'td', ih: Object.values(hash_array)[i] }) );
+    tr.appendChild( crEl({ el: 'td', tc: Object.values(hash_array)[i] }) );
     table.appendChild(tr);
   }
   return table
@@ -172,18 +172,33 @@ function searchParentTable(obj, index = 0){
 //    for(let td of tds                 ){ console.log(getCellData(td, true)) }
 //    for(let td of tds                 ){ console.log(getCellData(td)) }
 function getColData(table, c_name, list_with_index = false){
-  const col_no = getColNames(table).indexOf(c_name);
-  const group_value = [];
-  const n_row = nDataRow(table);
-  if(col_no < 0){
-    for(let i=0; i<n_row; i++){ group_value.push(''); }
-    return group_value;
-  }
+  return getColsData(table, [c_name], list_with_index)[c_name];
+}
+
+// Get the data of several columns of a table, in one walk over the rows.
+//    getColData() looks the column names up and walks the table again for
+//    every column. Reading a whole table one column at a time therefore
+//    costs (columns x rows) walks; this costs one.
+//    A column the table does not have comes back as empty strings, as in
+//    getColData(), so that the columns of several tables can be lined up.
+//    @param table A table element.
+//    @param c_names A string array of column names.
+//    @param list_with_index A boolean, as in getColData().
+//    @return An object keyed by column name, holding an array per column.
+function getColsData(table, c_names, list_with_index = false){
+  const names = getColNames(table);
+  const col_no = c_names.map(c_name => names.indexOf(c_name));
+  const cols = {};   // keyed by column name
+  for(const c_name of c_names){ cols[c_name] = []; }
   const rows = table.querySelectorAll("tr:not([class=hide_button])");
   for(let Ri = 1; Ri < rows.length; Ri++){    // except th (rows[0])
-    group_value[Ri - 1] = getCellData(rows[Ri].cells[col_no], list_with_index)
+    const cells = rows[Ri].cells;
+    for(let Ci = 0; Ci < c_names.length; Ci++){
+      cols[c_names[Ci]].push(
+        (col_no[Ci] < 0) ? '' : getCellData(cells[col_no[Ci]], list_with_index));
+    }
   }
-  return group_value;
+  return cols;
 }
 
 // Get input value, list, or innerHTML cell data in a table.
@@ -197,7 +212,7 @@ function getCellData(td, list_with_index = false){
   if(td.firstChild === void 0){ return ''; }
   if(td.firstChild === null  ){ return ''; }
   if(td.firstChild.value === void 0){
-    return td.innerHTML;
+    return td.textContent;   // the text of the cell, not its markup
   }else{
     if(td.firstChild.type === 'checkbox'){
       return td.firstChild.checked;

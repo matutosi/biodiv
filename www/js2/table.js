@@ -4,9 +4,9 @@ function createTd(col_name, data_type, select, table_data){
   switch(data_type){
     case "auto": {  // date, no, GPS
       const auto = autoValue(col_name);
-      if(auto !== void 0        ) td = crEl({ el: 'td', ih: auto });
-      if(col_name === COL.NO    ) td = crEl({ el: 'td', ih: 1    });
-      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', ih: ''  });
+      if(auto !== void 0        ) td = crEl({ el: 'td', tc: auto });
+      if(col_name === COL.NO    ) td = crEl({ el: 'td', tc: 1    });
+      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', tc: ''  });
       break;
     }
     case "text":
@@ -22,17 +22,20 @@ function createTd(col_name, data_type, select, table_data){
       td.firstChild.checked = !!table_data;
       break;
     case "fixed":
-      td = crEl({ el:'td', ih: table_data });
+      // A cell holds data, not markup: textContent, so that a name with
+      // & or < is kept as typed and comes back the same (getCellData()).
+      td = crEl({ el:'td', tc: table_data });
       break;
     case "button":
       if(col_name === COL.DELETE)         { td = createTdWithChild( createDelButton() ); }
       if(col_name === COL.UPDATE_TIME_GPS){ td = createTdWithChild( createUpdateButton() ); }
       break;
-    case "list":
-      select.push('');
+    case "list": {
+      const options = select.concat('');   // concat, not push: the caller reuses the options
       // -1 (not among the options) picks the first one
-      td = createTdWithChild( createSelectOpt(select, Math.max(0, select.indexOf(table_data))) );
+      td = createTdWithChild( createSelectOpt(options, Math.max(0, options.indexOf(table_data))) );
       break;
+    }
   }
   return td;
 }
@@ -42,7 +45,7 @@ function addThTr(table, col_names){
   const tr = document.createElement('tr');
   for(let Ni = 0; Ni < col_names.length; Ni++){
     if(col_names[Ni] !== ""){
-      const th = crEl({ el: 'th', ih: col_names[Ni] });
+      const th = crEl({ el: 'th', tc: col_names[Ni] });
       tr.appendChild(th);
     }
   }
@@ -105,7 +108,7 @@ function createSelectOpt(list, selected_no = 0, id = ''){
   for(let j = 0; j < n_list; j++){
     const option = document.createElement('option');
     if(selected_no === j){ option.setAttribute('selected', 'true'); }
-    option.innerHTML = list[j];
+    option.textContent = list[j];
     select.appendChild(option);
   }
   return select;
@@ -124,10 +127,8 @@ function createSelectOpt(list, selected_no = 0, id = ''){
 function getTableData(table){
   const c_names = getColNames(table);
   const d_types = getDataTypes(table);
-  const inputs = {};   // an object, not an array: JSON.stringify() of an array
-  for(const name of c_names){   //   with string keys writes []
-    inputs[name] = getColData(table, name);
-  }
+  // an object, not an array: JSON.stringify() of an array with string keys writes []
+  const inputs = getColsData(table, c_names);
   const selects = [];
   for(let i = 0; i < d_types.length; i++){
     selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null);
@@ -138,6 +139,27 @@ function getTableData(table){
     biss_selects: selects,
     biss_inputs : inputs
   }
+}
+
+// Press the DELETE button of the row that holds a value in a column.
+//    Reaching a row by its number (tr:nth-child(7)) means a row added to
+//    data.js above it deletes something else instead. Say which row is meant.
+//    @param table   A table element.
+//    @param c_name  A string, the column to look in.
+//    @param value   A string, the value that names the row.
+//    @return        true when a row was deleted.
+function deleteRowByValue(table, c_name, value){
+  const c_names = getColNames(table);
+  const col_no = c_names.indexOf(c_name);
+  const del_no = c_names.indexOf(COL.DELETE);
+  if(col_no < 0 || del_no < 0){ return false; }
+  for(let Ri = ROW_FIRST_DATA; Ri < table.rows.length; Ri++){
+    if(getCellData(table.rows[Ri].cells[col_no]) === value){
+      table.rows[Ri].cells[del_no].firstChild.click();
+      return true;
+    }
+  }
+  return false;
 }
 
 // Build a table out of a table definition.
@@ -159,11 +181,17 @@ function makeTableJO(table_data, table_name){
 
 // Add one tr per record, filling each td through createTd().
 function addTableData(table, col_names, dat_types, selects, inputs){
-  for(let Ri = 0; Ri < inputs[col_names[0]].length; Ri++){
+  // What is the same for every record is worked out once: the number of
+  // columns (only rows are added below) and the options of each column.
+  const n_col = nCol(table);
+  const options = [];
+  for(let Cj = 0; Cj < n_col; Cj++){ options.push(uniq(selects[Cj])); }
+  const n_row = inputs[col_names[0]].length;
+  for(let Ri = 0; Ri < n_row; Ri++){
     const tr = document.createElement('tr');
-    for(let Cj = 0; Cj < nCol(table); Cj++){
+    for(let Cj = 0; Cj < n_col; Cj++){
       if(col_names[Cj] !== ""){
-        tr.appendChild( createTd(col_names[Cj], dat_types[Cj], uniq(selects[Cj]), inputs[col_names[Cj]][Ri]) );
+        tr.appendChild( createTd(col_names[Cj], dat_types[Cj], options[Cj], inputs[col_names[Cj]][Ri]) );
       }
     }
     table.appendChild(tr);

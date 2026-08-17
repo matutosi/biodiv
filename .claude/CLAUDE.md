@@ -139,11 +139,12 @@ git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見
 | `package.json`         | `npm run lint` / `npm test` の定義と devDependencies |
 | `eslint.config.js`     | ESLint の設定 (flat config) |
 | `test/biss.js`         | jsdom で `www/biodiv2.html` を組み立てる土台 |
-| `test/smoke.test.js`   | 回帰スモークテスト (16件) |
+| `test/smoke.test.js`   | 調査の流れと保存形式の回帰テスト (22件) |
+| `test/feature.test.js` | 周辺機能のテスト (10件．集計・GPS・自動保存・文字サイズ・メール・植物相) |
 | `requirements-dev.txt` | ブラウザテストの Python 依存 |
 | `pytest.ini`           | pytest の設定 |
 | `e2e/conftest.py`      | Playwright で実ブラウザに読み込ませる土台 |
-| `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (8件 × 2ページ) |
+| `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (12件 × 2ページ + 配布物のみ1件) |
 
 **テストは 2 段構え**．jsdom は速いので編集のたびに，Playwright は遅いので区切りで走らせる．
 
@@ -199,7 +200,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-17 04:29 (JST) 更新．
+2026-08-17 13:10 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -483,7 +484,69 @@ python -m venv .venv
   `man/01-howtouse_jp.md`・`_en.md` の該当箇所 (各2件) も合わせた．
   キー名 `include_comp` は変えていない．表示が変わっただけで，
   組成表から種名を集める仕組みそのものは同じため．
-  **`www/biss2.html` は未再ビルド**なので，配布物にはまだ反映されていない．
+- **課題 B (性能) を片づけた**．`updateAllInputsTables()` が **2.6 倍速くなった**．
+  同じ条件 (jsdom) で測り直した値．
+
+  | 地点 | occ 行数 | 前 | 後 |
+  | ---- | -------- | -- | -- |
+  | 4 | 116 | 67 ms | 33 ms |
+  | 8 | 232 | 171 ms | 70 ms |
+  | 8 | 432 | 337 ms | 129 ms |
+
+  (以前の記録 (346/598/709 ms) は別のマシンで測ったもの．前後の比が意味を持つ)
+  - **表は列ごとではなく1回の走査で読む**．`getColsData()` を `utils.js` に足し，
+    `getColData()` はその1列版になった．`getMultiTableInputs()` が
+    (表 × 列) ごとに `getColNames()` と `querySelectorAll()` をやり直していたのを，
+    表ごとに1回にした (27 ms → 10 ms)．`getTableData()` も同じ形にした．
+  - **行を作るループから，行ごとに変わらないものを追い出した** (`addTableData`)．
+    列数 `nCol(table)` と，列ごとの選択肢 `uniq(selects[Cj])` を先に1回だけ求める．
+    選択肢を使い回せるように，`createTd()` の list が `select.push('')` で
+    引数を壊すのをやめて `concat` にした．
+  - **いちばん効いたのは，セルの中身を innerHTML ではなく textContent で書くこと**
+    (194 ms → 55 ms)．HTML の解析器を通さなくなる．
+    これは同時に**実バグ (A8) の修正**でもある (下記)．
+- **実バグ A8 を直した．表示用の表を通すと `&` が `&amp;` になっていた**．
+  種名に `Rosa A & B` と入れると，「全地点」の表と**保存する TSV では `Rosa A &amp; B`**
+  になっていた (`ecan::read_biss()` が読むのはこの TSV)．
+  `<i>` のような文字列は，文字ではなく**タグとして解釈**されて消えていた．
+  セルは innerHTML で書き，`getCellData()` が innerHTML で読み戻していたため．
+  データはマークアップではないので，書きも読みも textContent に変えた
+  (`createTd`・`addThTr`・`createSelectOpt`・`addRowWithValues`・`addRow`・
+  `updateTimeGPS`・`getCellData`・`table2array`・`hash2table`)．
+  回帰テストを1件足した (入力の表・全地点の表・保存する TSV の3か所で，打った通りであること)．
+- **課題 C (テストの無い機能) を片づけた**．`test/feature.test.js` (jsdom 10件) と
+  ブラウザテスト3件を新しく書いた．**jsdom 32件・ブラウザ 25件**，すべて成功．
+  - jsdom: 集計 (`sumWithGroup`．Layer ごとに Cover を足して T1=50，2回押しても増えない)，
+    GPS (最後の位置を返す・停止で watch を止める・位置が取れなくても止まらない・
+    「日時 GPS」ボタンが行を埋める)，自動保存のタイマー (間隔の切り替え)，
+    文字サイズ (1.2倍で往復)，メール (宛先の検査と本文)，植物相の入替．
+  - ブラウザ: 文字サイズが**実際に描画に効く**こと，フルスクリーンの往復，
+    植物相の入替 (3つ目のファイルダイアログ．これで3か所とも見ている)．
+- **テストを書いたら実バグが2件出てきた．どちらも直した**．
+  - **A9 自動保存で「no save」を選ぶと，止まるどころか全力で保存し続ける経路があった**．
+    `changeAutoSaveSttting()` が，タイマーがまだ動いていないときは値を見ずに
+    `setAutoSave(Number('no save'))` を呼ぶ．`Number('no save')` は `NaN`，
+    `setInterval(fn, NaN)` は `setInterval(fn, 0)` なので，ブラウザが許すかぎりの速さで
+    JSON をダウンロードし続ける．値の判定を先に行う形にした．
+  - **A10 Windows で書いた種名の一覧を「植物相の入替」で読むと，検索が何も見つけなくなる**．
+    `replaceFlora()` が `text.split('\n')` だけで切っており，各行に `\r` が残る．
+    検索は `makeLookAheadReg()` が作る `^(?=.*名前).*$` で照合するが，
+    **JavaScript の `.` も `$` も `\r` を越えない**ので一致しない．
+    `registerSL()` (種一覧の登録) は元から `\r` を落としていたので，入替だけが漏れていた．
+    テストのファイルも CRLF にして，この経路を固定した．
+- **課題 D (コードの脆さ) を片づけた**．「何番目か」で数えるのをやめ，名前で引くようにした．
+  - **`example.js` が設定行を位置で消していた**のを直した．
+    `#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4)` を2回押す書き方で，
+    `data.js` の項目が1つ増減すると**別の項目が消える**．
+    `deleteRowByValue(table, COL.ITEM, 'Abundance')` のように**名前で消す**形にした
+    (`table.js` に追加)．回帰テストも，例が Abundance と Rank だけを落とすことを見る．
+  - **設定タブの表を `getElementsByTagName('table')[0]` / `[1]` で取っていた**のをやめた．
+    `settingTable('plot')` / `settingTable('occ')` が，入れ物 (`setting_*_holder`) から引く．
+    設定ファイルを読むと表の id が変わる (`mysetting_tb`) ので，名前でも順番でもなく
+    入れ物で引くのが正しい．`addSettingPart()` も同じ関数に寄せた．
+    ブラウザテストに「設定を読み込んだ後に地点を足す」経路を足した．
+  - `COL` に設定表の列 (`item`・`type`・`value`) を足した．
+  - `addInputTab()` の `// in progress` を，引数の説明に書き換えた．
 
 ### 課題一覧
 
@@ -497,41 +560,29 @@ python -m venv .venv
 
 - (案1・案2 とも公開済み．未反映の修正は無い)
 
-#### B. 性能 (優先度 中．実測で分かった)
+#### B. 性能 → 対処済み
 
-- **`updateAllInputsTables()` が地点数に対して伸びる**．タブを切り替えるたびに走る．
+- `updateAllInputsTables()` を **2.6 倍速くした** (下表)．タブを切り替えるたびに走る処理．
+- 残る時間はほぼ表の組み立て (DOM を作る分) で，構造を変えないかぎりこれ以上は縮まない．
+- 20地点・数千行でも，従来の 8地点ぶんより軽い．
 
-  | 地点 | occ 行数 | 合計 | うち `createAllInputsTable` |
-  | ---- | -------- | ---- | --------------------------- |
-  | 4 | 116 | 346 ms | 282 ms |
-  | 8 | 232 | 598 ms | 447 ms |
-  | 8 | 432 | 709 ms | 510 ms |
+#### C. テストが無い機能 → 対処済み
 
-  (jsdom での実測．実機のブラウザはもう少し速く，スマートフォンは逆に遅い)
-- 主因は `getMultiTableInputs()` が **(表 × 列) の組ごとに `getColData()` を呼び，
-  その中で毎回 `getColNames()` と `querySelectorAll()` をやり直している**こと．
-  表ごとに列名を1度だけ求め，1回の走査で全列を読めば大きく減らせるはず．
-  振る舞いは変えずに済むので，費用対効果は高い．
-- 20地点・数千行の調査だとタブを触るたびに固まる恐れがある．
+- 集計・GPS・自動保存・文字サイズ・メール・植物相の入替・フルスクリーンに
+  テストを書いた (`test/feature.test.js` と `e2e/test_biss.py`)．
+- ファイル選択の3か所 (種一覧の登録・設定の読込・植物相の入替) は，すべて
+  Playwright が実際のダイアログで見ている．
+- 残る未テストは，人の目でしか見られないもの (下の E) だけ．
 
-#### C. テストが無い機能 (優先度 中)
+#### D. コードに残っている脆さ → ほぼ対処済み
 
-動くことは手で確かめたが，次に壊れても気づけない．
-
-- **集計** (`sumWithGroup`)．確認したときは正しかった (Layer で Cover を集計し T1=30+20=50，H=5)．
-- GPS の起動・停止と位置の取り込み，メールソフト起動，自動保存のタイマー，
-  文字サイズ，フルスクリーン，植物相の入替．
-- ファイル選択は「種一覧の登録」と「設定の読込」を Playwright が見ている．
-  「植物相の入替」だけ未記述 (同じ `createFileInput()` を使う)．
-
-#### D. コードに残っている脆さ (優先度 低)
-
-- `example.js` が `#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4)` という
-  **位置指定のセレクタ**で設定行を消している．`data.js` の行が1つ増減すると別の項目を消す．
-- `tab.js` が設定タブの表を `getElementsByTagName('table')[0]` / `[1]` で取っている
-  (並び順に依存)．
-- `tab.js` の `addInputTab()` に `// in progress` のコメントが残っている．
-- `inhibit_close.js` が `biodiv2.html` でコメントアウトされたまま (使うか消すかが保留)．
+- 位置で数えるのをやめ，名前で引くようにした (下記「課題 D」を参照)．
+- **残るのは `inhibit_close.js` の扱いだけ** (`biodiv2.html` でコメントアウトされたまま)．
+  「ページを離れるときに確認する」機能を**使うか消すか**の判断が要る．
+  - 使う: 野外で誤ってタブを閉じても入力が消えない．
+    ただし**保存・メール送信のたびにも確認が出る**恐れがあり，
+    今のブラウザは文言を無視して定型の確認を出す．
+  - 消す: 自動保存とダウンロードがあるので，そちらで守る．
 - 兄弟辿りで残っているのは `clickFileInput()` の1箇所だけ
   (ボタンと隠し入力を同じ関数で並べて作っている意図的なペアなので，このままでよい)．
 

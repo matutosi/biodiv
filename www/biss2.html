@@ -201,357 +201,372 @@ function initLanguage(){
   const select = document.getElementById('select_language'); 
   if(select !== null){ setSelectOption(select, currentLanguage); } 
   applyLanguage(); 
-}</script> <script>function larger(){changeFontSize(FONT_SIZE_STEP)}function smaller(){changeFontSize(1/FONT_SIZE_STEP)}function changeFontSize(e){const t=document.documentElement;""===t.style.getPropertyValue("--font-size")&&t.style.setProperty("--font-size","16px");const n=t.style.getPropertyValue("--font-size"),o=Number(n.replace("px",""))*e;t.style.setProperty("--font-size",o+"px")}const FONT_SIZE_STEP=1.2;</script> <script>const data_settings={empty:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}}},full:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","auto","auto","auto","auto","button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","","","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","",""]}}},_5_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},_3_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T_height","S_height","H_height","T_cover","S_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T:S:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},no_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],value:["","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}},flora:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","Memo"],type:["auto","fixed","text","text"],value:["","","",""],DELETE:["","","",""],memo:["","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Sampled","Identified","Photo","Memo"],type:["button","text","auto","auto","auto","button","checkbox","checkbox","text","text"],value:["","","","","","","","checked","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}}},data_settings_part={plot:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},altitude_etc:{item:["Altitude","Aspect","Inclination"],type:["number","text","number"]},_5_layers:{item:["T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover"],type:["number","number","number","number","number","number","number","number","number","number"]},_3_layers:{item:["T_height","S_height","H_height","T_cover","S_cover","H_cover"],type:["number","number","number","number","number","number"]},memo:{item:["Photo","Memo"],type:["text","text"]}},occ:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},delete_button:{item:["DELETE"],type:["button"]},_5_layers:{item:["Layer"],type:["list"],value:["T1:T2:S1:S2:H"]},_3_layers:{item:["Layer"],type:["list"],value:["T:S:H"]},species:{item:["Species"],type:["text"],value:[""]},cover_rank:{item:["Cover","Rank"],type:["number","list"],value:["","5:4:3:2:1:+:r"]},sampled_identified:{item:["Sampled","Identified"],type:["checkbox","checkbox"],value:["","checked"]},memo:{item:["Photo","Memo","SameAs"],type:["text","text","auto"]}}};</script> <script>function autoValue(L){switch(L){case COL.DATE:return getNow();case COL.LOC_LAT:return getLat();case COL.LOC_LON:return getLon();case COL.LOC_ACC:return getAcc();default:return}}const COL={PLOT:"PLOT",NO:"NO",DATE:"DATE",LOC_LAT:"LOC_LAT",LOC_LON:"LOC_LON",LOC_ACC:"LOC_ACC",SPECIES:"Species",COVER:"Cover",LAYER:"Layer",IDENTIFIED:"Identified",SAME_AS:"SameAs",DELETE:"DELETE",UPDATE_TIME_GPS:"UPDATE_TIME_GPS"},BUTTON_COLS=[COL.DELETE,COL.UPDATE_TIME_GPS],AUTO_COLS=[COL.DATE,COL.LOC_LAT,COL.LOC_LON,COL.LOC_ACC];</script> <script>// convert table into array 
-//    @param   id_table  A string. A table id. 
-//    @param   header    A logical. true: add header. 
-//    @return  An array. 
-//    @examples 
-//    var id_table = 'table-1'; 
-//    var header = true; 
-//    var array = table2array(id_table, header); 
-function table2array(id_table, header = true){ 
-  const table = document.getElementById(id_table); 
-  const array = []; 
-  for(let i=0; i<table.rows.length; i++){ 
-    const row = table.rows[i]; 
-    const array_row = []; 
-    for(let j=0; j<row.cells.length; j++){ 
-      array_row.push(row.cells[j].innerHTML); 
-    } 
-    array.push(array_row); 
-  } 
-  if(header){ 
-    const header_row = []; 
-    for(let i=0; i<headerRow(table).cells.length; i++){ 
-      header_row.push(headerRow(table).cells[i].innerHTML); 
-    } 
-    array.unshift(header_row); 
-  } 
-  return array 
-} 
- 
-// save array to csv file 
-//    @param   array     An array to be saved. 
-//    @param   filename  A string. A file name. 
-//    @param   sep       A string. A separator. 
-//    @param   header    A logical. true: add header. 
-//    @return  A string. 
-//    @examples 
-//    var array = [['a','b','c'],[1,2,3],[4,5,6]]; 
-//    var filename = 'test.csv'; 
-//    var sep = ','; 
-//    var header = true; 
-//    saveArrayToCsv(array, filename, sep, header); 
-function saveArrayToTsv(array, filename, sep = '\t', header = true){ 
-  let csv = '';  
-  if(header){ 
-    csv += array[0].join(sep) + '\n'; 
-    array = array.slice(1); 
-  } 
-  for(let i=0; i<array.length; i++){ 
-    csv += array[i].join(sep) + '\n'; 
-  } 
-  const blob = new Blob([csv], {type: 'text/csv'}); 
-  const url = window.URL.createObjectURL(blob); 
-  const a = document.createElement('a'); 
-  a.href = url; 
-  a.download = filename; 
-  a.click(); 
-  window.URL.revokeObjectURL(url); 
-} 
- 
-// Random sampling 
-//    @param   n         A number of sample. 
-//    @param   array     An array to be sampled. 
-//    @param   only_once A logical. true: each element will be sampled only once. 
-//    @return  An array. 
-//    @examples 
-//    console.log(randInt(3, 100)); 
-//    var array = ['a','b','c','d','e']; 
-//    console.log(randSample(3, array, true )); 
-//    console.log(randSample(6, array, true )); 
-//    console.log(randSample(3, array, false)); 
-//    console.log(randSample(6, array, false)); 
-function randInt(n, max){  
-  const sample = []; 
-  for(let i=0; i<n; i++){ 
-    sample.push(Math.floor(Math.random() * max)); 
-  } 
-  return sample 
-} 
-// Take n random elements from an array (only_once: never take the same one twice). 
-function randSample(n, array, only_once = false){ 
-  const sample = []; 
-  if(only_once){ 
-    const array_copy = Object.assign([], array); 
-    const m = Math.min(n, array_copy.length); 
-    for(let i=0; i<m; i++){ 
-      const index = randInt(1, array_copy.length); 
-      sample.push(array_copy.splice(index, 1)[0]); 
-    } 
-  }else{ 
-    for(let i=0; i<n; i++){ 
-      const index = randInt(1, array.length); 
-      sample.push(array[index]); 
-    } 
-  } 
-  return sample; 
-} 
-// Shuffle an array. 
-function randSort(array){ 
-  return randSample(array.length, array, true); 
-} 
- 
- 
-// Make look ahead regular expression 
-//    @param   A string. 
-//    @return  A regular expression. 
-//    @examples 
-//    var input = 'イシ ナラ'; 
-//    var reg_ex = makeLookAheadReg(input); 
-//    grepArray(flora, reg_ex); 
-//    @reference 
-//      look ahead: https://www-creators.com/archives/5332 
-function makeLookAheadReg(input){ 
-  const look_ahead = "^(?=.*" + input.replaceAll(" ", ")(?=.*") + ").*$"; 
-  const reg_ex = new RegExp(look_ahead, 'i');  // i: case-insensitive 
-  return reg_ex; 
-} 
- 
-// Convert hasy array table 
-//    In progress: can not convert hasy that has array as a value 
-//    @example  
-//    var hash_array = sumWithGroup("occurrence", "Cover", "Layer"); 
-//    hash2table(hasy_array); 
-//     
-function hash2table(hash_array){ 
-  const table = document.createElement('table'); 
-  for(let i = 0; i < Object.keys(hash_array).length; i++){ 
-    const tr = document.createElement('tr'); 
-    tr.appendChild( crEl({ el: 'td', tc: Object.keys(hash_array)[i] }) ); 
-    tr.appendChild( crEl({ el: 'td', ih: Object.values(hash_array)[i] }) ); 
-    table.appendChild(tr); 
-  } 
-  return table 
-} 
- 
-// Check if an object is or has table.  
-//    @param obj An object. 
-//    @return A logical. 
-function isTable(obj){ 
-  return obj.tagName === 'TABLE'; 
-} 
-// true when an element holds at least one table. 
-function hasTable(obj){ 
-  return obj.getElementsByTagName('table').length > 0; 
-} 
- 
-// Search parent table of a object 
-//    Search parentNode of a object. 
-//    When object has multiple tables, return the first table in default. 
-//    Can return another table by using index. 
-//    @param obj   An object. 
-//    @param index A numeric. 
-//    @return A table. 
-function searchParentTable(obj, index = 0){ 
-  while( !isTable(obj) && !hasTable(obj) ){ 
-    obj = obj.parentNode; 
-  } 
-  if(isTable(obj)){ 
-    return obj; 
-  }else{ 
-    return obj.getElementsByTagName("table")[index]; 
-  } 
-} 
- 
-// Get column data in a table 
-//    @param id_table A string. 
-//    @param col_name A string. 
-//    @return An array. 
-//    @examples 
-//    var table = document.getElementById('input_occ_pl_1_tb'); 
-//    var tds = table.rows[2].cells; 
-//    for(let name of getColNames(table)){ console.log(getColData(table, name, true)) } 
-//    for(let td of tds                 ){ console.log(getCellData(td, true)) } 
-//    for(let td of tds                 ){ console.log(getCellData(td)) } 
-function getColData(table, c_name, list_with_index = false){ 
-  const col_no = getColNames(table).indexOf(c_name); 
-  const group_value = []; 
-  const n_row = nDataRow(table); 
-  if(col_no < 0){ 
-    for(let i=0; i<n_row; i++){ group_value.push(''); } 
-    return group_value; 
-  } 
-  const rows = table.querySelectorAll("tr:not([class=hide_button])"); 
-  for(let Ri = 1; Ri < rows.length; Ri++){    // except th (rows[0]) 
-    group_value[Ri - 1] = getCellData(rows[Ri].cells[col_no], list_with_index) 
-  } 
-  return group_value; 
-} 
- 
-// Get input value, list, or innerHTML cell data in a table. 
-//    In BISS, the values varies input, list, or innerHTML.  
-//    getCellData()  
-//    @param cell_data A td element in a table. 
-//    @param data_type A string to specify the data type of the cell,  
-//                      which can be retrived with col_type(). 
-//    @return A string. 
-function getCellData(td, list_with_index = false){ 
-  if(td.firstChild === void 0){ return ''; } 
-  if(td.firstChild === null  ){ return ''; } 
-  if(td.firstChild.value === void 0){ 
-    return td.innerHTML; 
-  }else{ 
-    if(td.firstChild.type === 'checkbox'){ 
-      return td.firstChild.checked; 
-    }else{ 
-      if(list_with_index === true && td.firstChild.tagName === 'SELECT'){ 
-        return td.firstChild.selectedIndex; 
-      }else{ 
-        return td.firstChild.value; 
-      } 
-    } 
-  } 
-} 
- 
- 
-// Get options in select tag in a cell 
-//    Return string array. 
-function getSelectOptionInCell(select){ 
-  const select_opt = []; 
-  const opts = select.children; 
-  for(let i = 0; i < opts.length; i++){ select_opt.push(opts[i].value); } 
-  return select_opt; 
-} 
- 
-// Split array by group 
-//    @param array An array. 
-//    @param group An array. 
-//    @return Grouped array.  
-//    @examples 
-//    var array = [ 1,   2,   3,   4]; 
-//    var group = ["a", "b", "a", "b"]; 
-//    splitByGroup(array, group); 
-//    // [a: [1,3], b: [2,4]] 
-function splitByGroup(array, group){ 
-  if(array.length !== group.length){ return array; } 
-  const grouped = {};   // keyed by group name 
-  for(let i=0; i < array.length; i++){ grouped[group[i]] = []; } 
-  for(let i=0; i < array.length; i++){ 
-    grouped[group[i]].push(array[i]); 
-  } 
-  return grouped; 
-} 
- 
- 
-// Helper for getDataType() 
-function getDataTypes(table){ 
-  const types = []; 
-  const rows = table.querySelectorAll("tr:not([class=hide_button])"); // remove tr with hide buttons 
-  for(const cell of rows[1].cells){   // the hide row is filtered out, so 1 is the first record 
-    types.push(getDataTypeCell(cell)); 
-  } 
-  return types; 
-} 
- 
-// Helper for getDataType() 
-function getDataTypeCell(cell){ 
-  if(cell.firstChild === null){ return "fixed"; } 
-  let type = (cell.firstChild.type === void 0) ? "fixed" : cell.firstChild.type; 
-  if(type === 'select-one'){ type = 'list'; } 
-  return type; 
-} 
- 
-// Get column names as a string array. 
-//   @param table A table element. 
-//   @return A string array. 
-function getColNames(table){ 
-  // console.log(table.rows[0]); 
-  const row_0 = headerRow(table); 
-  const col_names = []; 
-  for(let Ri=0; Ri<row_0.cells.length; Ri++){ 
-    col_names[Ri] = row_0.cells[Ri].innerText; 
-  } 
-  return col_names 
-} 
- 
-// Get time like 2022_05_18_15_51_28: yyyy-mm-dd-hh-mm-ss 
-function getNow(){ 
-   const now = new Date(); 
-   const yr  = now.getFullYear(); 
-   const mo  = String(now.getMonth()+1).padStart(2, `0`); // getMonth() return 0 when January 
-   const dd  = String(now.getDate()).padStart(2, `0`); 
-   const hh  = String(now.getHours()).padStart(2, `0`); 
-   const mi  = String(now.getMinutes()).padStart(2, `0`); 
-   const ss  = String(now.getSeconds()).padStart(2, `0`); 
-   return(`${yr}_${mo}_${dd}_${hh}_${mi}_${ss}`) 
-} 
- 
-// Delete a row in a table. 
-//   When the raw is the only one row in a table, the row will not be deleted. 
-//   @param  obj An element of input button of a row in a table. 
-function delRow(obj){ 
-    const table = obj.parentNode.parentNode.parentNode; // clicked table 
-    if(table.rows.length > 3){                        // delete more than 3 rows (th + tb * 2) 
-      const tr = obj.parentNode.parentNode;             // clicked row 
-      tr.parentNode.deleteRow(tr.sectionRowIndex);    // delete clicked row 
-    } 
-} 
- 
-// Helper to createElement(), setAttribute(), innerHTML, textContent 
-//   @param el A string for element name. 
-//   @param ats An array with attribute names. {id: "hoge", value: "foo"} 
-//   @param ih,tc A string for innerHTML and textContent. 
-//            Both of them are given, ih is overwritten by tc. 
-//   @return HTML An object. 
-//   @examples  
-//   crEl({ el: 'p', ats: {id: "id_test", class: "some_class"}, ih: "test" }); 
-function crEl({ el, ats, ih, tc }){ 
-  const ele = document.createElement(el); 
-  if(ats != void 0){ 
-    const keys  = Object.keys(ats); 
-    for(const key of keys){ ele.setAttribute(key, ats[key]); } 
-  } 
-  if(ih != void 0){ ele.innerHTML   = ih; } 
-  if(tc != void 0){ ele.textContent = tc; } 
-  return ele; 
-} 
- 
-// Read a chosen file as text. 
-//    Used by whatever reads a file the user picked: a settings JSON, 
-//    a species list, a flora. 
-//    @param  file  A File from an <input type="file">. 
-//    @return       A Promise of the text. 
-//    @reference 
-//      https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/ 
-function readFile(file){ 
-  return new Promise((resolve) => { 
-    const reader = new FileReader(); 
-    reader.onload = () => resolve(reader.result); 
-    reader.readAsText(file); 
-  }) 
-} 
- 
-// Unique array 
-function uniq(array){ 
-  return Array.from(new Set(array)); 
-} 
- 
-// Remove every empty string from an array, in place. 
-function removeEmptyInArray(array){ 
-  while(array.indexOf('') >= 0){ 
-    array.splice(array.indexOf(''), 1); 
-  } 
-} 
-// Every index at which an element appears in an array. 
-function multiIndexOf(array, element){ 
-  const indices = []; 
-  let idx = array.indexOf(element); 
-  while (idx !== -1) { 
-    indices.push(idx); 
-    idx = array.indexOf(element, idx + 1); 
-  } 
-  return indices; 
+}</script> <script>function larger(){changeFontSize(FONT_SIZE_STEP)}function smaller(){changeFontSize(1/FONT_SIZE_STEP)}function changeFontSize(e){const t=document.documentElement;""===t.style.getPropertyValue("--font-size")&&t.style.setProperty("--font-size","16px");const n=t.style.getPropertyValue("--font-size"),o=Number(n.replace("px",""))*e;t.style.setProperty("--font-size",o+"px")}const FONT_SIZE_STEP=1.2;</script> <script>const data_settings={empty:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:[""],type:[""],value:[""],DELETE:[""],memo:[""]}}},full:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator_f","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","auto","auto","auto","auto","button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","","","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","",""]}}},_5_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T1:T2:S1:S2:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},_3_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","T_height","S_height","H_height","T_cover","S_cover","H_cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","number","number","number","number","text","text"],value:["","","","","","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Layer","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","list","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","T:S:H","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","","",""],memo:["","","","","","","","","","",""]}}},no_layers:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Altitude","Aspect","Inclination","Height","Cover","Photo","Memo"],type:["auto","fixed","text","auto","auto","auto","button","number","text","number","number","number","text","text"],value:["","","","","","","","","","","","","",""],DELETE:["","","","","","","","","","","","","",""],memo:["","","","","","","","","","","","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","Cover","Abundance","Rank","Sampled","Identified","Photo","Memo","SameAs"],type:["button","text","number","number","list","checkbox","checkbox","text","text","auto"],value:["","","","","5:4:3:2:1:+:r","","checked","","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}},flora:{plot:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DATE","Investigator","Location","Memo"],type:["auto","fixed","text","text"],value:["","","",""],DELETE:["","","",""],memo:["","","",""]}},occ:{biss_c_names:["item","type","value","DELETE","memo"],biss_d_types:["text","list","text","button","text"],biss_selects:[null,["auto","button","checkbox","fixed","list","text","number"],null,null,null],biss_inputs:{item:["DELETE","Species","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS","Sampled","Identified","Photo","Memo"],type:["button","text","auto","auto","auto","button","checkbox","checkbox","text","text"],value:["","","","","","","","checked","",""],DELETE:["","","","","","","","","",""],memo:["","","","","","","","","",""]}}}},data_settings_part={plot:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},altitude_etc:{item:["Altitude","Aspect","Inclination"],type:["number","text","number"]},_5_layers:{item:["T1_height","T2_height","S1_height","S2_height","H_height","T1_cover","T2_cover","S1_cover","S2_cover","H_cover"],type:["number","number","number","number","number","number","number","number","number","number"]},_3_layers:{item:["T_height","S_height","H_height","T_cover","S_cover","H_cover"],type:["number","number","number","number","number","number"]},memo:{item:["Photo","Memo"],type:["text","text"]}},occ:{date_GPS:{item:["DATE","LOC_LAT","LOC_LON","LOC_ACC","UPDATE_TIME_GPS"],type:["auto","auto","auto","auto","button"]},delete_button:{item:["DELETE"],type:["button"]},_5_layers:{item:["Layer"],type:["list"],value:["T1:T2:S1:S2:H"]},_3_layers:{item:["Layer"],type:["list"],value:["T:S:H"]},species:{item:["Species"],type:["text"],value:[""]},cover_rank:{item:["Cover","Rank"],type:["number","list"],value:["","5:4:3:2:1:+:r"]},sampled_identified:{item:["Sampled","Identified"],type:["checkbox","checkbox"],value:["","checked"]},memo:{item:["Photo","Memo","SameAs"],type:["text","text","auto"]}}};</script> <script>function autoValue(L){switch(L){case COL.DATE:return getNow();case COL.LOC_LAT:return getLat();case COL.LOC_LON:return getLon();case COL.LOC_ACC:return getAcc();default:return}}const COL={PLOT:"PLOT",NO:"NO",DATE:"DATE",LOC_LAT:"LOC_LAT",LOC_LON:"LOC_LON",LOC_ACC:"LOC_ACC",SPECIES:"Species",COVER:"Cover",LAYER:"Layer",IDENTIFIED:"Identified",SAME_AS:"SameAs",DELETE:"DELETE",UPDATE_TIME_GPS:"UPDATE_TIME_GPS",ITEM:"item",TYPE:"type",VALUE:"value"},BUTTON_COLS=[COL.DELETE,COL.UPDATE_TIME_GPS],AUTO_COLS=[COL.DATE,COL.LOC_LAT,COL.LOC_LON,COL.LOC_ACC];</script> <script>// convert table into array
+//    @param   id_table  A string. A table id.
+//    @param   header    A logical. true: add header.
+//    @return  An array.
+//    @examples
+//    var id_table = 'table-1';
+//    var header = true;
+//    var array = table2array(id_table, header);
+function table2array(id_table, header = true){
+  const table = document.getElementById(id_table);
+  const array = [];
+  for(let i=0; i<table.rows.length; i++){
+    const row = table.rows[i];
+    const array_row = [];
+    for(let j=0; j<row.cells.length; j++){
+      array_row.push(row.cells[j].textContent);
+    }
+    array.push(array_row);
+  }
+  if(header){
+    const header_row = [];
+    for(let i=0; i<headerRow(table).cells.length; i++){
+      header_row.push(headerRow(table).cells[i].textContent);
+    }
+    array.unshift(header_row);
+  }
+  return array
+}
+
+// save array to csv file
+//    @param   array     An array to be saved.
+//    @param   filename  A string. A file name.
+//    @param   sep       A string. A separator.
+//    @param   header    A logical. true: add header.
+//    @return  A string.
+//    @examples
+//    var array = [['a','b','c'],[1,2,3],[4,5,6]];
+//    var filename = 'test.csv';
+//    var sep = ',';
+//    var header = true;
+//    saveArrayToCsv(array, filename, sep, header);
+function saveArrayToTsv(array, filename, sep = '\t', header = true){
+  let csv = ''; 
+  if(header){
+    csv += array[0].join(sep) + '\n';
+    array = array.slice(1);
+  }
+  for(let i=0; i<array.length; i++){
+    csv += array[i].join(sep) + '\n';
+  }
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
+// Random sampling
+//    @param   n         A number of sample.
+//    @param   array     An array to be sampled.
+//    @param   only_once A logical. true: each element will be sampled only once.
+//    @return  An array.
+//    @examples
+//    console.log(randInt(3, 100));
+//    var array = ['a','b','c','d','e'];
+//    console.log(randSample(3, array, true ));
+//    console.log(randSample(6, array, true ));
+//    console.log(randSample(3, array, false));
+//    console.log(randSample(6, array, false));
+function randInt(n, max){ 
+  const sample = [];
+  for(let i=0; i<n; i++){
+    sample.push(Math.floor(Math.random() * max));
+  }
+  return sample
+}
+// Take n random elements from an array (only_once: never take the same one twice).
+function randSample(n, array, only_once = false){
+  const sample = [];
+  if(only_once){
+    const array_copy = Object.assign([], array);
+    const m = Math.min(n, array_copy.length);
+    for(let i=0; i<m; i++){
+      const index = randInt(1, array_copy.length);
+      sample.push(array_copy.splice(index, 1)[0]);
+    }
+  }else{
+    for(let i=0; i<n; i++){
+      const index = randInt(1, array.length);
+      sample.push(array[index]);
+    }
+  }
+  return sample;
+}
+// Shuffle an array.
+function randSort(array){
+  return randSample(array.length, array, true);
+}
+
+
+// Make look ahead regular expression
+//    @param   A string.
+//    @return  A regular expression.
+//    @examples
+//    var input = 'イシ ナラ';
+//    var reg_ex = makeLookAheadReg(input);
+//    grepArray(flora, reg_ex);
+//    @reference
+//      look ahead: https://www-creators.com/archives/5332
+function makeLookAheadReg(input){
+  const look_ahead = "^(?=.*" + input.replaceAll(" ", ")(?=.*") + ").*$";
+  const reg_ex = new RegExp(look_ahead, 'i');  // i: case-insensitive
+  return reg_ex;
+}
+
+// Convert hasy array table
+//    In progress: can not convert hasy that has array as a value
+//    @example 
+//    var hash_array = sumWithGroup("occurrence", "Cover", "Layer");
+//    hash2table(hasy_array);
+//    
+function hash2table(hash_array){
+  const table = document.createElement('table');
+  for(let i = 0; i < Object.keys(hash_array).length; i++){
+    const tr = document.createElement('tr');
+    tr.appendChild( crEl({ el: 'td', tc: Object.keys(hash_array)[i] }) );
+    tr.appendChild( crEl({ el: 'td', tc: Object.values(hash_array)[i] }) );
+    table.appendChild(tr);
+  }
+  return table
+}
+
+// Check if an object is or has table. 
+//    @param obj An object.
+//    @return A logical.
+function isTable(obj){
+  return obj.tagName === 'TABLE';
+}
+// true when an element holds at least one table.
+function hasTable(obj){
+  return obj.getElementsByTagName('table').length > 0;
+}
+
+// Search parent table of a object
+//    Search parentNode of a object.
+//    When object has multiple tables, return the first table in default.
+//    Can return another table by using index.
+//    @param obj   An object.
+//    @param index A numeric.
+//    @return A table.
+function searchParentTable(obj, index = 0){
+  while( !isTable(obj) && !hasTable(obj) ){
+    obj = obj.parentNode;
+  }
+  if(isTable(obj)){
+    return obj;
+  }else{
+    return obj.getElementsByTagName("table")[index];
+  }
+}
+
+// Get column data in a table
+//    @param id_table A string.
+//    @param col_name A string.
+//    @return An array.
+//    @examples
+//    var table = document.getElementById('input_occ_pl_1_tb');
+//    var tds = table.rows[2].cells;
+//    for(let name of getColNames(table)){ console.log(getColData(table, name, true)) }
+//    for(let td of tds                 ){ console.log(getCellData(td, true)) }
+//    for(let td of tds                 ){ console.log(getCellData(td)) }
+function getColData(table, c_name, list_with_index = false){
+  return getColsData(table, [c_name], list_with_index)[c_name];
+}
+
+// Get the data of several columns of a table, in one walk over the rows.
+//    getColData() looks the column names up and walks the table again for
+//    every column. Reading a whole table one column at a time therefore
+//    costs (columns x rows) walks; this costs one.
+//    A column the table does not have comes back as empty strings, as in
+//    getColData(), so that the columns of several tables can be lined up.
+//    @param table A table element.
+//    @param c_names A string array of column names.
+//    @param list_with_index A boolean, as in getColData().
+//    @return An object keyed by column name, holding an array per column.
+function getColsData(table, c_names, list_with_index = false){
+  const names = getColNames(table);
+  const col_no = c_names.map(c_name => names.indexOf(c_name));
+  const cols = {};   // keyed by column name
+  for(const c_name of c_names){ cols[c_name] = []; }
+  const rows = table.querySelectorAll("tr:not([class=hide_button])");
+  for(let Ri = 1; Ri < rows.length; Ri++){    // except th (rows[0])
+    const cells = rows[Ri].cells;
+    for(let Ci = 0; Ci < c_names.length; Ci++){
+      cols[c_names[Ci]].push(
+        (col_no[Ci] < 0) ? '' : getCellData(cells[col_no[Ci]], list_with_index));
+    }
+  }
+  return cols;
+}
+
+// Get input value, list, or innerHTML cell data in a table.
+//    In BISS, the values varies input, list, or innerHTML. 
+//    getCellData() 
+//    @param cell_data A td element in a table.
+//    @param data_type A string to specify the data type of the cell, 
+//                      which can be retrived with col_type().
+//    @return A string.
+function getCellData(td, list_with_index = false){
+  if(td.firstChild === void 0){ return ''; }
+  if(td.firstChild === null  ){ return ''; }
+  if(td.firstChild.value === void 0){
+    return td.textContent;   // the text of the cell, not its markup
+  }else{
+    if(td.firstChild.type === 'checkbox'){
+      return td.firstChild.checked;
+    }else{
+      if(list_with_index === true && td.firstChild.tagName === 'SELECT'){
+        return td.firstChild.selectedIndex;
+      }else{
+        return td.firstChild.value;
+      }
+    }
+  }
+}
+
+
+// Get options in select tag in a cell
+//    Return string array.
+function getSelectOptionInCell(select){
+  const select_opt = [];
+  const opts = select.children;
+  for(let i = 0; i < opts.length; i++){ select_opt.push(opts[i].value); }
+  return select_opt;
+}
+
+// Split array by group
+//    @param array An array.
+//    @param group An array.
+//    @return Grouped array. 
+//    @examples
+//    var array = [ 1,   2,   3,   4];
+//    var group = ["a", "b", "a", "b"];
+//    splitByGroup(array, group);
+//    // [a: [1,3], b: [2,4]]
+function splitByGroup(array, group){
+  if(array.length !== group.length){ return array; }
+  const grouped = {};   // keyed by group name
+  for(let i=0; i < array.length; i++){ grouped[group[i]] = []; }
+  for(let i=0; i < array.length; i++){
+    grouped[group[i]].push(array[i]);
+  }
+  return grouped;
+}
+
+
+// Helper for getDataType()
+function getDataTypes(table){
+  const types = [];
+  const rows = table.querySelectorAll("tr:not([class=hide_button])"); // remove tr with hide buttons
+  for(const cell of rows[1].cells){   // the hide row is filtered out, so 1 is the first record
+    types.push(getDataTypeCell(cell));
+  }
+  return types;
+}
+
+// Helper for getDataType()
+function getDataTypeCell(cell){
+  if(cell.firstChild === null){ return "fixed"; }
+  let type = (cell.firstChild.type === void 0) ? "fixed" : cell.firstChild.type;
+  if(type === 'select-one'){ type = 'list'; }
+  return type;
+}
+
+// Get column names as a string array.
+//   @param table A table element.
+//   @return A string array.
+function getColNames(table){
+  // console.log(table.rows[0]);
+  const row_0 = headerRow(table);
+  const col_names = [];
+  for(let Ri=0; Ri<row_0.cells.length; Ri++){
+    col_names[Ri] = row_0.cells[Ri].innerText;
+  }
+  return col_names
+}
+
+// Get time like 2022_05_18_15_51_28: yyyy-mm-dd-hh-mm-ss
+function getNow(){
+   const now = new Date();
+   const yr  = now.getFullYear();
+   const mo  = String(now.getMonth()+1).padStart(2, `0`); // getMonth() return 0 when January
+   const dd  = String(now.getDate()).padStart(2, `0`);
+   const hh  = String(now.getHours()).padStart(2, `0`);
+   const mi  = String(now.getMinutes()).padStart(2, `0`);
+   const ss  = String(now.getSeconds()).padStart(2, `0`);
+   return(`${yr}_${mo}_${dd}_${hh}_${mi}_${ss}`)
+}
+
+// Delete a row in a table.
+//   When the raw is the only one row in a table, the row will not be deleted.
+//   @param  obj An element of input button of a row in a table.
+function delRow(obj){
+    const table = obj.parentNode.parentNode.parentNode; // clicked table
+    if(table.rows.length > 3){                        // delete more than 3 rows (th + tb * 2)
+      const tr = obj.parentNode.parentNode;             // clicked row
+      tr.parentNode.deleteRow(tr.sectionRowIndex);    // delete clicked row
+    }
+}
+
+// Helper to createElement(), setAttribute(), innerHTML, textContent
+//   @param el A string for element name.
+//   @param ats An array with attribute names. {id: "hoge", value: "foo"}
+//   @param ih,tc A string for innerHTML and textContent.
+//            Both of them are given, ih is overwritten by tc.
+//   @return HTML An object.
+//   @examples 
+//   crEl({ el: 'p', ats: {id: "id_test", class: "some_class"}, ih: "test" });
+function crEl({ el, ats, ih, tc }){
+  const ele = document.createElement(el);
+  if(ats != void 0){
+    const keys  = Object.keys(ats);
+    for(const key of keys){ ele.setAttribute(key, ats[key]); }
+  }
+  if(ih != void 0){ ele.innerHTML   = ih; }
+  if(tc != void 0){ ele.textContent = tc; }
+  return ele;
+}
+
+// Read a chosen file as text.
+//    Used by whatever reads a file the user picked: a settings JSON,
+//    a species list, a flora.
+//    @param  file  A File from an <input type="file">.
+//    @return       A Promise of the text.
+//    @reference
+//      https://www.delftstack.com/ja/howto/javascript/open-local-text-file-using-javascript/
+function readFile(file){
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsText(file);
+  })
+}
+
+// Unique array
+function uniq(array){
+  return Array.from(new Set(array));
+}
+
+// Remove every empty string from an array, in place.
+function removeEmptyInArray(array){
+  while(array.indexOf('') >= 0){
+    array.splice(array.indexOf(''), 1);
+  }
+}
+// Every index at which an element appears in an array.
+function multiIndexOf(array, element){
+  const indices = [];
+  let idx = array.indexOf(element);
+  while (idx !== -1) {
+    indices.push(idx);
+    idx = array.indexOf(element, idx + 1);
+  }
+  return indices;
 }</script> <script>// Set table sortable 
 //    Inspired by https://blog.ver001.com/javascript-table-sort/ 
 //    Click th, and sort table by its th order. 
@@ -959,9 +974,7 @@ function createHideButton(){
 function addSettingPart(category, obj){ 
   //   console.log(category);   //  "plot" or "occ" 
   //   console.log(obj.value);  //  items to add 
-  //   var obj = temp1; obj  var obj = temp1; obj.parentNode.nextSibling.nextSibling.nextSibling; 
-  const table_category = "_" + category + "_tb"; 
-  const table = document.getElementById('tab_settings').querySelector("table[id$='" + table_category + "']"); 
+  const table = settingTable(category); 
   const values = data_settings_part[category][obj.value]; 
  
   const keys = Object.keys(values); 
@@ -974,6 +987,16 @@ function addSettingPart(category, obj){
     for(const key of keys){ row[key] = values[key][i]; } 
     addRowWithValues({ table: table, values: row }); 
   } 
+} 
+ 
+// The settings table of a category, 'plot' or 'occ'. 
+//   Both live in a holder of their own, so which one is meant does not depend 
+//   on the order the tables happen to be in, nor on the name of the setting 
+//   they were built from (a loaded settings file renames the table). 
+//   @param  category  A string, 'plot' or 'occ'. 
+//   @return           A table element. 
+function settingTable(category){ 
+  return document.querySelector('#setting_' + category + '_holder table'); 
 } 
  
 // Create one button per setting part (date_GPS etc.) of a category, plot or occ. 
@@ -1145,7 +1168,7 @@ function updateTimeGPS(obj){
   for(const col of AUTO_COLS){ 
     const col_no = c_names.indexOf(col); 
     if(col_no < 0){ continue; }   // a setting need not offer every one of them 
-    table.rows[row_no].cells[col_no].innerHTML = autoValue(col); 
+    table.rows[row_no].cells[col_no].textContent = autoValue(col); 
   } 
 } 
  
@@ -1252,118 +1275,118 @@ function saveSettings(obj){
   let f_name = document.getElementById(moduleNS(obj) + '_fname').value; 
   if(f_name === ""){ f_name = table.id.replace(/_tb$/, ''); } 
   downloadStrings(table_json, f_name + ".json") 
-}</script> <script>// addRowWithValues({ table:document.getElementById('full_plot_tb'), values:{ item:"new_item", type:"auto", value:"new_value", DELETE:"del"} }); 
-function addRowWithValues({ table, values }){ 
-  // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species'; 
-  // var table = document.getElementById('full_plot_tb'); var key = "item"; value = "new_val"; 
-  addRow(table); 
-  const c_names = getColNames(table); 
-  const keys = Object.keys(values); 
-  const row_no   = table.rows.length - 1; 
-  for(const key of keys){ 
-    const col_no = c_names.indexOf(key); 
-    if(col_no < 0) continue; 
-    const td = table.rows[row_no].cells[col_no]; 
-    const value = (values[key] === void 0) ? '' : values[key]; 
-  // console.log(c_names); 
-  // console.log(td); 
-  // console.log(values); 
-  // console.log(key); 
-    if(td.firstChild === null){                // fixed with no input 
-      td.innerHTML = value; 
-    }else{ 
-      if(td.firstChild.value === void 0){      // fixed with input 
-        td.innerHTML = value; 
-      }else{ 
-        if(td.firstChild.type === 'checkbox'){ // checkbox 
-          td.firstChild.checked = value; 
-        }else{ 
-          td.firstChild.value = value;         // text/number/select input 
-        } 
-      } 
-    } 
-  } 
-} 
- 
-// Helper to call addRow() multiple times 
-//    @param obj  A input element. 
-//                  Normally use "this".  
-//    In BISS, addRows() is generated by createAddRowButton() as below.  
-//      createNrowInput() is necessary as well. 
-//       
-//      // Down span 
-//      var dn = crEl({ el:'span', ats:{id: "dn_" + ns} }); 
-//      dn.appendChild( createNrowInput() ); 
-//      dn.appendChild( createAddRowButton() ); 
-//      // Main 
-//      var main   = crEl({ el:'span', ats:{id: "main_"   + ns} }) 
-//      main.appendChild(up); 
-//      main.appendChild(table); 
-//      main.appendChild(dn); 
-//      main.appendChild( crEl({ el: 'hr' }) ); 
-function addRows(obj){ 
-  // console.log(obj); 
-  //   var table = obj.parentNode.parentNode.querySelectorAll("table")[0]; 
-  const n_row = document.getElementById(obj.id.replace('add_rows', 'nrow')).value; 
-  const table = document.getElementById(obj.id.replace('add_rows', 'tb')); 
-  for(let i = 0; i < n_row; i++){ addRow(table); } 
-} 
- 
-// Copy buttom row and paste it as new rows 
-//    Column date  getNow() will be applied. 
-//    Column fixed and <select> <option> will be used the same selection. 
-//    Column "checkbox" and "text" will be made as unchecked and blank one. 
-//     
-function addRow(table){ 
-  // console.log(table); 
-  const col_names = getColNames(table); 
-  const n_col = col_names.length; 
-  const n_row = table.rows.length; 
-  const last_row = table.rows[n_row - 1];  // to get selectedIndex 
-  const next_row = table.rows[n_row - 1].cloneNode(true); 
-  for(let Ci = 0; Ci < n_col; Ci++){ 
-    switch(col_names[Ci]){ 
-      case COL.DATE:     // the time and place the new row is made 
-      case COL.LOC_LAT: 
-      case COL.LOC_LON: 
-      case COL.LOC_ACC: 
-        next_row.children[Ci].innerHTML = autoValue(col_names[Ci]); 
-        break; 
-      case COL.UPDATE_TIME_GPS: // do nothing 
-      case COL.DELETE:          // do nothing 
-        break; 
-      case COL.NO:           // no = max(no) + 1 
-        const nos = getColData(table, col_names[Ci]); 
-        next_row.children[Ci].innerHTML = Math.max.apply(Math, string2Numeric(nos)) + 1; 
-        break; 
-      case COL.SAME_AS:     // clear 
-        next_row.children[Ci].innerHTML = ""; 
-        break; 
-      default: 
-        if(next_row.children[Ci].firstChild.value === void 0){   
-          // void 0 means undifined -> fixed text: do nothing 
-          break; 
-        } else { 
-          switch(next_row.children[Ci].firstChild.getAttribute("type")){ 
-            case "text":    // clear input text 
-            case "number":  // clear input text 
-              next_row.children[Ci].firstChild.value = ""; 
-              break; 
-            case null:      // select from list 
-              const selected_opt = last_row.children[Ci].firstChild.selectedIndex; 
-              next_row.children[Ci].firstChild.selectedIndex = selected_opt; 
-              break; 
-            case "checkbox": // do nothing 
-  // if want 'Identified' checked and others no checked -> activate the codes below 
-  //               if(col_names[Ci] === 'Identified'){ next_row.children[Ci].firstChild.checked = true;  
-  //               }else{                              next_row.children[Ci].firstChild.checked = false; } 
-              break; 
-          } 
-        } 
-        break; 
-    } 
-  } 
-  table.appendChild(next_row); 
+}</script> <script>// addRowWithValues({ table:document.getElementById('full_plot_tb'), values:{ item:"new_item", type:"auto", value:"new_value", DELETE:"del"} });
+function addRowWithValues({ table, values }){
+  // var table = document.getElementById('input_occ_a_tb'); var layer = 'H'; var species = 'new_species';
+  // var table = document.getElementById('full_plot_tb'); var key = "item"; value = "new_val";
+  addRow(table);
+  const c_names = getColNames(table);
+  const keys = Object.keys(values);
+  const row_no   = table.rows.length - 1;
+  for(const key of keys){
+    const col_no = c_names.indexOf(key);
+    if(col_no < 0) continue;
+    const td = table.rows[row_no].cells[col_no];
+    const value = (values[key] === void 0) ? '' : values[key];
+  // console.log(c_names);
+  // console.log(td);
+  // console.log(values);
+  // console.log(key);
+    if(td.firstChild === null){                // fixed with no input
+      td.textContent = value;
+    }else{
+      if(td.firstChild.value === void 0){      // fixed with input
+        td.textContent = value;
+      }else{
+        if(td.firstChild.type === 'checkbox'){ // checkbox
+          td.firstChild.checked = value;
+        }else{
+          td.firstChild.value = value;         // text/number/select input
+        }
+      }
+    }
+  }
+}
+
+// Helper to call addRow() multiple times
+//    @param obj  A input element.
+//                  Normally use "this". 
+//    In BISS, addRows() is generated by createAddRowButton() as below. 
+//      createNrowInput() is necessary as well.
+//      
+//      // Down span
+//      var dn = crEl({ el:'span', ats:{id: "dn_" + ns} });
+//      dn.appendChild( createNrowInput() );
+//      dn.appendChild( createAddRowButton() );
+//      // Main
+//      var main   = crEl({ el:'span', ats:{id: "main_"   + ns} })
+//      main.appendChild(up);
+//      main.appendChild(table);
+//      main.appendChild(dn);
+//      main.appendChild( crEl({ el: 'hr' }) );
+function addRows(obj){
+  // console.log(obj);
+  //   var table = obj.parentNode.parentNode.querySelectorAll("table")[0];
+  const n_row = document.getElementById(obj.id.replace('add_rows', 'nrow')).value;
+  const table = document.getElementById(obj.id.replace('add_rows', 'tb'));
+  for(let i = 0; i < n_row; i++){ addRow(table); }
+}
+
+// Copy buttom row and paste it as new rows
+//    Column date  getNow() will be applied.
+//    Column fixed and <select> <option> will be used the same selection.
+//    Column "checkbox" and "text" will be made as unchecked and blank one.
+//    
+function addRow(table){
+  // console.log(table);
+  const col_names = getColNames(table);
+  const n_col = col_names.length;
+  const n_row = table.rows.length;
+  const last_row = table.rows[n_row - 1];  // to get selectedIndex
+  const next_row = table.rows[n_row - 1].cloneNode(true);
+  for(let Ci = 0; Ci < n_col; Ci++){
+    switch(col_names[Ci]){
+      case COL.DATE:     // the time and place the new row is made
+      case COL.LOC_LAT:
+      case COL.LOC_LON:
+      case COL.LOC_ACC:
+        next_row.children[Ci].textContent = autoValue(col_names[Ci]);
+        break;
+      case COL.UPDATE_TIME_GPS: // do nothing
+      case COL.DELETE:          // do nothing
+        break;
+      case COL.NO:           // no = max(no) + 1
+        const nos = getColData(table, col_names[Ci]);
+        next_row.children[Ci].textContent = Math.max.apply(Math, string2Numeric(nos)) + 1;
+        break;
+      case COL.SAME_AS:     // clear
+        next_row.children[Ci].textContent = "";
+        break;
+      default:
+        if(next_row.children[Ci].firstChild.value === void 0){  
+          // void 0 means undifined -> fixed text: do nothing
+          break;
+        } else {
+          switch(next_row.children[Ci].firstChild.getAttribute("type")){
+            case "text":    // clear input text
+            case "number":  // clear input text
+              next_row.children[Ci].firstChild.value = "";
+              break;
+            case null:      // select from list
+              const selected_opt = last_row.children[Ci].firstChild.selectedIndex;
+              next_row.children[Ci].firstChild.selectedIndex = selected_opt;
+              break;
+            case "checkbox": // do nothing
+  // if want 'Identified' checked and others no checked -> activate the codes below
+  //               if(col_names[Ci] === 'Identified'){ next_row.children[Ci].firstChild.checked = true; 
+  //               }else{                              next_row.children[Ci].firstChild.checked = false; }
+              break;
+          }
+        }
+        break;
+    }
+  }
+  table.appendChild(next_row);
 }</script> <script>// Change table view wide <--> short.  
 //   Short table hide th and show label in td. 
 //    
@@ -1525,719 +1548,720 @@ function isShownCol(table){
     display_style_none.push(!!!ths[i].getAttribute('style')); 
   } 
   return display_style_none; 
-}</script> <script>// Show the page of the clicked tab and hide the others (used as the onclick of a tab). 
-function changeTab(){ 
-  const ref = decodeURI(this.href);  // For multibyte character 
-  const targetid = ref.substring(ref.indexOf('#')+1, ref.length); 
-  // console.log([ref,targetid]); 
-  // show selected tab 
-  for(let i = 0; i < pages.length; i++) { 
-    if( pages[i].id != targetid ) { 
-      pages[i].style.display = "none"; 
-    } 
-    else { 
-      pages[i].style.display = "block"; 
-    } 
-  } 
-  // show front 
-  for(let i = 0; i < tabs.length; i++) { 
-    tabs[i].style.zIndex = "0"; 
-  } 
-  this.style.zIndex = "10"; 
-  // Updates 
-  updateInputsPlotLayerSpecies(); 
- 
-  // needs not to move tab 
-  return false; 
-} 
- 
- 
-// Give every tab, new ones included, changeTab() as its onclick. 
-function updateTab(){ 
-  // get elements 
-  const tabs = document.getElementById('tabcontrol').getElementsByTagName('a'); 
-  // when clicked, enable to run changeTab() in all tab 
-  for(let i = 0; i < tabs.length; i++) { 
-    tabs[i].onclick = changeTab; 
-  } 
-} 
- 
-// Redraw everything that follows the input: the all plots tables, the PLOT and Layer selects, and the species lists. 
-function updateInputsPlotLayerSpecies(){ 
-  updateAllInputsTables();  // All plots 
-  updatePlotLayer({});      // PLOT and Layer select in Tools 
-  updateSpeciesList();      // species list 
-} 
- 
-// Redraw every species list from the list selected in it. 
-//   A module can hold two pull downs of species lists: the one that says 
-//   which list is shown, and the one that says which list to delete. Both 
-//   need their options refreshed, because a list may have been registered 
-//   or deleted since they were built. Only the first one decides what is 
-//   shown: rebuilding from the delete pull down as well would take its own 
-//   empty value and wipe the species the first one just put there. 
-const SL_SELECT_SELECTOR = "select[id^='sp_list_select-']:not([id$='-flora'])"; 
-const SL_DELETE_SELECTOR = "select[id^='sp_list_delete_name-']"; 
- 
-function updateSpeciesList(){ 
-  for(const select of document.querySelectorAll(SL_SELECT_SELECTOR + ',' + SL_DELETE_SELECTOR)){ 
-    updateSelectSLById(select.id); 
-  } 
-  // Query again: updateSelectSLById() puts a new element in place of each one. 
-  for(const select of document.querySelectorAll(SL_SELECT_SELECTOR)){ 
-    const ns = getSlNs(select.id); 
-    const id = 'sp_list_sp_list-' + ns; 
-    const is_checked = document.getElementById('sp_list_checkbox-' + ns).checked; 
-    replaceSpeciesList(select.value, id, is_checked); 
-  } 
-} 
- 
-// Add the PLOT column, holding the plot name, in front of a table definition. 
-function addPlotId(plot_data, id){ 
-  // var plot_data = temp1; 
-  plot_data['biss_c_names'].unshift(COL.PLOT); 
-  plot_data['biss_d_types'].unshift('fixed'); 
-  plot_data['biss_selects'].unshift(''); 
-  plot_data['biss_inputs'][COL.PLOT] = [id]; 
-  return plot_data; 
-} 
- 
-// Add the NO column, holding the plot number, in front of a table definition. 
-function addPlotNo(plot_data, no){ 
-  // var plot_data = temp1; 
-  plot_data['biss_c_names'].unshift(COL.NO); 
-  plot_data['biss_d_types'].unshift('fixed'); 
-  plot_data['biss_selects'].unshift(''); 
-  plot_data['biss_inputs'][COL.NO] = [no]; 
-  return plot_data; 
-} 
- 
-// The largest plot number in use, or 0 when there is no plot yet. 
-function getPlotMaxNo(){ 
-  const tables = document.querySelectorAll("table[id^='input_plot']"); 
-  const max_no = [0]; 
-  for(const tb of tables){ 
-    max_no.push(getColData(tb, COL.NO)[0]); 
-  } 
-  return Math.max.apply(Math, string2Numeric(max_no)); 
-} 
- 
-// Add a tab 
-//   in progress 
-function addInputTab({ obj, id }){ 
-  // input PLOT name 
-  if(id == void 0){ 
-    id = prompt(msg('prompt_plot'), ""); 
-  } 
-  if(null === id){ 
+}</script> <script>// Show the page of the clicked tab and hide the others (used as the onclick of a tab).
+function changeTab(){
+  const ref = decodeURI(this.href);  // For multibyte character
+  const targetid = ref.substring(ref.indexOf('#')+1, ref.length);
+  // console.log([ref,targetid]);
+  // show selected tab
+  for(let i = 0; i < pages.length; i++) {
+    if( pages[i].id != targetid ) {
+      pages[i].style.display = "none";
+    }
+    else {
+      pages[i].style.display = "block";
+    }
+  }
+  // show front
+  for(let i = 0; i < tabs.length; i++) {
+    tabs[i].style.zIndex = "0";
+  }
+  this.style.zIndex = "10";
+  // Updates
+  updateInputsPlotLayerSpecies();
+
+  // needs not to move tab
+  return false;
+}
+
+
+// Give every tab, new ones included, changeTab() as its onclick.
+function updateTab(){
+  // get elements
+  const tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
+  // when clicked, enable to run changeTab() in all tab
+  for(let i = 0; i < tabs.length; i++) {
+    tabs[i].onclick = changeTab;
+  }
+}
+
+// Redraw everything that follows the input: the all plots tables, the PLOT and Layer selects, and the species lists.
+function updateInputsPlotLayerSpecies(){
+  updateAllInputsTables();  // All plots
+  updatePlotLayer({});      // PLOT and Layer select in Tools
+  updateSpeciesList();      // species list
+}
+
+// Redraw every species list from the list selected in it.
+//   A module can hold two pull downs of species lists: the one that says
+//   which list is shown, and the one that says which list to delete. Both
+//   need their options refreshed, because a list may have been registered
+//   or deleted since they were built. Only the first one decides what is
+//   shown: rebuilding from the delete pull down as well would take its own
+//   empty value and wipe the species the first one just put there.
+const SL_SELECT_SELECTOR = "select[id^='sp_list_select-']:not([id$='-flora'])";
+const SL_DELETE_SELECTOR = "select[id^='sp_list_delete_name-']";
+
+function updateSpeciesList(){
+  for(const select of document.querySelectorAll(SL_SELECT_SELECTOR + ',' + SL_DELETE_SELECTOR)){
+    updateSelectSLById(select.id);
+  }
+  // Query again: updateSelectSLById() puts a new element in place of each one.
+  for(const select of document.querySelectorAll(SL_SELECT_SELECTOR)){
+    const ns = getSlNs(select.id);
+    const id = 'sp_list_sp_list-' + ns;
+    const is_checked = document.getElementById('sp_list_checkbox-' + ns).checked;
+    replaceSpeciesList(select.value, id, is_checked);
+  }
+}
+
+// Add the PLOT column, holding the plot name, in front of a table definition.
+function addPlotId(plot_data, id){
+  // var plot_data = temp1;
+  plot_data['biss_c_names'].unshift(COL.PLOT);
+  plot_data['biss_d_types'].unshift('fixed');
+  plot_data['biss_selects'].unshift('');
+  plot_data['biss_inputs'][COL.PLOT] = [id];
+  return plot_data;
+}
+
+// Add the NO column, holding the plot number, in front of a table definition.
+function addPlotNo(plot_data, no){
+  // var plot_data = temp1;
+  plot_data['biss_c_names'].unshift(COL.NO);
+  plot_data['biss_d_types'].unshift('fixed');
+  plot_data['biss_selects'].unshift('');
+  plot_data['biss_inputs'][COL.NO] = [no];
+  return plot_data;
+}
+
+// The largest plot number in use, or 0 when there is no plot yet.
+function getPlotMaxNo(){
+  const tables = document.querySelectorAll("table[id^='input_plot']");
+  const max_no = [0];
+  for(const tb of tables){
+    max_no.push(getColData(tb, COL.NO)[0]);
+  }
+  return Math.max.apply(Math, string2Numeric(max_no));
+}
+
+// Add a plot: a tab, its two input tables built from the settings, and the
+//   species list module under them.
+//   @param obj  The element the new tab is put in front of (the + PLOT button).
+//   @param id   A string, the plot name. Asked for when it is not given.
+function addInputTab({ obj, id }){
+  // input PLOT name
+  if(id == void 0){
+    id = prompt(msg('prompt_plot'), "");
+  }
+  if(null === id){
+    return void 0;
+  }
+  if(/_/.test(id)){
+    alert( msg('alert_plot_ub') );
+    return void 0;
+  }
+  if('' === id){
+    alert( msg('alert_plot_empty') );
+    return void 0;
+  }
+  if(null !== document.getElementById(id)){
+    alert( msgF('alert_plot_dup', id) );
     return void 0; 
-  } 
-  if(/_/.test(id)){ 
-    alert( msg('alert_plot_ub') ); 
-    return void 0; 
-  } 
-  if('' === id){ 
-    alert( msg('alert_plot_empty') ); 
-    return void 0; 
-  } 
-  if(null !== document.getElementById(id)){ 
-    alert( msgF('alert_plot_dup', id) ); 
-    return void 0;  
-  } 
-  // create tabcontrol 
-  const a = crEl({ el: 'a', ats: {href: "#" + id}, ih: id }); 
-  document.getElementById('tabcontrol').insertBefore(a, obj); 
- 
-  // create tabbody 
-  const tabbody = document.getElementById('tabbody'); 
-  const div = crEl({ el: 'div', ats: {id: id} }); 
-  tabbody.appendChild(div); 
- 
-  // create input tables 
-      // PLOT 
-  let plot_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[0] ) ); 
-  plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1); 
-  plot_setting = addPlotId(plot_setting, id); 
-  const pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id,  
-                              id_text: true,  
-                              hide_button: true, fit_button: true }) 
-  div.appendChild( pl_table ); 
-  document.getElementById('input_plot_' + id + '_fit').onclick(); 
- 
-      // OCC 
-  let occ_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[1] ) ); 
-  occ_setting = addPlotId(occ_setting, id); 
-  const oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id,  
-                              id_text: true, search_input: true, 
-                              hide_button: true, fit_button: true,  
-                              add_button: true, calc_button: true}) 
-  div.appendChild( oc_table ); 
-  document.getElementById('input_occ_' + id + '_nrow').value = 3; 
-  document.getElementById('input_occ_' + id + '_add_rows').onclick(); 
-  updateTab(); 
-  tabs[tabs.length - 1].onclick();  // move tab 
-  const table = searchParentTable(oc_table); 
-  setSortable(table.id);  // Should setSortable() after appendChild() 
- 
-  // void 0 hides the pull downs: createSpecieUlModule() reads it as "do not show" 
-  const show_select_options = (occ_setting.biss_c_names.indexOf(COL.LAYER) < 0) ? void 0 : true; 
-  const ul_module = createSpecieUlModule({ species: '', ns: id, 
-                  show_select_button   : true,  
-                  show_comp_checkbox   : true,  
-                  show_text_input      : true,  
-                  show_select_options  : show_select_options   }); 
-  div.appendChild( ul_module ); 
-  // all update 
-  updateInputsPlotLayerSpecies() 
-} 
- 
-// Rebuild the plot, occurrence and composition tables of the All plots tab. 
-function updateAllInputsTables(){ 
-  const pl_table = createAllInputsTable('input_plot') 
-  const oc_table = createAllInputsTable('input_occ' ) 
-  if(pl_table === void 0){ return void 0; } 
-  document.getElementById('plot_all').replaceWith(pl_table); 
-  document.getElementById('occ_all' ).replaceWith(oc_table); 
-  setSortable( searchParentTable(pl_table).id ); 
-  setSortable( searchParentTable(oc_table).id ); 
- 
-  const tables = document.querySelectorAll("table[id^='input_occ']"); 
-  const comp_table = createCompTable(tables); 
-  document.getElementById('comp_table').replaceWith(comp_table); 
-  setSortable( searchParentTable(comp_table).id ); 
-} 
- 
-// Stack every input table of one kind into one table, without the button columns (DELETE, UPDATE_TIME_GPS). 
-function createAllInputsTable(table_name){ 
-  // var table_name = "input_occ"; var table_name = "input_plot"; 
-  const tables = document.querySelectorAll("table[id^='" + table_name + "']"); 
-  if(0 === tables.length){ return void 0; }  // return void 0, when no input tables 
-  let c_names = getUniqeColNames(tables); 
-  c_names = c_names.filter(item => ! BUTTON_COLS.includes(item)); 
- 
-  const inputs = getMultiTableInputs(tables, c_names); 
-  const d_types = Array(c_names.length).fill('fixed'); 
-  const selects = Array(c_names.length).fill(''); 
- 
-  const all_data = { 
-    biss_c_names: c_names, 
-    biss_d_types: d_types, 
-    biss_selects: selects, 
-    biss_inputs : inputs 
-  } 
- 
-  const all_table_name = table_name.split("_")[1] + '_all'; 
-  //   var all_table = makeTableJO(all_data, all_table_name); 
-  const all_table = tableModule({table_data: all_data, ns: all_table_name, 
-                              search_input: true, 
-                              fit_button: true, hide_button: true}); 
-  return all_table; 
-} 
-// The column names of several tables, each of them once. 
-function getUniqeColNames(tables){ 
-  let c_names = []; 
-  for(let i = 0; i < tables.length; i++) { 
-    c_names = c_names.concat(getColNames(tables[i])); 
-  } 
-  return uniq(c_names); 
-} 
-// The data of the given columns, read from several tables and joined per column. 
-function getMultiTableInputs(tables, c_names){ 
-  const inputs = {};   // keyed by column name 
-  for(const c_name of c_names){ 
-    inputs[c_name] = []; 
-    for(const tb of tables){ 
-  // console.log(tb); 
-  // console.log(c_name); 
-      inputs[c_name] = inputs[c_name].concat(getColData(tb, c_name)); 
-    } 
-  } 
-  return inputs; 
-} 
- 
-// The names of the columns that hold a pull down in any of the tables. 
-function getMultiTableSelects(tables){ 
-  const selects = []; 
-  for(const table of tables){ 
-    const d_types = getDataTypes(table); 
-    const c_names = getColNames(table); 
-    const indices = multiIndexOf(d_types, 'list'); 
-    for(const i of indices){ 
-      selects.push(c_names[i]); 
-    } 
-  } 
-  return uniq(selects); 
-} 
- 
-// The options of the given columns, collected over several tables. 
-function getMultiTableOptions(tables, c_names){ 
-  const options = {};   // keyed by column name 
-  for(const c_name of c_names){ 
-    options[c_name] = []; 
-    for(const tb of tables){ 
-      options[c_name] = options[c_name].concat(getSelectOne(tb, c_name)); 
-    } 
-  } 
-  return options; 
-} 
- 
-// Make an unidentified species name unique per plot (or per the plot named in SameAs), so that two of them are not counted as one. 
-function checkSameAs(inputs, pl, sp, id, sa){ 
-  // var inputs = temp1; var pl = 'PLOT'; var sp = 'Species'; var id = 'Identified'; var sa = 'SameAs'; 
-  for(let i=0; i < inputs[pl].length; i++){ 
-    if(inputs[id][i] === false) 
-      if(inputs[sa][i] === ''){ 
-         inputs[sp][i] = inputs[sp][i] + '_' + inputs[pl][i]; 
-       }else{ 
-         inputs[sp][i] = inputs[sp][i] + '_' + inputs[sa][i]; 
-      } 
-  } 
-  return inputs; 
-} 
-// Build the composition table: species by plot, holding the cover ('--' when present without a cover). 
-function createCompTable(tables, pl = COL.PLOT, sp = COL.SPECIES, ab = COL.COVER, id = COL.IDENTIFIED, sa = COL.SAME_AS){ 
-  // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']"); 
-  let inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]); 
-  // console.log(inputs); 
-  inputs = checkSameAs(inputs, pl, sp, id, sa) 
-  const uniq_pl = uniq(inputs[pl]); 
-  const uniq_sp = uniq(inputs[sp]); 
-  const c_names = [sp].concat(uniq_pl); 
-  const data_table = {};   // keyed by column name: the species, then one per plot 
-  data_table[sp] = uniq_sp; 
-  for(const p of uniq_pl){ 
-    const data_col = []; 
-    for(const s of uniq_sp){ 
-      let value = 0; 
-      let is_present = 0; 
-      for(let i=0; i < inputs[ab].length; i++){ 
-        if(inputs[pl][i] === p && inputs[sp][i] === s ){ 
-          value = value + Number(inputs[ab][i]); 
-          is_present++; 
-        } 
-      } 
-      if(is_present === 0){  // absent 
-        value = ''; 
-      }else{                 // present 
-        if(value === 0){ 
-          value = '--';    // present, but no cover was given 
-        } 
-      } 
-      data_col.push(value); 
-    } 
-    data_table[p] = data_col; 
-  } 
-  data_table; 
- 
-  const d_types = Array(c_names.length).fill('fixed'); 
-  const selects = Array(c_names.length).fill(''); 
-  const comp_data = { 
-    biss_c_names: c_names, 
-    biss_d_types: d_types, 
-    biss_selects: selects, 
-    biss_inputs : data_table 
-  } 
-  const comp_table = tableModule({table_data: comp_data, ns: 'comp_table', 
-                              id_text: true, search_input: true, 
-                              hide_button: true}) 
-  return comp_table; 
-}</script> <script>// The name space of a species list element, taken from its id. 
-//    Every element of a module is named 'sp_list_<part>-<ns>', where <part> 
-//    is fixed and holds no '-' (select, checkbox, staged, delete_name, ...) 
-//    and <ns> is a plot name, 'all' or 'flora'. 
-//    A plot name MAY hold a '-': addInputTab() refuses '_' and tells the user 
-//    to write '-' instead. So the name space is everything after the FIRST 
-//    '-', not the second field of a split: 'sp_list_select-sito-A' is the 
-//    module of plot 'sito-A', not of a plot called 'sito'. 
-//    @param  id  A string, the id of an element of a species list module. 
-//    @return     A string. 
-function getSlNs(id){ 
-  return id.slice(id.indexOf('-') + 1); 
-} 
- 
-// Get species list in compotition table 
-//    @param  sp  A string to specify a species column. 
-//                Usually and in default, use 'Species'. 
-//    @return     An array of species in composition table. 
-function getSpeciesInComposition(sp = COL.SPECIES){ 
-  const comp = document.getElementById('comp_table_tb'); 
-  if(comp === null){ return []; } // return, when no inputs 
-  const species = getColData(comp, sp); 
-  removeEmptyInArray(species); 
-  return species; 
-} 
-// Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out. 
-function createSpecieUlModule({ species, ns, 
-                                show_select_button     , show_comp_checkbox, show_delete_list,  
-                                show_select_ncol       ,  
-                                show_button_register_sl,  
-                                show_text_input        ,  
-                                show_button_update_pl  , show_select_plot     , show_select_options}){ 
-  // var ns = 'all'; var species = sp_list; 
-  const base_name = 'sp_list_'; 
-  const main               = createSpanWithId      ( base_name + 'module-'    + ns          ); 
- 
-  const select_button      = createSelectSL        ( base_name + 'select-'    + ns          ); 
-  const select_ncol        = createSelectNumber    ( base_name + 'ncols-'     + ns          ); 
-  const comp_checkbox      = createCompCheckbox    ( base_name + 'checkbox-'  + ns          ); 
- 
-  const button_register_sl = createRegisterSLButton( base_name + 'register-'  + ns          ); 
-  const delete_list        = createDeleteSL        ( base_name + 'delete-'    + ns          ); 
- 
-  const staged             = createSpanWithId      ( base_name + 'staged-'    + ns          ); 
-  const text_input         = createSLInput         ( base_name + 'input-'     + ns          ); 
-  const button_update_pl   = createUpdatePLButton  ( base_name + 'update_pl-' + ns          ); 
-  const button_add         = createSLAdd           ( base_name + 'add-'       + ns          ); 
-  const select_plot        = createSelectPlot      ( base_name + 'plot-'      + ns          ); 
-  const select_options     = createSelectOptions   ( base_name + 'options-'    + ns         ); 
-  // console.log(select_options); 
-  const sp_list            = createSpecieList    ( base_name + 'sp_list-'   + ns, species ); 
- 
-  main.appendChild( select_ncol         ); 
-  main.appendChild( select_button       ); 
-  main.appendChild( comp_checkbox       ); 
-  main.appendChild( crEl({ el: 'br' })  ); 
-  main.appendChild( button_register_sl  ); 
-  main.appendChild( delete_list         ); 
-  main.appendChild( crEl({ el: 'br' })  ); 
-  main.appendChild( staged              ); 
-  main.appendChild( crEl({ el: 'br' })  ); 
-  main.appendChild( text_input          ); 
-  main.appendChild( crEl({ el: 'br' })  ); 
-  main.appendChild( button_update_pl    ); 
-  main.appendChild( button_add          ); 
-  main.appendChild( select_plot         ); 
-  main.appendChild( select_options      ); 
-  main.appendChild( sp_list             ); 
-  main.appendChild( crEl({el:'hr'})     ); 
- 
-  if( show_select_ncol          === void 0){ select_ncol        .style.display = "none"; } 
-  if( show_select_button        === void 0){ select_button      .style.display = "none"; } 
-  if( show_comp_checkbox        === void 0){ comp_checkbox      .style.display = "none"; } 
-  if( show_delete_list          === void 0){ delete_list        .style.display = "none"; } 
-  if( show_button_register_sl   === void 0){ button_register_sl .style.display = "none"; } 
-  if( show_text_input           === void 0){ text_input         .style.display = "none"; } 
-  if( show_button_update_pl     === void 0){ button_update_pl   .style.display = "none"; } 
-  if( show_select_plot          === void 0){ select_plot        .style.display = "none"; } 
-  if( show_select_options       === void 0){ select_options     .style.display = "none"; } 
- 
-  return main; 
-} 
- 
-// span 
-function createSpanWithId(id){ 
-  return crEl({ el: 'span', ats:{ id: id} }); 
-} 
- 
-// Select species list 
-function createSelectSL(id){ 
-  const span   = crEl({ el:'span' }); 
-  const select = createSL(id); 
-  span.appendChild( msgSpan('s_list') ); 
-  span.appendChild(select); 
-  return span; 
-} 
-// Create the delete button and the pull down of the list it deletes. 
-function createDeleteSL(id){ 
-  const delete_name = id.replace('delete', 'delete_name'); 
-  const span   = crEl({ el:'span' }); 
-  const delete_button = crEl({ el:'input', ats:{type: 'button', value: msg('delete_list'), 'data-msg': 'delete_list', onclick: 'deleteSl(this)', id: id} }); 
-  const select = createSL(delete_name, '', '');  // '', '': no value picked, no 'NEW' option 
-  span.appendChild( delete_button ); 
-  span.appendChild( select ); 
-  return span; 
-} 
-// Delete the selected species list after a confirmation, then redraw the pull downs. 
-function deleteSl(obj){ 
-  const sel_de = obj.id.replace('delete', 'delete_name'); 
-  const select = obj.id.replace('delete', 'select'); 
-  const del_list = document.getElementById(sel_de).value; 
-  const is_ok = confirm( msgF('confirm_del_sl', del_list) ); 
-  if(is_ok){ 
-    removeSLinLS(del_list); 
-    updateSelectSLById(select); 
-    updateSelectSLById(sel_de); 
-  } 
-  return void 0; 
-} 
- 
- 
-// Redraw a species list pull down, keeping what was selected. 
-function updateSelectSLById(id){ 
-  const old_select = document.getElementById(id); 
-  const first_option = (/delete/.test(id)) ? '' : 'NEW' 
-  const selected_value = old_select.value; 
-  const new_select = createSL(id, selected_value, first_option); 
-  old_select.replaceWith(new_select); 
-} 
-// Create the pull down of the stored species lists ('NEW' first, unless it is the delete one). 
-function createSL(id, value = '', first_option = 'NEW'){ 
-  const species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', ''); 
-  species_list.sort(); 
-  species_list.unshift(first_option); 
-  const select = createSelectOpt(species_list, 0, id); 
-  if(value !== ''){ setSelectOption(select, value); } 
-  select.setAttribute('onchange', 'changeSL(this)'); 
-  return select 
-} 
- 
-// Select the option of that value, or the first one when it is not there. 
-function setSelectOption(select, value){ 
-  const options = getSelectOptionInCell(select); 
-  const index = Math.max(0, options.indexOf(value));  // -1 (not there) picks the first 
-  select.options[index].selected = true; 
-} 
- 
- 
-// Create the checkbox that adds the composition species to the list. 
-function createCompCheckbox(id){ 
-  const span     = crEl({ el:'span', ats:{class: 'margin_right'} }); 
-  const checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} }); 
-  span.appendChild( msgSpan('include_comp') ); 
-  span.appendChild(checkbox); 
-  return span; 
-} 
- 
-// Redraw the species buttons for the list just selected. 
-function changeSL(obj){ 
-  const ns = getSlNs(obj.id); 
-  const id = 'sp_list_sp_list-' + ns; 
-  const sl = document.getElementById('sp_list_select-' + ns).value; 
-  // console.log('id:' + id + ', sl:' + sl); 
-  const is_checked = document.getElementById('sp_list_checkbox-' + ns).checked; 
-  replaceSpeciesList(sl, id, is_checked); 
-} 
- 
-// Load  
-//   @param obj  A input element. 
-//                 Normally use "this".  
-async function registerSL(obj){ 
-  const id = obj.id; 
-  const name = obj.files[0].name.split("\.")[0]; 
-  const text = await readFile(obj.files[0]); 
-  const sp_list = text.replaceAll('\r', '').split(/[,\n]/); 
-  removeEmptyInArray(sp_list); 
-  addSLinLS(sp_list, name); 
-  updateSelectSLById(id.replace('register', 'select')); 
-  updateSelectSLById(id.replace('register', 'delete_name')); 
-  obj.value = '';  // for select the same file twice or more 
-  const select = document.getElementById(id.replace('register', 'select')); 
-  setSelectOption(select, name); 
-  changeSL(select); 
-} 
-// Create the file input that registers a species list from a text file. 
-function createRegisterSLButton(id){ 
-  const span = crEl({el:'span' }); 
-  const file_input = createFileInput({ id: id, onchange: "registerSL(this)" }); 
-  span.appendChild( msgSpan('register') ); 
-  span.appendChild(file_input); 
-  return span; 
-} 
- 
-// No. of columns 
-function createSelectNumber(id){ 
-  const span = crEl({el:'span' }); 
-  const select = createSelectOpt([1,2,3,4,5,6,7,8,9], 5, id); 
-  select.setAttribute('onchange', 'changeUlColumns(this)'); 
-  span.appendChild( msgSpan('n_cols') ); 
-  span.appendChild(select); 
-  return span; 
-} 
-// Set how many columns the species lists are shown in ('--cc' in the CSS). 
-function changeUlColumns(obj){ 
-  const ncols = obj.value; 
-  document.documentElement.style.setProperty('--cc', ncols); 
-} 
- 
-// Species list 
-function createSpecieList(id, species){ 
-  const ns = getSlNs(id); 
-  const ul = crEl({ el:'ul', ats:{id: id} }); 
-  // console.log(species); 
-  for(const sp of species){ 
-    const li = crEl({ el:'li' }) 
-    const button = createSpeciesButton({ sp: sp, to_stage: true, ns: ns }) 
-    li.appendChild(button); 
-    ul.appendChild(li); 
-  } 
-  return ul; 
-} 
-//  
-//    @param  sl   A string of a species list. 
-//    @param  id   A string of a namespace: plot name, 'all', or 'flora'. 
-//  
-function replaceSpeciesList(sl, id, add_comp = true){ 
-  // var sl = 'tabu'; 
-  let new_sp  = (sl === 'NEW' || sl === '') ? [] : getSLinLS(sl); 
-  const comp_sp = add_comp ? getSpeciesInComposition() : []; 
-  new_sp = new_sp.concat(comp_sp).sort(); 
-  const new_sp_list = createSpecieList(id, new_sp); 
-  const old_sp_list = document.getElementById(id); 
-  old_sp_list.replaceWith(new_sp_list); 
-} 
-// Create the button of one species (to_stage: click stages it, otherwise click takes it back). 
-function createSpeciesButton({ sp, to_stage, ns }){ 
-  const id      = to_stage ? ns + '_sp_' + sp      : ns + '_staged_sp_' + sp; 
-  const onclick = to_stage ? "stageSpecies(this)" : "unStageSpecies(this)"; 
-  return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } }); 
-} 
-// Create the box for typing species names that have no button. 
-function createSLInput(id){ 
-  return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: msg('input_species'), 'data-msg-ph': 'input_species', size:'100'} }); 
-} 
- 
-// Plot and Layer 
-function createUpdatePLButton(id){ 
-  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('update_pl'), 'data-msg': 'update_pl', onclick: 'updatePlotLayer({ obj:this })'} }); 
-} 
-// Create the PLOT pull down: every plot for 'all' and 'flora', the own plot otherwise. 
-function createSelectPlot(id){ 
-  const span = crEl({ el:'span' }); 
-  span.appendChild( msgSpan('plot_label') ); 
-  const ns = getSlNs(id); 
-  let plot_list;   // declared here: both branches and the line below share it 
-  if(ns === 'all' || ns === 'flora'){ 
-    const tables = document.querySelectorAll("table[id^='input_occ']"); 
-    const pl = COL.PLOT; 
-    plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]); 
-  }else{ 
-    plot_list = [ns]; 
-  } 
-  const plot_select = createSelectOpt(plot_list.reverse(), 0, id);  // up: new plot, down: old plot 
-  span.appendChild(plot_select) 
-  return span; 
-} 
-// Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given. 
-function updatePlotLayer({ obj }){ 
-  const nss = (obj === void 0) ? ['all', 'flora'] : [getSlNs(obj.id)]; 
-  const base_name = 'sp_list_'; 
-  for(const ns of nss){ 
-    const plot_id  = base_name + 'plot-'    + ns; 
-    const layer_id = base_name + 'options-' + ns; 
-    replaceSelectPlot (plot_id ); 
-    replaceSelectLayer(layer_id); 
-  } 
-} 
-// Replace a PLOT select with a freshly built one. 
-function replaceSelectPlot(id){ 
-  const old_plot = document.getElementById(id).parentNode; 
-  const new_plot = createSelectPlot(id); 
-  old_plot.replaceWith(new_plot); 
-} 
-// Replace a Layer select with a freshly built one. 
-function replaceSelectLayer(id){ 
-  // console.log(id); 
-  const old_layer = document.getElementById(id); 
-  const new_layer = createSelectOptions(id); 
-  old_layer.replaceWith(new_layer); 
-} 
- 
-// Create one pull down per 'list' column of the occurrence tables (Layer and the like). 
-function createSelectOptions(id){ 
-  const ns = getSlNs(id); 
-  // console.log(ns); 
-  const selector =  "table[id^='input_occ_']"; 
-  const tables = document.querySelectorAll(selector); 
-  const selects = getMultiTableSelects(tables); 
-  const options = getMultiTableOptions(tables, selects); 
-  const opt_keys = Object.keys(options); 
-  const span = crEl({ el: 'span', ats:{id: id} }); 
-  for(const key of opt_keys){ 
-    span.appendChild( crEl({ el: 'span', ih: key}) ); 
-    const opts = uniq(options[key]); 
-    opts.unshift(''); 
-    const select = createSelectOpt(uniq(opts), 0, 'sp_list_options_' + key + '-' + ns); 
-    span.appendChild( select ); 
-  } 
-  return span; 
-} 
- 
- 
-// Add species 
-function createSLAdd(id){ 
-  return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } }); 
-} 
-// Move a species to the staged row and grey out its button. 
-function stageSpecies(obj){ 
-  const ns = getSlNs(obj.parentNode.parentNode.id); 
-  const sp_staged = document.getElementById('sp_list_staged-' + ns); 
-  const sp = obj.value; 
-  obj.setAttribute("disabled", true); 
-  const button = createSpeciesButton({ sp: sp, to_stage: false, ns: ns }); 
-  sp_staged.appendChild( button ); 
-} 
-// Take a species off the staged row and enable its button again. 
-function unStageSpecies(obj){ 
-  // console.log(obj) 
-  const ns = getSlNs(obj.parentNode.parentNode.id); 
-  const id = ns + '_sp_' + obj.value; 
-  const sp_button = document.getElementById(id); 
-  sp_button.removeAttribute("disabled"); 
-  obj.remove(); 
-} 
- 
-// What the pull downs of a module are set to, keyed by column name. 
-//    @param  ns  A string, the name space of the module. 
-//    @return     An object, e.g. { Layer: 'H' }. 
-function getSelectOptionsValues(ns){ 
-  const prefix = 'sp_list_options_'; 
-  // Quote the value and anchor it on the '-'. Unquoted it breaks on a plot 
-  // name that is not a plain CSS ident, and unanchored it also matches a 
-  // name that merely ends the same way ('all' would match 'small'). 
-  const selector = "select[id^='" + prefix + "'][id$='-" + ns + "']"; 
-  const values = {}; 
-  for(const opt of document.querySelectorAll(selector)){ 
-    // The id is 'sp_list_options_<column>-<ns>'. Either part may hold a '-', 
-    // so cut away the prefix and the name space, both of which are known, 
-    // instead of splitting on the first '-'. 
-    const column = opt.id.slice(prefix.length, opt.id.length - ns.length - 1); 
-    values[column] = opt.value; 
-  } 
-  return values; 
-} 
- 
-// Add the staged and typed species to the occurrence table of the selected plot, one row each. A name with '_' is read as species_SameAs and counted as unidentified. 
-function addSpecies(obj){ 
-  // console.log(obj); 
-  // console.log(obj.id); 
-  const base_name = 'sp_list_'; 
-  const ns = getSlNs(obj.id); 
-  const staged  = document.getElementById(base_name + 'staged-' + ns); 
-  const input   = document.getElementById(base_name + 'input-'  + ns); 
-  const plot    = document.getElementById(base_name + 'plot-'   + ns).value; 
-  const options = getSelectOptionsValues(ns); 
-  let species = getChildrenValues(staged); 
-  if(input.value !== ''){ 
-    const input_val = input.value.replaceAll('，', ',').replaceAll('、', ',') // FULL size JP -> half size 
-    species = species.concat(input_val.split(',')); 
-  } 
-  // add species 
-  const table = document.getElementById('input_occ_' + plot + '_tb'); 
-  for(const spec of species){ 
-    const [sp, same_as] = spec.split('_'); 
-    const iden = (same_as === void 0);  // no '_' in the name: an identified species 
-    const sa   = iden ? '' : same_as; 
-    // Build the row as an object. It used to be pasted together as JSON text 
-    // and parsed back, so a name holding a " or a \ threw and took the whole 
-    // batch with it. 
-    const values = Object.assign({}, options, 
-                                 { [COL.SPECIES]: sp, [COL.SAME_AS]: sa, [COL.IDENTIFIED]: iden }); 
-    addRowWithValues({ table: table, values: values }); 
-  } 
-  // clear inputs 
-  input.value = ''; 
-    // Delete from the front, elements will be shifted and don't work well 
-  for(let i = staged.children.length; 0 < i; i--){ // loop backwards 
-    staged.children[i-1].click(); 
-  } 
-} 
-// The values of the children of an element. 
-function getChildrenValues(element){ 
-  const values = []; 
-  for(const child of element.children){ 
-    values.push(child.value); 
-  } 
-  return values; 
+  }
+  // create tabcontrol
+  const a = crEl({ el: 'a', ats: {href: "#" + id}, tc: id });
+  document.getElementById('tabcontrol').insertBefore(a, obj);
+
+  // create tabbody
+  const tabbody = document.getElementById('tabbody');
+  const div = crEl({ el: 'div', ats: {id: id} });
+  tabbody.appendChild(div);
+
+  // create input tables
+      // PLOT
+  let plot_setting = convertTableData( getTableData( settingTable('plot') ) );
+  plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
+  plot_setting = addPlotId(plot_setting, id);
+  const pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
+                              id_text: true, 
+                              hide_button: true, fit_button: true })
+  div.appendChild( pl_table );
+  document.getElementById('input_plot_' + id + '_fit').onclick();
+
+      // OCC
+  let occ_setting = convertTableData( getTableData( settingTable('occ') ) );
+  occ_setting = addPlotId(occ_setting, id);
+  const oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
+                              id_text: true, search_input: true,
+                              hide_button: true, fit_button: true, 
+                              add_button: true, calc_button: true})
+  div.appendChild( oc_table );
+  document.getElementById('input_occ_' + id + '_nrow').value = 3;
+  document.getElementById('input_occ_' + id + '_add_rows').onclick();
+  updateTab();
+  tabs[tabs.length - 1].onclick();  // move tab
+  const table = searchParentTable(oc_table);
+  setSortable(table.id);  // Should setSortable() after appendChild()
+
+  // void 0 hides the pull downs: createSpecieUlModule() reads it as "do not show"
+  const show_select_options = (occ_setting.biss_c_names.indexOf(COL.LAYER) < 0) ? void 0 : true;
+  const ul_module = createSpecieUlModule({ species: '', ns: id,
+                  show_select_button   : true, 
+                  show_comp_checkbox   : true, 
+                  show_text_input      : true, 
+                  show_select_options  : show_select_options   });
+  div.appendChild( ul_module );
+  // all update
+  updateInputsPlotLayerSpecies()
+}
+
+// Rebuild the plot, occurrence and composition tables of the All plots tab.
+function updateAllInputsTables(){
+  const pl_table = createAllInputsTable('input_plot')
+  const oc_table = createAllInputsTable('input_occ' )
+  if(pl_table === void 0){ return void 0; }
+  document.getElementById('plot_all').replaceWith(pl_table);
+  document.getElementById('occ_all' ).replaceWith(oc_table);
+  setSortable( searchParentTable(pl_table).id );
+  setSortable( searchParentTable(oc_table).id );
+
+  const tables = document.querySelectorAll("table[id^='input_occ']");
+  const comp_table = createCompTable(tables);
+  document.getElementById('comp_table').replaceWith(comp_table);
+  setSortable( searchParentTable(comp_table).id );
+}
+
+// Stack every input table of one kind into one table, without the button columns (DELETE, UPDATE_TIME_GPS).
+function createAllInputsTable(table_name){
+  // var table_name = "input_occ"; var table_name = "input_plot";
+  const tables = document.querySelectorAll("table[id^='" + table_name + "']");
+  if(0 === tables.length){ return void 0; }  // return void 0, when no input tables
+  let c_names = getUniqeColNames(tables);
+  c_names = c_names.filter(item => ! BUTTON_COLS.includes(item));
+
+  const inputs = getMultiTableInputs(tables, c_names);
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
+
+  const all_data = {
+    biss_c_names: c_names,
+    biss_d_types: d_types,
+    biss_selects: selects,
+    biss_inputs : inputs
+  }
+
+  const all_table_name = table_name.split("_")[1] + '_all';
+  //   var all_table = makeTableJO(all_data, all_table_name);
+  const all_table = tableModule({table_data: all_data, ns: all_table_name,
+                              search_input: true,
+                              fit_button: true, hide_button: true});
+  return all_table;
+}
+// The column names of several tables, each of them once.
+function getUniqeColNames(tables){
+  let c_names = [];
+  for(let i = 0; i < tables.length; i++) {
+    c_names = c_names.concat(getColNames(tables[i]));
+  }
+  return uniq(c_names);
+}
+// The data of the given columns, read from several tables and joined per column.
+function getMultiTableInputs(tables, c_names){
+  const inputs = {};   // keyed by column name
+  for(const c_name of c_names){ inputs[c_name] = []; }
+  for(const tb of tables){
+    const cols = getColsData(tb, c_names);   // one walk per table, not per column
+    for(const c_name of c_names){
+      for(const value of cols[c_name]){ inputs[c_name].push(value); }
+    }
+  }
+  return inputs;
+}
+
+// The names of the columns that hold a pull down in any of the tables.
+function getMultiTableSelects(tables){
+  const selects = [];
+  for(const table of tables){
+    const d_types = getDataTypes(table);
+    const c_names = getColNames(table);
+    const indices = multiIndexOf(d_types, 'list');
+    for(const i of indices){
+      selects.push(c_names[i]);
+    }
+  }
+  return uniq(selects);
+}
+
+// The options of the given columns, collected over several tables.
+function getMultiTableOptions(tables, c_names){
+  const options = {};   // keyed by column name
+  for(const c_name of c_names){
+    options[c_name] = [];
+    for(const tb of tables){
+      options[c_name] = options[c_name].concat(getSelectOne(tb, c_name));
+    }
+  }
+  return options;
+}
+
+// Make an unidentified species name unique per plot (or per the plot named in SameAs), so that two of them are not counted as one.
+function checkSameAs(inputs, pl, sp, id, sa){
+  // var inputs = temp1; var pl = 'PLOT'; var sp = 'Species'; var id = 'Identified'; var sa = 'SameAs';
+  for(let i=0; i < inputs[pl].length; i++){
+    if(inputs[id][i] === false)
+      if(inputs[sa][i] === ''){
+         inputs[sp][i] = inputs[sp][i] + '_' + inputs[pl][i];
+       }else{
+         inputs[sp][i] = inputs[sp][i] + '_' + inputs[sa][i];
+      }
+  }
+  return inputs;
+}
+// Build the composition table: species by plot, holding the cover ('--' when present without a cover).
+function createCompTable(tables, pl = COL.PLOT, sp = COL.SPECIES, ab = COL.COVER, id = COL.IDENTIFIED, sa = COL.SAME_AS){
+  // var pl = "PLOT"; var sp = "Species"; var ab = "Cover"; id = "Identified"; sa = "SameAs"; var tables = document.querySelectorAll("table[id^='input_occ']");
+  let inputs = getMultiTableInputs(tables, [pl, sp, ab, id, sa]);
+  // console.log(inputs);
+  inputs = checkSameAs(inputs, pl, sp, id, sa)
+  const uniq_pl = uniq(inputs[pl]);
+  const uniq_sp = uniq(inputs[sp]);
+  const c_names = [sp].concat(uniq_pl);
+  const data_table = {};   // keyed by column name: the species, then one per plot
+  data_table[sp] = uniq_sp;
+  for(const p of uniq_pl){
+    const data_col = [];
+    for(const s of uniq_sp){
+      let value = 0;
+      let is_present = 0;
+      for(let i=0; i < inputs[ab].length; i++){
+        if(inputs[pl][i] === p && inputs[sp][i] === s ){
+          value = value + Number(inputs[ab][i]);
+          is_present++;
+        }
+      }
+      if(is_present === 0){  // absent
+        value = '';
+      }else{                 // present
+        if(value === 0){
+          value = '--';    // present, but no cover was given
+        }
+      }
+      data_col.push(value);
+    }
+    data_table[p] = data_col;
+  }
+  data_table;
+
+  const d_types = Array(c_names.length).fill('fixed');
+  const selects = Array(c_names.length).fill('');
+  const comp_data = {
+    biss_c_names: c_names,
+    biss_d_types: d_types,
+    biss_selects: selects,
+    biss_inputs : data_table
+  }
+  const comp_table = tableModule({table_data: comp_data, ns: 'comp_table',
+                              id_text: true, search_input: true,
+                              hide_button: true})
+  return comp_table;
+}</script> <script>// The name space of a species list element, taken from its id.
+//    Every element of a module is named 'sp_list_<part>-<ns>', where <part>
+//    is fixed and holds no '-' (select, checkbox, staged, delete_name, ...)
+//    and <ns> is a plot name, 'all' or 'flora'.
+//    A plot name MAY hold a '-': addInputTab() refuses '_' and tells the user
+//    to write '-' instead. So the name space is everything after the FIRST
+//    '-', not the second field of a split: 'sp_list_select-sito-A' is the
+//    module of plot 'sito-A', not of a plot called 'sito'.
+//    @param  id  A string, the id of an element of a species list module.
+//    @return     A string.
+function getSlNs(id){
+  return id.slice(id.indexOf('-') + 1);
+}
+
+// Get species list in compotition table
+//    @param  sp  A string to specify a species column.
+//                Usually and in default, use 'Species'.
+//    @return     An array of species in composition table.
+function getSpeciesInComposition(sp = COL.SPECIES){
+  const comp = document.getElementById('comp_table_tb');
+  if(comp === null){ return []; } // return, when no inputs
+  const species = getColData(comp, sp);
+  removeEmptyInArray(species);
+  return species;
+}
+// Build a species list module (list select, register, staged species, text box, PLOT and Layer selects, species buttons). Parts not asked for are hidden, not left out.
+function createSpecieUlModule({ species, ns,
+                                show_select_button     , show_comp_checkbox, show_delete_list, 
+                                show_select_ncol       , 
+                                show_button_register_sl, 
+                                show_text_input        , 
+                                show_button_update_pl  , show_select_plot     , show_select_options}){
+  // var ns = 'all'; var species = sp_list;
+  const base_name = 'sp_list_';
+  const main               = createSpanWithId      ( base_name + 'module-'    + ns          );
+
+  const select_button      = createSelectSL        ( base_name + 'select-'    + ns          );
+  const select_ncol        = createSelectNumber    ( base_name + 'ncols-'     + ns          );
+  const comp_checkbox      = createCompCheckbox    ( base_name + 'checkbox-'  + ns          );
+
+  const button_register_sl = createRegisterSLButton( base_name + 'register-'  + ns          );
+  const delete_list        = createDeleteSL        ( base_name + 'delete-'    + ns          );
+
+  const staged             = createSpanWithId      ( base_name + 'staged-'    + ns          );
+  const text_input         = createSLInput         ( base_name + 'input-'     + ns          );
+  const button_update_pl   = createUpdatePLButton  ( base_name + 'update_pl-' + ns          );
+  const button_add         = createSLAdd           ( base_name + 'add-'       + ns          );
+  const select_plot        = createSelectPlot      ( base_name + 'plot-'      + ns          );
+  const select_options     = createSelectOptions   ( base_name + 'options-'    + ns         );
+  // console.log(select_options);
+  const sp_list            = createSpecieList    ( base_name + 'sp_list-'   + ns, species );
+
+  main.appendChild( select_ncol         );
+  main.appendChild( select_button       );
+  main.appendChild( comp_checkbox       );
+  main.appendChild( crEl({ el: 'br' })  );
+  main.appendChild( button_register_sl  );
+  main.appendChild( delete_list         );
+  main.appendChild( crEl({ el: 'br' })  );
+  main.appendChild( staged              );
+  main.appendChild( crEl({ el: 'br' })  );
+  main.appendChild( text_input          );
+  main.appendChild( crEl({ el: 'br' })  );
+  main.appendChild( button_update_pl    );
+  main.appendChild( button_add          );
+  main.appendChild( select_plot         );
+  main.appendChild( select_options      );
+  main.appendChild( sp_list             );
+  main.appendChild( crEl({el:'hr'})     );
+
+  if( show_select_ncol          === void 0){ select_ncol        .style.display = "none"; }
+  if( show_select_button        === void 0){ select_button      .style.display = "none"; }
+  if( show_comp_checkbox        === void 0){ comp_checkbox      .style.display = "none"; }
+  if( show_delete_list          === void 0){ delete_list        .style.display = "none"; }
+  if( show_button_register_sl   === void 0){ button_register_sl .style.display = "none"; }
+  if( show_text_input           === void 0){ text_input         .style.display = "none"; }
+  if( show_button_update_pl     === void 0){ button_update_pl   .style.display = "none"; }
+  if( show_select_plot          === void 0){ select_plot        .style.display = "none"; }
+  if( show_select_options       === void 0){ select_options     .style.display = "none"; }
+
+  return main;
+}
+
+// span
+function createSpanWithId(id){
+  return crEl({ el: 'span', ats:{ id: id} });
+}
+
+// Select species list
+function createSelectSL(id){
+  const span   = crEl({ el:'span' });
+  const select = createSL(id);
+  span.appendChild( msgSpan('s_list') );
+  span.appendChild(select);
+  return span;
+}
+// Create the delete button and the pull down of the list it deletes.
+function createDeleteSL(id){
+  const delete_name = id.replace('delete', 'delete_name');
+  const span   = crEl({ el:'span' });
+  const delete_button = crEl({ el:'input', ats:{type: 'button', value: msg('delete_list'), 'data-msg': 'delete_list', onclick: 'deleteSl(this)', id: id} });
+  const select = createSL(delete_name, '', '');  // '', '': no value picked, no 'NEW' option
+  span.appendChild( delete_button );
+  span.appendChild( select );
+  return span;
+}
+// Delete the selected species list after a confirmation, then redraw the pull downs.
+function deleteSl(obj){
+  const sel_de = obj.id.replace('delete', 'delete_name');
+  const select = obj.id.replace('delete', 'select');
+  const del_list = document.getElementById(sel_de).value;
+  const is_ok = confirm( msgF('confirm_del_sl', del_list) );
+  if(is_ok){
+    removeSLinLS(del_list);
+    updateSelectSLById(select);
+    updateSelectSLById(sel_de);
+  }
+  return void 0;
+}
+
+
+// Redraw a species list pull down, keeping what was selected.
+function updateSelectSLById(id){
+  const old_select = document.getElementById(id);
+  const first_option = (/delete/.test(id)) ? '' : 'NEW'
+  const selected_value = old_select.value;
+  const new_select = createSL(id, selected_value, first_option);
+  old_select.replaceWith(new_select);
+}
+// Create the pull down of the stored species lists ('NEW' first, unless it is the delete one).
+function createSL(id, value = '', first_option = 'NEW'){
+  const species_list = replaceArrayAll(getKeysOfSLinLS(), 'biss_sl-', '');
+  species_list.sort();
+  species_list.unshift(first_option);
+  const select = createSelectOpt(species_list, 0, id);
+  if(value !== ''){ setSelectOption(select, value); }
+  select.setAttribute('onchange', 'changeSL(this)');
+  return select
+}
+
+// Select the option of that value, or the first one when it is not there.
+function setSelectOption(select, value){
+  const options = getSelectOptionInCell(select);
+  const index = Math.max(0, options.indexOf(value));  // -1 (not there) picks the first
+  select.options[index].selected = true;
+}
+
+
+// Create the checkbox that adds the composition species to the list.
+function createCompCheckbox(id){
+  const span     = crEl({ el:'span', ats:{class: 'margin_right'} });
+  const checkbox = crEl({ el:'input', ats:{id: id, type: 'checkbox', onchange: 'changeSL(this)'} });
+  span.appendChild( msgSpan('include_comp') );
+  span.appendChild(checkbox);
+  return span;
+}
+
+// Redraw the species buttons for the list just selected.
+function changeSL(obj){
+  const ns = getSlNs(obj.id);
+  const id = 'sp_list_sp_list-' + ns;
+  const sl = document.getElementById('sp_list_select-' + ns).value;
+  // console.log('id:' + id + ', sl:' + sl);
+  const is_checked = document.getElementById('sp_list_checkbox-' + ns).checked;
+  replaceSpeciesList(sl, id, is_checked);
+}
+
+// Load 
+//   @param obj  A input element.
+//                 Normally use "this". 
+async function registerSL(obj){
+  const id = obj.id;
+  const name = obj.files[0].name.split("\.")[0];
+  const text = await readFile(obj.files[0]);
+  const sp_list = text.replaceAll('\r', '').split(/[,\n]/);
+  removeEmptyInArray(sp_list);
+  addSLinLS(sp_list, name);
+  updateSelectSLById(id.replace('register', 'select'));
+  updateSelectSLById(id.replace('register', 'delete_name'));
+  obj.value = '';  // for select the same file twice or more
+  const select = document.getElementById(id.replace('register', 'select'));
+  setSelectOption(select, name);
+  changeSL(select);
+}
+// Create the file input that registers a species list from a text file.
+function createRegisterSLButton(id){
+  const span = crEl({el:'span' });
+  const file_input = createFileInput({ id: id, onchange: "registerSL(this)" });
+  span.appendChild( msgSpan('register') );
+  span.appendChild(file_input);
+  return span;
+}
+
+// No. of columns
+function createSelectNumber(id){
+  const span = crEl({el:'span' });
+  const select = createSelectOpt([1,2,3,4,5,6,7,8,9], 5, id);
+  select.setAttribute('onchange', 'changeUlColumns(this)');
+  span.appendChild( msgSpan('n_cols') );
+  span.appendChild(select);
+  return span;
+}
+// Set how many columns the species lists are shown in ('--cc' in the CSS).
+function changeUlColumns(obj){
+  const ncols = obj.value;
+  document.documentElement.style.setProperty('--cc', ncols);
+}
+
+// Species list
+function createSpecieList(id, species){
+  const ns = getSlNs(id);
+  const ul = crEl({ el:'ul', ats:{id: id} });
+  // console.log(species);
+  for(const sp of species){
+    const li = crEl({ el:'li' })
+    const button = createSpeciesButton({ sp: sp, to_stage: true, ns: ns })
+    li.appendChild(button);
+    ul.appendChild(li);
+  }
+  return ul;
+}
+// 
+//    @param  sl   A string of a species list.
+//    @param  id   A string of a namespace: plot name, 'all', or 'flora'.
+// 
+function replaceSpeciesList(sl, id, add_comp = true){
+  // var sl = 'tabu';
+  let new_sp  = (sl === 'NEW' || sl === '') ? [] : getSLinLS(sl);
+  const comp_sp = add_comp ? getSpeciesInComposition() : [];
+  new_sp = new_sp.concat(comp_sp).sort();
+  const new_sp_list = createSpecieList(id, new_sp);
+  const old_sp_list = document.getElementById(id);
+  old_sp_list.replaceWith(new_sp_list);
+}
+// Create the button of one species (to_stage: click stages it, otherwise click takes it back).
+function createSpeciesButton({ sp, to_stage, ns }){
+  const id      = to_stage ? ns + '_sp_' + sp      : ns + '_staged_sp_' + sp;
+  const onclick = to_stage ? "stageSpecies(this)" : "unStageSpecies(this)";
+  return crEl({ el:'input', ats:{type: "button", value: sp, onclick: onclick, id: id } });
+}
+// Create the box for typing species names that have no button.
+function createSLInput(id){
+  return crEl({ el:'input', ats:{type: 'text', id: id, placeholder: msg('input_species'), 'data-msg-ph': 'input_species', size:'100'} });
+}
+
+// Plot and Layer
+function createUpdatePLButton(id){
+  return crEl({ el:'input', ats:{type:'button', id: id, value: msg('update_pl'), 'data-msg': 'update_pl', onclick: 'updatePlotLayer({ obj:this })'} });
+}
+// Create the PLOT pull down: every plot for 'all' and 'flora', the own plot otherwise.
+function createSelectPlot(id){
+  const span = crEl({ el:'span' });
+  span.appendChild( msgSpan('plot_label') );
+  const ns = getSlNs(id);
+  let plot_list;   // declared here: both branches and the line below share it
+  if(ns === 'all' || ns === 'flora'){
+    const tables = document.querySelectorAll("table[id^='input_occ']");
+    const pl = COL.PLOT;
+    plot_list = uniq(getMultiTableInputs(tables, [pl])[pl]);
+  }else{
+    plot_list = [ns];
+  }
+  const plot_select = createSelectOpt(plot_list.reverse(), 0, id);  // up: new plot, down: old plot
+  span.appendChild(plot_select)
+  return span;
+}
+// Redraw the PLOT and Layer selects of one module, or of 'all' and 'flora' when none is given.
+function updatePlotLayer({ obj }){
+  const nss = (obj === void 0) ? ['all', 'flora'] : [getSlNs(obj.id)];
+  const base_name = 'sp_list_';
+  for(const ns of nss){
+    const plot_id  = base_name + 'plot-'    + ns;
+    const layer_id = base_name + 'options-' + ns;
+    replaceSelectPlot (plot_id );
+    replaceSelectLayer(layer_id);
+  }
+}
+// Replace a PLOT select with a freshly built one.
+function replaceSelectPlot(id){
+  const old_plot = document.getElementById(id).parentNode;
+  const new_plot = createSelectPlot(id);
+  old_plot.replaceWith(new_plot);
+}
+// Replace a Layer select with a freshly built one.
+function replaceSelectLayer(id){
+  // console.log(id);
+  const old_layer = document.getElementById(id);
+  const new_layer = createSelectOptions(id);
+  old_layer.replaceWith(new_layer);
+}
+
+// Create one pull down per 'list' column of the occurrence tables (Layer and the like).
+function createSelectOptions(id){
+  const ns = getSlNs(id);
+  // console.log(ns);
+  const selector =  "table[id^='input_occ_']";
+  const tables = document.querySelectorAll(selector);
+  const selects = getMultiTableSelects(tables);
+  const options = getMultiTableOptions(tables, selects);
+  const opt_keys = Object.keys(options);
+  const span = crEl({ el: 'span', ats:{id: id} });
+  for(const key of opt_keys){
+    span.appendChild( crEl({ el: 'span', tc: key}) );
+    const opts = uniq(options[key]);
+    opts.unshift('');
+    const select = createSelectOpt(uniq(opts), 0, 'sp_list_options_' + key + '-' + ns);
+    span.appendChild( select );
+  }
+  return span;
+}
+
+
+// Add species
+function createSLAdd(id){
+  return crEl({ el:'input', ats:{type: 'button', id: id, value: msg('add_species_to'), 'data-msg': 'add_species_to', onclick: 'addSpecies(this)' } });
+}
+// Move a species to the staged row and grey out its button.
+function stageSpecies(obj){
+  const ns = getSlNs(obj.parentNode.parentNode.id);
+  const sp_staged = document.getElementById('sp_list_staged-' + ns);
+  const sp = obj.value;
+  obj.setAttribute("disabled", true);
+  const button = createSpeciesButton({ sp: sp, to_stage: false, ns: ns });
+  sp_staged.appendChild( button );
+}
+// Take a species off the staged row and enable its button again.
+function unStageSpecies(obj){
+  // console.log(obj)
+  const ns = getSlNs(obj.parentNode.parentNode.id);
+  const id = ns + '_sp_' + obj.value;
+  const sp_button = document.getElementById(id);
+  sp_button.removeAttribute("disabled");
+  obj.remove();
+}
+
+// What the pull downs of a module are set to, keyed by column name.
+//    @param  ns  A string, the name space of the module.
+//    @return     An object, e.g. { Layer: 'H' }.
+function getSelectOptionsValues(ns){
+  const prefix = 'sp_list_options_';
+  // Quote the value and anchor it on the '-'. Unquoted it breaks on a plot
+  // name that is not a plain CSS ident, and unanchored it also matches a
+  // name that merely ends the same way ('all' would match 'small').
+  const selector = "select[id^='" + prefix + "'][id$='-" + ns + "']";
+  const values = {};
+  for(const opt of document.querySelectorAll(selector)){
+    // The id is 'sp_list_options_<column>-<ns>'. Either part may hold a '-',
+    // so cut away the prefix and the name space, both of which are known,
+    // instead of splitting on the first '-'.
+    const column = opt.id.slice(prefix.length, opt.id.length - ns.length - 1);
+    values[column] = opt.value;
+  }
+  return values;
+}
+
+// Add the staged and typed species to the occurrence table of the selected plot, one row each. A name with '_' is read as species_SameAs and counted as unidentified.
+function addSpecies(obj){
+  // console.log(obj);
+  // console.log(obj.id);
+  const base_name = 'sp_list_';
+  const ns = getSlNs(obj.id);
+  const staged  = document.getElementById(base_name + 'staged-' + ns);
+  const input   = document.getElementById(base_name + 'input-'  + ns);
+  const plot    = document.getElementById(base_name + 'plot-'   + ns).value;
+  const options = getSelectOptionsValues(ns);
+  let species = getChildrenValues(staged);
+  if(input.value !== ''){
+    const input_val = input.value.replaceAll('，', ',').replaceAll('、', ',') // FULL size JP -> half size
+    species = species.concat(input_val.split(','));
+  }
+  // add species
+  const table = document.getElementById('input_occ_' + plot + '_tb');
+  for(const spec of species){
+    const [sp, same_as] = spec.split('_');
+    const iden = (same_as === void 0);  // no '_' in the name: an identified species
+    const sa   = iden ? '' : same_as;
+    // Build the row as an object. It used to be pasted together as JSON text
+    // and parsed back, so a name holding a " or a \ threw and took the whole
+    // batch with it.
+    const values = Object.assign({}, options,
+                                 { [COL.SPECIES]: sp, [COL.SAME_AS]: sa, [COL.IDENTIFIED]: iden });
+    addRowWithValues({ table: table, values: values });
+  }
+  // clear inputs
+  input.value = '';
+    // Delete from the front, elements will be shifted and don't work well
+  for(let i = staged.children.length; 0 < i; i--){ // loop backwards
+    staged.children[i-1].click();
+  }
+}
+// The values of the children of an element.
+function getChildrenValues(element){
+  const values = [];
+  for(const child of element.children){
+    values.push(child.value);
+  }
+  return values;
 }</script> <script charset="utf-8">var wamei = ` 
 アーティチョーク 
 アーネルスゲ 
@@ -29396,7 +29420,10 @@ function createReplaceFloraButton(){
 async function replaceFlora(obj){ 
   const name = obj.files[0].name.split("\.")[0]; 
   const text = await readFile(obj.files[0]); 
-  flora = uniq(text.split('\n')); 
+  // A list written on Windows ends its lines with \r\n. A name left holding 
+  // the \r is never found again: makeLookAheadReg() builds ^(?=.*x).*$, and 
+  // neither . nor $ goes past a \r. registerSL() drops it for the same reason. 
+  flora = uniq(text.replaceAll('\r', '').split('\n')); 
   removeEmptyInArray(flora); 
   flora.sort(); 
  
@@ -29412,9 +29439,9 @@ function createTd(col_name, data_type, select, table_data){
   switch(data_type){ 
     case "auto": {  // date, no, GPS 
       const auto = autoValue(col_name); 
-      if(auto !== void 0        ) td = crEl({ el: 'td', ih: auto }); 
-      if(col_name === COL.NO    ) td = crEl({ el: 'td', ih: 1    }); 
-      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', ih: ''  }); 
+      if(auto !== void 0        ) td = crEl({ el: 'td', tc: auto }); 
+      if(col_name === COL.NO    ) td = crEl({ el: 'td', tc: 1    }); 
+      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', tc: ''  }); 
       break; 
     } 
     case "text": 
@@ -29430,17 +29457,20 @@ function createTd(col_name, data_type, select, table_data){
       td.firstChild.checked = !!table_data; 
       break; 
     case "fixed": 
-      td = crEl({ el:'td', ih: table_data }); 
+      // A cell holds data, not markup: textContent, so that a name with 
+      // & or < is kept as typed and comes back the same (getCellData()). 
+      td = crEl({ el:'td', tc: table_data }); 
       break; 
     case "button": 
       if(col_name === COL.DELETE)         { td = createTdWithChild( createDelButton() ); } 
       if(col_name === COL.UPDATE_TIME_GPS){ td = createTdWithChild( createUpdateButton() ); } 
       break; 
-    case "list": 
-      select.push(''); 
+    case "list": { 
+      const options = select.concat('');   // concat, not push: the caller reuses the options 
       // -1 (not among the options) picks the first one 
-      td = createTdWithChild( createSelectOpt(select, Math.max(0, select.indexOf(table_data))) ); 
+      td = createTdWithChild( createSelectOpt(options, Math.max(0, options.indexOf(table_data))) ); 
       break; 
+    } 
   } 
   return td; 
 } 
@@ -29450,7 +29480,7 @@ function addThTr(table, col_names){
   const tr = document.createElement('tr'); 
   for(let Ni = 0; Ni < col_names.length; Ni++){ 
     if(col_names[Ni] !== ""){ 
-      const th = crEl({ el: 'th', ih: col_names[Ni] }); 
+      const th = crEl({ el: 'th', tc: col_names[Ni] }); 
       tr.appendChild(th); 
     } 
   } 
@@ -29513,7 +29543,7 @@ function createSelectOpt(list, selected_no = 0, id = ''){
   for(let j = 0; j < n_list; j++){ 
     const option = document.createElement('option'); 
     if(selected_no === j){ option.setAttribute('selected', 'true'); } 
-    option.innerHTML = list[j]; 
+    option.textContent = list[j]; 
     select.appendChild(option); 
   } 
   return select; 
@@ -29532,10 +29562,8 @@ function createSelectOpt(list, selected_no = 0, id = ''){
 function getTableData(table){ 
   const c_names = getColNames(table); 
   const d_types = getDataTypes(table); 
-  const inputs = {};   // an object, not an array: JSON.stringify() of an array 
-  for(const name of c_names){   //   with string keys writes [] 
-    inputs[name] = getColData(table, name); 
-  } 
+  // an object, not an array: JSON.stringify() of an array with string keys writes [] 
+  const inputs = getColsData(table, c_names); 
   const selects = []; 
   for(let i = 0; i < d_types.length; i++){ 
     selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null); 
@@ -29546,6 +29574,27 @@ function getTableData(table){
     biss_selects: selects, 
     biss_inputs : inputs 
   } 
+} 
+ 
+// Press the DELETE button of the row that holds a value in a column. 
+//    Reaching a row by its number (tr:nth-child(7)) means a row added to 
+//    data.js above it deletes something else instead. Say which row is meant. 
+//    @param table   A table element. 
+//    @param c_name  A string, the column to look in. 
+//    @param value   A string, the value that names the row. 
+//    @return        true when a row was deleted. 
+function deleteRowByValue(table, c_name, value){ 
+  const c_names = getColNames(table); 
+  const col_no = c_names.indexOf(c_name); 
+  const del_no = c_names.indexOf(COL.DELETE); 
+  if(col_no < 0 || del_no < 0){ return false; } 
+  for(let Ri = ROW_FIRST_DATA; Ri < table.rows.length; Ri++){ 
+    if(getCellData(table.rows[Ri].cells[col_no]) === value){ 
+      table.rows[Ri].cells[del_no].firstChild.click(); 
+      return true; 
+    } 
+  } 
+  return false; 
 } 
  
 // Build a table out of a table definition. 
@@ -29567,11 +29616,17 @@ function makeTableJO(table_data, table_name){
  
 // Add one tr per record, filling each td through createTd(). 
 function addTableData(table, col_names, dat_types, selects, inputs){ 
-  for(let Ri = 0; Ri < inputs[col_names[0]].length; Ri++){ 
+  // What is the same for every record is worked out once: the number of 
+  // columns (only rows are added below) and the options of each column. 
+  const n_col = nCol(table); 
+  const options = []; 
+  for(let Cj = 0; Cj < n_col; Cj++){ options.push(uniq(selects[Cj])); } 
+  const n_row = inputs[col_names[0]].length; 
+  for(let Ri = 0; Ri < n_row; Ri++){ 
     const tr = document.createElement('tr'); 
-    for(let Cj = 0; Cj < nCol(table); Cj++){ 
+    for(let Cj = 0; Cj < n_col; Cj++){ 
       if(col_names[Cj] !== ""){ 
-        tr.appendChild( createTd(col_names[Cj], dat_types[Cj], uniq(selects[Cj]), inputs[col_names[Cj]][Ri]) ); 
+        tr.appendChild( createTd(col_names[Cj], dat_types[Cj], options[Cj], inputs[col_names[Cj]][Ri]) ); 
       } 
     } 
     table.appendChild(tr); 
@@ -29609,9 +29664,10 @@ function showExample(obj){
  
   // select settings: '_5_layers' 
   changeSettingsByName('_5_layers'); 
-  // delete 'rank' and 'abundance' 
-  document.querySelector("#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4) > input[type=button]").click() 
-  document.querySelector("#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4) > input[type=button]").click() 
+  // delete 'Abundance' and 'Rank': the example does not use them 
+  const occ_setting = document.getElementById('_5_layers_occ_tb'); 
+  deleteRowByValue(occ_setting, COL.ITEM, 'Abundance'); 
+  deleteRowByValue(occ_setting, COL.ITEM, 'Rank'); 
  
   // add plots 
   addInputTab({ obj:document.getElementById('add_tab'), id:'biss01' }); 
@@ -29707,18 +29763,17 @@ function autoSave(){
 let timerId; 
  
 // Restart the auto save timer with the interval just selected. 
+//   'no save' is checked before anything is scheduled: Number('no save') is 
+//   NaN, and setInterval(fn, NaN) means setInterval(fn, 0), which saves a 
+//   file as fast as the browser can. 
 function changeAutoSaveSttting(obj){ 
   const n = obj.value; 
-  if(typeof timerId === 'undefined'){ 
-    setAutoSave(Number(n)); 
-  }else{ 
-    clearInterval(timerId); 
-    if(n === 'no save'){ 
-      return void 0; 
-    }else{ 
-      setAutoSave(Number(n)); 
-    } 
+  if(typeof timerId !== 'undefined'){ clearInterval(timerId); } 
+  if(n === 'no save'){ 
+    timerId = void 0; 
+    return void 0; 
   } 
+  setAutoSave(Number(n)); 
 } 
  
 // Save every n minutes from now on. 
