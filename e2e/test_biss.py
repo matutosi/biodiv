@@ -103,6 +103,12 @@ def test_a_settings_file_can_be_loaded_back(biss, tmp_path):
     # The module it replaced is gone: one settings table per side, not two.
     assert page.locator("#_5_layers_plot_tb").count() == 0, "the old table is still there"
     assert page.locator("#tab_settings table").count() == 2, "one plot and one occ table"
+
+    # A plot added now is built from the loaded settings. The table is found
+    # by the holder it sits in, not by its name or by where it comes on the page.
+    biss.add_plot("after-load")
+    assert biss.col_names("input_plot_after-load_tb") is not None, "the plot table was built"
+    assert "Investigator" in biss.col_names("input_plot_after-load_tb")
     assert biss.errors == []
 
 

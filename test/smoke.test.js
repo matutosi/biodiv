@@ -441,5 +441,12 @@ test('the built in example runs end to end', async () => {
   assert.ok(colData(w, 'occ_all_tb', 'Species').length > 0,
             'the all plots table has species');
 
+  // The example drops the two columns it does not use. It used to do that by
+  // row number, which deletes something else as soon as data.js changes.
+  const cols = colNames(w, 'occ_all_tb');
+  assert.ok(!cols.includes('Abundance'), `Abundance was dropped, got ${cols}`);
+  assert.ok(!cols.includes('Rank'), `Rank was dropped, got ${cols}`);
+  assert.ok(cols.includes('Cover'), 'and Cover, its neighbour, was not');
+
   biss.close();
 });
