@@ -300,7 +300,7 @@ function createSelectOptions(id){
   const opt_keys = Object.keys(options);
   const span = crEl({ el: 'span', ats:{id: id} });
   for(const key of opt_keys){
-    span.appendChild( crEl({ el: 'span', ih: key}) );
+    span.appendChild( crEl({ el: 'span', tc: key}) );
     const opts = uniq(options[key]);
     opts.unshift('');
     const select = createSelectOpt(uniq(opts), 0, 'sp_list_options_' + key + '-' + ns);

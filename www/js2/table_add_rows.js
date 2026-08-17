@@ -17,10 +17,10 @@ function addRowWithValues({ table, values }){
   // console.log(values);
   // console.log(key);
     if(td.firstChild === null){                // fixed with no input
-      td.innerHTML = value;
+      td.textContent = value;
     }else{
       if(td.firstChild.value === void 0){      // fixed with input
-        td.innerHTML = value;
+        td.textContent = value;
       }else{
         if(td.firstChild.type === 'checkbox'){ // checkbox
           td.firstChild.checked = value;
@@ -74,17 +74,17 @@ function addRow(table){
       case COL.LOC_LAT:
       case COL.LOC_LON:
       case COL.LOC_ACC:
-        next_row.children[Ci].innerHTML = autoValue(col_names[Ci]);
+        next_row.children[Ci].textContent = autoValue(col_names[Ci]);
         break;
       case COL.UPDATE_TIME_GPS: // do nothing
       case COL.DELETE:          // do nothing
         break;
       case COL.NO:           // no = max(no) + 1
         const nos = getColData(table, col_names[Ci]);
-        next_row.children[Ci].innerHTML = Math.max.apply(Math, string2Numeric(nos)) + 1;
+        next_row.children[Ci].textContent = Math.max.apply(Math, string2Numeric(nos)) + 1;
         break;
       case COL.SAME_AS:     // clear
-        next_row.children[Ci].innerHTML = "";
+        next_row.children[Ci].textContent = "";
         break;
       default:
         if(next_row.children[Ci].firstChild.value === void 0){  

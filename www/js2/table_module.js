@@ -191,7 +191,7 @@ function updateTimeGPS(obj){
   for(const col of AUTO_COLS){
     const col_no = c_names.indexOf(col);
     if(col_no < 0){ continue; }   // a setting need not offer every one of them
-    table.rows[row_no].cells[col_no].innerHTML = autoValue(col);
+    table.rows[row_no].cells[col_no].textContent = autoValue(col);
   }
 }
 

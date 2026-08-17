@@ -4,9 +4,9 @@ function createTd(col_name, data_type, select, table_data){
   switch(data_type){
     case "auto": {  // date, no, GPS
       const auto = autoValue(col_name);
-      if(auto !== void 0        ) td = crEl({ el: 'td', ih: auto });
-      if(col_name === COL.NO    ) td = crEl({ el: 'td', ih: 1    });
-      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', ih: ''  });
+      if(auto !== void 0        ) td = crEl({ el: 'td', tc: auto });
+      if(col_name === COL.NO    ) td = crEl({ el: 'td', tc: 1    });
+      if(col_name === COL.SAME_AS) td = crEl({ el: 'td', tc: ''  });
       break;
     }
     case "text":
@@ -22,7 +22,9 @@ function createTd(col_name, data_type, select, table_data){
       td.firstChild.checked = !!table_data;
       break;
     case "fixed":
-      td = crEl({ el:'td', ih: table_data });
+      // A cell holds data, not markup: textContent, so that a name with
+      // & or < is kept as typed and comes back the same (getCellData()).
+      td = crEl({ el:'td', tc: table_data });
       break;
     case "button":
       if(col_name === COL.DELETE)         { td = createTdWithChild( createDelButton() ); }
@@ -43,7 +45,7 @@ function addThTr(table, col_names){
   const tr = document.createElement('tr');
   for(let Ni = 0; Ni < col_names.length; Ni++){
     if(col_names[Ni] !== ""){
-      const th = crEl({ el: 'th', ih: col_names[Ni] });
+      const th = crEl({ el: 'th', tc: col_names[Ni] });
       tr.appendChild(th);
     }
   }
@@ -106,7 +108,7 @@ function createSelectOpt(list, selected_no = 0, id = ''){
   for(let j = 0; j < n_list; j++){
     const option = document.createElement('option');
     if(selected_no === j){ option.setAttribute('selected', 'true'); }
-    option.innerHTML = list[j];
+    option.textContent = list[j];
     select.appendChild(option);
   }
   return select;

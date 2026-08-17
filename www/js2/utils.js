@@ -13,14 +13,14 @@ function table2array(id_table, header = true){
     const row = table.rows[i];
     const array_row = [];
     for(let j=0; j<row.cells.length; j++){
-      array_row.push(row.cells[j].innerHTML);
+      array_row.push(row.cells[j].textContent);
     }
     array.push(array_row);
   }
   if(header){
     const header_row = [];
     for(let i=0; i<headerRow(table).cells.length; i++){
-      header_row.push(headerRow(table).cells[i].innerHTML);
+      header_row.push(headerRow(table).cells[i].textContent);
     }
     array.unshift(header_row);
   }
@@ -126,7 +126,7 @@ function hash2table(hash_array){
   for(let i = 0; i < Object.keys(hash_array).length; i++){
     const tr = document.createElement('tr');
     tr.appendChild( crEl({ el: 'td', tc: Object.keys(hash_array)[i] }) );
-    tr.appendChild( crEl({ el: 'td', ih: Object.values(hash_array)[i] }) );
+    tr.appendChild( crEl({ el: 'td', tc: Object.values(hash_array)[i] }) );
     table.appendChild(tr);
   }
   return table
@@ -212,7 +212,7 @@ function getCellData(td, list_with_index = false){
   if(td.firstChild === void 0){ return ''; }
   if(td.firstChild === null  ){ return ''; }
   if(td.firstChild.value === void 0){
-    return td.innerHTML;
+    return td.textContent;   // the text of the cell, not its markup
   }else{
     if(td.firstChild.type === 'checkbox'){
       return td.firstChild.checked;

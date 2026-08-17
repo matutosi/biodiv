@@ -355,6 +355,38 @@ test('a species name may hold a quote', async () => {
   biss.close();
 });
 
+test('a species name may hold an ampersand or a tag', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.changeSettingsByName('_5_layers');
+  addPlot(w, 'amp');
+
+  // The All plots table used to be built with innerHTML, so "A & B" came out
+  // of it as "A &amp; B" and a <i> in a memo was read as markup. What a cell
+  // holds is text, and it has to reach the saved TSV as it was typed.
+  w.document.getElementById('sp_list_input-amp').value = 'Rosa A & B,Carex <i>x</i>';
+  w.document.getElementById('sp_list_add-amp').click();
+  w.updateInputsPlotLayerSpecies();
+
+  const typed = ['Rosa A & B', 'Carex <i>x</i>'];
+  const input = colData(w, 'input_occ_amp_tb', 'Species');
+  const all   = colData(w, 'occ_all_tb', 'Species');
+  for(const name of typed){
+    assert.ok(input.includes(name), `${name} is in the input table`);
+    assert.ok(all.includes(name), `${name} reaches the All plots table unchanged`);
+  }
+
+  // And the TSV that gets saved holds the same.
+  const rows = plain(w.getTableDataAsArray('occ_all_tb'));
+  const col = rows[0].indexOf('Species');
+  const saved = rows.slice(1).map(r => r[col]);
+  for(const name of typed){
+    assert.ok(saved.includes(name), `${name} is written to the TSV as typed`);
+  }
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
 test('a settings table round trips through its saved JSON', async () => {
   const biss = await loadBiss();
   const w = biss.window;

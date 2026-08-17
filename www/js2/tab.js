@@ -118,7 +118,7 @@ function addInputTab({ obj, id }){
     return void 0; 
   }
   // create tabcontrol
-  const a = crEl({ el: 'a', ats: {href: "#" + id}, ih: id });
+  const a = crEl({ el: 'a', ats: {href: "#" + id}, tc: id });
   document.getElementById('tabcontrol').insertBefore(a, obj);
 
   // create tabbody
