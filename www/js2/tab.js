@@ -217,12 +217,11 @@ function getUniqeColNames(tables){
 // The data of the given columns, read from several tables and joined per column.
 function getMultiTableInputs(tables, c_names){
   const inputs = {};   // keyed by column name
-  for(const c_name of c_names){
-    inputs[c_name] = [];
-    for(const tb of tables){
-  // console.log(tb);
-  // console.log(c_name);
-      inputs[c_name] = inputs[c_name].concat(getColData(tb, c_name));
+  for(const c_name of c_names){ inputs[c_name] = []; }
+  for(const tb of tables){
+    const cols = getColsData(tb, c_names);   // one walk per table, not per column
+    for(const c_name of c_names){
+      for(const value of cols[c_name]){ inputs[c_name].push(value); }
     }
   }
   return inputs;

@@ -172,18 +172,33 @@ function searchParentTable(obj, index = 0){
 //    for(let td of tds                 ){ console.log(getCellData(td, true)) }
 //    for(let td of tds                 ){ console.log(getCellData(td)) }
 function getColData(table, c_name, list_with_index = false){
-  const col_no = getColNames(table).indexOf(c_name);
-  const group_value = [];
-  const n_row = nDataRow(table);
-  if(col_no < 0){
-    for(let i=0; i<n_row; i++){ group_value.push(''); }
-    return group_value;
-  }
+  return getColsData(table, [c_name], list_with_index)[c_name];
+}
+
+// Get the data of several columns of a table, in one walk over the rows.
+//    getColData() looks the column names up and walks the table again for
+//    every column. Reading a whole table one column at a time therefore
+//    costs (columns x rows) walks; this costs one.
+//    A column the table does not have comes back as empty strings, as in
+//    getColData(), so that the columns of several tables can be lined up.
+//    @param table A table element.
+//    @param c_names A string array of column names.
+//    @param list_with_index A boolean, as in getColData().
+//    @return An object keyed by column name, holding an array per column.
+function getColsData(table, c_names, list_with_index = false){
+  const names = getColNames(table);
+  const col_no = c_names.map(c_name => names.indexOf(c_name));
+  const cols = {};   // keyed by column name
+  for(const c_name of c_names){ cols[c_name] = []; }
   const rows = table.querySelectorAll("tr:not([class=hide_button])");
   for(let Ri = 1; Ri < rows.length; Ri++){    // except th (rows[0])
-    group_value[Ri - 1] = getCellData(rows[Ri].cells[col_no], list_with_index)
+    const cells = rows[Ri].cells;
+    for(let Ci = 0; Ci < c_names.length; Ci++){
+      cols[c_names[Ci]].push(
+        (col_no[Ci] < 0) ? '' : getCellData(cells[col_no[Ci]], list_with_index));
+    }
   }
-  return group_value;
+  return cols;
 }
 
 // Get input value, list, or innerHTML cell data in a table.

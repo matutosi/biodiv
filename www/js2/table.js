@@ -28,11 +28,12 @@ function createTd(col_name, data_type, select, table_data){
       if(col_name === COL.DELETE)         { td = createTdWithChild( createDelButton() ); }
       if(col_name === COL.UPDATE_TIME_GPS){ td = createTdWithChild( createUpdateButton() ); }
       break;
-    case "list":
-      select.push('');
+    case "list": {
+      const options = select.concat('');   // concat, not push: the caller reuses the options
       // -1 (not among the options) picks the first one
-      td = createTdWithChild( createSelectOpt(select, Math.max(0, select.indexOf(table_data))) );
+      td = createTdWithChild( createSelectOpt(options, Math.max(0, options.indexOf(table_data))) );
       break;
+    }
   }
   return td;
 }
@@ -124,10 +125,8 @@ function createSelectOpt(list, selected_no = 0, id = ''){
 function getTableData(table){
   const c_names = getColNames(table);
   const d_types = getDataTypes(table);
-  const inputs = {};   // an object, not an array: JSON.stringify() of an array
-  for(const name of c_names){   //   with string keys writes []
-    inputs[name] = getColData(table, name);
-  }
+  // an object, not an array: JSON.stringify() of an array with string keys writes []
+  const inputs = getColsData(table, c_names);
   const selects = [];
   for(let i = 0; i < d_types.length; i++){
     selects.push( (d_types[i] === "list") ? getSelectOne(table, c_names[i]) : null);
@@ -159,11 +158,17 @@ function makeTableJO(table_data, table_name){
 
 // Add one tr per record, filling each td through createTd().
 function addTableData(table, col_names, dat_types, selects, inputs){
-  for(let Ri = 0; Ri < inputs[col_names[0]].length; Ri++){
+  // What is the same for every record is worked out once: the number of
+  // columns (only rows are added below) and the options of each column.
+  const n_col = nCol(table);
+  const options = [];
+  for(let Cj = 0; Cj < n_col; Cj++){ options.push(uniq(selects[Cj])); }
+  const n_row = inputs[col_names[0]].length;
+  for(let Ri = 0; Ri < n_row; Ri++){
     const tr = document.createElement('tr');
-    for(let Cj = 0; Cj < nCol(table); Cj++){
+    for(let Cj = 0; Cj < n_col; Cj++){
       if(col_names[Cj] !== ""){
-        tr.appendChild( createTd(col_names[Cj], dat_types[Cj], uniq(selects[Cj]), inputs[col_names[Cj]][Ri]) );
+        tr.appendChild( createTd(col_names[Cj], dat_types[Cj], options[Cj], inputs[col_names[Cj]][Ri]) );
       }
     }
     table.appendChild(tr);
