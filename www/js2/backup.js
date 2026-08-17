@@ -11,10 +11,12 @@
 //   the next start, if a copy is there, the page offers to put it back.
 //
 //   What is kept is each plot's two tables as they stand, which is what
-//   buildPlotTab() needs. The species lists are already in localStorage of
-//   their own, and the settings are only used to make a new plot.
+//   buildPlotTab() needs, and the two settings tables, so that a plot can
+//   still be added after a restore. The species lists are already in
+//   localStorage of their own.
 
 const BACKUP_KEY = 'biss_backup';
+const BACKUP_DELAY = 3000;   // ms of quiet after typing before the copy is written
 
 // Every plot on the page, as the tables it is made of.
 //   @return An array of { id, plot, occ }, empty when there is no plot.
@@ -29,6 +31,18 @@ function getSurveyBackup(){
   return plots;
 }
 
+// The settings a plot is made from, as they stand.
+//   @return { plot, occ }, each { ns, data } or null.
+function getSettingsBackup(){
+  const settings = {};
+  for(const category of ['plot', 'occ']){
+    const table = settingTable(category);
+    settings[category] = (table === null) ? null
+      : { ns: table.id.replace(/_tb$/, ''), data: getTableData(table) };
+  }
+  return settings;
+}
+
 // Write the copy, unless there is nothing to write.
 //   A page with no plot leaves the copy alone: opening the app to look at
 //   something must not throw away what was left from the day before.
@@ -36,8 +50,19 @@ function saveSurveyBackup(){
   const plots = getSurveyBackup();
   if(plots.length === 0){ return void 0; }
   try {
-    localStorage.setItem(BACKUP_KEY, JSON.stringify({ saved: getNow(), plots: plots }));
+    localStorage.setItem(BACKUP_KEY, JSON.stringify(
+      { saved: getNow(), settings: getSettingsBackup(), plots: plots }));
   } catch { }   // full or forbidden storage must not stop the survey
+}
+
+// Write the copy once the typing stops.
+//   Leaving the page is not the only way to lose it: a browser can be killed
+//   where it stands. Writing after every keystroke would build every table
+//   again each time, so wait for a moment of quiet first.
+let backup_timer;
+function scheduleSurveyBackup(){
+  clearTimeout(backup_timer);
+  backup_timer = setTimeout(saveSurveyBackup, BACKUP_DELAY);
 }
 
 // The copy, or null when there is none to read.
@@ -57,6 +82,13 @@ function readSurveyBackup(){
 function restoreSurvey(){
   const backup = readSurveyBackup();
   if(backup === null){ return void 0; }
+  // The settings first: a plot added after the restore is built from them.
+  if(backup.settings !== void 0){
+    for(const category of ['plot', 'occ']){
+      const setting = backup.settings[category];
+      if(setting != void 0){ showSettingModule(category, setting.data, setting.ns); }
+    }
+  }
   for(const plot of backup.plots){
     if(document.getElementById(plot.id) !== null){ continue; }
     buildPlotTab({ id: plot.id, plot_data: plot.plot, occ_data: plot.occ });
@@ -92,9 +124,13 @@ function hideRestoreNotice(){
 }
 
 // When to write the copy.
-//   'visibilitychange' is the one that can be relied on: a phone may kill a
-//   tab it has hidden without ever raising 'pagehide' or 'beforeunload'.
+//   'visibilitychange' is the one that can be relied on when the page goes
+//   away: a phone may kill a tab it has hidden without ever raising
+//   'pagehide' or 'beforeunload'. Typing is watched as well, for the times
+//   the browser does not go away but stops.
 document.addEventListener('visibilitychange', function(){
   if(document.visibilityState === 'hidden'){ saveSurveyBackup(); }
 });
 window.addEventListener('pagehide', saveSurveyBackup);
+document.addEventListener('input',  scheduleSurveyBackup);
+document.addEventListener('change', scheduleSurveyBackup);

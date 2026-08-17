@@ -79,18 +79,24 @@ function changeSettingsByName(ns){
 // Rebuild the plot and occ setting tables from the base setting just picked.
 function changeSettings(obj){
   const setting = obj.value;
-  const new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot',
-                                      id_text: true, load_button: true, save_button: true, hide_button: true, 
-                                      add_button: true });
-  const new_occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ',
-                                      id_text: true, load_button: true, save_button: true, hide_button: true, 
-                                      add_button: true });
-  // The two modules live in named holders, so this works the first time,
-  // when there is nothing to replace yet, as well as on every switch after.
-  showInHolder('setting_plot_holder', new_plot_module);
-  showInHolder('setting_occ_holder',  new_occ_module);
-  setSortable(setting + '_plot_tb');
-  setSortable(setting + '_occ_tb');
+  showSettingModule('plot', data_settings[setting].plot, setting + '_plot');
+  showSettingModule('occ',  data_settings[setting].occ,  setting + '_occ');
+}
+
+// Put one settings module in its holder, built from a table definition.
+//   Used by the base setting pull down and by a restored backup, so that a
+//   settings table is built the same way whichever it came from.
+//   @param category    A string, 'plot' or 'occ'.
+//   @param table_data  A table definition.
+//   @param ns          A string, the name of the module (its table becomes <ns>_tb).
+function showSettingModule(category, table_data, ns){
+  const module = tableModule({ table_data: table_data, ns: ns,
+                               id_text: true, load_button: true, save_button: true,
+                               hide_button: true, add_button: true });
+  // The modules live in named holders, so this works the first time, when
+  // there is nothing to replace yet, as well as on every switch after.
+  showInHolder('setting_' + category + '_holder', module);
+  setSortable(ns + '_tb');
 }
 
 // Which module a control belongs to, and how to reach the rest of it.
