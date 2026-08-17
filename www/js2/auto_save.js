@@ -37,18 +37,17 @@ function autoSave(){
 let timerId;
 
 // Restart the auto save timer with the interval just selected.
+//   'no save' is checked before anything is scheduled: Number('no save') is
+//   NaN, and setInterval(fn, NaN) means setInterval(fn, 0), which saves a
+//   file as fast as the browser can.
 function changeAutoSaveSttting(obj){
   const n = obj.value;
-  if(typeof timerId === 'undefined'){
-    setAutoSave(Number(n));
-  }else{
-    clearInterval(timerId);
-    if(n === 'no save'){
-      return void 0;
-    }else{
-      setAutoSave(Number(n));
-    }
+  if(typeof timerId !== 'undefined'){ clearInterval(timerId); }
+  if(n === 'no save'){
+    timerId = void 0;
+    return void 0;
   }
+  setAutoSave(Number(n));
 }
 
 // Save every n minutes from now on.
