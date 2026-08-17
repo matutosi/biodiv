@@ -220,7 +220,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-17 14:10 (JST) 更新．
+2026-08-18 00:16 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -664,6 +664,29 @@ python -m venv .venv
   A8 (`&` が `&amp;` になる) が再発したら，ここで止まる．
   R か `ecan` が無い環境では skip する．**`pytest` は 27件から 29件**になった
   (この機械には `ecan` を CRAN から入れた)．
+- **`develop` を `main` へマージして push した** (`bde32f9`)．
+  マニュアルの画像・本文の修正，`npm test` の修正，R まで通すテストが公開された．
+  GitHub Pages のデプロイも成功 (22秒)．
+  - **`main` は fast-forward できない**．毎回マージコミットを積んできたので
+    `main` にしか無いコミットがあり，`git fetch . develop:main` は non-fast-forward で断られる．
+    `git checkout main` → `git merge --no-ff develop` → push → `git checkout develop` で行う．
+- **TSV 側は R まで通していない** (やるかどうかは未定)．
+  `ecan::read_biss()` は JSON を読む関数なので，上のテストが見ているのは JSON だけ．
+  TSV (「入力データを保存」の2ファイル) は `e2e/test_biss.py` が
+  ヘッダと種名1つの有無しか見ておらず，`&` や `<` を含む種名が TSV 経由でも
+  壊れないことは未検証 (タブ区切りなので壊れる見込みは薄い)．
+  やるなら `readr::read_tsv()` に通す形になる．
+- **`.claude/settings.json` を作った** (`.gitignore` 済み，`settings.local.json` も)．
+  `"worktree": {"bgIsolation": "none"}` の1項目だけ．
+  バックグラウンドのセッションは既定でワークツリーへ隔離され，
+  このチェックアウトを直接編集できない (記録の更新まで弾かれる)ため外した．
+  **並行セッションが同じチェックアウトを触ると取り合いになる**点は承知のうえ．
+- **ここで手を止め，実機での確認待ちにした** (課題一覧 E)．
+  コード側で着手すべき残件は無い．lint 0件・jsdom 36件・browser 29件が緑で，
+  `develop` と `main` は origin と一致している．
+- **状態を確認した**．`develop` は `origin/develop` と一致し，中身はすべて `main` に入っている
+  (`main` にしか無いのはマージコミット 21 個だけ)．`www/` に未コミットの変更は無く，
+  公開物は最新のまま．残る待ちは課題一覧 E の実機確認だけ．
 
 ### 課題一覧
 
