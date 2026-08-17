@@ -5,7 +5,7 @@
 初期画面は以下のとおり．
 自動保存や地点・観察の入力項目の設定が可能である．
 
-<img src="img/settings00.png" width="70%">
+<img src="img_jp/settings00.png" width="70%">
 
 ## 表示言語の切り替え
 
@@ -18,16 +18,19 @@
 保存したファイルの中身も言語によって変わらない．
 
 > **Note**   
-> このマニュアルのボタン名は日本語表示のもの．画面の画像は英語表示のときのもので，
-> ボタンの位置は同じ．英語表示のボタン名は [英語版マニュアル](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md) を参照．
+> このマニュアルのボタン名も画面の画像も日本語表示のもの (画像は `man/img_jp/`)．
+> 英語表示のボタン名は [英語版マニュアル](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md) を参照．
+> ただし次の4つは**ブラウザが描く部分**なので，英語表示のままである
+> (ダウンロードの通知，複数ダウンロードの許可，地点名の入力欄)．
+> これらの文言は，アプリではなく端末とブラウザの言語で決まる．
 
 ## 文字サイズの変更
 
 「文字：小」「文字：大」ボタンで画面全体の文字サイズの変更が可能．
 それぞれ，約0.83(1/1.2)倍・約1.2倍になる．
 
-<img src="img/font_large.png" width="70%">
-<img src="img/font_small.png" width="70%">
+<img src="img_jp/font_large.png" width="70%">
+<img src="img_jp/font_small.png" width="70%">
 
 ## 全画面表示への変更
 
@@ -77,7 +80,7 @@ GPSの使用を終了するには，「GPS停止」をクリック．
 自動保存の間隔(分)をプルダウンメニューから選択する．
 保存間隔を設定すると，地点情報と観察情報の全てがダウンロードされる．
 
-<img src="img/settings_autosave01.png" width="70%">
+<img src="img_jp/settings_autosave01.png" width="70%">
 
 ### データのダウンロード開始
 
@@ -115,11 +118,14 @@ Rでデータを使うには，[「Rでのデータの取り込み」](https://g
 
 入力があるまま画面を離れると(タブを閉じる，別のアプリに切り替える，画面を消す)，
 BISSは入力内容の控えをブラウザの中に自動的に残す．
+**入力の手が止まったとき(数秒)にも控えを更新する**ので，
+ブラウザが突然終了したときも，直前までの入力が残る．
 次に開いたときに控えが残っていれば，画面の上に次のように出る．
 
 > 2026\_08\_17\_13\_30\_15 の入力 (2 地点) が残っています．　[復元]　[破棄]
 
 - **復元**: 控えから地点のタブを作り直す．入力した種名・被度・メモなどがそのまま戻る．
+  **入力項目の設定も一緒に戻る**ので，そのまま「＋新規地点」で調査を続けられる．
 - **破棄**: 控えを捨てる(確認あり)．
 
 補足．
@@ -152,25 +158,25 @@ BISSは入力内容の控えをブラウザの中に自動的に残す．
 - flora: 植物相調査用   
 - empty: 空の設定    
 
-<img src="img/settings_base01.png" width="70%">
+<img src="img_jp/settings_base01.png" width="70%">
 
 植生調査の場合は，「full」か「\_5\_layers」をもとにすることをおすすめする．
 不要な行を「削除」(英語表示では「DELETE」)のボタンで削除する．
 
-<img src="img/settings_base02.png" width="70%">
+<img src="img_jp/settings_base02.png" width="70%">
 
 必要な項目がない場合は，一番下の「行を追加」で行を追加する．
 複数行を追加したい場合は，左の数値を変更してから「行を追加」を押す．
 
-<img src="img/settings_base03.png" width="70%">
+<img src="img_jp/settings_base03.png" width="70%">
 
 ### 空の設定からボタンを追加
 
 空の設定をもとに，必要な項目を追加する場合は，上記のemptyを選択する．
 "date\_GPS"などのボタンで項目を追加する．
 
-<img src="img/settings_base04.png" width="70%">
-<img src="img/settings_base05.png" width="70%">
+<img src="img_jp/settings_base04.png" width="70%">
+<img src="img_jp/settings_base05.png" width="70%">
 
 ### 設定の保存・復元
 
@@ -178,7 +184,7 @@ BISSは入力内容の控えをブラウザの中に自動的に残す．
 保存するには「保存」の右にあるテキストボックスにファイル名を入力し，「保存」ボタンをクリックする．
 保存したファイルはJSON形式のテキストファイル(UTF8)で，拡張子は「json」．
 
-<img src="img/settings_save01.png" width="70%">
+<img src="img_jp/settings_save01.png" width="70%">
 
 no_layersの設定
 
@@ -231,7 +237,7 @@ floraの設定
 表の左上ににある「表を非表示」を押すと，非表示になる．
 非表示のときに「表を表示」を押すと，表示される．
 
-<img src="img/settings_hide_show.png" width="70%">
+<img src="img_jp/settings_hide_show.png" width="70%">
 
 ### 項目設定のコツ
 
@@ -246,7 +252,7 @@ floraの設定
 
 地点情報と観察情報を入力するには，まず「＋ 新規地点」をクリックする．
 
-<img src="img/add_plot00.png" width="70%">
+<img src="img_jp/add_plot00.png" width="70%">
 
 ポップアップ画面に地点名を入力する．
 地点名には，英数字・日本語文字が使用可能．
@@ -259,7 +265,7 @@ floraの設定
 
 地点名を入力して「OK」を選択すると，新しい地点のタブが表示される．
 
-<img src="img/add_plot02.png" width="70%">
+<img src="img_jp/add_plot02.png" width="70%">
 
 以下では，サンプルデータを用いて地点情報と観察情報の入力方法を説明する．
 
@@ -267,7 +273,7 @@ floraの設定
 
 右上にある「例を表示」をクリックすると，サンプルデータが表示される．
 
-<img src="img/add_plot00.png" width="70%">
+<img src="img_jp/add_plot00.png" width="70%">
 
 表の上部には地点情報，下部には観察情報の表が表示される．
 
@@ -277,7 +283,7 @@ floraの設定
 - Plots: BiSS01とBiSS02の2地点   
 - Occurrences: ランダムに階層(T1, T2, S1, S2, H)，種名(sp1, sp2, ...)，被度(0-100)が表示される
 
-<img src="img/example01.png" width="90%">
+<img src="img_jp/example01.png" width="90%">
 
 ## 表の表示変更・操作(地点・観察共通)
 
@@ -295,22 +301,22 @@ floraの設定
 誤操作による変更を防ぐには，非表示にしておくと良い．
 表の左上ににある「表を非表示」を押すと，非表示になる．
 
-<img src="img/example_hide_table02.png" width="90%">
+<img src="img_jp/example_hide_table02.png" width="90%">
 
 非表示のときに「表を表示」を押すと，表示される．
 
-<img src="img/example_hide_table01.png" width="90%">
+<img src="img_jp/example_hide_table01.png" width="90%">
 
 ### 表幅の設定変更
 
 地点情報の初期状態は画面幅に合わせた形で折り返され，観察情報は折り返しなしで右に伸びた状態である．
 表の左上にある「横長に」をクリックすると，表幅が広がって折り返しなしの状態になる．
 
-<img src="img/example_width01.png" width="90%">
+<img src="img_jp/example_width01.png" width="90%">
 
 「幅を狭く」をクリックすると，画面幅で折り返される．
 
-<img src="img/example_width02.png" width="90%">
+<img src="img_jp/example_width02.png" width="90%">
 
 ### 列の表示/非表示
 
@@ -320,18 +326,18 @@ floraの設定
 それぞれの列名のボタンをクリックすると，再表示が可能．
 「全列」をクリックすると全列を一斉に表示できる．
 
-<img src="img/example_hide_cols01.png" width="90%">
+<img src="img_jp/example_hide_cols01.png" width="90%">
 
 ### 行の並べ替え
 
 折り返しなしの状態のときに列名をクリックすると，その列の入力内容に従って並べ替えができる．
 階層などのリストは設定時の入力順で並べ替えされる．
 
-<img src="img/example_sort01.png" width="90%">
+<img src="img_jp/example_sort01.png" width="90%">
 
 再度列名をクリックすると，昇順・降順が入れ替わる．
 
-<img src="img/example_sort02.png" width="90%">
+<img src="img_jp/example_sort02.png" width="90%">
 
 なお，1地点での地点情報では1行しかないため，並べ替えは無意味．
 
@@ -340,13 +346,13 @@ floraの設定
 表の左上のテキストボックスに入力をすると，表示中の入力情報の検索が可能．
 一致するものだけが表示されるため，種名の確認などができる．
 
-<img src="img/example_search01.png" width="90%">
+<img src="img_jp/example_search01.png" width="90%">
 
 なお，ここでの検索対象は，表示中の列のテキストボックス・固定値(fixed)のテキストである．
 検索対象から地点名などを除外する場合は，「非表示」により非表示にしておくと良い．
 
-<img src="img/example_search04.png" width="90%">
-<img src="img/example_search05.png" width="90%">
+<img src="img_jp/example_search04.png" width="90%">
+<img src="img_jp/example_search05.png" width="90%">
 
 ## データ入力
 
@@ -361,15 +367,15 @@ floraの設定
 - 自動入力項目: 「PLOT」「NO」    
 - 「DATE」「LOC\_LAT」「LOC\_LON」「LOC\_ACC」は，「UPDATE\_TIME\_GPS」ボタンを押と更新．GPSデータは，「GPS起動」ボタンを押してGPSデータの使用を許可する必要あり．     
 
-<img src="img/example01.png" width="90%">
+<img src="img_jp/example01.png" width="90%">
 
 ## 観察情報の行の追加・削除
 
 「＋ 新規地点」で新規の地点を追加すると，観察情報は4行の入力欄が表示される．
 左下のプルダウンの数字で行数を選択して，「行を追加」をクリックすると，新たな入力行が追加できる．
 
-<img src="img/example_addrows01.png" width="90%">
-<img src="img/example_addrows02.png" width="90%">
+<img src="img_jp/example_addrows01.png" width="90%">
+<img src="img_jp/example_addrows02.png" width="90%">
 
 ## リストから種名を追加
 
@@ -377,7 +383,7 @@ floraの設定
 使用したいリストを選択すると，そのリストの種名が一覧として表示される．
 なお，種名リストの登録・削除方法は，[小規模な種名リスト](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md#小規模な種名リスト)を参照．
 
-<img src="img/example_species_list01.png" width="90%">
+<img src="img_jp/example_species_list01.png" width="90%">
 
 一覧に表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
 仮登録したものは，種名一覧ではクリックできなくなる．
@@ -388,21 +394,21 @@ floraの設定
 テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
 「，」(全角カンマ)や「、」(読点)も区切りとして使える．
 
-<img src="img/example_species_list02.png" width="90%">
+<img src="img_jp/example_species_list02.png" width="90%">
 
 「種を追加」をクリックすると種名が観察情報に追加できる．
 種名リストの仮登録の種は，種名一覧に戻る．
 
-<img src="img/example_species_list03.png" width="90%">
+<img src="img_jp/example_species_list03.png" width="90%">
 
 「出現種を含める」にチェックを入れると，全地点での入力済の種名が種名一覧に追加される．
 未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
 
-<img src="img/example_species_list05.png" width="90%">
+<img src="img_jp/example_species_list05.png" width="90%">
 
 「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
 
-<img src="img/example_species_list06.png" width="90%">
+<img src="img_jp/example_species_list06.png" width="90%">
 
 ## 階層ごとの被度の計算
 
@@ -410,7 +416,7 @@ floraの設定
 なお，「値」には観察情報のうち数値の項目が表示され，「グループ」にはプルダウンのリストの項目が表示される．
 そのため，「被度」「階層」以外の集計も可能．
 
-<img src="img/example_calculate01.png" width="90%">
+<img src="img_jp/example_calculate01.png" width="90%">
 
 # 全入力情報の表示
 
@@ -421,7 +427,7 @@ floraの設定
 なお，「全地点」の表は閲覧のみで，内容の変更は不可．
 また，未入力の場合は何も表示されない．
 
-<img src="img/example_all_plots.png" width="90%">
+<img src="img_jp/example_all_plots.png" width="90%">
 
 「全地点」の3つの表のいずれも，地点情報や観察情報の表と同様に以下の操作が可能である．
 
@@ -446,7 +452,7 @@ floraの設定
 種名の検索，種名リストからの登録などができる．
 小規模な種名リストを複数および大規模な種名リストを1つ利用可能である．
 
-<img src="img/tools_list00.png" width="70%">
+<img src="img_jp/tools_list00.png" width="70%">
 
 ## 小規模な種名リスト
 
@@ -456,7 +462,7 @@ floraの設定
 選択したリストは，アルファベットあるいは50音順で表示される．
 表示されたものを選択すると，調査データとして入力できる．
 
-<img src="img/tools_list02.png" width="70%">
+<img src="img_jp/tools_list02.png" width="70%">
 
 ### ファイルから種名リストの登録
 
@@ -490,24 +496,24 @@ floraの設定
 
 「削除」の右側にあるプルダウンメニューから種名リストを選択して「削除」ボタンをクリックすると，該当の種名リストが削除される．
 
-<img src="img/tools_list03.png" width="70%">
+<img src="img_jp/tools_list03.png" width="70%">
 
 ### 種名リストの利用
 
 登録した小規模な種名リストは，プルダウンメニューに表示される．
 使用したいリストを選択すると，そのリストの種名が一覧として表示される．
 
-<img src="img/tools_list04.png" width="70%">
+<img src="img_jp/tools_list04.png" width="70%">
 
 一覧に表示されている種名ボタンをクリックすると，その種名が仮登録として上の部分に移動する．
 仮登録したものは，種名一覧ではクリックできなくなる．
 仮登録した種名ボタンをクリックすると，仮登録がキャンセルされる．
 
-<img src="img/tools_list05.png" width="70%">
+<img src="img_jp/tools_list05.png" width="70%">
 
 「表示列数」の右にある数字を変更すると，種名の表示列数を変更できる．
 
-<img src="img/tools_list06.png" width="70%">
+<img src="img_jp/tools_list06.png" width="70%">
 
 仮登録した種名について地点および階層をプルダウンメニューから選択する．
 プルダウンメニューには，階層等のリスト形式の項目が表示される．
@@ -518,7 +524,7 @@ floraの設定
 テキストボックスで複数種を登録するときには「,」(半角カンマ)で区切る．
 「，」(全角カンマ)や「、」(読点)も区切りとして使える．
 
-<img src="img/tools_list08.png" width="70%">
+<img src="img_jp/tools_list08.png" width="70%">
 
 「種を追加」をクリックすると種名が観察情報に追加できる．
 種名リストの仮登録の種は，種名一覧に戻る．
@@ -526,7 +532,7 @@ floraの設定
 「出現種を含める」にチェックを入れると，全地点での入力済の種名が種名一覧に追加されて表示される．
 未同定の種名(「Identified」にチェックされていない種)には，「sp8\_biss02」のような形式で地点名が合わせて表示される．
 
-<img src="img/tools_list07.png" width="70%">
+<img src="img_jp/tools_list07.png" width="70%">
 
 「sp8\_biss02」を選択して観察情報に追加すると，既出の地点名(この例では「biss02」)が「SameAs」の列にが自動的に入力される．
 
@@ -546,7 +552,7 @@ floraの設定
 テキストファイルは，1つの種名を1行ごとに入力しておく．
 「種を追加」の右にある「ファイルを選ぶ」でファイル名を選択し，「開く」をクリックする．
 
-<img src="img/tools_list10.png" width="70%">
+<img src="img_jp/tools_list10.png" width="70%">
 
 大規模な種名リストは1つしか登録できないため，新しいものを登録すると古いものは削除される．
 
@@ -556,13 +562,13 @@ floraの設定
 「種名を入力」と薄く表示された検索用のテキストボックスに検索文字列を入力して「wamei を検索」をクリックすると，検索結果に合致する種が種名のボタンとして表示される．
 合致したものが200種を超える場合は，「一致が 200 件を超えました．200 件のみ表示します．」という警告がポップアップ画面で表示され，最初の200種のみが表示される．
 
-<img src="img/tools_list12.png" width="70%">
+<img src="img_jp/tools_list12.png" width="70%">
 
 複数の文字列をスペースで区切って入力すると，絞り込み検索が可能である(3項目以上でも検索可能)．
 つまり，「アイ ガヤ」で検索すると，「アイ」かつ「ガヤ」に合致するものだけが表示される．
 検索のテキストボックスを空欄にして「wamei を検索」をクリックすると，検索結果がリセットされて種名のボタンが消える．
 
-<img src="img/tools_list09.png" width="70%">
+<img src="img_jp/tools_list09.png" width="70%">
 
 調査データへの入力方法は，小規模リストと同様である．
 

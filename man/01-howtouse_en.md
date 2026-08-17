@@ -18,6 +18,13 @@ Column names and item names ("Species", "DATE", ...), species names, plot names,
 layer names and setting names ("\_5\_layers", ...) are **data and are not translated**,
 so a saved file has the same content in either language.
 
+> **Note**   
+> The pictures here are of the English display; the Japanese ones are in
+> [the Japanese manual](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md).
+> Four of them show what the browser draws rather than the page (the download
+> bar, the "allow several downloads?" box, and the box that asks for a plot
+> name); their wording follows the browser, not the app.
+
 ## Change font size
 
 To change the font size of the entire screen, click "small" and "LAGE" buttons.
@@ -114,12 +121,15 @@ See ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/01-h
 
 Whenever you leave the page with something in it (closing the tab, switching to
 another app, locking the screen), BISS keeps a copy of the input in the browser.
+**The copy is also rewritten a few seconds after you stop typing**, so that a
+browser that dies where it stands still leaves the input behind.
 If a copy is there the next time you open it, the top of the page says so:
 
 > Input of 2026\_08\_17\_13\_30\_15 (2 plots) was left.　[Restore]　[Discard]
 
 - **Restore**: build the plot tabs again from the copy. The species, the cover
-  and the memos come back as they were.
+  and the memos come back as they were. **The settings come back too**, so you
+  can go on with "+ PLOT" straight away.
 - **Discard**: throw the copy away (it asks first).
 
 Notes.
