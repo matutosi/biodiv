@@ -183,6 +183,64 @@ def test_hiding_a_column_leaves_a_button_that_brings_it_back(biss):
     assert biss.errors == []
 
 
+def test_the_font_size_buttons_change_what_is_drawn(biss):
+    """--font-size only means something once the browser lays the page out."""
+    page = biss.page
+    biss.survey_one_plot()
+    box = page.locator("#sp_list_input-e2e01")
+    drawn = "el => parseFloat(getComputedStyle(el).fontSize)"
+
+    start = box.evaluate(drawn)
+    page.click("input[data-msg='large']")
+    larger = box.evaluate(drawn)
+    assert larger > start, f"LARGE did not grow the text: {start} -> {larger}"
+
+    page.click("input[data-msg='small']")
+    assert abs(box.evaluate(drawn) - start) < 0.5, "small did not undo LARGE"
+    assert biss.errors == []
+
+
+def test_the_flora_can_be_replaced_from_a_file(biss, tmp_path):
+    """The third file dialog: the other two are covered above."""
+    page = biss.tab("Tools").page
+    flora = tmp_path / "my_flora.txt"
+    flora.write_text("ススキ\nチガヤ\nヨシ\n", encoding="utf-8")
+
+    with page.expect_file_chooser() as chooser:
+        # The first one belongs to Replace flora; the species list module
+        # inside #flora has one of its own.
+        page.locator("#flora input[data-msg='choose_file']").first.click()
+    chooser.value.set_files(flora)
+
+    # The button says which flora it searches now.
+    page.wait_for_function(
+        "() => /my_flora/.test(document.getElementById('search_flora_button').value)"
+    )
+    assert page.locator("#note_wamei").is_hidden(), "the note about the bundled flora stayed"
+
+    page.fill("#flora_input", "チガヤ")
+    page.click("#search_flora_button")
+    hits = page.eval_on_selector_all(
+        "#sp_list_module-flora input[type=button]", "els => els.map(e => e.value)"
+    )
+    assert "チガヤ" in hits, f"the new flora is not what is searched: {hits}"
+    assert biss.errors == []
+
+
+def test_the_page_can_go_full_screen_and_come_back(biss):
+    """Full screen needs a real click on a real browser."""
+    page = biss.page
+    is_full = "() => document.fullscreenElement !== null"
+    assert page.evaluate(is_full) is False
+
+    page.click("#switch_screen_show")
+    page.wait_for_function(is_full)
+
+    page.click("#switch_screen_show")
+    page.wait_for_function("() => document.fullscreenElement === null")
+    assert biss.errors == []
+
+
 def test_the_language_switch_relabels_the_page(biss):
     page = biss.page
     plot = biss.survey_one_plot()
