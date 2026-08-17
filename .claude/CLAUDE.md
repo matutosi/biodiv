@@ -139,11 +139,12 @@ git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見
 | `package.json`         | `npm run lint` / `npm test` の定義と devDependencies |
 | `eslint.config.js`     | ESLint の設定 (flat config) |
 | `test/biss.js`         | jsdom で `www/biodiv2.html` を組み立てる土台 |
-| `test/smoke.test.js`   | 回帰スモークテスト (16件) |
+| `test/smoke.test.js`   | 調査の流れと保存形式の回帰テスト (22件) |
+| `test/feature.test.js` | 周辺機能のテスト (10件．集計・GPS・自動保存・文字サイズ・メール・植物相) |
 | `requirements-dev.txt` | ブラウザテストの Python 依存 |
 | `pytest.ini`           | pytest の設定 |
 | `e2e/conftest.py`      | Playwright で実ブラウザに読み込ませる土台 |
-| `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (8件 × 2ページ) |
+| `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (12件 × 2ページ + 配布物のみ1件) |
 
 **テストは 2 段構え**．jsdom は速いので編集のたびに，Playwright は遅いので区切りで走らせる．
 
@@ -199,7 +200,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-17 11:50 (JST) 更新．
+2026-08-17 12:40 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -513,6 +514,26 @@ python -m venv .venv
   (`createTd`・`addThTr`・`createSelectOpt`・`addRowWithValues`・`addRow`・
   `updateTimeGPS`・`getCellData`・`table2array`・`hash2table`)．
   回帰テストを1件足した (入力の表・全地点の表・保存する TSV の3か所で，打った通りであること)．
+- **課題 C (テストの無い機能) を片づけた**．`test/feature.test.js` (jsdom 10件) と
+  ブラウザテスト3件を新しく書いた．**jsdom 32件・ブラウザ 25件**，すべて成功．
+  - jsdom: 集計 (`sumWithGroup`．Layer ごとに Cover を足して T1=50，2回押しても増えない)，
+    GPS (最後の位置を返す・停止で watch を止める・位置が取れなくても止まらない・
+    「日時 GPS」ボタンが行を埋める)，自動保存のタイマー (間隔の切り替え)，
+    文字サイズ (1.2倍で往復)，メール (宛先の検査と本文)，植物相の入替．
+  - ブラウザ: 文字サイズが**実際に描画に効く**こと，フルスクリーンの往復，
+    植物相の入替 (3つ目のファイルダイアログ．これで3か所とも見ている)．
+- **テストを書いたら実バグが2件出てきた．どちらも直した**．
+  - **A9 自動保存で「no save」を選ぶと，止まるどころか全力で保存し続ける経路があった**．
+    `changeAutoSaveSttting()` が，タイマーがまだ動いていないときは値を見ずに
+    `setAutoSave(Number('no save'))` を呼ぶ．`Number('no save')` は `NaN`，
+    `setInterval(fn, NaN)` は `setInterval(fn, 0)` なので，ブラウザが許すかぎりの速さで
+    JSON をダウンロードし続ける．値の判定を先に行う形にした．
+  - **A10 Windows で書いた種名の一覧を「植物相の入替」で読むと，検索が何も見つけなくなる**．
+    `replaceFlora()` が `text.split('\n')` だけで切っており，各行に `\r` が残る．
+    検索は `makeLookAheadReg()` が作る `^(?=.*名前).*$` で照合するが，
+    **JavaScript の `.` も `$` も `\r` を越えない**ので一致しない．
+    `registerSL()` (種一覧の登録) は元から `\r` を落としていたので，入替だけが漏れていた．
+    テストのファイルも CRLF にして，この経路を固定した．
 
 ### 課題一覧
 
@@ -532,15 +553,13 @@ python -m venv .venv
 - 残る時間はほぼ表の組み立て (DOM を作る分) で，構造を変えないかぎりこれ以上は縮まない．
 - 20地点・数千行でも，従来の 8地点ぶんより軽い．
 
-#### C. テストが無い機能 (優先度 中)
+#### C. テストが無い機能 → 対処済み
 
-動くことは手で確かめたが，次に壊れても気づけない．
-
-- **集計** (`sumWithGroup`)．確認したときは正しかった (Layer で Cover を集計し T1=30+20=50，H=5)．
-- GPS の起動・停止と位置の取り込み，メールソフト起動，自動保存のタイマー，
-  文字サイズ，フルスクリーン，植物相の入替．
-- ファイル選択は「種一覧の登録」と「設定の読込」を Playwright が見ている．
-  「植物相の入替」だけ未記述 (同じ `createFileInput()` を使う)．
+- 集計・GPS・自動保存・文字サイズ・メール・植物相の入替・フルスクリーンに
+  テストを書いた (`test/feature.test.js` と `e2e/test_biss.py`)．
+- ファイル選択の3か所 (種一覧の登録・設定の読込・植物相の入替) は，すべて
+  Playwright が実際のダイアログで見ている．
+- 残る未テストは，人の目でしか見られないもの (下の E) だけ．
 
 #### D. コードに残っている脆さ (優先度 低)
 
