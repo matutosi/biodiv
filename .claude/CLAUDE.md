@@ -200,7 +200,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-17 12:40 (JST) 更新．
+2026-08-17 13:10 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -534,6 +534,19 @@ python -m venv .venv
     **JavaScript の `.` も `$` も `\r` を越えない**ので一致しない．
     `registerSL()` (種一覧の登録) は元から `\r` を落としていたので，入替だけが漏れていた．
     テストのファイルも CRLF にして，この経路を固定した．
+- **課題 D (コードの脆さ) を片づけた**．「何番目か」で数えるのをやめ，名前で引くようにした．
+  - **`example.js` が設定行を位置で消していた**のを直した．
+    `#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4)` を2回押す書き方で，
+    `data.js` の項目が1つ増減すると**別の項目が消える**．
+    `deleteRowByValue(table, COL.ITEM, 'Abundance')` のように**名前で消す**形にした
+    (`table.js` に追加)．回帰テストも，例が Abundance と Rank だけを落とすことを見る．
+  - **設定タブの表を `getElementsByTagName('table')[0]` / `[1]` で取っていた**のをやめた．
+    `settingTable('plot')` / `settingTable('occ')` が，入れ物 (`setting_*_holder`) から引く．
+    設定ファイルを読むと表の id が変わる (`mysetting_tb`) ので，名前でも順番でもなく
+    入れ物で引くのが正しい．`addSettingPart()` も同じ関数に寄せた．
+    ブラウザテストに「設定を読み込んだ後に地点を足す」経路を足した．
+  - `COL` に設定表の列 (`item`・`type`・`value`) を足した．
+  - `addInputTab()` の `// in progress` を，引数の説明に書き換えた．
 
 ### 課題一覧
 
@@ -561,14 +574,15 @@ python -m venv .venv
   Playwright が実際のダイアログで見ている．
 - 残る未テストは，人の目でしか見られないもの (下の E) だけ．
 
-#### D. コードに残っている脆さ (優先度 低)
+#### D. コードに残っている脆さ → ほぼ対処済み
 
-- `example.js` が `#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4)` という
-  **位置指定のセレクタ**で設定行を消している．`data.js` の行が1つ増減すると別の項目を消す．
-- `tab.js` が設定タブの表を `getElementsByTagName('table')[0]` / `[1]` で取っている
-  (並び順に依存)．
-- `tab.js` の `addInputTab()` に `// in progress` のコメントが残っている．
-- `inhibit_close.js` が `biodiv2.html` でコメントアウトされたまま (使うか消すかが保留)．
+- 位置で数えるのをやめ，名前で引くようにした (下記「課題 D」を参照)．
+- **残るのは `inhibit_close.js` の扱いだけ** (`biodiv2.html` でコメントアウトされたまま)．
+  「ページを離れるときに確認する」機能を**使うか消すか**の判断が要る．
+  - 使う: 野外で誤ってタブを閉じても入力が消えない．
+    ただし**保存・メール送信のたびにも確認が出る**恐れがあり，
+    今のブラウザは文言を無視して定型の確認を出す．
+  - 消す: 自動保存とダウンロードがあるので，そちらで守る．
 - 兄弟辿りで残っているのは `clickFileInput()` の1箇所だけ
   (ボタンと隠し入力を同じ関数で並べて作っている意図的なペアなので，このままでよい)．
 
