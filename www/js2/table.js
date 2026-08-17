@@ -14,8 +14,10 @@ function createTd(col_name, data_type, select, table_data){
       td = createTdWithChild( crEl({ el:'input', ats:{type: data_type, value: table_data, size: select} }) );
       break;
     case "number":
-      td = createTdWithChild( 
-        crEl({ el:'input', ats:{type: data_type, value: "", inputmode: "numeric", min: "0", step: select} }) );
+      // The value, like a text column: a table built from data that was
+      // entered (a restored survey) has to come back with its numbers.
+      td = createTdWithChild(
+        crEl({ el:'input', ats:{type: data_type, value: table_data, inputmode: "numeric", min: "0", step: select} }) );
       break;
     case "checkbox":
       td = createTdWithChild( crEl({ el:'input', ats:{type: data_type} }) );

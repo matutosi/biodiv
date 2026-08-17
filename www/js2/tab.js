@@ -117,8 +117,27 @@ function addInputTab({ obj, id }){
   }
   if(null !== document.getElementById(id)){
     alert( msgF('alert_plot_dup', id) );
-    return void 0; 
+    return void 0;
   }
+  // The tables the settings describe, with the plot name and number in front.
+  let plot_data = convertTableData( getTableData( settingTable('plot') ) );
+  plot_data = addPlotNo(plot_data, getPlotMaxNo() + 1);
+  plot_data = addPlotId(plot_data, id);
+  const occ_data = addPlotId( convertTableData( getTableData( settingTable('occ') ) ), id);
+  buildPlotTab({ obj: obj, id: id, plot_data: plot_data, occ_data: occ_data, n_row: 3 });
+}
+
+// Build the tab of a plot out of the two table definitions it holds.
+//   Split from addInputTab() so that a survey can be built back from a
+//   backup as well as from the settings: restoreSurvey() passes the tables
+//   as they were, addInputTab() passes the empty ones the settings describe.
+//   @param obj        The element the tab goes in front of (the + PLOT button).
+//   @param id         A string, the plot name.
+//   @param plot_data  A table definition for the plot table.
+//   @param occ_data   A table definition for the occurrence table.
+//   @param n_row      How many empty rows to add to the occurrence table.
+function buildPlotTab({ obj, id, plot_data, occ_data, n_row = 0 }){
+  if(obj === void 0){ obj = document.getElementById('add_tab'); }
   // create tabcontrol
   const a = crEl({ el: 'a', ats: {href: "#" + id}, tc: id });
   document.getElementById('tabcontrol').insertBefore(a, obj);
@@ -130,38 +149,36 @@ function addInputTab({ obj, id }){
 
   // create input tables
       // PLOT
-  let plot_setting = convertTableData( getTableData( settingTable('plot') ) );
-  plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
-  plot_setting = addPlotId(plot_setting, id);
-  const pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
-                              id_text: true, 
+  const pl_table = tableModule({table_data: plot_data, ns: 'input_plot_' + id,
+                              id_text: true,
                               hide_button: true, fit_button: true })
   div.appendChild( pl_table );
   document.getElementById('input_plot_' + id + '_fit').onclick();
 
       // OCC
-  let occ_setting = convertTableData( getTableData( settingTable('occ') ) );
-  occ_setting = addPlotId(occ_setting, id);
-  const oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
+  const oc_table = tableModule({table_data: occ_data, ns: 'input_occ_' + id,
                               id_text: true, search_input: true,
-                              hide_button: true, fit_button: true, 
+                              hide_button: true, fit_button: true,
                               add_button: true, calc_button: true})
   div.appendChild( oc_table );
-  document.getElementById('input_occ_' + id + '_nrow').value = 3;
-  document.getElementById('input_occ_' + id + '_add_rows').onclick();
+  if(n_row > 0){
+    document.getElementById('input_occ_' + id + '_nrow').value = n_row;
+    document.getElementById('input_occ_' + id + '_add_rows').onclick();
+  }
   updateTab();
   tabs[tabs.length - 1].onclick();  // move tab
   const table = searchParentTable(oc_table);
   setSortable(table.id);  // Should setSortable() after appendChild()
 
   // void 0 hides the pull downs: createSpecieUlModule() reads it as "do not show"
-  const show_select_options = (occ_setting.biss_c_names.indexOf(COL.LAYER) < 0) ? void 0 : true;
+  const show_select_options = (occ_data.biss_c_names.indexOf(COL.LAYER) < 0) ? void 0 : true;
   const ul_module = createSpecieUlModule({ species: '', ns: id,
-                  show_select_button   : true, 
-                  show_comp_checkbox   : true, 
-                  show_text_input      : true, 
+                  show_select_button   : true,
+                  show_comp_checkbox   : true,
+                  show_text_input      : true,
                   show_select_options  : show_select_options   });
   div.appendChild( ul_module );
+  hideRestoreNotice();   // there is input again: the offer is out of the way
   // all update
   updateInputsPlotLayerSpecies()
 }

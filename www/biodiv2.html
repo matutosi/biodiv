@@ -31,13 +31,8 @@
     <script src="js2/table.js">                        </script>
     <script src="js2/example.js"      charset="utf-8"> </script>
 
-<!-- in progress   -->
     <script src="js2/auto_save.js"></script>
-<!-- in progress   -->
-
-    <!--  Not use in progress
-    <script src="js2/inhibit_close.js"></script>
-    -->
+    <script src="js2/backup.js"></script>
 
     <link rel="stylesheet" href="css2/tab.css">
     <link rel="stylesheet" href="css2/table.css">
@@ -64,6 +59,9 @@
 <input type='button' value="Show example" data-msg="show_example" onclick="showExample(this)" />
 <input type='button' value="Show manual"  data-msg="show_manual"  onclick="showManual()" />
 </p>
+
+<!-- showRestoreNotice() offers here what was left when the tab was closed. -->
+<p id="restore_holder"></p>
 
 
 <div class="Biodiversity Investigation System (BIS)">
@@ -126,6 +124,7 @@
     const pages = document.getElementById('tabbody').getElementsByTagName('div');
     updateTab()
     tabs[1].onclick();  // tab at first
+    showRestoreNotice();  // when the last visit was closed with input in it
     initLanguage();     // label the page, after it is built
   </script>
 <div>
