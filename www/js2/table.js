@@ -141,6 +141,27 @@ function getTableData(table){
   }
 }
 
+// Press the DELETE button of the row that holds a value in a column.
+//    Reaching a row by its number (tr:nth-child(7)) means a row added to
+//    data.js above it deletes something else instead. Say which row is meant.
+//    @param table   A table element.
+//    @param c_name  A string, the column to look in.
+//    @param value   A string, the value that names the row.
+//    @return        true when a row was deleted.
+function deleteRowByValue(table, c_name, value){
+  const c_names = getColNames(table);
+  const col_no = c_names.indexOf(c_name);
+  const del_no = c_names.indexOf(COL.DELETE);
+  if(col_no < 0 || del_no < 0){ return false; }
+  for(let Ri = ROW_FIRST_DATA; Ri < table.rows.length; Ri++){
+    if(getCellData(table.rows[Ri].cells[col_no]) === value){
+      table.rows[Ri].cells[del_no].firstChild.click();
+      return true;
+    }
+  }
+  return false;
+}
+
 // Build a table out of a table definition.
 //   @param table_data  A table definition: biss_c_names, biss_d_types,
 //                        biss_selects and biss_inputs.

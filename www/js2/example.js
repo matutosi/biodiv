@@ -10,9 +10,10 @@ function showExample(obj){
 
   // select settings: '_5_layers'
   changeSettingsByName('_5_layers');
-  // delete 'rank' and 'abundance'
-  document.querySelector("#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4) > input[type=button]").click()
-  document.querySelector("#_5_layers_occ_tb > tr:nth-child(7) > td:nth-child(4) > input[type=button]").click()
+  // delete 'Abundance' and 'Rank': the example does not use them
+  const occ_setting = document.getElementById('_5_layers_occ_tb');
+  deleteRowByValue(occ_setting, COL.ITEM, 'Abundance');
+  deleteRowByValue(occ_setting, COL.ITEM, 'Rank');
 
   // add plots
   addInputTab({ obj:document.getElementById('add_tab'), id:'biss01' });

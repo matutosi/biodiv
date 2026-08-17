@@ -5,9 +5,7 @@
 function addSettingPart(category, obj){
   //   console.log(category);   //  "plot" or "occ"
   //   console.log(obj.value);  //  items to add
-  //   var obj = temp1; obj  var obj = temp1; obj.parentNode.nextSibling.nextSibling.nextSibling;
-  const table_category = "_" + category + "_tb";
-  const table = document.getElementById('tab_settings').querySelector("table[id$='" + table_category + "']");
+  const table = settingTable(category);
   const values = data_settings_part[category][obj.value];
 
   const keys = Object.keys(values);
@@ -20,6 +18,16 @@ function addSettingPart(category, obj){
     for(const key of keys){ row[key] = values[key][i]; }
     addRowWithValues({ table: table, values: row });
   }
+}
+
+// The settings table of a category, 'plot' or 'occ'.
+//   Both live in a holder of their own, so which one is meant does not depend
+//   on the order the tables happen to be in, nor on the name of the setting
+//   they were built from (a loaded settings file renames the table).
+//   @param  category  A string, 'plot' or 'occ'.
+//   @return           A table element.
+function settingTable(category){
+  return document.querySelector('#setting_' + category + '_holder table');
 }
 
 // Create one button per setting part (date_GPS etc.) of a category, plot or occ.

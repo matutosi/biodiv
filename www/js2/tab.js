@@ -95,8 +95,10 @@ function getPlotMaxNo(){
   return Math.max.apply(Math, string2Numeric(max_no));
 }
 
-// Add a tab
-//   in progress
+// Add a plot: a tab, its two input tables built from the settings, and the
+//   species list module under them.
+//   @param obj  The element the new tab is put in front of (the + PLOT button).
+//   @param id   A string, the plot name. Asked for when it is not given.
 function addInputTab({ obj, id }){
   // input PLOT name
   if(id == void 0){
@@ -128,7 +130,7 @@ function addInputTab({ obj, id }){
 
   // create input tables
       // PLOT
-  let plot_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[0] ) );
+  let plot_setting = convertTableData( getTableData( settingTable('plot') ) );
   plot_setting = addPlotNo(plot_setting, getPlotMaxNo() + 1);
   plot_setting = addPlotId(plot_setting, id);
   const pl_table = tableModule({table_data: plot_setting, ns: 'input_plot_' + id, 
@@ -138,7 +140,7 @@ function addInputTab({ obj, id }){
   document.getElementById('input_plot_' + id + '_fit').onclick();
 
       // OCC
-  let occ_setting = convertTableData( getTableData( document.getElementById('tab_settings').getElementsByTagName('table')[1] ) );
+  let occ_setting = convertTableData( getTableData( settingTable('occ') ) );
   occ_setting = addPlotId(occ_setting, id);
   const oc_table = tableModule({table_data: occ_setting, ns: 'input_occ_' + id, 
                               id_text: true, search_input: true,
