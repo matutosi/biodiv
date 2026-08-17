@@ -10,6 +10,8 @@ node_modules
 .Rhistory
 merge_push.bat
 .claude/worktrees/
+.claude/settings.json
+.claude/settings.local.json
 
 # LaTeX build artifacts (2210veg/, 2310veg/)
 *.aux
