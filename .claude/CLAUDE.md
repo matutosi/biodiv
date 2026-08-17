@@ -147,6 +147,8 @@ git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見
 | `pytest.ini`           | pytest の設定 |
 | `e2e/conftest.py`      | Playwright で実ブラウザに読み込ませる土台 |
 | `e2e/test_biss.py`     | ブラウザでしか確認できないテスト (13件 × 2ページ + 配布物のみ1件) |
+| `e2e/test_read_biss.py`| 保存した JSON を実際の R で `ecan::read_biss()` に通す (1件 × 2ページ) |
+| `R/read_biss_check.R`  | 上のテストが呼ぶ R 側．読み込んだ結果を JSON で返す (手元の保存ファイルにも使える) |
 | `e2e/shoot_manual.py`  | マニュアルの画像を撮り直す (テストではない．`--en` で英語版) |
 
 **テストは 2 段構え**．jsdom は速いので編集のたびに，Playwright は遅いので区切りで走らせる．
@@ -199,11 +201,26 @@ python -m venv .venv
   BISS はブラウザの言語で起動するので，日本語環境と英語環境でテストの結果が変わってしまう．
   切り替えそのものは，切替のテストの中で明示的に行う．
 
+#### R まで通すテスト (`e2e/test_read_biss.py`)
+
+**調査の行き先は解析なので，保存した JSON を実際の R で読ませる**．
+ブラウザで保存 → `Rscript --vanilla R/read_biss_check.R <file>` →
+`ecan::read_biss()` の結果を JSON で受け取り，打った通りかを Python 側で判定する．
+
+- 見ているのは **HTML が食べたがる文字** (`&` `<` `>` `"` `\`) と日本語の種名．
+  A8 が実際にこれで壊れていた (`&` が `&amp;` になり，`<i>` はタグとして消えた)．
+- 地点側も1列 (`Location`) 見る．`Investigator` は `_5_layers` では `fixed` (設定で1度書く列)
+  なので入力欄が無く，ここでは使えない．
+- **R か `ecan` が無ければ skip する**．開発の必須条件にはしない
+  (入れるには `install.packages('ecan')`．依存に vegan などが付く)．
+- `--vanilla` で呼ぶ．`Rprofile.site` が tidyverse を読み込む環境があり，起動が遅くなるため．
+- 種を入れなかった階層は空の行のまま残る (画面と同じ)．判定は空を除いてから行う．
+
 ## 進捗状況
 
 ### 現在の状態
 
-2026-08-17 14:05 (JST) 更新．
+2026-08-17 14:10 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -637,6 +654,16 @@ python -m venv .venv
     glob は **Node 21 以降**でしか展開されず，環境の Node が 18 に下がっていた．
     どちらでも動く `node --test test/` にした (36件・約8秒)．
   - `pytest` 27件も緑．
+- **保存した JSON を実際の R で読ませるテストを足した** (`e2e/test_read_biss.py` と
+  `R/read_biss_check.R`)．課題一覧 E から「`ecan::read_biss()` に通すこと」が消えた
+  (人の目でなく機械で見られる)．
+  ブラウザで `autoSave()` を押して落ちた JSON を，`Rscript --vanilla` 経由で
+  `ecan::read_biss()` に読ませ，`Rosa A & B`・`Carex <sp>`・`Quercus "ao"`・
+  `Pinus \ sp`・`ブナ` と地点側の `Sasaki & Co. <field>` が
+  **打った通りに R まで届く**ことを見る (`join` は TRUE / FALSE の両方)．
+  A8 (`&` が `&amp;` になる) が再発したら，ここで止まる．
+  R か `ecan` が無い環境では skip する．**`pytest` は 27件から 29件**になった
+  (この機械には `ecan` を CRAN から入れた)．
 
 ### 課題一覧
 
@@ -648,13 +675,8 @@ python -m venv .venv
 
 #### A. 機能として未完了 (優先度 高)
 
-- **`develop` を `main` へマージする (次のセッションへの引き継ぎ)**．
-  2026-08-17 のマニュアルの画像と本文の修正 (`2e192ea`〜`21f3789`) が `develop` にある．
-  `www/` は触っていないので配布物の再ビルドは不要だが，
-  **「使い方」ボタンは `main` の `man/01-howtouse_*.md` を開く**
-  (`js2/example.js` が `https://github.com/matutosi/biodiv/blob/main/man/…` を指す)ため，
-  マージするまで修正が利用者に見えない．
-  マージ前に `npm test` (36件) と `pytest` (27件) を走らせること．
+- (未反映の修正は無い．2026-08-17 のマニュアルの画像・本文の修正と
+  R まで通すテストは `main` へマージ済み)
 
 #### B. 性能 → 対処済み
 
@@ -687,8 +709,8 @@ python -m venv .venv
   (iOS Safari は `visibilitychange` の扱いが違うことがある)．
   復元の文言とボタンの見え方も．ブラウザテストが見ているのは
   Chromium で開き直したときの往復だけ．
-- 保存した TSV/JSON を実際に `ecan::read_biss()` に通すこと
-  (とくに `&` や `<` を含む種名が，打った通りに入っていること)．
+- ~~保存した TSV/JSON を実際に `ecan::read_biss()` に通すこと~~
+  → **機械で見るようにした** (`e2e/test_read_biss.py`)．人の目は要らなくなった．
 - ~~**撮り直した画像の見え方**~~ → 88枚を目視で確認した．結果は下の **G**．
 
 #### F. 見送っているもの (案3)
