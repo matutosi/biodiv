@@ -199,7 +199,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-17 04:29 (JST) 更新．
+2026-08-17 11:50 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -483,7 +483,36 @@ python -m venv .venv
   `man/01-howtouse_jp.md`・`_en.md` の該当箇所 (各2件) も合わせた．
   キー名 `include_comp` は変えていない．表示が変わっただけで，
   組成表から種名を集める仕組みそのものは同じため．
-  **`www/biss2.html` は未再ビルド**なので，配布物にはまだ反映されていない．
+- **課題 B (性能) を片づけた**．`updateAllInputsTables()` が **2.6 倍速くなった**．
+  同じ条件 (jsdom) で測り直した値．
+
+  | 地点 | occ 行数 | 前 | 後 |
+  | ---- | -------- | -- | -- |
+  | 4 | 116 | 67 ms | 33 ms |
+  | 8 | 232 | 171 ms | 70 ms |
+  | 8 | 432 | 337 ms | 129 ms |
+
+  (以前の記録 (346/598/709 ms) は別のマシンで測ったもの．前後の比が意味を持つ)
+  - **表は列ごとではなく1回の走査で読む**．`getColsData()` を `utils.js` に足し，
+    `getColData()` はその1列版になった．`getMultiTableInputs()` が
+    (表 × 列) ごとに `getColNames()` と `querySelectorAll()` をやり直していたのを，
+    表ごとに1回にした (27 ms → 10 ms)．`getTableData()` も同じ形にした．
+  - **行を作るループから，行ごとに変わらないものを追い出した** (`addTableData`)．
+    列数 `nCol(table)` と，列ごとの選択肢 `uniq(selects[Cj])` を先に1回だけ求める．
+    選択肢を使い回せるように，`createTd()` の list が `select.push('')` で
+    引数を壊すのをやめて `concat` にした．
+  - **いちばん効いたのは，セルの中身を innerHTML ではなく textContent で書くこと**
+    (194 ms → 55 ms)．HTML の解析器を通さなくなる．
+    これは同時に**実バグ (A8) の修正**でもある (下記)．
+- **実バグ A8 を直した．表示用の表を通すと `&` が `&amp;` になっていた**．
+  種名に `Rosa A & B` と入れると，「全地点」の表と**保存する TSV では `Rosa A &amp; B`**
+  になっていた (`ecan::read_biss()` が読むのはこの TSV)．
+  `<i>` のような文字列は，文字ではなく**タグとして解釈**されて消えていた．
+  セルは innerHTML で書き，`getCellData()` が innerHTML で読み戻していたため．
+  データはマークアップではないので，書きも読みも textContent に変えた
+  (`createTd`・`addThTr`・`createSelectOpt`・`addRowWithValues`・`addRow`・
+  `updateTimeGPS`・`getCellData`・`table2array`・`hash2table`)．
+  回帰テストを1件足した (入力の表・全地点の表・保存する TSV の3か所で，打った通りであること)．
 
 ### 課題一覧
 
@@ -497,22 +526,11 @@ python -m venv .venv
 
 - (案1・案2 とも公開済み．未反映の修正は無い)
 
-#### B. 性能 (優先度 中．実測で分かった)
+#### B. 性能 → 対処済み
 
-- **`updateAllInputsTables()` が地点数に対して伸びる**．タブを切り替えるたびに走る．
-
-  | 地点 | occ 行数 | 合計 | うち `createAllInputsTable` |
-  | ---- | -------- | ---- | --------------------------- |
-  | 4 | 116 | 346 ms | 282 ms |
-  | 8 | 232 | 598 ms | 447 ms |
-  | 8 | 432 | 709 ms | 510 ms |
-
-  (jsdom での実測．実機のブラウザはもう少し速く，スマートフォンは逆に遅い)
-- 主因は `getMultiTableInputs()` が **(表 × 列) の組ごとに `getColData()` を呼び，
-  その中で毎回 `getColNames()` と `querySelectorAll()` をやり直している**こと．
-  表ごとに列名を1度だけ求め，1回の走査で全列を読めば大きく減らせるはず．
-  振る舞いは変えずに済むので，費用対効果は高い．
-- 20地点・数千行の調査だとタブを触るたびに固まる恐れがある．
+- `updateAllInputsTables()` を **2.6 倍速くした** (下表)．タブを切り替えるたびに走る処理．
+- 残る時間はほぼ表の組み立て (DOM を作る分) で，構造を変えないかぎりこれ以上は縮まない．
+- 20地点・数千行でも，従来の 8地点ぶんより軽い．
 
 #### C. テストが無い機能 (優先度 中)
 
