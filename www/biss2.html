@@ -1054,18 +1054,24 @@ function changeSettingsByName(ns){
 // Rebuild the plot and occ setting tables from the base setting just picked. 
 function changeSettings(obj){ 
   const setting = obj.value; 
-  const new_plot_module = tableModule({ table_data: data_settings[setting].plot, ns: setting + '_plot', 
-                                      id_text: true, load_button: true, save_button: true, hide_button: true,  
-                                      add_button: true }); 
-  const new_occ_module = tableModule({ table_data: data_settings[setting].occ, ns: setting + '_occ', 
-                                      id_text: true, load_button: true, save_button: true, hide_button: true,  
-                                      add_button: true }); 
-  // The two modules live in named holders, so this works the first time, 
-  // when there is nothing to replace yet, as well as on every switch after. 
-  showInHolder('setting_plot_holder', new_plot_module); 
-  showInHolder('setting_occ_holder',  new_occ_module); 
-  setSortable(setting + '_plot_tb'); 
-  setSortable(setting + '_occ_tb'); 
+  showSettingModule('plot', data_settings[setting].plot, setting + '_plot'); 
+  showSettingModule('occ',  data_settings[setting].occ,  setting + '_occ'); 
+} 
+ 
+// Put one settings module in its holder, built from a table definition. 
+//   Used by the base setting pull down and by a restored backup, so that a 
+//   settings table is built the same way whichever it came from. 
+//   @param category    A string, 'plot' or 'occ'. 
+//   @param table_data  A table definition. 
+//   @param ns          A string, the name of the module (its table becomes <ns>_tb). 
+function showSettingModule(category, table_data, ns){ 
+  const module = tableModule({ table_data: table_data, ns: ns, 
+                               id_text: true, load_button: true, save_button: true, 
+                               hide_button: true, add_button: true }); 
+  // The modules live in named holders, so this works the first time, when 
+  // there is nothing to replace yet, as well as on every switch after. 
+  showInHolder('setting_' + category + '_holder', module); 
+  setSortable(ns + '_tb'); 
 } 
  
 // Which module a control belongs to, and how to reach the rest of it. 
@@ -29805,103 +29811,139 @@ function changeAutoSaveSttting(obj){
 function setAutoSave(n){ 
   const min = 1000 * 60; // 1 min: 1000ms * 60sec 
   timerId = setInterval(autoSave, n * min ); 
-}</script> <script>// Keep a copy of the survey in the browser, so that closing the tab by
-// mistake does not lose it.
-//
-//   The auto save writes a file every n minutes, which is the copy to keep.
-//   It cannot help at the moment the tab is closed, though: a browser does
-//   not let a page start a download while it is going away. What a page may
-//   still do then is write to its own storage, so that is what this does.
-//
-//   The copy is written whenever the page goes out of sight (the tab is
-//   closed, the browser is left for another app, the phone is locked). On
-//   the next start, if a copy is there, the page offers to put it back.
-//
-//   What is kept is each plot's two tables as they stand, which is what
-//   buildPlotTab() needs. The species lists are already in localStorage of
-//   their own, and the settings are only used to make a new plot.
-
-const BACKUP_KEY = 'biss_backup';
-
-// Every plot on the page, as the tables it is made of.
-//   @return An array of { id, plot, occ }, empty when there is no plot.
-function getSurveyBackup(){
-  const plots = [];
-  for(const table of document.querySelectorAll("table[id^='input_plot_']")){
-    const id = table.id.replace(/^input_plot_/, '').replace(/_tb$/, '');
-    const occ = document.getElementById('input_occ_' + id + '_tb');
-    if(occ === null){ continue; }
-    plots.push({ id: id, plot: getTableData(table), occ: getTableData(occ) });
-  }
-  return plots;
-}
-
-// Write the copy, unless there is nothing to write.
-//   A page with no plot leaves the copy alone: opening the app to look at
-//   something must not throw away what was left from the day before.
-function saveSurveyBackup(){
-  const plots = getSurveyBackup();
-  if(plots.length === 0){ return void 0; }
-  try {
-    localStorage.setItem(BACKUP_KEY, JSON.stringify({ saved: getNow(), plots: plots }));
-  } catch { }   // full or forbidden storage must not stop the survey
-}
-
-// The copy, or null when there is none to read.
-function readSurveyBackup(){
-  try {
-    const text = localStorage.getItem(BACKUP_KEY);
-    if(text === null){ return null; }
-    const backup = JSON.parse(text);
-    return (backup.plots === void 0 || backup.plots.length === 0) ? null : backup;
-  } catch {
-    return null;
-  }
-}
-
-// Build the plots of the copy again. A plot that is already on the page is
-//   left as it is: what is on screen was typed later than the copy.
-function restoreSurvey(){
-  const backup = readSurveyBackup();
-  if(backup === null){ return void 0; }
-  for(const plot of backup.plots){
-    if(document.getElementById(plot.id) !== null){ continue; }
-    buildPlotTab({ id: plot.id, plot_data: plot.plot, occ_data: plot.occ });
-  }
-  hideRestoreNotice();
-}
-
-// Throw the copy away, after asking.
-function discardSurveyBackup(){
-  if(!confirm( msg('confirm_discard_backup') )){ return void 0; }
-  try { localStorage.removeItem(BACKUP_KEY); } catch { }
-  hideRestoreNotice();
-}
-
-// Offer to restore, when a copy was left behind. Call once, at the start.
-function showRestoreNotice(){
-  const holder = document.getElementById('restore_holder');
-  if(holder === null){ return void 0; }
-  const backup = readSurveyBackup();
-  if(backup === null){ return void 0; }
-  holder.appendChild( msgSpan('restore_note', backup.saved, backup.plots.length) );
-  holder.appendChild( createInput({ type: 'button', value: msg('restore'),
-                                    'data-msg': 'restore', onclick: 'restoreSurvey()' }) );
-  holder.appendChild( createInput({ type: 'button', value: msg('discard'),
-                                    'data-msg': 'discard', onclick: 'discardSurveyBackup()' }) );
-}
-
-// Take the offer off the page.
-function hideRestoreNotice(){
-  const holder = document.getElementById('restore_holder');
-  if(holder === null){ return void 0; }
-  holder.textContent = '';
-}
-
-// When to write the copy.
-//   'visibilitychange' is the one that can be relied on: a phone may kill a
-//   tab it has hidden without ever raising 'pagehide' or 'beforeunload'.
-document.addEventListener('visibilitychange', function(){
-  if(document.visibilityState === 'hidden'){ saveSurveyBackup(); }
-});
-window.addEventListener('pagehide', saveSurveyBackup);</script> <style> #tabcontrol{ margin:0;} #tabcontrol a{ display:inline-block;border-width:1px 1px 0px 1px; border-style:solid;border-color:black;border-radius:0.75em 0.75em 0px 0px; padding:0.75em 1em;text-decoration:none; color:black;background-color:white;font-weight:bold;position:relative; } #tabbody div{ border:1px solid black;margin-top:-1px; padding:1em;background-color:white;position:relative; z-index:0; min-height:5em; } #tabcontrol a:nth-child(1), #tabbody div:nth-child(1){ background-color:#FFFFE0;}#tabcontrol a:nth-child(2), #tabbody div:nth-child(2){ background-color:#efefff;}#tabcontrol a:nth-child(n+3), #tabbody div:nth-child(n+3){ background-color:#efffef;} </style> <style>select,.margin_right{ margin-right:20px;}:root{ --font-size:16px;}table{ border-collapse:collapse;}input[type="number"]{ width :5em;}input,select,b,span,div{ font-size :var(--font-size);}input[type=checkbox]{ transform:scale(1.2);}input{ }table td,th{ font-size :var(--font-size);border-style:solid; padding :0.3em 1em; text-align :center; }table th{ color:white;background-color:#00552e;cursor:pointer;}table td{ border-width:0px 0px; border-color:#00552e; }table tr:nth-child(odd){ background:#AEFFBD;}table td:before{ content:attr(th-lab);}table tr{ border-width:0.5px 0.5px;border-color:#00552e; border-style:solid; }#tab_tools table tr{ background:#FFFFFF;}#tab_tools table th{ color:white;background-color:#FF6E00;}#tab_settings table th{ color:white;background-color:#0033CC;}#tab_settings table td{ border-width:1px 0px; border-color:#0033CC; }#tab_settings table tr:nth-child(odd){ background:#BAD3FF;}#tab_tools td{ text-align :left;vertical-align:top;background:#FFFFF0;} td #sp_staged{ background:#FF6E00;}</style> <style>:not(:root):fullscreen::backdrop{ background-color:white;}</style> <style>:root{ --cc:5;}ul{ column-count :var(--cc);list-style-type:none;padding-left :1px;padding-right :1px;}</style> </head> <body> <p> <select id="select_language" onchange="changeLanguage(this)"> <option value="en">English</option> <option value="ja">日本語</option> </select> <input type="button" value="Save input data" data-msg="save_input" onclick="saveAllTableDataAsCSV()"> <input type="button" value="small" data-msg="small" onclick="smaller()"> <input type="button" value="LARGE" data-msg="large" onclick="larger()"> <span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span> <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)"> <input type="button" value="Show example" data-msg="show_example" onclick="showExample(this)"> <input type="button" value="Show manual" data-msg="show_manual" onclick="showManual()"> </p> <p id="restore_holder"></p> <div class="Biodiversity Investigation System (BIS)"> <p id="tabcontrol"> <a href="#tab_tools" data-msg="tab_tools">Tools </a> <a href="#tab_settings" data-msg="tab_settings">Settings </a> <a href="#tab_all" data-msg="tab_all">All plots</a> <input id="add_tab" type="button" value="+ PLOT" data-msg="plus_plot" onclick="addInputTab({ obj:this })"> </p> <div id="tabbody"> <div id="tab_tools"> <script>const tab_tools=document.getElementById("tab_tools"),ul_all=createSpecieUlModule({species:"",ns:"all",show_select_button:!0,show_comp_checkbox:!0,show_select_ncol:!0,show_delete_list:!0,show_button_register_sl:!0,show_text_input:!0,show_select_plot:!0,show_select_options:!0});tab_tools.appendChild(ul_all),tab_tools.appendChild(createSearchFloraSpan());</script> </div> <div id="tab_settings"> <script>const tab_setting=document.getElementById("tab_settings");tab_setting.appendChild(createAutoSaveIntervalSelect()),tab_setting.appendChild(createStartGPSButton()),tab_setting.appendChild(createMailerSpan()),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(createSettingSelect()),tab_setting.appendChild(addSettingPartButton("plot")),tab_setting.appendChild(addSettingPartButton("occ")),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(crEl({el:"span",ats:{id:"setting_plot_holder"}})),tab_setting.appendChild(crEl({el:"span",ats:{id:"setting_occ_holder"}})),changeSettingsByName("empty");</script> </div> <div id="tab_all"> <span id="plot_all"></span> <span id="occ_all"></span> <span id="comp_table"> <script></script> </span></div> </div> </div> <div> <script>const tabs=document.getElementById("tabcontrol").getElementsByTagName("a"),pages=document.getElementById("tabbody").getElementsByTagName("div");updateTab(),tabs[1].onclick(),showRestoreNotice(),initLanguage();</script> <div> </div></div></body> </html> 
+}</script> <script>// Keep a copy of the survey in the browser, so that closing the tab by 
+// mistake does not lose it. 
+// 
+//   The auto save writes a file every n minutes, which is the copy to keep. 
+//   It cannot help at the moment the tab is closed, though: a browser does 
+//   not let a page start a download while it is going away. What a page may 
+//   still do then is write to its own storage, so that is what this does. 
+// 
+//   The copy is written whenever the page goes out of sight (the tab is 
+//   closed, the browser is left for another app, the phone is locked). On 
+//   the next start, if a copy is there, the page offers to put it back. 
+// 
+//   What is kept is each plot's two tables as they stand, which is what 
+//   buildPlotTab() needs, and the two settings tables, so that a plot can 
+//   still be added after a restore. The species lists are already in 
+//   localStorage of their own. 
+ 
+const BACKUP_KEY = 'biss_backup'; 
+const BACKUP_DELAY = 3000;   // ms of quiet after typing before the copy is written 
+ 
+// Every plot on the page, as the tables it is made of. 
+//   @return An array of { id, plot, occ }, empty when there is no plot. 
+function getSurveyBackup(){ 
+  const plots = []; 
+  for(const table of document.querySelectorAll("table[id^='input_plot_']")){ 
+    const id = table.id.replace(/^input_plot_/, '').replace(/_tb$/, ''); 
+    const occ = document.getElementById('input_occ_' + id + '_tb'); 
+    if(occ === null){ continue; } 
+    plots.push({ id: id, plot: getTableData(table), occ: getTableData(occ) }); 
+  } 
+  return plots; 
+} 
+ 
+// The settings a plot is made from, as they stand. 
+//   @return { plot, occ }, each { ns, data } or null. 
+function getSettingsBackup(){ 
+  const settings = {}; 
+  for(const category of ['plot', 'occ']){ 
+    const table = settingTable(category); 
+    settings[category] = (table === null) ? null 
+      : { ns: table.id.replace(/_tb$/, ''), data: getTableData(table) }; 
+  } 
+  return settings; 
+} 
+ 
+// Write the copy, unless there is nothing to write. 
+//   A page with no plot leaves the copy alone: opening the app to look at 
+//   something must not throw away what was left from the day before. 
+function saveSurveyBackup(){ 
+  const plots = getSurveyBackup(); 
+  if(plots.length === 0){ return void 0; } 
+  try { 
+    localStorage.setItem(BACKUP_KEY, JSON.stringify( 
+      { saved: getNow(), settings: getSettingsBackup(), plots: plots })); 
+  } catch { }   // full or forbidden storage must not stop the survey 
+} 
+ 
+// Write the copy once the typing stops. 
+//   Leaving the page is not the only way to lose it: a browser can be killed 
+//   where it stands. Writing after every keystroke would build every table 
+//   again each time, so wait for a moment of quiet first. 
+let backup_timer; 
+function scheduleSurveyBackup(){ 
+  clearTimeout(backup_timer); 
+  backup_timer = setTimeout(saveSurveyBackup, BACKUP_DELAY); 
+} 
+ 
+// The copy, or null when there is none to read. 
+function readSurveyBackup(){ 
+  try { 
+    const text = localStorage.getItem(BACKUP_KEY); 
+    if(text === null){ return null; } 
+    const backup = JSON.parse(text); 
+    return (backup.plots === void 0 || backup.plots.length === 0) ? null : backup; 
+  } catch { 
+    return null; 
+  } 
+} 
+ 
+// Build the plots of the copy again. A plot that is already on the page is 
+//   left as it is: what is on screen was typed later than the copy. 
+function restoreSurvey(){ 
+  const backup = readSurveyBackup(); 
+  if(backup === null){ return void 0; } 
+  // The settings first: a plot added after the restore is built from them. 
+  if(backup.settings !== void 0){ 
+    for(const category of ['plot', 'occ']){ 
+      const setting = backup.settings[category]; 
+      if(setting != void 0){ showSettingModule(category, setting.data, setting.ns); } 
+    } 
+  } 
+  for(const plot of backup.plots){ 
+    if(document.getElementById(plot.id) !== null){ continue; } 
+    buildPlotTab({ id: plot.id, plot_data: plot.plot, occ_data: plot.occ }); 
+  } 
+  hideRestoreNotice(); 
+} 
+ 
+// Throw the copy away, after asking. 
+function discardSurveyBackup(){ 
+  if(!confirm( msg('confirm_discard_backup') )){ return void 0; } 
+  try { localStorage.removeItem(BACKUP_KEY); } catch { } 
+  hideRestoreNotice(); 
+} 
+ 
+// Offer to restore, when a copy was left behind. Call once, at the start. 
+function showRestoreNotice(){ 
+  const holder = document.getElementById('restore_holder'); 
+  if(holder === null){ return void 0; } 
+  const backup = readSurveyBackup(); 
+  if(backup === null){ return void 0; } 
+  holder.appendChild( msgSpan('restore_note', backup.saved, backup.plots.length) ); 
+  holder.appendChild( createInput({ type: 'button', value: msg('restore'), 
+                                    'data-msg': 'restore', onclick: 'restoreSurvey()' }) ); 
+  holder.appendChild( createInput({ type: 'button', value: msg('discard'), 
+                                    'data-msg': 'discard', onclick: 'discardSurveyBackup()' }) ); 
+} 
+ 
+// Take the offer off the page. 
+function hideRestoreNotice(){ 
+  const holder = document.getElementById('restore_holder'); 
+  if(holder === null){ return void 0; } 
+  holder.textContent = ''; 
+} 
+ 
+// When to write the copy. 
+//   'visibilitychange' is the one that can be relied on when the page goes 
+//   away: a phone may kill a tab it has hidden without ever raising 
+//   'pagehide' or 'beforeunload'. Typing is watched as well, for the times 
+//   the browser does not go away but stops. 
+document.addEventListener('visibilitychange', function(){ 
+  if(document.visibilityState === 'hidden'){ saveSurveyBackup(); } 
+}); 
+window.addEventListener('pagehide', saveSurveyBackup); 
+document.addEventListener('input',  scheduleSurveyBackup); 
+document.addEventListener('change', scheduleSurveyBackup);</script> <style> #tabcontrol{ margin:0;} #tabcontrol a{ display:inline-block;border-width:1px 1px 0px 1px; border-style:solid;border-color:black;border-radius:0.75em 0.75em 0px 0px; padding:0.75em 1em;text-decoration:none; color:black;background-color:white;font-weight:bold;position:relative; } #tabbody div{ border:1px solid black;margin-top:-1px; padding:1em;background-color:white;position:relative; z-index:0; min-height:5em; } #tabcontrol a:nth-child(1), #tabbody div:nth-child(1){ background-color:#FFFFE0;}#tabcontrol a:nth-child(2), #tabbody div:nth-child(2){ background-color:#efefff;}#tabcontrol a:nth-child(n+3), #tabbody div:nth-child(n+3){ background-color:#efffef;} </style> <style>select,.margin_right{ margin-right:20px;}:root{ --font-size:16px;}table{ border-collapse:collapse;}input[type="number"]{ width :5em;}input,select,b,span,div{ font-size :var(--font-size);}input[type=checkbox]{ transform:scale(1.2);}input{ }table td,th{ font-size :var(--font-size);border-style:solid; padding :0.3em 1em; text-align :center; }table th{ color:white;background-color:#00552e;cursor:pointer;}table td{ border-width:0px 0px; border-color:#00552e; }table tr:nth-child(odd){ background:#AEFFBD;}table td:before{ content:attr(th-lab);}table tr{ border-width:0.5px 0.5px;border-color:#00552e; border-style:solid; }#tab_tools table tr{ background:#FFFFFF;}#tab_tools table th{ color:white;background-color:#FF6E00;}#tab_settings table th{ color:white;background-color:#0033CC;}#tab_settings table td{ border-width:1px 0px; border-color:#0033CC; }#tab_settings table tr:nth-child(odd){ background:#BAD3FF;}#tab_tools td{ text-align :left;vertical-align:top;background:#FFFFF0;} td #sp_staged{ background:#FF6E00;}</style> <style>:not(:root):fullscreen::backdrop{ background-color:white;}</style> <style>:root{ --cc:5;}ul{ column-count :var(--cc);list-style-type:none;padding-left :1px;padding-right :1px;}</style> </head> <body> <p> <select id="select_language" onchange="changeLanguage(this)"> <option value="en">English</option> <option value="ja">日本語</option> </select> <input type="button" value="Save input data" data-msg="save_input" onclick="saveAllTableDataAsCSV()"> <input type="button" value="small" data-msg="small" onclick="smaller()"> <input type="button" value="LARGE" data-msg="large" onclick="larger()"> <span data-msg="biss">Biodiversity Investigation Support System (BiSS)</span> <input id="switch_screen_show" type="button" value="FULL SC <=> windowed" data-msg="screen" onclick="switchScreenShow(this.id)"> <input type="button" value="Show example" data-msg="show_example" onclick="showExample(this)"> <input type="button" value="Show manual" data-msg="show_manual" onclick="showManual()"> </p> <p id="restore_holder"></p> <div class="Biodiversity Investigation System (BIS)"> <p id="tabcontrol"> <a href="#tab_tools" data-msg="tab_tools">Tools </a> <a href="#tab_settings" data-msg="tab_settings">Settings </a> <a href="#tab_all" data-msg="tab_all">All plots</a> <input id="add_tab" type="button" value="+ PLOT" data-msg="plus_plot" onclick="addInputTab({ obj:this })"> </p> <div id="tabbody"> <div id="tab_tools"> <script>const tab_tools=document.getElementById("tab_tools"),ul_all=createSpecieUlModule({species:"",ns:"all",show_select_button:!0,show_comp_checkbox:!0,show_select_ncol:!0,show_delete_list:!0,show_button_register_sl:!0,show_text_input:!0,show_select_plot:!0,show_select_options:!0});tab_tools.appendChild(ul_all),tab_tools.appendChild(createSearchFloraSpan());</script> </div> <div id="tab_settings"> <script>const tab_setting=document.getElementById("tab_settings");tab_setting.appendChild(createAutoSaveIntervalSelect()),tab_setting.appendChild(createStartGPSButton()),tab_setting.appendChild(createMailerSpan()),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(createSettingSelect()),tab_setting.appendChild(addSettingPartButton("plot")),tab_setting.appendChild(addSettingPartButton("occ")),tab_setting.appendChild(crEl({el:"hr"})),tab_setting.appendChild(crEl({el:"span",ats:{id:"setting_plot_holder"}})),tab_setting.appendChild(crEl({el:"span",ats:{id:"setting_occ_holder"}})),changeSettingsByName("empty");</script> </div> <div id="tab_all"> <span id="plot_all"></span> <span id="occ_all"></span> <span id="comp_table"> <script></script> </span></div> </div> </div> <div> <script>const tabs=document.getElementById("tabcontrol").getElementsByTagName("a"),pages=document.getElementById("tabbody").getElementsByTagName("div");updateTab(),tabs[1].onclick(),showRestoreNotice(),initLanguage();</script> <div> </div></div></body> </html> 
