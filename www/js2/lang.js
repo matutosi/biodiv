@@ -47,6 +47,12 @@ const msgs = {
   show_example    :{ en: "Show example"                               , ja: "例を表示"                         },
   show_manual     :{ en: "Show manual"                                , ja: "使い方"                           },
 
+  // The copy left behind when the tab was closed (backup.js)
+  restore_note    :{ en: "Input of %s (%s plots) was left."           , ja: "%s の入力 (%s 地点) が残っています．" },
+  restore         :{ en: "<b>Restore</b>"                             , ja: "<b>復元</b>"                      },
+  discard         :{ en: "Discard"                                    , ja: "破棄"                             },
+  confirm_discard_backup:{ en: "Sure to throw the input away?"        , ja: "残っている入力を破棄します．よろしいですか？" },
+
   // Tabs
   tab_tools       :{ en: "Tools"                                      , ja: "ツール"                           },
   tab_settings    :{ en: "Settings"                                   , ja: "設定"                             },

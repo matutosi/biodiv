@@ -110,6 +110,31 @@ example
 
 See ["Inport data into R"](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_en.md#inport-data-into-r-1) to use data in R.
 
+## Restore the input (when the tab is closed by mistake)
+
+Whenever you leave the page with something in it (closing the tab, switching to
+another app, locking the screen), BISS keeps a copy of the input in the browser.
+If a copy is there the next time you open it, the top of the page says so:
+
+> Input of 2026\_08\_17\_13\_30\_15 (2 plots) was left.　[Restore]　[Discard]
+
+- **Restore**: build the plot tabs again from the copy. The species, the cover
+  and the memos come back as they were.
+- **Discard**: throw the copy away (it asks first).
+
+Notes.
+
+- **The copy lives in the browser (localStorage), not in a file.** Save the
+  survey itself with "Save input data" or with the auto save.
+- The copy is rewritten every time you leave the page, unless there is no plot
+  at all: opening the app to look something up does not throw yesterday's copy
+  away.
+- A plot whose name is already on the page is not restored: what is on screen
+  was typed later than the copy.
+- Clearing the history or the site data of the browser clears the copy too.
+- The species lists are kept in localStorage of their own, and are not part of
+  the copy.
+
 ## Setting of input items
 
 Before inputting data, the plot and occurrence items must be set.
