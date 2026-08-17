@@ -24,6 +24,11 @@
     Those four are left alone, and an open pull down is shown closed, with
     the value that was chosen in it. A screenshot only holds what the page
     itself draws; the rest belongs to the browser and the operating system.
+
+    A scene may be registered under more than one name, and then takes that
+    many pictures with s.frame(). The "before" and the "after" of a pair
+    have to come from one scene: the sample data is random, and a scene that
+    starts over gets a different survey to show.
 """
 
 import pathlib
@@ -38,13 +43,13 @@ PAGE = "biss2.html"          # the file that is distributed, as a reader has it
 WIDTH = 1200                 # the header row needs this much in Japanese
 WIDE  = 1400                 # an occurrence table does not wrap: it needs more
 
-scenes = []                  # [(chapter, name, function)]
+scenes = []                  # [(chapter, names, function)]
 
 
-def scene(chapter, name):
-    """Register one screenshot."""
+def scene(chapter, *names):
+    """Register a scene, which writes one image per name it is given."""
     def keep(fn):
-        scenes.append((chapter, name, fn))
+        scenes.append((chapter, names, fn))
         return fn
     return keep
 
@@ -69,6 +74,21 @@ class Shooter:
     def js(self, expression, *args):
         return self.page.evaluate(expression, *args)
 
+    def frame(self, name):
+        """Name the picture that the next shot writes."""
+        self.name = name
+
+    def search(self, selector, text):
+        """Type into a box that filters on keyup.
+
+        page.fill() puts the text in and sends 'input' only, so a table that
+        listens for 'keyup' (searchTableText) never filters. Real keystrokes
+        do what a reader does.
+        """
+        self.page.fill(selector, "")
+        self.page.click(selector)
+        self.page.keyboard.type(text)
+
     def top(self):
         """Scroll back to the top before measuring anything.
 
@@ -85,13 +105,31 @@ class Shooter:
         self.page.screenshot(path=str(self.img / f"{self.name}.png"), full_page=True,
                              clip={"x": 0, "y": y, "width": width, "height": height})
 
+    def edges(self, selector):
+        """The top and the bottom of everything an element draws.
+
+        A module of BISS is a <span>, and the box of an inline element starts
+        and ends where its flow does, not where its blocks do. Asking the
+        children as well keeps a clip from cutting through the last row.
+        """
+        return self.js("""sel => {
+            const root = document.querySelector(sel);
+            let top = Infinity, bottom = 0;
+            for (const e of [root, ...root.querySelectorAll('*')]) {
+                const r = e.getBoundingClientRect();
+                if (r.width === 0 && r.height === 0) continue;
+                top = Math.min(top, r.top);
+                bottom = Math.max(bottom, r.bottom);
+            }
+            return { top: top + window.scrollY, bottom: bottom + window.scrollY };
+        }""", selector)
+
     def shot_through(self, selector, width=WIDTH, pad=10):
         """From the top of the page down to the bottom of an element."""
         self.top()
-        box = self.page.locator(selector).first.bounding_box()
         self.page.screenshot(path=str(self.img / f"{self.name}.png"), full_page=True,
                              clip={"x": 0, "y": 0, "width": width,
-                                   "height": box["y"] + box["height"] + pad})
+                                   "height": self.edges(selector)["bottom"] + pad})
 
     def box(self, selector):
         """The box of an element, or None when it does not draw one."""
@@ -103,17 +141,28 @@ class Shooter:
     def shot_between(self, top, bottom, width=WIDE, pad=10, extra=0):
         """From the top of one element to the bottom of another.
 
-        A module of BISS is a <span> holding blocks, and the box of such a
-        span starts where its inline flow starts, not where it looks like it
-        does. Naming the two ends leaves no room for that surprise.
+        Naming the two ends leaves no room for the surprise that edges()
+        describes.
         """
         self.top()
         t = self.page.locator(top).first.bounding_box()
-        b = self.box(bottom) or t
         y = max(0, t["y"] - pad)
+        try:
+            b = self.edges(bottom)["bottom"]
+        except Exception:
+            b = t["y"] + t["height"]
         self.page.screenshot(path=str(self.img / f"{self.name}.png"), full_page=True, clip={
-            "x": 0, "y": y, "width": width,
-            "height": b["y"] + b["height"] + pad + extra - y})
+            "x": 0, "y": y, "width": width, "height": b + pad + extra - y})
+
+    def width_through(self, selector, least=WIDE):
+        """How wide a clip has to be to hold an element to its right edge.
+
+        The occurrence table does not wrap, and a Japanese heading is wider
+        than an English one: SameAs falls off the picture unless it is asked
+        for.
+        """
+        box = self.page.locator(selector).first.bounding_box()
+        return max(least, int(box["x"] + box["width"]) + 10)
 
     def shot_of(self, selector, pad=8):
         """One element, with a little room around it."""
@@ -171,14 +220,18 @@ def settings_autosave01(s):
 def settings_base01(s):
     """基本的な組み合わせの選択, with _5_layers picked."""
     s.settings("_5_layers")
-    s.shot_through("#_5_layers_plot_up b")
+    s.shot_through("#_5_layers_plot_up", pad=2)   # stop above the table
 
 
 @scene("settings", "settings_base02")
 def settings_base02(s):
-    """The occurrence settings of _5_layers, the rows to delete in sight."""
+    """… and the rows that are not wanted taken out with 削除."""
     s.settings("_5_layers")
-    s.shot_between("#_5_layers_occ_up b", "#_5_layers_occ_tb", width=WIDTH, extra=45)
+    for item in ["Abundance", "Rank"]:
+        row = s.page.locator("#_5_layers_occ_tb tr").filter(
+            has=s.page.locator(f"input[value='{item}']"))
+        row.locator("input[onclick='delRow(this)']").click()
+    s.shot_between("#_5_layers_occ_up b", "#_5_layers_occ", width=WIDTH)
 
 
 @scene("settings", "settings_base03")
@@ -187,7 +240,7 @@ def settings_base03(s):
     s.settings("_5_layers")
     s.page.fill("#_5_layers_occ_nrow", "2")
     s.page.click("#_5_layers_occ_add_rows")
-    s.shot_between("#_5_layers_occ_up b", "#_5_layers_occ_tb", width=WIDTH, extra=45)
+    s.shot_between("#_5_layers_occ_up b", "#_5_layers_occ", width=WIDTH)
 
 
 @scene("settings", "settings_base04")
@@ -210,7 +263,7 @@ def settings_save01(s):
     """設定の保存: a file name typed next to 保存."""
     s.settings("_5_layers")
     s.page.fill("#_5_layers_plot_fname", "my_plot_setting")
-    s.shot_through("#_5_layers_plot_tb")
+    s.shot_through("#_5_layers_plot")
 
 
 @scene("settings", "settings_hide_show")
@@ -227,6 +280,15 @@ def example(s):
     """The sample survey the manual works through: biss01 and biss02."""
     s.page.click("input[data-msg='show_example']")
     s.page.wait_for_selector("#input_occ_biss01_tb")
+
+
+OCC_TOP = "#input_occ_biss01_up b"          # the name above the module
+OCC_END = "#input_occ_biss01_sum_group"     # 集計 row, the last of the module
+
+
+def occ_shot(s, width=WIDE):
+    """The occurrence module of biss01, down to the 集計 row."""
+    s.shot_between(OCC_TOP, OCC_END, width=width, extra=12)
 
 
 @scene("plot", "add_plot00")
@@ -251,38 +313,27 @@ def example01(s):
     s.shot_through("#input_occ_biss01", width=WIDE)
 
 
-@scene("plot", "example_hide_table02")
-def example_hide_table02(s):
-    """表を非表示 pressed on the occurrences."""
+@scene("plot", "example_hide_table02", "example_hide_table01")
+def example_hide_table(s):
+    """表を非表示 pressed on the occurrences, and 表を表示 to bring it back."""
     example(s)
     s.page.click("#input_occ_biss01 input[data-msg='hide_table']")
-    s.shot_between("#input_occ_biss01_up b",
-                   "#input_occ_biss01_up input[data-msg='show_table']", extra=10)
-
-
-@scene("plot", "example_hide_table01")
-def example_hide_table01(s):
-    """… and 表を表示 to bring it back."""
-    example(s)
-    s.page.click("#input_occ_biss01 input[data-msg='hide_table']")
+    s.frame("example_hide_table02")
+    s.shot_between(OCC_TOP, "#input_occ_biss01_up input[data-msg='show_table']")
     s.page.click("#input_occ_biss01 input[data-msg='show_table']")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.frame("example_hide_table01")
+    occ_shot(s)
 
 
-@scene("plot", "example_width01")
-def example_width01(s):
-    """横長に pressed on the plot table: no wrapping."""
+@scene("plot", "example_width01", "example_width02")
+def example_width(s):
+    """横長に pressed on the plot table, then 幅を狭く to wrap it again."""
     example(s)
     s.page.click("#input_plot_biss01_fit")
+    s.frame("example_width01")
     s.shot_between("#input_plot_biss01_up b", "#input_plot_biss01_tb")
-
-
-@scene("plot", "example_width02")
-def example_width02(s):
-    """幅を狭く: wrapped to the width of the screen again."""
-    example(s)
     s.page.click("#input_plot_biss01_fit")
-    s.page.click("#input_plot_biss01_fit")
+    s.frame("example_width02")
     s.shot_between("#input_plot_biss01_up b", "#input_plot_biss01_tb")
 
 
@@ -294,68 +345,55 @@ def example_hide_cols01(s):
         col = s.js("name => getColNames(document.getElementById('input_occ_biss01_tb'))"
                    "         .indexOf(name)", name)
         s.page.locator("#input_occ_biss01_tb tr.hide_button td").nth(col).locator("input").click()
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    occ_shot(s)
 
 
-@scene("plot", "example_sort01")
-def example_sort01(s):
-    """行の並べ替え: Species clicked once."""
-    example(s)
-    s.page.locator("#input_occ_biss01_tb tr").first.get_by_text("Species").click()
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
-
-
-@scene("plot", "example_sort02")
-def example_sort02(s):
-    """… and clicked again, which turns the order round."""
+@scene("plot", "example_sort01", "example_sort02")
+def example_sort(s):
+    """行の並べ替え: Species clicked once, and again to turn the order round."""
     example(s)
     header = s.page.locator("#input_occ_biss01_tb tr").first.get_by_text("Species")
     header.click()
+    s.frame("example_sort01")
+    occ_shot(s)
     header.click()
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.frame("example_sort02")
+    occ_shot(s)
 
 
 @scene("plot", "example_search01")
 def example_search01(s):
     """テキストデータの検索: only the rows that hold the text are left."""
     example(s)
-    s.page.fill("#input_occ_biss01_up input[type=text]", "sp0")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.search("#input_occ_biss01_up input[type=text]", "sp0")
+    occ_shot(s)
 
 
-@scene("plot", "example_search04")
-def example_search04(s):
-    """The search reads the columns that are shown, PLOT among them."""
+@scene("plot", "example_search04", "example_search05")
+def example_search(s):
+    """The search reads the columns that are shown, PLOT among them,
+    so hiding PLOT takes it out of the search and nothing matches."""
     example(s)
-    s.page.fill("#input_occ_biss01_up input[type=text]", "biss01")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
-
-
-@scene("plot", "example_search05")
-def example_search05(s):
-    """… so hiding PLOT takes it out of the search."""
-    example(s)
+    s.search("#input_occ_biss01_up input[type=text]", "biss01")
+    s.frame("example_search04")
+    occ_shot(s)
     col = s.js("() => getColNames(document.getElementById('input_occ_biss01_tb')).indexOf('PLOT')")
     s.page.locator("#input_occ_biss01_tb tr.hide_button td").nth(col).locator("input").click()
-    s.page.fill("#input_occ_biss01_up input[type=text]", "biss01")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.search("#input_occ_biss01_up input[type=text]", "biss01")
+    s.frame("example_search05")
+    occ_shot(s)
 
 
-@scene("plot", "example_addrows01")
-def example_addrows01(s):
-    """観察情報の行の追加: three rows asked for."""
+@scene("plot", "example_addrows01", "example_addrows02")
+def example_addrows(s):
+    """観察情報の行の追加: three rows asked for, then 行を追加 pressed."""
     example(s)
     s.page.fill("#input_occ_biss01_nrow", "3")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
-
-
-@scene("plot", "example_addrows02")
-def example_addrows02(s):
-    """… and 行を追加 pressed."""
-    example(s)
-    s.page.fill("#input_occ_biss01_nrow", "3")
+    s.frame("example_addrows01")
+    occ_shot(s)
     s.page.click("#input_occ_biss01_add_rows")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.frame("example_addrows02")
+    occ_shot(s)
 
 
 def pick_species(s, ns, names):
@@ -364,51 +402,33 @@ def pick_species(s, ns, names):
         s.page.locator(f"#sp_list_sp_list-{ns} input[value='{name}']").first.click()
 
 
-@scene("plot", "example_species_list01")
-def example_species_list01(s):
-    """リストから種名を追加: a list picked shows its species."""
+@scene("plot", "example_species_list01", "example_species_list02", "example_species_list03")
+def example_species_list(s):
+    """リストから種名を追加: a list picked, two species staged with two more
+    typed in the text box, and 種を追加 pressed. All four reach the table."""
     example(s)
     s.page.select_option("#sp_list_select-biss01", "nara")
+    s.frame("example_species_list01")
     s.shot_between("#sp_list_select-biss01", "#sp_list_sp_list-biss01")
-
-
-@scene("plot", "example_species_list02")
-def example_species_list02(s):
-    """Two species staged, and one more typed in the text box."""
-    example(s)
-    s.page.select_option("#sp_list_select-biss01", "nara")
     names = s.js("() => [...document.querySelectorAll('#sp_list_sp_list-biss01 input')]"
                  "        .slice(0, 2).map(e => e.value)")
     pick_species(s, "biss01", names)
     s.page.fill("#sp_list_input-biss01", "ススキ,チガヤ")
+    s.frame("example_species_list02")
     s.shot_between("#sp_list_select-biss01", "#sp_list_sp_list-biss01")
-
-
-@scene("plot", "example_species_list03")
-def example_species_list03(s):
-    """種を追加 pressed: the species are in the occurrence table."""
-    example(s)
-    s.page.select_option("#sp_list_select-biss01", "nara")
-    names = s.js("() => [...document.querySelectorAll('#sp_list_sp_list-biss01 input')]"
-                 "        .slice(0, 2).map(e => e.value)")
-    pick_species(s, "biss01", names)
     s.page.click("#sp_list_add-biss01")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.frame("example_species_list03")
+    occ_shot(s)
 
 
-@scene("plot", "example_species_list05")
-def example_species_list05(s):
-    """出現種を含める: what was entered anywhere joins the list."""
+@scene("plot", "example_species_list05", "example_species_list06")
+def example_species_list_observed(s):
+    """出現種を含める: what was entered anywhere joins the list, and a species
+    of another plot, added here, fills SameAs in."""
     example(s)
     s.page.check("#sp_list_checkbox-biss01")
+    s.frame("example_species_list05")
     s.shot_between("#sp_list_select-biss01", "#sp_list_sp_list-biss01")
-
-
-@scene("plot", "example_species_list06")
-def example_species_list06(s):
-    """A species of another plot, added here, fills SameAs in."""
-    example(s)
-    s.page.check("#sp_list_checkbox-biss01")
     same = s.js("() => { const e = [...document.querySelectorAll('#sp_list_sp_list-biss01 input')]"
                 "          .find(e => /_biss02$/.test(e.value)); return e === undefined ? null : e.value; }")
     if same is None:
@@ -416,7 +436,8 @@ def example_species_list06(s):
         return
     pick_species(s, "biss01", [same])
     s.page.click("#sp_list_add-biss01")
-    s.shot_between("#input_occ_biss01_up b", "#input_occ_biss01_tb", extra=100)
+    s.frame("example_species_list06")
+    occ_shot(s, width=s.width_through("#input_occ_biss01_tb"))
 
 
 @scene("plot", "example_calculate01")
@@ -529,24 +550,27 @@ def tools_list10(s):
 
 @scene("tools", "tools_list12")
 def tools_list12(s):
-    """種名の検索: what the flora holds for a text."""
+    """種名の検索: what the flora holds for one word."""
+    example(s)
+    s.tab("ツール")
+    s.page.fill("#flora_input", "イヌガヤ")
+    s.page.click("#search_flora_button")
+    s.shot_between("#flora_input", "#sp_list_sp_list-flora", pad=3, extra=20)
+
+
+@scene("tools", "tools_list11", "tools_list09")
+def tools_list_and_search(s):
+    """Two words narrow the search down, and an empty one puts it away."""
     example(s)
     s.tab("ツール")
     s.page.fill("#flora_input", "アイ ガヤ")
     s.page.click("#search_flora_button")
-    s.shot_between("#flora_input", "#sp_list_sp_list-flora", extra=20)
-
-
-@scene("tools", "tools_list09")
-def tools_list09(s):
-    """An empty search puts the result away again."""
-    example(s)
-    s.tab("ツール")
-    s.page.fill("#flora_input", "アイ ガヤ")
-    s.page.click("#search_flora_button")
+    s.frame("tools_list11")
+    s.shot_between("#flora_input", "#sp_list_sp_list-flora", pad=3, extra=20)
     s.page.fill("#flora_input", "")
     s.page.click("#search_flora_button")
-    s.shot_between("#flora_input", "#sp_list_sp_list-flora", extra=20)
+    s.frame("tools_list09")
+    s.shot_between("#flora_input", "#sp_list_sp_list-flora", pad=3, extra=20)
 
 
 # ------------------------------------------------------------------ run ----
@@ -558,7 +582,7 @@ def main(argv):
         lang = "en"
     wanted = set(argv)
     picked = [s for s in scenes
-              if not wanted or s[0] in wanted or s[1] in wanted]
+              if not wanted or s[0] in wanted or wanted & set(s[1])]
     if not picked:
         print(f"no scene matches {wanted}")
         print("chapters:", sorted({c for c, _, _ in scenes}))
@@ -569,10 +593,10 @@ def main(argv):
                                       viewport={"width": 1400, "height": 1000})
         page = context.new_page()
         shooter = Shooter(page, lang)
-        for chapter, name, fn in picked:
+        for chapter, names, fn in picked:
             shooter.open()          # every scene starts from a fresh page
-            shooter.name = name
-            print(f"{lang}  {chapter:10s} {name}", flush=True)
+            shooter.frame(names[0])
+            print(f"{lang}  {chapter:10s} {' '.join(names)}", flush=True)
             fn(shooter)
         browser.close()
     return 0
