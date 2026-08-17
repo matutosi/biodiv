@@ -288,6 +288,32 @@ test('a copy that was left behind can be restored', async () => {
   assert.deepEqual(plain(w.getColData(w.document.getElementById('input_occ_p1_tb'), 'Cover')),
                    ['', '', '', '', '30', '20'], 'and the cover that was typed');
   assert.equal(holder.textContent, '', 'the offer is taken off the page');
+
+  // The settings come back too, so that the next plot is not an empty table.
+  assert.deepEqual(
+    [...w.document.querySelectorAll('#tab_settings table')].map(t => t.id),
+    ['_5_layers_plot_tb', '_5_layers_occ_tb'], 'the settings that were in use');
+  addPlot(w, 'p2');
+  assert.ok(plain(w.getColNames(w.document.getElementById('input_occ_p2_tb'))).includes('Species'),
+            'a plot added after the restore is built from them');
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('typing writes the copy without leaving the page', async () => {
+  const biss = await surveyWithCover();
+  const w = biss.window;
+  assert.equal(w.localStorage.getItem('biss_backup'), null, 'nothing yet');
+
+  // The wait for a moment of quiet, without the wait.
+  const real_timeout = w.setTimeout;
+  w.setTimeout = (fn) => { fn(); return 1; };
+  w.document.getElementById('input_occ_p1_tb').querySelector('input')
+   .dispatchEvent(new w.Event('input', { bubbles: true }));
+  w.setTimeout = real_timeout;
+
+  const backup = JSON.parse(w.localStorage.getItem('biss_backup'));
+  assert.equal(backup.plots.length, 1, 'the copy is there before the tab is closed');
   assert.deepEqual(biss.errors, []);
   biss.close();
 });
