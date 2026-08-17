@@ -233,6 +233,24 @@ def test_the_flora_can_be_replaced_from_a_file(biss, tmp_path):
     assert biss.errors == []
 
 
+def test_a_page_that_was_left_offers_the_input_back(biss):
+    """Only a real browser leaves a page the way closing a tab does."""
+    page = biss.page
+    plot = biss.survey_one_plot()
+    species = biss.col_data(f"input_occ_{plot}_tb", "Species")
+
+    page.reload()   # the page goes away, which is when the copy is written
+    page.wait_for_function("typeof addInputTab === 'function'")
+
+    restore = page.locator("#restore_holder input[onclick='restoreSurvey()']")
+    assert restore.is_visible(), "nothing was offered after the page was left"
+    restore.click()
+
+    assert biss.col_data(f"input_occ_{plot}_tb", "Species") == species, "the input came back"
+    assert page.locator("#restore_holder").inner_text() == "", "the offer is gone"
+    assert biss.errors == []
+
+
 def test_the_page_can_go_full_screen_and_come_back(biss):
     """Full screen needs a real click on a real browser."""
     page = biss.page

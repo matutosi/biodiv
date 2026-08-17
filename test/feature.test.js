@@ -239,6 +239,80 @@ test('the mailer refuses an address that is not one', async () => {
   biss.close();
 });
 
+test('closing the page keeps a copy of the survey', async () => {
+  const biss = await surveyWithCover();
+  const w = biss.window;
+
+  // The browser is left for another app: that is when the copy is written.
+  w.document.dispatchEvent(new w.Event('visibilitychange'));   // still visible
+  assert.equal(w.localStorage.getItem('biss_backup'), null, 'nothing is written while it is on screen');
+
+  Object.defineProperty(w.document, 'visibilityState', { configurable: true, value: 'hidden' });
+  w.document.dispatchEvent(new w.Event('visibilitychange'));
+
+  const backup = JSON.parse(w.localStorage.getItem('biss_backup'));
+  assert.equal(backup.plots.length, 1, 'the one plot is in the copy');
+  assert.equal(backup.plots[0].id, 'p1');
+  assert.ok(backup.plots[0].occ.biss_inputs.Species.includes('Fagus crenata'),
+            'with the species that were entered');
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('a copy that was left behind can be restored', async () => {
+  // What the last visit wrote. A new page has a storage of its own, so the
+  // copy is put there by hand, exactly as the browser would have kept it.
+  const first = await surveyWithCover();
+  Object.defineProperty(first.window.document, 'visibilityState',
+                        { configurable: true, value: 'hidden' });
+  first.window.document.dispatchEvent(new first.window.Event('visibilitychange'));
+  const kept = first.window.localStorage.getItem('biss_backup');
+  const before = plain(first.window.getColData(
+    first.window.document.getElementById('input_occ_p1_tb'), 'Species'));
+  first.close();
+
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.localStorage.setItem('biss_backup', kept);
+  w.showRestoreNotice();
+
+  const holder = w.document.getElementById('restore_holder');
+  assert.ok(holder.textContent.includes('p1') === false, 'the offer names the time, not the plot');
+  assert.ok(holder.querySelector('input[onclick="restoreSurvey()"]'), 'there is a Restore button');
+
+  holder.querySelector('input[onclick="restoreSurvey()"]').click();
+
+  assert.ok(w.document.getElementById('input_occ_p1_tb'), 'the plot is back');
+  assert.deepEqual(plain(w.getColData(w.document.getElementById('input_occ_p1_tb'), 'Species')),
+                   before, 'with the same species, in the same rows');
+  assert.deepEqual(plain(w.getColData(w.document.getElementById('input_occ_p1_tb'), 'Cover')),
+                   ['', '', '', '', '30', '20'], 'and the cover that was typed');
+  assert.equal(holder.textContent, '', 'the offer is taken off the page');
+  assert.deepEqual(biss.errors, []);
+  biss.close();
+});
+
+test('a page with no plot leaves the copy alone', async () => {
+  const biss = await loadBiss();
+  const w = biss.window;
+  w.localStorage.setItem('biss_backup', '{"saved":"yesterday","plots":[{"id":"kept"}]}');
+
+  Object.defineProperty(w.document, 'visibilityState', { configurable: true, value: 'hidden' });
+  w.document.dispatchEvent(new w.Event('visibilitychange'));
+
+  // Opening the app to look something up must not throw yesterday's work away.
+  assert.ok(w.localStorage.getItem('biss_backup').includes('kept'));
+
+  // Throwing it away is a decision, and it is asked about.
+  w.confirm = () => false;
+  w.discardSurveyBackup();
+  assert.notEqual(w.localStorage.getItem('biss_backup'), null, 'a no keeps it');
+  w.confirm = () => true;
+  w.discardSurveyBackup();
+  assert.equal(w.localStorage.getItem('biss_backup'), null, 'a yes throws it away');
+  biss.close();
+});
+
 test('the flora can be replaced by a file of names', async () => {
   const biss = await loadBiss();
   const w = biss.window;
