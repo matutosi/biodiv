@@ -23,7 +23,10 @@ so a saved file has the same content in either language.
 > [the Japanese manual](https://github.com/matutosi/biodiv/blob/main/man/01-howtouse_jp.md).
 > Four of them show what the browser draws rather than the page (the download
 > bar, the "allow several downloads?" box, and the box that asks for a plot
-> name); their wording follows the browser, not the app.
+> name), and were taken by hand.
+> In the box that asks for a plot name, only the frame and the OK and Cancel
+> buttons belong to the browser: the question itself comes from the app and
+> follows the language of the display.
 
 ## Change font size
 
@@ -467,7 +470,7 @@ Selecting a species displayed in the list allows you to enter it as occurrence d
 
 Species names can be registered from a text file (UTF8).
 In the text file, enter one species name per line.
-Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
+Select a file name from the "Choose file" button to the right of "Register" and click "Open".
 
 When registered as a species list, it will be added in the pull-down menu on the right side of the "Species list".
 
@@ -543,7 +546,7 @@ Selecting a species displayed allows you to enter it as occurrence data.
 
 Species names can be registered from a text file (UTF8).
 In the text file, enter one species name per line.
-Select a file name from the "Choose file" menu to the right of "Add species to list" and click "Open".
+Select a file name from the "Choose file" button to the right of "Replace flora" and click "Open".
 
 <img src="img/tools_list10.png" width="70%">
 
@@ -559,6 +562,9 @@ If there are more than 200 matches, a pop-up window will appear with the warning
 
 Multiple character strings separated by spaces can be entered to narrow down the search (more than three items can be searched).
 A search for "aaa bbb" will display only those matching the words "aaa" and "bbb".
+
+<img src="img/tools_list11.png" width="70%">
+
 If the search text box is left blank and "Search" is clicked, the search results will be reset and the species name button will disappear.
 
 <img src="img/tools_list09.png" width="70%">
