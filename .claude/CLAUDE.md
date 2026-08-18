@@ -138,7 +138,9 @@ git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見
 
 | ファイル | 内容 |
 | -------- | ---- |
-| `package.json`         | `npm run lint` / `npm test` の定義と devDependencies |
+| `package.json`         | `npm run lint` / `npm test` の定義と devDependencies．`engines` で Node の下限 |
+| `.node-version`        | この機械で使う Node の版 (fnm・Volta 等が読む) |
+| `.npmrc`               | `engine-strict=true` (版が足りなければ `npm ci` で止める) |
 | `eslint.config.js`     | ESLint の設定 (flat config) |
 | `test/biss.js`         | jsdom で `www/biodiv2.html` を組み立てる土台 |
 | `test/smoke.test.js`   | 調査の流れと保存形式の回帰テスト (22件) |
@@ -150,6 +152,7 @@ git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見
 | `e2e/test_read_biss.py`| 保存した JSON を実際の R で `ecan::read_biss()` に通す (1件 × 2ページ) |
 | `R/read_biss_check.R`  | 上のテストが呼ぶ R 側．読み込んだ結果を JSON で返す (手元の保存ファイルにも使える) |
 | `e2e/shoot_manual.py`  | マニュアルの画像を撮り直す (テストではない．`--en` で英語版) |
+| `.github/workflows/test.yml` | push・PR で lint と `npm test` を Node 4 版で走らせる |
 
 **テストは 2 段構え**．jsdom は速いので編集のたびに，Playwright は遅いので区切りで走らせる．
 
@@ -175,6 +178,39 @@ git のオブジェクトは LF なので，約 29,800 行ぶん (約 29 kB) 見
   (`innerText`，`HTMLCollection` の反復，`URL.createObjectURL`，geolocation，各ダイアログ)．
   ページは `http://biss.test/` から配ったことにする．`file://` だと origin が無く
   `localStorage` が使えないため．
+
+### Node の版ちがい (複数の PC で作業するため)
+
+PC ごとに入っている Node の版が違うので，**版に依存する書き方をしない**ことと，
+**版差を機械に見張らせる**ことで対処する (版そのものを揃えるのは必須にしない)．
+
+- **テストの起動は `node --test` (引数なし)** にする．
+  位置引数の解釈が版ごとに揺れるため，`node --test test/` や
+  `node --test "test/**/*.test.js"` は書かない．
+  - `node --test "test/**/*.test.js"` … glob の展開が **Node 21 以降**でしか効かない．
+    しかも 22 では 36件のうち 35件しか拾わない．
+  - `node --test test/` … **Node 22 で位置引数がディレクトリとして扱われなくなり**，
+    `Cannot find module ...	est` で落ちる (2026-08-19 に踏んだ)．
+  - 引数なしなら既定の探索が `test/**/*.test.js` を拾う．**36件**．
+- **下限は `package.json` の `engines` (`>=18.18`)** で宣言する．
+  eslint 9 が要求する下限に合わせてある．`.npmrc` の `engine-strict=true` と組で，
+  古い PC では `npm ci` が理由を出して止まる (原因不明の失敗にしない)．
+- **`.node-version` は 24.19.0** (LTS "Krypton")．fnm・Volta・nvm-windows・asdf を
+  入れている PC では自動で切り替わる．入れていない PC では単に無視される．
+- **CI (`.github/workflows/test.yml`) が Node 18.18 / 20 / 22 / 24 で lint と `npm test` を回す**．
+  どの PC で書いても，版差で壊れる書き方は push した時点で分かる．
+  ブラウザテストは CI に載せていない (Playwright の取得に数分かかるため)．手元で走らせる．
+- **npm は Node 同梱のものを使う**．グローバルに `npm i -g npm` すると
+  `%APPDATA%
+pm` の古い npm が同梱版を PATH で隠し，PC ごとに npm の版が変わる．
+  `npm rm -g npm` で消せば，Node を入れ替えるたびに npm も追随する．
+- **`node_modules/` と `.venv/` は Dropbox の同期の中にある**点に注意．
+  `.gitignore` は効いても Dropbox は別勘定で，とくに **`.venv` は絶対パスを埋め込むので
+  PC 間・Python の版の入れ替えで壊れる** (2026-08-19 に実際に壊れていた:
+  `No Python at '...\Python312\python.exe'`)．
+  おかしくなったら作り直す (`requirements-dev.txt` の手順)．
+  **Dropbox がファイルを掴んでいて `rm -rf .venv` が `Device or resource busy` になる**ので，
+  `mv .venv .venv_old` で退かしてから作り直し，あとで消すとよい．
 
 ### ブラウザテスト (Playwright + pytest)
 
@@ -220,7 +256,7 @@ python -m venv .venv
 
 ### 現在の状態
 
-2026-08-18 00:16 (JST) 更新．
+2026-08-19 06:11 (JST) 更新．
 
 - プロジェクト管理用の `.claude/CLAUDE.md` を新規作成し，構成・ビルド手順・運用ルールを整理した．
 - `www/run_inliner2.bat` のパスが古く (`D:\matu\work\ToDo\biodiv\www`) 実行できなかったので，
@@ -687,6 +723,37 @@ python -m venv .venv
 - **状態を確認した**．`develop` は `origin/develop` と一致し，中身はすべて `main` に入っている
   (`main` にしか無いのはマージコミット 21 個だけ)．`www/` に未コミットの変更は無く，
   公開物は最新のまま．残る待ちは課題一覧 E の実機確認だけ．
+
+- **複数の PC で Node の版が違う問題に対処した** (「開発ツール > Node の版ちがい」の節を参照)．
+  この機械の Node が 18 から **22.23.1** に上がっており，前回直したはずの `npm test` が
+  また落ちていた (`node --test test/` の位置引数が 22 でディレクトリとして扱われなくなり
+  `Cannot find module ...	est`)．**版を上げ下げしても直らない書き方の問題**だったので，
+  版に依存しない形に直したうえで，版差そのものを機械に見張らせることにした．
+  - `package.json` の `test` を **`node --test` (引数なし)** にした．36件すべて緑．
+  - `package.json` に **`engines: {"node": ">=18.18"}`** を足し，`.npmrc` に
+    **`engine-strict=true`** を置いた．古い PC では `npm ci` が理由を出して止まる．
+    下限は devDependency の eslint 9 の要求に合わせた．
+  - **`.node-version` (24.19.0)** を置いた．切替ツールを入れた PC だけが読む．
+    入れていない PC では無視されるので，全 PC に導入を強制しない．
+  - **`.github/workflows/test.yml` を新設**し，push (`main`・`develop`) と PR で
+    **Node 18.18 / 20 / 22 / 24** の 4 版で lint と `npm test` を回すようにした．
+    これまで CI は Pages への配信 (`pages.yml`) だけで，**テストは誰も走らせていなかった**．
+    ブラウザテストは Playwright の取得に数分かかるので CI には載せていない．
+- **npm がグローバル導入の 9.6.1 に隠されている**のを見つけた
+  (`%APPDATA%
+pm` の 9.6.1 が Node 22 同梱の 10.9.8 を PATH で先取りしている)．
+  `npm rm -g npm` で消せば同梱版に戻るが，**Claude Code のシェルからは権限で弾かれた**ので
+  **ユーザの手で実行してもらう** (各 PC で 1 回ずつ)．
+- **`node_modules/` と `.venv/` が Dropbox の同期の中にある**ことに気づき，
+  **`.venv` は実際に壊れていた**．Python 3.12 を指したままで
+  (`No Python at '...\Python312\python.exe'`)，この機械の Python は 3.14.7 になっていた．
+  **3.14 で作り直した** (pytest 9.1.1・Playwright の chromium を入れ直し，**29件すべて緑**)．
+  Dropbox の除外設定を入れるかは未定．
+- **CI の actions が古い major だった**．最初の CI が全ジョブで
+  「Node 20 は非推奨」と警告したので，`test.yml`・`pages.yml` の両方を現行の major に上げた
+  (checkout v7・setup-node v7・configure-pages v6・upload-pages-artifact v5・deploy-pages v5)．
+  **`pages.yml` は `www/**` を触るまで走らない**ので，上げた版での配信はまだ確かめていない．
+  次に `www/` を変えて `main` へ入れたときに，デプロイが緑になるか見ること．
 
 ### 課題一覧
 
