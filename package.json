@@ -7,6 +7,9 @@
     "lint": "eslint",
     "test": "node --test"
   },
+  "engines": {
+    "node": ">=18.18"
+  },
   "devDependencies": {
     "eslint": "^9.39.5",
     "globals": "^17.11.0",
