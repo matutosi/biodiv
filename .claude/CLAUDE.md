@@ -752,8 +752,16 @@ pm` の 9.6.1 が Node 22 同梱の 10.9.8 を PATH で先取りしている)．
 - **CI の actions が古い major だった**．最初の CI が全ジョブで
   「Node 20 は非推奨」と警告したので，`test.yml`・`pages.yml` の両方を現行の major に上げた
   (checkout v7・setup-node v7・configure-pages v6・upload-pages-artifact v5・deploy-pages v5)．
-  **`pages.yml` は `www/**` を触るまで走らない**ので，上げた版での配信はまだ確かめていない．
-  次に `www/` を変えて `main` へ入れたときに，デプロイが緑になるか見ること．
+  **上げた版での配信も確認済み**．`pages.yml` の path フィルタに自分自身が入っているため
+  `main` へマージした時点でデプロイが走り，1分15秒で成功した．
+  公開ページも 200 で返る (`biss2.html` 787,637 バイト・`biss.html` 749,055 バイト)．
+
+- **`develop` を `main` へマージして push した**．あわせて，`main` にしか無かった
+  `man/01-howtouse_en.md` 末尾の**空の HTML コメント (3行) を消した**．
+  これで `develop` と `main` の中身は完全に一致する (差はマージコミットだけ)．
+  CI は `main` でも 4 版すべて緑．
+- **残っている手作業**: `npm rm -g npm` を各 PC で 1 回ずつ実行する
+  (Claude Code のシェルからは権限で弾かれた)．
 
 ### 課題一覧
 
