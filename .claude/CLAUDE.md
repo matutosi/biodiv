@@ -205,8 +205,12 @@ PC ごとに入っている Node の版が違うので，**版に依存する書
 pm` の古い npm が同梱版を PATH で隠し，PC ごとに npm の版が変わる．
   `npm rm -g npm` で消せば，Node を入れ替えるたびに npm も追随する．
 - **`node_modules/` と `.venv/` は Dropbox の同期の中にある**点に注意．
-  `.gitignore` は効いても Dropbox は別勘定で，とくに `.venv` は絶対パスを埋め込むので
-  PC 間で壊れる．おかしくなったら作り直す (`requirements-dev.txt` の手順)．
+  `.gitignore` は効いても Dropbox は別勘定で，とくに **`.venv` は絶対パスを埋め込むので
+  PC 間・Python の版の入れ替えで壊れる** (2026-08-19 に実際に壊れていた:
+  `No Python at '...\Python312\python.exe'`)．
+  おかしくなったら作り直す (`requirements-dev.txt` の手順)．
+  **Dropbox がファイルを掴んでいて `rm -rf .venv` が `Device or resource busy` になる**ので，
+  `mv .venv .venv_old` で退かしてから作り直し，あとで消すとよい．
 
 ### ブラウザテスト (Playwright + pytest)
 
@@ -740,9 +744,16 @@ python -m venv .venv
 pm` の 9.6.1 が Node 22 同梱の 10.9.8 を PATH で先取りしている)．
   `npm rm -g npm` で消せば同梱版に戻るが，**Claude Code のシェルからは権限で弾かれた**ので
   **ユーザの手で実行してもらう** (各 PC で 1 回ずつ)．
-- **`node_modules/` と `.venv/` が Dropbox の同期の中にある**ことに気づいた．
-  `.gitignore` は効くが Dropbox は別勘定で，とくに `.venv` は絶対パスを埋め込むため
-  PC 間で壊れうる．Dropbox の除外設定を入れるかは未定 (今のところ実害は出ていない)．
+- **`node_modules/` と `.venv/` が Dropbox の同期の中にある**ことに気づき，
+  **`.venv` は実際に壊れていた**．Python 3.12 を指したままで
+  (`No Python at '...\Python312\python.exe'`)，この機械の Python は 3.14.7 になっていた．
+  **3.14 で作り直した** (pytest 9.1.1・Playwright の chromium を入れ直し，**29件すべて緑**)．
+  Dropbox の除外設定を入れるかは未定．
+- **CI の actions が古い major だった**．最初の CI が全ジョブで
+  「Node 20 は非推奨」と警告したので，`test.yml`・`pages.yml` の両方を現行の major に上げた
+  (checkout v7・setup-node v7・configure-pages v6・upload-pages-artifact v5・deploy-pages v5)．
+  **`pages.yml` は `www/**` を触るまで走らない**ので，上げた版での配信はまだ確かめていない．
+  次に `www/` を変えて `main` へ入れたときに，デプロイが緑になるか見ること．
 
 ### 課題一覧
 
